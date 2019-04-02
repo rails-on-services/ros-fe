@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor() { }
+  showModal: boolean;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+    this.showModal = false;
+  }
 
   ngOnInit() {
   }
 
+  addUser() {
+    // todo: fill in adding mock user
+    return;
+  }
+
+  removeUsers() {
+    // todo: import from mock user list
+    return;
+  }
+
+  openModal() {
+    // this.showModal = true;
+  }
+
+  closeModal() {
+    // this.showModal = false;
+  }
 }

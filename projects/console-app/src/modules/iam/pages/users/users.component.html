@@ -1,14 +1,15 @@
 <app-iam-menu></app-iam-menu>
 <app-dismissable-content></app-dismissable-content>
 <div class="button-row">
-  <button mat-raised-button color="primary">
+  <a mat-raised-button color="primary" [routerLink]="'new-user'">
     Add User
-  </button>
-  <button mat-raised-button color="warn">
-    Remove User
-  </button>
+  </a>
+  <a mat-raised-button color="warn" (click)="removeUsers()">
+    Remove Users
+  </a>
 </div>
 <p>
   users works!
 </p>
 <app-filterable-table></app-filterable-table>
+<router-outlet></router-outlet>

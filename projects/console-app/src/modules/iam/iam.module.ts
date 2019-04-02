@@ -6,13 +6,17 @@ import { HomeComponent } from './pages/home/home.component';
 import {IamRoutingModule} from './iam-routing.module';
 import { IamMenuComponent } from './components/iam-menu/iam-menu.component';
 import {SharedModule} from '../../shared/shared.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [UsersComponent, GroupsComponent, HomeComponent, IamMenuComponent],
   imports: [
     CommonModule,
     IamRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+    FormsModule,
+
+  ],
+  exports: [HomeComponent]
 })
 export class IamModule { }
