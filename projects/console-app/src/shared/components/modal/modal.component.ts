@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -12,19 +12,23 @@ export interface DialogData {
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, AfterViewInit {
 
   constructor(public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute,
-
   ) {
   }
 
   ngOnInit() {
-    this.openDialog();
   }
 
+  ngAfterViewInit() {
+    // fix ExpressionChangedAfterItHasBeenCheckedError
+    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
+    setTimeout(() => this.openDialog());
+
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialogComponent, {
@@ -34,7 +38,7 @@ export class ModalComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.router.navigate(['..'], { relativeTo: this.route });
+      this.router.navigate(['..'], {relativeTo: this.route});
 
     });
   }
