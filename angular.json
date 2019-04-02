@@ -23,7 +23,7 @@
               "projects/console-app/src/assets"
             ],
             "styles": [
-              "projects/console-app/src/styles.css"
+              "projects/console-app/src/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -80,7 +80,7 @@
             "tsConfig": "projects/console-app/tsconfig.spec.json",
             "karmaConfig": "projects/console-app/karma.conf.js",
             "styles": [
-              "projects/console-app/src/styles.css"
+              "projects/console-app/src/styles.scss"
             ],
             "scripts": [],
             "assets": [
