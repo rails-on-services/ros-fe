@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+// import {routes} from './app-routing.module';
+import {IamModule} from '../iam/iam.module';
+import {ChildrenOutletContexts} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -12,9 +15,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    // routes,
+    IamModule
   ],
-  providers: [],
+  providers: [ChildrenOutletContexts],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

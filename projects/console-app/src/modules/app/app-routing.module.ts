@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
+import {IamModule} from '../iam/iam.module';
 
-const routes: Routes = [
+const router: Routes = [
   {
     path: 'iam',
-    loadChildren: '../iam/iam.module#IamModule'
+    loadChildren: () => IamModule
   },
   {
     path: '',
     redirectTo: '',
     pathMatch: 'full',
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(router)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

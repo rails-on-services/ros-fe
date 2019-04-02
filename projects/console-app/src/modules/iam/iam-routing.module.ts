@@ -4,30 +4,38 @@ import {HomeComponent} from './pages/home/home.component';
 import {UsersComponent} from './pages/users/users.component';
 import {GroupsComponent} from './pages/groups/groups.component';
 import {ModalComponent} from '../../shared/components/modal/modal.component';
+import {IamComponent} from './iam.component';
 
-const routes: Routes = [
+export const router: Routes = [
   {
-    path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'users',
-    component: UsersComponent,
+    path: 'dashboard',
+    component: IamComponent,
     children: [
       {
-        path: 'new-user',
-        component: ModalComponent,
+        path: 'home',
+        component: HomeComponent,
       },
+      {
+        path: 'users',
+        component: UsersComponent,
+        children: [
+          {
+            path: 'new-user',
+            component: ModalComponent,
+          },
+        ],
+      },
+      {
+        path: 'groups',
+        component: GroupsComponent,
+      }
     ]
   },
-  {
-    path: 'groups',
-    component: GroupsComponent
-  }
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(router)],
   exports: [RouterModule]
 })
 export class IamRoutingModule {
