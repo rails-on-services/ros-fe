@@ -9,7 +9,7 @@ export interface DialogData {
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
+  template: '',
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit, AfterViewInit {
