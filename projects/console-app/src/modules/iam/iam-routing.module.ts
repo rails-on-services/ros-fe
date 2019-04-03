@@ -8,7 +8,7 @@ import {IamComponent} from './iam.component';
 
 export const router: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: IamComponent,
     children: [
       {

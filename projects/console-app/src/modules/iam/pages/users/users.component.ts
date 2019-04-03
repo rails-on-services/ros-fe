@@ -1,9 +1,13 @@
 import {
   Component,
-  ComponentRef, ElementRef,
+  ElementRef,
   OnInit,
   ViewChild,
 } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { IamService, IamUser } from '@whistler/iam';
 
 @Component({
   selector: 'app-users',
@@ -11,15 +15,21 @@ import {
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
+  users$: Observable<IamUser[]>;
 
   showModal: boolean;
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
-  constructor() {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private iamService: IamService
+  ) {
     this.showModal = false;
   }
 
   ngOnInit() {
+    this.users$ = this.iamService.fetchUsers();
   }
 
   addUser() {
