@@ -8,7 +8,6 @@ import {MatSidenavContainer} from '@angular/material';
   providers: [MatSidenavContainer]
 })
 export class IamMenuComponent implements OnInit {
-  events: string[] = [];
   opened: boolean;
 
   constructor() {

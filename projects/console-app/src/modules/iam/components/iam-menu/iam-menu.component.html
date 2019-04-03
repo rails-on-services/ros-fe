@@ -18,15 +18,8 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <p>
-      <mat-checkbox [(ngModel)]="opened">sidenav.opened</mat-checkbox>
+      <button mat-stroked-button (click)="sidenav.toggle()">sidenav.toggle()</button>
     </p>
-    <p>
-      <button mat-button (click)="sidenav.toggle()">sidenav.toggle()</button>
-    </p>
-    <p>Events:</p>
-    <div class="example-events">
-      <div *ngFor="let e of events">{{e}}</div>
-    </div>
     <ng-content></ng-content>
   </mat-sidenav-content>
 </mat-sidenav-container>
