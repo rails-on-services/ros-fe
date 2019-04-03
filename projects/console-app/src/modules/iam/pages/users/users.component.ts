@@ -5,10 +5,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 import { IamService, IamUser } from '@whistler/iam';
-import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-users',
@@ -25,7 +24,7 @@ export class UsersComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private iamService: IamService
+    private iamService: IamService,
   ) {
     this.showModal = false;
   }
@@ -40,6 +39,7 @@ export class UsersComponent implements OnInit {
 
   addUser() {
     // todo: fill in adding mock user
+    this.openModal();
     return;
   }
 
@@ -50,6 +50,7 @@ export class UsersComponent implements OnInit {
 
   openModal() {
     // this.showModal = true;
+    this.router.navigate(['new-user'], {relativeTo: this.activatedRoute});
   }
 
   closeModal() {

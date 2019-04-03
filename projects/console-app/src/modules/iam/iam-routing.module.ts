@@ -5,6 +5,8 @@ import {UsersComponent} from './pages/users/users.component';
 import {GroupsComponent} from './pages/groups/groups.component';
 import {ModalComponent} from '../../shared/components/modal/modal.component';
 import {IamComponent} from './iam.component';
+import {NewUserComponent} from './pages/users/new-user/new-user.component';
+import {NewUserResolverService} from './pages/users/new-user/new-user-resolver.service';
 
 export const router: Routes = [
   {
@@ -27,6 +29,9 @@ export const router: Routes = [
           {
             path: 'new-user',
             component: ModalComponent,
+            resolve: {
+              modal: NewUserResolverService
+            }
           },
         ],
       },

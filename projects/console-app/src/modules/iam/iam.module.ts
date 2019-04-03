@@ -1,27 +1,36 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UsersComponent } from './pages/users/users.component';
-import { GroupsComponent } from './pages/groups/groups.component';
-import { HomeComponent } from './pages/home/home.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {UsersComponent} from './pages/users/users.component';
+import {GroupsComponent} from './pages/groups/groups.component';
+import {HomeComponent} from './pages/home/home.component';
 import {IamRoutingModule} from './iam-routing.module';
-import { IamMenuComponent } from './components/iam-menu/iam-menu.component';
+import {IamMenuComponent} from './components/iam-menu/iam-menu.component';
 import {SharedModule} from '../../shared/shared.module';
 import {FormsModule} from '@angular/forms';
-import { IamComponent } from './iam.component';
+import {IamComponent} from './iam.component';
 import {DismissableContentComponent} from '../../shared/components/dismissable-content/dismissable-content.component';
+import {NewUserComponent} from './pages/users/new-user/new-user.component';
+
 // import {routes} from './iam-routing.module';
 
 @NgModule({
-  declarations: [UsersComponent, GroupsComponent, HomeComponent, IamMenuComponent, IamComponent],
+  declarations: [UsersComponent,
+    GroupsComponent,
+    HomeComponent,
+    IamMenuComponent,
+    IamComponent,
+    NewUserComponent],
   imports: [
     CommonModule,
     IamRoutingModule,
     // routes,
     SharedModule,
     FormsModule,
-
   ],
   exports: [HomeComponent, IamComponent],
-  entryComponents: [DismissableContentComponent]
+  entryComponents: [
+    DismissableContentComponent,
+    NewUserComponent]
 })
-export class IamModule { }
+export class IamModule {
+}

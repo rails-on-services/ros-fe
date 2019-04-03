@@ -3,7 +3,7 @@
   </app-dismissable-content>
 </div>
 <div class="button-row">
-  <a mat-raised-button color="primary" [routerLink]="'new-user'">
+  <a mat-raised-button color="primary" (click)="addUser()">
     Add User
   </a>
   <a mat-raised-button color="warn" (click)="removeUsers()">
