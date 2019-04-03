@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
-import { IamUser } from './models/user.model';
+import {IamUser} from './models/user.model';
 
 const IAM_USERS: IamUser[] = [
   new IamUser('1', 'rob123'),
@@ -18,7 +18,8 @@ const FETCH_LATENCY = 500;
 })
 export class IamService {
 
-  constructor() { }
+  constructor() {
+  }
 
   fetchUser(id: number | string): Observable<IamUser> {
     const user$ = of(IAM_USERS.find(contact => contact.id === +id));
@@ -27,5 +28,9 @@ export class IamService {
 
   fetchUsers(): Observable<IamUser[]> {
     return of(IAM_USERS).pipe(delay(FETCH_LATENCY));
+  }
+
+  addUser(): Observable<any> {
+    return of(IAM_USERS.push(new IamUser((IAM_USERS.length + 1).toString(), 'amit1234')));
   }
 }

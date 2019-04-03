@@ -40,6 +40,8 @@ export class UsersComponent implements OnInit {
   addUser() {
     // todo: fill in adding mock user
     this.openModal();
+    this.iamService.addUser();
+    this.users$ = this.iamService.fetchUsers();
     return;
   }
 
