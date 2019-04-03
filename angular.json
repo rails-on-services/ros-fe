@@ -130,6 +130,41 @@
           }
         }
       }
+    },
+    "whistler-iam": {
+      "root": "projects/whistler/iam",
+      "sourceRoot": "projects/whistler/iam/src",
+      "projectType": "library",
+      "prefix": "iam",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/whistler/iam/tsconfig.lib.json",
+            "project": "projects/whistler/iam/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/whistler/iam/src/test.ts",
+            "tsConfig": "projects/whistler/iam/tsconfig.spec.json",
+            "karmaConfig": "projects/whistler/iam/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/whistler/iam/tsconfig.lib.json",
+              "projects/whistler/iam/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "console-app",
