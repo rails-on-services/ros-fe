@@ -33,4 +33,9 @@ export class IamService {
   addUser(): Observable<any> {
     return of(IAM_USERS.push(new IamUser((IAM_USERS.length + 1).toString(), 'amit1234')));
   }
+
+  removeUser(id: number | string): Observable<any> {
+    const user$ = IAM_USERS.find(contact => contact.id === +id);
+    return of(IAM_USERS.splice( IAM_USERS.indexOf(user$), 1 ));
+  }
 }

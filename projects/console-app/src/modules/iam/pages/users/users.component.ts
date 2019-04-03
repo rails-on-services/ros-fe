@@ -38,15 +38,17 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-    // todo: fill in adding mock user
     this.openModal();
     this.iamService.addUser();
     this.users$ = this.iamService.fetchUsers();
     return;
   }
 
-  removeUsers() {
+  removeUsers(id: number | string) {
     // todo: import from mock user list
+    this.iamService.removeUser(id);
+    this.users$ = this.iamService.fetchUsers();
+
     return;
   }
 
