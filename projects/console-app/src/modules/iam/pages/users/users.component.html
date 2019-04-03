@@ -1,4 +1,7 @@
-<app-dismissable-content></app-dismissable-content>
+<div #dismissable>
+  <app-dismissable-content (closeButtonClick)="closeButtonClick()">
+  </app-dismissable-content>
+</div>
 <div class="button-row">
   <a mat-raised-button color="primary" [routerLink]="'new-user'">
     Add User

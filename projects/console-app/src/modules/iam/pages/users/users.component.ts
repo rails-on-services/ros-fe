@@ -1,5 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {
+  Component,
+  ComponentRef, ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DismissableContentComponent} from '../../../../shared/components/dismissable-content/dismissable-content.component';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +15,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class UsersComponent implements OnInit {
 
   showModal: boolean;
+  dialogComponentRef: ComponentRef<DismissableContentComponent>;
+  @ViewChild('dismissable') private dismissableElement: ElementRef;
 
+  // @ts-ignore
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this.showModal = false;
   }
@@ -34,4 +43,13 @@ export class UsersComponent implements OnInit {
   closeModal() {
     // this.showModal = false;
   }
+
+  private removeDialogComponentFromBody() {
+    this.dismissableElement.nativeElement.remove();
+  }
+
+  closeButtonClick() {
+    this.removeDialogComponentFromBody();
+  }
+
 }

@@ -8,6 +8,7 @@ import { IamMenuComponent } from './components/iam-menu/iam-menu.component';
 import {SharedModule} from '../../shared/shared.module';
 import {FormsModule} from '@angular/forms';
 import { IamComponent } from './iam.component';
+import {DismissableContentComponent} from '../../shared/components/dismissable-content/dismissable-content.component';
 // import {routes} from './iam-routing.module';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { IamComponent } from './iam.component';
     FormsModule,
 
   ],
-  exports: [HomeComponent, IamComponent]
+  exports: [HomeComponent, IamComponent],
+  entryComponents: [DismissableContentComponent]
 })
 export class IamModule { }
