@@ -12,6 +12,7 @@ export class IamMenuComponent implements OnInit {
   opened: boolean;
 
   constructor() {
+    this.opened = true;
   }
 
   ngOnInit() {
