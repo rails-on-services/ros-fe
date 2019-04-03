@@ -4,8 +4,6 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DismissableContentComponent} from '../../../../shared/components/dismissable-content/dismissable-content.component';
 
 @Component({
   selector: 'app-users',
@@ -15,11 +13,9 @@ import {DismissableContentComponent} from '../../../../shared/components/dismiss
 export class UsersComponent implements OnInit {
 
   showModal: boolean;
-  dialogComponentRef: ComponentRef<DismissableContentComponent>;
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
-  // @ts-ignore
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor() {
     this.showModal = false;
   }
 
