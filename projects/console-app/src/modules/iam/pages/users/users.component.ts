@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IamService, IamUser } from '@whistler/iam';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-users',
@@ -16,8 +17,9 @@ import { IamService, IamUser } from '@whistler/iam';
 })
 export class UsersComponent implements OnInit {
   users$: Observable<IamUser[]>;
-
+  tableHeaders: {key: string, value: string}[];
   showModal: boolean;
+
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
   constructor(
@@ -29,6 +31,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tableHeaders = [
+      {key: 'id', value: 'ID'},
+      {key: 'username', value: 'Username'},
+    ];
     this.users$ = this.iamService.fetchUsers();
   }
 

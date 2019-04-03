@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-filterable-table',
@@ -6,12 +7,27 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./filterable-table.component.scss']
 })
 export class FilterableTableComponent implements OnInit {
+  @Input() headers: {key: string, value: string}[];
   @Input() contents: any[];
 
-  constructor() { }
+  dataSource: MatTableDataSource<any[]>;
+
+  @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
-    console.log(this.contents);
+    this.dataSource = new MatTableDataSource(this.contents);
+    this.dataSource.sort = this.sort;
   }
 
+  get headerKeys() {
+    return this.headers.map(column => column.key);
+  }
+
+  get headerValues() {
+    return this.headers.map(column => column.value);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

@@ -10,5 +10,11 @@
     Remove Users
   </a>
 </div>
-<app-filterable-table *ngIf="(users$ | async)?.length" contents="{{users$}}"></app-filterable-table>
+<div class="users-table" *ngIf="users$ | async as users">
+  <app-filterable-table 
+    *ngIf="users.length"
+    [headers]="tableHeaders"
+    [contents]="users">
+  </app-filterable-table>
+</div>
 <router-outlet></router-outlet>
