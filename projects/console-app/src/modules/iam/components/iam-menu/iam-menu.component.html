@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container">
+<mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
                (closed)="events.push('close!')">
     Sidenav content
@@ -12,4 +12,4 @@
     </div>
     <ng-content></ng-content>
   </mat-sidenav-content>
-</mat-drawer-container>
+</mat-sidenav-container>
