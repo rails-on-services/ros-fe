@@ -1,8 +1,6 @@
-import {Component, Inject, Injectable} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Injectable} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {debug} from 'util';
-import {take} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +27,6 @@ export class ModalService {
       if (this.componentToRender == null) {
         console.log('component for modal not found');
         return;
-        // this.componentToRender = DialogOverviewExampleDialogComponent;
       }
       const dialogRef = this.dialog.open(this.componentToRender, {
         width: '50vw',
