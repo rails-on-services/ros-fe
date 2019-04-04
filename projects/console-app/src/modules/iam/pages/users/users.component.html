@@ -9,12 +9,24 @@
   <a mat-raised-button color="warn" (click)="removeUsers(0)">
     Remove Users
   </a>
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle value="bold">Bold</mat-button-toggle>
+    <mat-button-toggle value="italic">Italic</mat-button-toggle>
+    <mat-button-toggle value="underline">Underline</mat-button-toggle>
+  </mat-button-toggle-group>
 </div>
-<div class="users-table" *ngIf="users$ | async as users">
+<!-- <div class="users-table" *ngIf="users">
   <app-filterable-table 
     *ngIf="users.length"
     [headers]="tableHeaders"
     [contents]="users">
   </app-filterable-table>
-</div>
+</div> -->
+<ng-container class="users-table" *ngIf="document$ | async as document">
+  <app-filterable-table
+    *ngIf="document.getModels() && document.getModels().length"
+    [headers]="tableHeaders"
+    [contents]="document.getModels()">
+  </app-filterable-table>
+</ng-container>
 <router-outlet></router-outlet>

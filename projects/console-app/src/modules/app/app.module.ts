@@ -9,6 +9,8 @@ import {IamModule} from '../iam/iam.module';
 import {ChildrenOutletContexts} from '@angular/router';
 import {CoreModule} from './core/core.module';
 
+import {IamModule as IamServiceModule} from '@whistler/iam';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,8 @@ import {CoreModule} from './core/core.module';
     AppRoutingModule,
     // routes,
     IamModule,
-    CoreModule
+    CoreModule,
+    IamServiceModule
   ],
   providers: [ChildrenOutletContexts],
   bootstrap: [AppComponent]
