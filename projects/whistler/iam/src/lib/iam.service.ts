@@ -1,16 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {delay} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 
-import {IamUser} from './models/user.model';
-
-const IAM_USERS: IamUser[] = [
-  new IamUser('1', 'rob123'),
-  new IamUser('2', 'ryane123'),
-  new IamUser('3', 'pie123')
-];
-
-const FETCH_LATENCY = 500;
+import { IamUser } from './models/user.model';
+import { Datastore } from './iam-datastore.service';
 
 
 @Injectable({
@@ -18,24 +10,24 @@ const FETCH_LATENCY = 500;
 })
 export class IamService {
 
-  constructor() {
+  constructor(private datastore: Datastore) {
+    this.datastore.headers = new HttpHeaders({
+      Authorization: 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA'
+    });
   }
 
-  fetchUser(id: number | string): Observable<IamUser> {
-    const user$ = of(IAM_USERS.find(contact => contact.id === +id));
-    return user$.pipe(delay(FETCH_LATENCY));
+  fetchUsers() {
+    return this.datastore.findAll(
+      IamUser,
+      {
+        page: { size: 10, number: 1 }
+      }
+    );
   }
 
-  fetchUsers(): Observable<IamUser[]> {
-    return of(IAM_USERS).pipe(delay(FETCH_LATENCY));
+  addUser() {
   }
 
-  addUser(): Observable<any> {
-    return of(IAM_USERS.push(new IamUser((IAM_USERS.length + 1).toString(), 'amit1234')));
-  }
-
-  removeUser(id: number | string): Observable<any> {
-    const user$ = IAM_USERS.find(contact => contact.id === +id);
-    return of(IAM_USERS.splice( IAM_USERS.indexOf(user$), 1 ));
+  removeUser(id: number | string) {
   }
 }

@@ -3,9 +3,12 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
+import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@whistler/iam';
 
@@ -14,8 +17,8 @@ import { IamService, IamUser } from '@whistler/iam';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
-  users$: Observable<IamUser[]>;
+export class UsersComponent implements OnInit, OnDestroy {
+  document$: Observable<JsonApiQueryData<IamUser>>;
   tableHeaders: {key: string, value: string}[];
   showModal: boolean;
 
@@ -32,24 +35,31 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.tableHeaders = [
       {key: 'id', value: 'ID'},
-      {key: 'username', value: 'Username'},
+      {key: 'username', value: 'User name'},
+      {key: 'urn', value: 'URN'},
+      {key: 'console', value: 'Console access'},
+      {key: 'api', value: 'API access'}
     ];
-    this.users$ = this.iamService.fetchUsers();
+    this.document$ = this.iamService.fetchUsers();
+  }
+
+  ngOnDestroy(): void {
+    // this.usersSubsription.unsubscribe();
   }
 
   addUser() {
-    this.openModal();
-    this.iamService.addUser();
-    this.users$ = this.iamService.fetchUsers();
-    return;
+    // this.openModal();
+    // this.iamService.addUser();
+    // this.users$ = this.iamService.fetchUsers();
+    // return;
   }
 
   removeUsers(id: number | string) {
-    // todo: import from mock user list
-    this.iamService.removeUser(id);
-    this.users$ = this.iamService.fetchUsers();
+    // // todo: import from mock user list
+    // this.iamService.removeUser(id);
+    // this.users$ = this.iamService.fetchUsers();
 
-    return;
+    // return;
   }
 
   openModal() {

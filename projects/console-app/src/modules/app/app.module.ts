@@ -8,6 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IamModule} from '../iam/iam.module';
 import {ChildrenOutletContexts} from '@angular/router';
 
+import {IamModule as IamServiceModule} from '@whistler/iam';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +19,8 @@ import {ChildrenOutletContexts} from '@angular/router';
     BrowserAnimationsModule,
     AppRoutingModule,
     // routes,
-    IamModule
+    IamModule,
+    IamServiceModule
   ],
   providers: [ChildrenOutletContexts],
   bootstrap: [AppComponent]
