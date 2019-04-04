@@ -26,14 +26,18 @@ export const router: Routes = [
         path: 'users',
         component: UsersComponent,
         children: [
-          {
-            path: 'new-user',
-            component: ModalComponent,
-            resolve: {
-              modal: NewUserResolverService
-            }
-          },
+          // {
+          //   path: 'new-user',
+          //   component: ModalComponent,
+          //   resolve: {
+          //     modal: NewUserResolverService
+          //   }
+          // },
         ],
+      },
+      {
+        path: 'users/new-user',
+        component: NewUserComponent
       },
       {
         path: 'groups',
