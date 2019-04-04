@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addUser() {
-    // this.openModal();
+    this.openModal();
     // this.iamService.addUser();
     // this.users$ = this.iamService.fetchUsers();
     // return;
