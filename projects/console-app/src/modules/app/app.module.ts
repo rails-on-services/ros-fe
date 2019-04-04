@@ -7,17 +7,19 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // import {routes} from './app-routing.module';
 import {IamModule} from '../iam/iam.module';
 import {ChildrenOutletContexts} from '@angular/router';
+import {CoreModule} from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     // routes,
-    IamModule
+    IamModule,
+    CoreModule
   ],
   providers: [ChildrenOutletContexts],
   bootstrap: [AppComponent]

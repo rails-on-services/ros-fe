@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  height: 4em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+.header {
+  height: 100%;
+  h2 {
+    font-weight: bold;
+  }
+}
