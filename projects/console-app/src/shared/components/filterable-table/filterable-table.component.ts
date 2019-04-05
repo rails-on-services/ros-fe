@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
-import 'reflect-metadata';
-
 @Component({
   selector: 'app-filterable-table',
   templateUrl: './filterable-table.component.html',
