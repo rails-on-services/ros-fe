@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalService} from '../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {debug} from 'util';
 import {IamService} from '@whistler/iam';
 
 @Component({
@@ -13,10 +12,6 @@ import {IamService} from '@whistler/iam';
 export class NewUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
   isEditable = true;
-
-  userName: string;
-  hasProgrammaticAccess: boolean;
-  hasConsoleAccess: boolean;
 
   createUsernamePage: boolean;
   reviewPage: boolean;
