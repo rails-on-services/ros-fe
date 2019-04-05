@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@whistler/iam';
+import { MatButtonToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-users',
@@ -33,7 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.document$ = this.iamService.fetchUsers();
+    this.fetchUsers();
   }
 
   ngOnDestroy(): void {
@@ -55,6 +56,20 @@ export class UsersComponent implements OnInit, OnDestroy {
     // return;
   }
 
+  onOtherActionsChange(event: MatButtonToggleChange) {
+    // Toggle off as we only want the look and feel.
+    event.source.checked = false;
+    switch (event.value) {
+      case 'reload':
+        this.fetchUsers();
+        break;
+      case 'settings':
+        break;
+      case 'help':
+        break;
+    }
+  }
+
   openModal() {
     // this.showModal = true;
     this.router.navigate(['new-user'], {relativeTo: this.activatedRoute});
@@ -72,4 +87,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
+  private fetchUsers() {
+    this.document$ = this.iamService.fetchUsers();
+  }
 }
