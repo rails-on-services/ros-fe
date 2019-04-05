@@ -6,7 +6,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {IamRoutingModule} from './iam-routing.module';
 import {IamMenuComponent} from './components/iam-menu/iam-menu.component';
 import {SharedModule} from '../../shared/shared.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IamComponent} from './iam.component';
 import {DismissableContentComponent} from '../../shared/components/dismissable-content/dismissable-content.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
@@ -25,7 +25,8 @@ import {NewUserComponent} from './pages/users/new-user/new-user.component';
     IamRoutingModule,
     // routes,
     SharedModule,
-    FormsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [HomeComponent, IamComponent],
   entryComponents: [

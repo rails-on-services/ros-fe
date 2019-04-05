@@ -1,84 +1,86 @@
 <mat-card>
   <mat-card-title>Create New User</mat-card-title>
+  <form [formGroup]="userDetailsGroup" (ngSubmit)="submitForm()">
 
-  <div *ngIf="createUsernamePage">
-    <mat-card-content>
-      <form>
-        <h3 class="mat-h3">Set user details</h3>
-        <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input matInput placeholder="Username" [(ngModel)]="userName" name="userName" required>
-        </mat-form-field>
-        <h3 class="mat-h3">Select access type</h3>
-        <div class="access-types">
-          <mat-label>Access Type:</mat-label>
-          <div>
+    <mat-horizontal-stepper linear>
+      <mat-step label="User Details" [stepControl]="userDetailsGroup" [editable]="isEditable">
+        <mat-card-content>
+          <ng-template matStepLabel>Set user details</ng-template>
+          <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" formControlName="userName" required>
+            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('userName', 'required')">Username is required</mat-error>
+            <mat-error *ngIf="hasError('userName', 'maxlength')">You have more than 60 characters</mat-error>
+          </mat-form-field>
+          <div class="access-types">
+
+            <mat-label>Access Type:</mat-label>
             <div>
-              <mat-checkbox [(ngModel)]="hasProgrammaticAccess" [ngModelOptions]="{standalone: true}">
-                <div><strong>Programmatic Access</strong></div>
-                <div>
-                  Enables an access key ID and secret access key for the API, SDK, and other development tools.
-                </div>
-              </mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="hasConsoleAccess" [ngModelOptions]="{standalone: true}">
-                <div><strong>Console Access</strong></div>
-                <div>Enables a password that allows users to sign-in to the Management Console.</div>
-              </mat-checkbox>
+              <div>
+                <mat-checkbox formControlName="hasProgrammaticAccess">
+                  <div><strong>Programmatic Access</strong></div>
+                  <div>
+                    Enables an access key ID and secret access key for the API, SDK, and other development tools.
+                  </div>
+                </mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox formControlName="hasConsoleAccess">
+                  <div><strong>Console Access</strong></div>
+                  <div>Enables a password that allows users to sign-in to the Management Console.</div>
+                </mat-checkbox>
+              </div>
             </div>
           </div>
-        </div>
 
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-      <div class="button-container">
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
         <span class="align-left">
         </span>
-        <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()">Cancel</button>
-          <button mat-raised-button (click)="reviewClicked()">Review</button>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
         </span>
-      </div>
-    </mat-card-actions>
-  </div>
-  <div *ngIf="reviewPage">
-    <mat-card-content>
-      <form>
-        <h3 class="mat-h3">Review details</h3>
-        <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
-        <h4 class="mat-h4">User details</h4>
-        <mat-form-field>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Review" [editable]="false">
+        <mat-card-content>
+          <h3 class="mat-h3">Review details</h3>
+          <h4 class="mat-h4">User details</h4>
+
           <mat-label>Username:</mat-label>
-          <input matInput [readonly]="true" placeholder="Username" [(ngModel)]="userName" name="userName">
-        </mat-form-field>
-        <h3 class="mat-h3">Select access type</h3>
-        <div class="access-types">
-          <mat-label>Access Type:</mat-label>
-          <div *ngIf="hasProgrammaticAccess">
-              <div><strong>Programmatic Access</strong> - with an access key</div>
-          </div>
-          <div *ngIf="hasConsoleAccess">
-              <div><strong>Console Access</strong> - Console with a username and password</div>
-          </div>
-        </div>
+          <div>{{userDetailsGroup.get('userName').value}}</div>
 
-      </form>
-    </mat-card-content>
-    <mat-card-actions>
-      <div class="button-container">
+          <div class="access-types">
+            <mat-label>Access Type:</mat-label>
+            <div *ngIf="userDetailsGroup.get('hasProgrammaticAccess').value">
+              <div><strong>Programmatic Access</strong> - with an access key</div>
+            </div>
+            <div *ngIf="userDetailsGroup.get('hasConsoleAccess').value">
+              <div><strong>Console Access</strong> - Console access with a username and password</div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
         <span class="align-left">
-        <button mat-button (click)="backClicked()">
+        <button mat-stroked-button matStepperPrevious>
           <mat-icon>keyboard_arrow_left</mat-icon>
           <span>Back</span></button>
         </span>
-        <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()">Cancel</button>
-          <button mat-raised-button color="primary" (click)="finishClicked()">Finish</button>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Finish</button>
         </span>
-      </div>
-    </mat-card-actions>
-  </div>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+
 </mat-card>
