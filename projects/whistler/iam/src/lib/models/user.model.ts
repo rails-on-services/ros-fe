@@ -1,19 +1,24 @@
 import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
+import { ColumnName, Tablify } from '../decorators/column-name.decorator';
 
+@Tablify()
 @JsonApiModelConfig({
   type: 'users'
 })
 export class IamUser extends JsonApiModel {
-  // constructor(public id: number | string, public username: string) { }
+  @ColumnName('User Name')
   @Attribute()
   username: string;
 
+  @ColumnName('URN')
   @Attribute()
   urn: string;
 
+  @ColumnName('Console Access')
   @Attribute({ serializedName: 'console' })
   consoleAccess: boolean;
 
+  @ColumnName('API Access')
   @Attribute({ serializedName: 'api' })
   apiAccess: boolean;
 

@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
+import 'reflect-metadata';
+
 @Component({
   selector: 'app-filterable-table',
   templateUrl: './filterable-table.component.html',
   styleUrls: ['./filterable-table.component.scss']
 })
 export class FilterableTableComponent implements OnInit {
-  @Input() headers: {key: string, value: string}[];
   @Input() contents: any[];
 
   dataSource: MatTableDataSource<any[]>;
@@ -15,16 +16,27 @@ export class FilterableTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    if (this.contents.length <= 0) {
+      return;
+    }
     this.dataSource = new MatTableDataSource(this.contents);
     this.dataSource.sort = this.sort;
   }
 
-  get headerKeys() {
-    return this.headers.map(column => column.key);
+  get columnProperties() {
+    if (this.contents.length > 0) {
+      return this.contents[0].getColumnProperties();
+    }
+
+    return {};
   }
 
-  get headerValues() {
-    return this.headers.map(column => column.value);
+  get columnPropertyKeys() {
+    if (this.contents.length > 0) {
+      return Reflect.ownKeys(this.contents[0].getColumnProperties());
+    }
+
+    return [];
   }
 
   applyFilter(filterValue: string) {

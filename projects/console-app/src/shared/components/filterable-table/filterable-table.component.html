@@ -4,13 +4,12 @@
   </mat-form-field>
 
   <table mat-table [dataSource]="dataSource" matSort>
-
-    <ng-container [matColumnDef]="column.key" *ngFor="let column of headers">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}} </th>
-      <td mat-cell *matCellDef="let element"> {{element[column.key]}} </td>
+    <ng-container [matColumnDef]="key" *ngFor="let key of columnPropertyKeys">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{columnProperties[key]}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[key]}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="headerKeys; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: headerKeys;"></tr>
+    <tr mat-header-row *matHeaderRowDef="columnPropertyKeys; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnPropertyKeys;"></tr>
   </table>
 </div>

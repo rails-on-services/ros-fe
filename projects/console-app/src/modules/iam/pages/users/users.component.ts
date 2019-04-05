@@ -33,13 +33,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tableHeaders = [
-      {key: 'id', value: 'ID'},
-      {key: 'username', value: 'User name'},
-      {key: 'urn', value: 'URN'},
-      {key: 'console', value: 'Console access'},
-      {key: 'api', value: 'API access'}
-    ];
     this.document$ = this.iamService.fetchUsers();
   }
 
