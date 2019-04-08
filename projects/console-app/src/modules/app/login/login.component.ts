@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthenticationService } from '../../../shared/modules/authentication';
 import { environment } from '../../../environments/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-perx-login',
@@ -15,12 +16,18 @@ export class LoginComponent implements OnInit {
   preAuth: boolean;
   failedAuth: boolean;
 
+  loginFormGroup: FormGroup;
+  hidePw = true;
+  currentYear: number;
+
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private authService: AuthenticationService,
               @Inject(PLATFORM_ID) private platformId: object) {
     this.preAuth = environment.preAuth;
     this.failedAuth = false;
 
+    this.currentYear = new Date().getFullYear();
   }
 
   ngOnInit() {
@@ -48,7 +55,22 @@ export class LoginComponent implements OnInit {
           },
         );
       }
+    } else {
+      this.loginFormGroup = new FormGroup({
+        userName: new FormControl('', [Validators.required]),
+        password: new FormControl(''),
+        accountID: new FormControl(''),
+      });
     }
   }
 
+  hasError(controlName: string, errorName: string) {
+    return this.loginFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  submitForm() {
+    console.log(this.loginFormGroup.value); // outputs values in object format
+    // call login api
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 }
