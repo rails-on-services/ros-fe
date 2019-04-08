@@ -9,7 +9,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() enableMenuButton = false;
   expandMenu = false;
-  @Output() menuButtonClick = new EventEmitter();
+  @Output() menuButtonClick = new EventEmitter<boolean>();
 
   constructor() {
   }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-core',
@@ -7,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoreComponent implements OnInit {
 
+  @ViewChild('mainnav') public mainNav: MatSidenav;
+  opened: boolean;
   constructor() {
+    this.opened = true;
   }
 
   ngOnInit() {
   }
 
-  menuButtonClick(event) {
-    return event;
+  menuButtonClick() {
+    this.mainNav.toggle();
   }
 }
