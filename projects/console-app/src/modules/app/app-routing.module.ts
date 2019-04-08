@@ -1,26 +1,18 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {IamModule} from '../iam/iam.module';
-import {CoreModule} from './core/core.module';
-import { CognitoModule } from '../cognito/cognito.module';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { CoreModule } from './core/core.module';
+import { LoginComponent } from './login/login.component';
 
 const router: Routes = [
   {
-    path: 'iam',
-    loadChildren: () => IamModule
-  },
-  {
-    path: 'core',
+    path: '',
+    pathMatch: 'full',
     loadChildren: () => CoreModule
   },
   {
-    path: 'cognito',
-    loadChildren: () => CognitoModule
-  },
-  {
-    path: '',
-    redirectTo: '',
+    path: 'login',
     pathMatch: 'full',
+    component: LoginComponent
   },
 ];
 
@@ -28,4 +20,5 @@ const router: Routes = [
   imports: [RouterModule.forRoot(router)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

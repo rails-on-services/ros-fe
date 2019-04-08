@@ -1,11 +1,11 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {Router} from '@angular/router';
-import {isPlatformBrowser} from '@angular/common';
-import {AuthenticationService} from '../../../../../shared/modules/authentication';
-import {environment} from '../../../../../environments/environment';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthenticationService } from '../../../shared/modules/authentication';
+import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'perx-login',
+  selector: 'app-perx-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

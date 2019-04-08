@@ -57,7 +57,7 @@ export class CognitoService {
     });
   }
 
-  authenticateUser(bearer: string, user: string) {
+  autoAuthenticateUser(bearer: string, user: string) {
     const payload = {
       data: {
         type: 'login',
@@ -77,6 +77,10 @@ export class CognitoService {
       headers: httpOptions.headers,
       observe: 'response'
     });
+  }
+
+  authenticateUser(username: string, password: string) {
+
   }
 
   private handleError(error: HttpErrorResponse) {
