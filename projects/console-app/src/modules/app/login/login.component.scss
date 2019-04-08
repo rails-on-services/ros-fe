@@ -55,11 +55,14 @@
       top: calc(4em + 10em + 80px); //todo: slightly off pixel perfect, maybe change mat-card-title to h1
       color: white;
       width: 30vw;
+      p {
+        font-size: 1.3em;
+      }
       .demo-btn {
         font-size: 1.5em;
-        margin-top: 1.5em;
+        margin-top: 1em;
         width: 9em;
-        height: 2.5em;
+        height: 3em;
         border-color: white !important;
       }
     }
