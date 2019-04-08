@@ -13,6 +13,7 @@ import { CognitoModule as CognitoServiceModule } from '@whistler/cognito';
 import { environment } from '../../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../../shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { SharedModule } from '../../shared/shared.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     CoreModule,
     IamServiceModule,

@@ -55,22 +55,21 @@ export class LoginComponent implements OnInit {
           },
         );
       }
-    } else {
-      this.loginFormGroup = new FormGroup({
-        userName: new FormControl('', [Validators.required]),
-        password: new FormControl(''),
-        accountID: new FormControl(''),
-      });
     }
+    this.loginFormGroup = new FormGroup({
+      userName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      accountID: new FormControl('', [Validators.required]),
+    });
   }
 
   hasError(controlName: string, errorName: string) {
     return this.loginFormGroup.controls[controlName].hasError(errorName);
   }
 
-  submitForm() {
+  handleSubmit() {
     console.log(this.loginFormGroup.value); // outputs values in object format
     // call login api
-    this.router.navigate(['../'], { relativeTo: this.route });
+    // this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -34,7 +34,7 @@
                 </div>
                 <mat-card-title>Log In</mat-card-title>
                 <mat-card-content>
-                    <form>
+                    <form [formGroup]="loginFormGroup" (ngSubmit)="handleSubmit()">
                         <div>
                             <mat-form-field>
                                 <mat-label>Account ID</mat-label>
@@ -63,7 +63,7 @@
                             </mat-form-field>
                         </div>
                         <div>
-                            <button class="log-in-btn" mat-flat-button color="primary">Log In</button>
+                            <button class="log-in-btn" mat-flat-button color="primary" type="submit">Log In</button>
                         </div>
                     </form>
 
