@@ -39,6 +39,7 @@
                             <mat-form-field>
                                 <mat-label>Account ID</mat-label>
                                 <input matInput placeholder="Account ID" formControlName="accountID" required autocomplete="on">
+                                <mat-error *ngIf="hasError('accountID', 'required')">Account ID is required</mat-error>
                             </mat-form-field>
                         </div>
                         <div>
