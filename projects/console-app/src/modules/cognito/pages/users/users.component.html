@@ -1,0 +1,33 @@
+<div #dismissable>
+  <app-dismissable-content (closeButtonClick)="closeButtonClick()">
+  </app-dismissable-content>
+</div>
+<div class="button-row">
+  <a mat-raised-button color="primary" (click)="addUser()">
+    Add User
+  </a>
+  <a mat-raised-button color="warn" (click)="removeUsers(0)">
+    Remove Users
+  </a>
+  <mat-button-toggle-group
+    aria-label="Other Actions" 
+    name="otherActions" 
+    (change)="onOtherActionsChange($event)"
+  >
+    <mat-button-toggle value="reload">
+      <mat-icon>refresh</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="settings">
+      <mat-icon>settings</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="help">
+      <mat-icon>help</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+<ng-container class="users-table" *ngIf="document$ | async as document">
+  <app-filterable-table
+    [contents]="document.getModels()">
+  </app-filterable-table>
+</ng-container>
+<router-outlet></router-outlet>

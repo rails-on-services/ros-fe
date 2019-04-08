@@ -10,8 +10,9 @@ import {ChildrenOutletContexts} from '@angular/router';
 import {CoreModule} from './core/core.module';
 
 import {IamModule as IamServiceModule} from '@whistler/iam';
-import {CognitoModule} from '../../../../whistler/cognito/src/lib/cognito.module';
+import {CognitoModule as CognitoServiceModule} from '@whistler/cognito';
 import {environment} from '../../environments/environment';
+import { CognitoModule } from '../cognito/cognito.module';
 
 @NgModule({
   declarations: [
@@ -23,9 +24,10 @@ import {environment} from '../../environments/environment';
     AppRoutingModule,
     // routes,
     IamModule,
+    CognitoModule,
     CoreModule,
     IamServiceModule,
-    CognitoModule.forRoot({env: environment})
+    CognitoServiceModule.forRoot({env: environment})
   ],
   providers: [ChildrenOutletContexts],
   bootstrap: [AppComponent]

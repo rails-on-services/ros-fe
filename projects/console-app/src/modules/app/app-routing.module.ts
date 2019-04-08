@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {IamModule} from '../iam/iam.module';
 import {CoreModule} from './core/core.module';
+import { CognitoModule } from '../cognito/cognito.module';
 
 const router: Routes = [
   {
@@ -11,6 +12,10 @@ const router: Routes = [
   {
     path: 'core',
     loadChildren: () => CoreModule
+  },
+  {
+    path: 'cognito',
+    loadChildren: () => CognitoModule
   },
   {
     path: '',
