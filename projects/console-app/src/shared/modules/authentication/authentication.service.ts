@@ -6,6 +6,7 @@ import {AuthService} from 'ngx-auth';
 import {CognitoService} from '@whistler/cognito';
 import {TokenStorage} from './token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 interface AccessData {
   refreshToken: string;
@@ -61,27 +62,32 @@ export class AuthenticationService implements AuthService {
    */
   public refreshToken(): Observable<any> {
 
-    return this.preAuth().pipe(
-      tap((resp) => {
-        /* check if valid auth  */
-        this.retries++;
-        if (resp) {
-          this.userAuth(this.preAuthJWT).toPromise().then(
-            (res) => {
-              const userBearer = resp.headers.get('Authorization');
-              if (userBearer) {
-                this.tokenStorage.setAccessToken(userBearer.split(' ')[1]);
+    if (environment.preAuth) {
+      return this.preAuth().pipe(
+        tap((resp) => {
+          /* check if valid auth  */
+          this.retries++;
+          if (resp) {
+            this.userAuth(this.preAuthJWT).toPromise().then(
+              (res) => {
+                const userBearer = resp.headers.get('Authorization');
+                if (userBearer) {
+                  this.tokenStorage.setAccessToken(userBearer.split(' ')[1]);
 
+                }
+              },
+              (err) => {
+
+                return of(this.logout());
               }
-            },
-            (err) => {
+            );
+          }
+        }),
+      );
+    }
 
-              return of(this.logout());
-            }
-          );
-        }
-      }),
-    );
+    // todo: implement traditional auth refresh token path
+    return of();
 
     // return this.tokenStorage
     //   .getRefreshToken()
