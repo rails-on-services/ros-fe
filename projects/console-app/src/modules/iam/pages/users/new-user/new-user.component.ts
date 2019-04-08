@@ -2,7 +2,8 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalService} from '../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService} from '@whistler/iam';
+import {IamService, IamUser} from '@whistler/iam';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-user',
@@ -15,6 +16,8 @@ export class NewUserComponent implements OnInit, AfterViewInit {
 
   createUsernamePage: boolean;
   reviewPage: boolean;
+
+  user$: Observable<IamUser>;
 
   constructor(private modalService: ModalService,
               private router: Router,
@@ -47,11 +50,21 @@ export class NewUserComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
-    // console.log(this.userDetailsGroup.value); // outputs values in object format
+    console.log(this.userDetailsGroup.value); // outputs values in object format
+
 
     // save to api
-    this.iamService.addUser();
-    this.router.navigate(['../'], {relativeTo: this.route});
+    const user = {
+      username: this.userDetailsGroup.get('userName').value,
+      api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
+      console: this.userDetailsGroup.get('hasConsoleAccess').value,
+    };
 
+    this.user$ = this.iamService.createUser(user);
+    // this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  goBack() {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

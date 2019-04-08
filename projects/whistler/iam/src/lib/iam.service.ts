@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
+import { Observable } from 'rxjs';
+import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
+
 import { IamUser } from './models/user.model';
 import { Datastore } from './iam-datastore.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class IamService {
     });
   }
 
-  fetchUsers() {
+  fetchUsers(): Observable<JsonApiQueryData<IamUser>> {
     return this.datastore.findAll(
       IamUser,
       {
@@ -25,7 +27,15 @@ export class IamService {
     );
   }
 
-  addUser() {
+  createUser(user: { username: string; api: boolean; console: boolean; }): Observable<IamUser> {
+    const newUser = this.datastore.createRecord(
+      IamUser,
+      {
+        ...user
+      }
+    );
+
+    return newUser.save();
   }
 
   removeUser(id: number | string) {
