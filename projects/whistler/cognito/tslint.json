@@ -1,0 +1,17 @@
+{
+  "extends": "../../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "whistlerCognito",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "whistler-cognito",
+      "kebab-case"
+    ]
+  }
+}

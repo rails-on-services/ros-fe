@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "PRODUCTION=false npm run config && ng build whistler-iam && ng serve --host 0.0.0.0",
-    "start:prod": "PRODUCTION=true npm run config  && ng build whistler-iam && ng serve --aot --prod --host 0.0.0.0",
-    "build": "PRODUCTION=false npm run config && ng build whistler-iam && ng build",
-    "build:prod": "PRODUCTION=true npm run config && ng build whistler-iam && ng build --aot --prod",
+    "start": "PRODUCTION=false npm run config && npm run build-libraries && ng serve --host 0.0.0.0",
+    "start:prod": "PRODUCTION=true npm run config && npm run build-libraries && ng serve --aot --prod --host 0.0.0.0",
+    "build": "PRODUCTION=false npm run config && npm run build-libraries && ng build",
+    "build:prod": "PRODUCTION=true npm run config && npm run build-libraries && ng build --aot --prod",
+    "build-libraries": "ng build whistler-iam && ng build whistler-cognito",
     "config": "ts-node set-env.ts",
     "test": "ng test",
     "lint": "ng lint",
@@ -26,6 +27,7 @@
     "@angular/router": "~7.2.0",
     "angular2-jsonapi": "^6.1.3",
     "core-js": "^2.5.4",
+    "ngx-auth": "^5.0.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"

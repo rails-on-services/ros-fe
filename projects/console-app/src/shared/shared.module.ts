@@ -5,6 +5,7 @@ import {FilterableTableComponent} from './components/filterable-table/filterable
 import {MaterialDesignModule} from './modules/material-design/material-design.module';
 import {DialogOverviewExampleDialogComponent, ModalComponent} from './components/modal/modal.component';
 import {FormsModule} from '@angular/forms';
+import {AuthenticationModule} from './modules/authentication';
 
 @NgModule({
   declarations: [
@@ -14,16 +15,18 @@ import {FormsModule} from '@angular/forms';
     DialogOverviewExampleDialogComponent
   ],
   imports: [
+    AuthenticationModule,
     CommonModule,
     FormsModule,
     MaterialDesignModule
   ],
   exports: [
+    DialogOverviewExampleDialogComponent,
     DismissableContentComponent,
     FilterableTableComponent,
-    MaterialDesignModule,
     ModalComponent,
-    DialogOverviewExampleDialogComponent
+    AuthenticationModule,
+    MaterialDesignModule
   ],
   entryComponents: [
     DialogOverviewExampleDialogComponent

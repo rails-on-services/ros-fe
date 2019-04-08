@@ -4708,6 +4708,13 @@ ng-packagr@^4.2.0:
     uglify-js "^3.0.7"
     update-notifier "^2.3.0"
 
+ngx-auth@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-auth/-/ngx-auth-5.0.0.tgz#557dd9baac79972e93a5262ef318889ea60552c6"
+  integrity sha512-bwCA2S3AELsOucmpcO+ZiLrf0MnOQrO7sC1Shizil4NAZpN8huleYx+hqBvbdkQOc9EZ5OvwCV1FoCJS6s4iPQ==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

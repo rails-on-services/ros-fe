@@ -13,7 +13,9 @@ require('dotenv').config();
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
     apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'http://localhost:3000'}',
-    production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false}
+    production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
+    preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
+    preAuthPath: '${process.env.PREAUTHPATH ? process.env.PREAUTHPATH : '/preauth'}'
 };
 `;
 

@@ -24,6 +24,12 @@
       ],
       "@whistler/iam/*": [
         "dist/whistler/iam/*"
+      ],
+      "@whistler/cognito": [
+        "dist/whistler/cognito"
+      ],
+      "@whistler/cognito/*": [
+        "dist/whistler/cognito/*"
       ]
     }
   }
