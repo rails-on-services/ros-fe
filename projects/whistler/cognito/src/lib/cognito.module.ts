@@ -1,14 +1,19 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
-import {CognitoComponent} from './cognito.component';
-import {HttpClientModule} from '@angular/common/http';
-import {CognitoService, EnvConfig} from './cognito.service';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { CognitoComponent } from './cognito.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CognitoService, EnvConfig } from './cognito.service';
+import { JsonApiModule } from 'angular2-jsonapi';
 
 @NgModule({
   declarations: [CognitoComponent],
   imports: [
-    HttpClientModule
+    HttpClientModule,
+    JsonApiModule
   ],
-  exports: [CognitoComponent]
+  exports: [
+    CognitoComponent,
+    JsonApiModule
+  ]
 })
 
 export class CognitoModule {

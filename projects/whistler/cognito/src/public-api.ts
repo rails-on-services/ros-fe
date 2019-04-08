@@ -3,5 +3,5 @@
  */
 
 export * from './lib/cognito.service';
-export * from './lib/cognito.component';
 export * from './lib/cognito.module';
+export * from './lib/models/user.model';

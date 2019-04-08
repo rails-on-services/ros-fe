@@ -1,6 +1,9 @@
-import {Injectable, Optional} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {throwError} from 'rxjs';
+import { Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { JsonApiQueryData } from 'angular2-jsonapi';
+import { CognitoUser } from './models/user.model';
+import { Datastore } from './cognito-datastore.service';
 
 export class EnvConfig {
   // defaults
@@ -22,7 +25,9 @@ export class CognitoService {
   cognitoEndpoint: string;
   isAuthenticated: boolean;
 
-  constructor(@Optional() config: EnvConfig, private http: HttpClient) {
+  constructor(@Optional() config: EnvConfig,
+              private http: HttpClient,
+              private datastore: Datastore) {
     if (!config) {
       config = new EnvConfig();
     }
@@ -34,6 +39,10 @@ export class CognitoService {
     } else {
       this.cognitoEndpoint = config.env.preAuthPath;
     }
+
+    this.datastore.headers = new HttpHeaders({
+      Authorization: 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA'
+    });
   }
 
   authenticateAppWithPreAuth(referrer: string) {
@@ -78,11 +87,38 @@ export class CognitoService {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend returned code ${ error.status }, ` +
+        `body was: ${ error.error }`);
     }
     // return an observable with a user-facing error message
     return throwError(
       'Something bad happened; please try again later.');
+  }
+
+  fetchUsers(): Observable<JsonApiQueryData<CognitoUser>> {
+    return this.datastore.findAll(
+      CognitoUser,
+      {
+        page: { size: 10, number: 1 }
+      }
+    );
+  }
+
+  createUser(user: { username: string; api: boolean; console: boolean; }): Observable<CognitoUser> {
+    const newUser = this.datastore.createRecord(
+      CognitoUser,
+      {
+        ...user
+      }
+    );
+
+    return newUser.save();
+  }
+
+  removeUser(id: number|string): Observable<Response> {
+    return this.datastore.deleteRecord(
+      CognitoUser,
+      `${ id }`
+    );
   }
 }
