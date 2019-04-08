@@ -1,14 +1,18 @@
 .table-container {
-  //height: 40rem;
+  margin: 2rem 0rem;
   overflow: auto;
-  padding: 0rem 1rem;
 }
 
 table {
   width: 100%;
 }
 
-.mat-form-field {
+mat-form-field {
   font-size: 1.4rem;
-  width: 100%;
+  padding: 1rem 1rem 0rem;
+  width: 50%;
+}
+
+.mat-header-row {
+  background: lightgray;
 }

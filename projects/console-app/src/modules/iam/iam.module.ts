@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IamComponent} from './iam.component';
 import {DismissableContentComponent} from '../../shared/components/dismissable-content/dismissable-content.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // import {routes} from './iam-routing.module';
 
@@ -22,6 +23,7 @@ import {NewUserComponent} from './pages/users/new-user/new-user.component';
     NewUserComponent],
   imports: [
     CommonModule,
+    FlexLayoutModule,
     IamRoutingModule,
     // routes,
     SharedModule,
