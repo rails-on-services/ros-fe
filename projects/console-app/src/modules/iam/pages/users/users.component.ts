@@ -12,6 +12,7 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@whistler/iam';
 import { MatButtonToggleChange } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-users',
@@ -22,6 +23,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   document$: Observable<JsonApiQueryData<IamUser>>;
   tableHeaders: {key: string, value: string}[];
   showModal: boolean;
+
+  selection: SelectionModel<IamUser>;
+  removeUsersResponse$: Observable<Response>;
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -42,18 +46,18 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addUser() {
-    this.openModal();
-    // this.iamService.addUser();
-    // this.users$ = this.iamService.fetchUsers();
-    // return;
+    this.router.navigate(['new-user'], {relativeTo: this.activatedRoute});
   }
 
-  removeUsers(id: number | string) {
-    // // todo: import from mock user list
-    // this.iamService.removeUser(id);
-    // this.users$ = this.iamService.fetchUsers();
-
-    // return;
+  removeUsers() {
+    if (!this.selection || this.selection.selected.length <= 0) {
+      return;
+    }
+    this.selection.selected.forEach(user => {
+      this.iamService.removeUser(user.id).subscribe(() => {
+        this.fetchUsers();
+      });
+    });
   }
 
   onOtherActionsChange(event: MatButtonToggleChange) {
@@ -61,6 +65,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     event.source.checked = false;
     switch (event.value) {
       case 'reload':
+        this.selection.clear();
         this.fetchUsers();
         break;
       case 'settings':
@@ -68,15 +73,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       case 'help':
         break;
     }
-  }
-
-  openModal() {
-    // this.showModal = true;
-    this.router.navigate(['new-user'], {relativeTo: this.activatedRoute});
-  }
-
-  closeModal() {
-    // this.showModal = false;
   }
 
   private removeDialogComponentFromBody() {
@@ -89,5 +85,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private fetchUsers() {
     this.document$ = this.iamService.fetchUsers();
+  }
+
+  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+    this.selection = selection;
   }
 }

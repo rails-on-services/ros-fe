@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-filterable-table',
@@ -8,6 +9,11 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 })
 export class FilterableTableComponent implements OnInit {
   @Input() contents: any[];
+  @Input() selectable = false;
+
+  @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
+
+  selection = new SelectionModel<any>(true, []);
 
   dataSource: MatTableDataSource<any[]>;
 
@@ -35,6 +41,37 @@ export class FilterableTableComponent implements OnInit {
     }
 
     return [];
+  }
+
+  get displayedColumns() {
+    if (this.selectable) {
+      return [
+        'select',
+        ...this.columnPropertyKeys
+      ];
+    }
+    return [
+      ...this.columnPropertyKeys
+    ];
+  }
+
+  onSelectionChange(row: any) {
+    this.selection.toggle(row);
+    this.selectionChange.emit(this.selection);
+  }
+
+  selectAll() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+
+    this.selectionChange.emit(this.selection);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 
   applyFilter(filterValue: string) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { JsonApiModel, JsonApiQueryData } from 'angular2-jsonapi';
+import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamUser } from './models/user.model';
 import { Datastore } from './iam-datastore.service';
@@ -38,6 +38,10 @@ export class IamService {
     return newUser.save();
   }
 
-  removeUser(id: number | string) {
+  removeUser(id: number | string): Observable<Response> {
+    return this.datastore.deleteRecord(
+      IamUser,
+      `${id}`
+    );
   }
 }
