@@ -35,7 +35,14 @@
       .log-in-btn, .mat-form-field {
         width: 100%;
         height: 3.5em;
+      }
+
+      .mat-form-field {
         margin-top: 1em;
+      }
+
+      .log-in-btn {
+        margin-top: 2em;
       }
 
       .copyright {
@@ -57,9 +64,11 @@
       top: calc(4em + 10em + 80px); //todo: slightly off pixel perfect, maybe change mat-card-title to h1
       color: white;
       width: 30vw;
+
       p {
         font-size: 1.3em;
       }
+
       .demo-btn {
         font-size: 1.5em;
         margin-top: 1em;
