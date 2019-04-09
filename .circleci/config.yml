@@ -14,7 +14,7 @@ jobs:
       - run: yarn add file:./dist/whistler/cognito
       - run: yarn build:prod
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: ~/project
           paths:
             - dist/console-app
   deploy:
@@ -22,7 +22,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - attach_workspace:
-          at: /tmp/workspace
+          at: ~/project
       - aws-cli/install
       - aws-cli/configure
       - run:
