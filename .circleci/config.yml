@@ -1,0 +1,32 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.13
+jobs:
+  build:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn build:prod
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - dist/console-app
+  deploy:
+    working_directory: ~/project
+    executor: aws-cli/default
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - aws-cli/install
+      - aws-cli/configure
+      - run:
+          name: Sync to S3
+          command: aws s3 sync --delete /tmp/workspace/dist/console-app s3://${S3_BUCKET}
+workflow:
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy
