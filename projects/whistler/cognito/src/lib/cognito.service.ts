@@ -57,7 +57,7 @@ export class CognitoService {
     });
   }
 
-  autoAuthenticateUser(bearer: string, user: string) {
+  authenticateUser(bearer: string, user: string) {
     const payload = {
       data: {
         type: 'login',
@@ -79,9 +79,9 @@ export class CognitoService {
     });
   }
 
-  authenticateUser(username: string, password: string) {
+  // authenticateUser(username: string, password: string) {
 
-  }
+  // }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
