@@ -65,7 +65,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     event.source.checked = false;
     switch (event.value) {
       case 'reload':
-        this.selection.clear();
+        if (this.selection) {
+          this.selection.clear();
+        }
         this.fetchUsers();
         break;
       case 'settings':

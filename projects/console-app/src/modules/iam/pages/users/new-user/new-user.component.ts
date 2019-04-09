@@ -50,10 +50,6 @@ export class NewUserComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
-    console.log(this.userDetailsGroup.value); // outputs values in object format
-
-
-    // save to api
     const user = {
       username: this.userDetailsGroup.get('userName').value,
       api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
@@ -61,7 +57,6 @@ export class NewUserComponent implements OnInit, AfterViewInit {
     };
 
     this.user$ = this.iamService.createUser(user);
-    // this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   goBack() {
