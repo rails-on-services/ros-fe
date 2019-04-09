@@ -7,7 +7,8 @@ const router: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => CoreModule
+    // loadChildren: () => CoreModule
+    loadChildren: './core/core.module#CoreModule'
   },
   {
     path: 'login',

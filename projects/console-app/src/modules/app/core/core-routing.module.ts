@@ -12,15 +12,19 @@ const router: Routes = [
     children: [
       {
         path: 'iam',
-        loadChildren: () => IamModule
+        // loadChildren: () => IamModule
+        loadChildren: '../../iam/iam.module#IamModule'
       },
       {
         path: 'cognito',
-        loadChildren: () => CognitoModule
+        // loadChildren: () => CognitoModule
+        loadChildren: '../../cognito/cognito.module#CognitoModule'
+
       },
       {
         path: 'dashboard',
-        loadChildren: () => DashboardModule
+        // loadChildren: () => DashboardModule
+        loadChildren: '../../dashboard/dashboard.module#DashboardModule'
       },
     ]
   },
