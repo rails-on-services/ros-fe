@@ -46,6 +46,5 @@ testem.log
 Thumbs.db
 
 # Angular
-/src/environments/environment.ts
-*/environments/environment.ts
-*/environments/*.ts
+/src/environments/*.ts
+/projects/console-app/src/environments/*.ts
