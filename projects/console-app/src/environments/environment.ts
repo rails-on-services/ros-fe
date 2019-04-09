@@ -1,6 +1,6 @@
 export const environment = {
     apiHost: 'http://localhost:3000',
-    production: false,
+    production: true,
     preAuth: false,
     preAuthPath: '/preauth'
 };

@@ -5,11 +5,13 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: johnpapa/angular-cli:latest
+      - image: circleci/node:latest
     steps:
       - checkout
-      - run: yarn build-libraries
       - run: yarn install
+      - run: yarn build-libraries
+      - run: yarn add file:./dist/whistler/iam
+      - run: yarn add file:./dist/whistler/cognito
       - run: yarn build:prod
       - persist_to_workspace:
           root: /tmp/workspace
