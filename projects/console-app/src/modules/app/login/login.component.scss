@@ -55,8 +55,10 @@
 
   .right-banner-container {
     flex-grow: 1;
-    background-image: url("https://via.placeholder.com/1000");
+    background-image: url("/assets/img/john-price-1243559-unsplash.jpg");
     background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
     padding: 4em;
 
     .hover-text {
