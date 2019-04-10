@@ -6,13 +6,15 @@ import {MaterialDesignModule} from './modules/material-design/material-design.mo
 import {DialogOverviewExampleDialogComponent, ModalComponent} from './components/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AuthenticationModule} from './modules/authentication';
+import { ManageColumnModal } from './components/modal/manage-column-modal/manage-column-modal.component';
 
 @NgModule({
   declarations: [
     DismissableContentComponent,
     FilterableTableComponent,
     ModalComponent,
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    ManageColumnModal
   ],
   imports: [
     AuthenticationModule,
@@ -30,7 +32,8 @@ import {AuthenticationModule} from './modules/authentication';
     MaterialDesignModule
   ],
   entryComponents: [
-    DialogOverviewExampleDialogComponent
+    DialogOverviewExampleDialogComponent,
+    ManageColumnModal
   ]
 })
 export class SharedModule {

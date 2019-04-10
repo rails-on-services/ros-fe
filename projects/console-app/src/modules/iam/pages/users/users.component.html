@@ -3,7 +3,7 @@
   </app-dismissable-content>
 </div>
 <div class="container">
-  <div fxLayout="row" fxLayoutGap="1rem">
+  <div class="action" fxLayout="row" fxLayoutGap="1rem">
     <button mat-raised-button color="primary" (click)="addUser()">
       Add User
     </button>
@@ -30,9 +30,10 @@
   </div>
   <ng-container class="users-table" *ngIf="document$ | async as document">
     <app-filterable-table
-      [selectable]=true
       [contents]="document.getModels()"
+      [selectable]=true
       (selectionChange)="onUsersSelectionChange($event)"
+      [shownColumns]="shownColumns"
     >
     </app-filterable-table>
   </ng-container>

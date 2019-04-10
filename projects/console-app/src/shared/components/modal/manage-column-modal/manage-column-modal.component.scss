@@ -1,0 +1,15 @@
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  overflow: hidden;
+}
+
+.mat-checkbox {
+  padding-top: 1rem;
+}
+
+.mat-dialog-actions {
+  flex-direction: row;
+  justify-content: flex-end;
+}
