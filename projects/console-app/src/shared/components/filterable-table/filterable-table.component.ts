@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FilterableTableComponent implements OnInit {
   @Input() contents: any[];
   @Input() selectable = false;
+  @Input() shownColumns;
 
   @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
 
@@ -44,14 +45,17 @@ export class FilterableTableComponent implements OnInit {
   }
 
   get displayedColumns() {
+    const columnPropertyKeys = this.shownColumns ?
+      this.columnPropertyKeys.filter(column => (this.shownColumns.indexOf(column) !== -1 )) :
+      this.columnPropertyKeys;
     if (this.selectable) {
       return [
         'select',
-        ...this.columnPropertyKeys
+        ...columnPropertyKeys
       ];
     }
     return [
-      ...this.columnPropertyKeys
+      ...columnPropertyKeys
     ];
   }
 

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Manage columns</h1>
+<div mat-dialog-content>
+  <mat-checkbox
+    [name]="key"
+    (change)="$event ? onSelectionChange($event) : null"
+    [checked]="selection.isSelected(key)"
+    *ngFor="let key of columnPropertyKeys"
+  >
+    {{data.columnProperties[key].name}}
+  </mat-checkbox>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="" cdkFocusInitial>Close</button>
+</div>

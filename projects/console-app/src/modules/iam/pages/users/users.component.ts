@@ -11,8 +11,11 @@ import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@whistler/iam';
-import { MatButtonToggleChange } from '@angular/material';
+import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import {
+  ManageColumnModal
+} from 'projects/console-app/src/shared/components/modal/manage-column-modal/manage-column-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -25,7 +28,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   showModal: boolean;
 
   selection: SelectionModel<IamUser>;
-  removeUsersResponse$: Observable<Response>;
+
+  shownColumns$: Observable<(string | number | symbol)[]>;
+  shownColumns: (string | number | symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -33,6 +38,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private iamService: IamService,
+    public dialog: MatDialog,
   ) {
     this.showModal = false;
   }
@@ -71,6 +77,18 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.fetchUsers();
         break;
       case 'settings':
+        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+          width: '30rem',
+          data: {
+            columnProperties: IamUser.prototype.getColumnProperties(),
+            selected: this.shownColumns
+          }
+        }).componentInstance.selectionChange;
+        this.shownColumns$.subscribe(columns => {
+          this.shownColumns = [
+            ...columns
+          ]
+        });
         break;
       case 'help':
         break;
