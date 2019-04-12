@@ -17,7 +17,7 @@ export class CoreComponent implements OnInit {
   ngOnInit() {
   }
 
-  menuButtonClick() {
-    this.mainNav.toggle();
-  }
+  // menuButtonClick() {
+  //   this.mainNav.toggle();
+  // }
 }
