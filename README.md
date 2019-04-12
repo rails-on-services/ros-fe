@@ -24,11 +24,42 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `yarn build:prod` flag for a production build.
 
-## Environment Variables
+## Development
+### Environment Variables
 
 the environment variables are set on `yarn start|build`.
 
 you can set new variables in `/set-env.ts` and set defaults unless overridden in run scripts in `/package.json`
+
+### Feature Flags
+
+Add/modify new flags in `/path/to/services/feature-flags.service.ts`. Flags should be set based on environment.
+
+To use feature flags in your component:
+``` 
+### component.ts
+import { FeatureFlagsService } from '/path/to/services/feature-flags.service';
+
+  featureSet: {
+    foo: [true|false],
+  };
+  
+  constructor(private featureFlags: FeatureFlagsService) {
+      this.featureSet = featureFlags;
+  }
+```
+```
+### component.html
+<div *ngIf="featureSet.foo; then thenBlock else elseBlock"></div>
+<ng-template #thenBlock>
+  <p>content to render if true</p>
+</ng-template>
+
+<ng-template #elseBlock>
+  <p>content to render if false</p>
+</ng-template>
+
+```
 
 ## Running unit tests
 
