@@ -15,9 +15,9 @@
                [routerLinkActiveOptions]="{exact: true}"
                [routerLink]="'/cognito'">Cognito</a>
         </mat-nav-list>
+        <button mat-stroked-button (click)="mainnav.toggle()">mainnav.toggle()</button>
     </mat-sidenav>
     <mat-sidenav-content>
-        <!--<button mat-stroked-button (click)="mainnav.toggle()">mainnav.toggle()</button>-->
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
