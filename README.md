@@ -1,10 +1,20 @@
-# WhistlerDashboardNg
+[![CircleCI](https://circleci.com/gh/rails-on-services/ros-fe.svg?style=svg)](https://circleci.com/gh/rails-on-services/ros-fe)
+# Ros-fe
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.7.
 
-## Development server
+Demo: http://console.ros.rails-on-services.org/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Tooling Requirements
+* [angular CLI](https://angular.io/guide/quickstart)
+* [node 10+](https://nodejs.org/en/)
+* [yarn](https://yarnpkg.com/en/)
+
+## Getting started
+
+Run `yarn install` to install dependencies
+
+Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -12,7 +22,13 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `yarn build:prod` flag for a production build.
+
+## Environment Variables
+
+the environment variables are set on `yarn start|build`.
+
+you can set new variables in `/set-env.ts` and set defaults unless overridden in run scripts in `/package.json`
 
 ## Running unit tests
 
