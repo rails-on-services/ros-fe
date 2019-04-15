@@ -11,6 +11,7 @@ import {IamComponent} from './iam.component';
 import {DismissableContentComponent} from '../../shared/components/dismissable-content/dismissable-content.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
 
 // import {routes} from './iam-routing.module';
 
@@ -20,7 +21,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     HomeComponent,
     IamMenuComponent,
     IamComponent,
-    NewUserComponent],
+    NewUserComponent,
+    NewGroupComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

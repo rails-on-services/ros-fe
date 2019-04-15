@@ -7,6 +7,7 @@ import {ModalComponent} from '../../shared/components/modal/modal.component';
 import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import {NewUserResolverService} from './pages/users/new-user/new-user-resolver.service';
+import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
 
 export const router: Routes = [
   {
@@ -42,7 +43,11 @@ export const router: Routes = [
       {
         path: 'groups',
         component: GroupsComponent,
-      }
+      },
+      {
+        path: 'groups/new-group',
+        component: NewGroupComponent
+      },
     ]
   },
 

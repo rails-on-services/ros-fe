@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.shownColumns$.subscribe(columns => {
           this.shownColumns = [
             ...columns
-          ]
+          ];
         });
         break;
       case 'help':
