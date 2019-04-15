@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { JsonApiModule } from 'angular2-jsonapi';
-import { IamUser } from './models/user.model';
 
 @NgModule({
   declarations: [

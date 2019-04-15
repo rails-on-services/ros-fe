@@ -6,6 +6,7 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamUser } from './models/user.model';
 import { Datastore } from './iam-datastore.service';
+import { IamGroup } from './models/group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,33 @@ export class IamService {
   removeUser(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamUser,
+      `${id}`
+    );
+  }
+
+  fetchGroups(): Observable<JsonApiQueryData<IamGroup>> {
+    return this.datastore.findAll(
+      IamGroup,
+      {
+        page: { size: 10, number: 1 }
+      }
+    );
+  }
+
+  createGroup(group: { users: IamUser[]; }): Observable<IamGroup> {
+    const newGroup = this.datastore.createRecord(
+      IamGroup,
+      {
+        ...group
+      }
+    );
+
+    return newGroup.save();
+  }
+
+  removeGroup(id: number | string): Observable<Response> {
+    return this.datastore.deleteRecord(
+      IamGroup,
       `${id}`
     );
   }
