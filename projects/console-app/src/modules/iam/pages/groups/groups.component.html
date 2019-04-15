@@ -3,7 +3,7 @@
     <button mat-raised-button color="primary" routerLink="new-group">
       Add Group
     </button>
-    <button mat-raised-button mat-raised-button [matMenuTriggerFor]="appMenu"
+    <button mat-raised-button [matMenuTriggerFor]="appMenu"
             >
             <!--[disabled]="!(selection && selection.selected.length)">-->
       Group Actions
@@ -44,7 +44,7 @@
   </div>
   <ng-container class="groups-table" *ngIf="document$ | async as document">
     <app-filterable-table
-            [contents]="testGroupList"
+            [contents]="document.getModels()"
             [selectable]=true
             (selectionChange)="onGroupsSelectionChange($event)"
             [shownColumns]="shownColumns"

@@ -15,6 +15,10 @@ import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// used to create fake backend
+import { FakeBackendProvider } from '../../helpers/fake-backend-intercepter';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +35,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     IamServiceModule,
     CognitoServiceModule.forRoot({ env: environment })
   ],
-  providers: [ChildrenOutletContexts],
+  providers: [
+    ChildrenOutletContexts,
+    FakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
