@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { FeatureFlagsService } from '../shared/services/feature-flags/feature-flags.service';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -90,7 +91,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }]
   };
 
-  constructor() {
+  constructor(private featureFlagService: FeatureFlagsService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -126,27 +127,31 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       // }
 
       // get users
-      if (request.url.includes('iam/users') && request.method === 'GET') {
-        // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-        if (request.headers.get('Authorization') === 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-          return of(new HttpResponse({ status: 200, body: this.users }));
-        } else {
-          // return 401 not authorised if token is null or invalid
-          return throwError({ error: { message: 'Unauthorised lol' } });
+      if (this.featureFlagService.mockUsersDb) {
+        if (request.url.includes('iam/users') && request.method === 'GET') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') === 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            return of(new HttpResponse({ status: 200, body: this.users }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised lol' } });
+          }
         }
-      }
 
+      }
       // get groups
-      if (request.url.includes('iam/groups') && request.method === 'GET') {
-        // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-        if (request.headers.get('Authorization') === 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-          return of(new HttpResponse({ status: 200, body: this.groups }));
-        } else {
-          // return 401 not authorised if token is null or invalid
-          return throwError({ error: { message: 'Unauthorised lol' } });
+      if (this.featureFlagService.mockGroupsDb) {
+        if (request.url.includes('iam/groups') && request.method === 'GET') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            return of(new HttpResponse({ status: 200, body: this.groups }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised lol' } });
+          }
         }
       }
-
       // get user by id
       // if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
       //   // check for fake auth token in header and return user if valid, this security is implemented server side in a real application

@@ -6,13 +6,13 @@ import { environment } from '../../../environments/environment';
 })
 export class FeatureFlagsService {
 
-  showme = false;
-  donut = false;
+  mockUsersDb = false;
+  mockGroupsDb = false;
 
   constructor() {
     if (!environment.production) {
-      this.showme = true;
-      // this.donut = true;
+      this.mockUsersDb = false;
+      this.mockGroupsDb = true;
     }
   }
 }
