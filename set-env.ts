@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./projects/console-app/src/environments/environment.ts`;
+const targetPath = `./src/projects/console-app/environments/environment.ts`;
 
 // Load node modules
 const colors = require('colors');
