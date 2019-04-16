@@ -75,7 +75,7 @@ export class NewGroupComponent implements OnInit, AfterViewInit {
     }
 
     const group = {
-      groupname: this.groupDetailsGroup.get('groupName').value,
+      groupName: this.groupDetailsGroup.get('groupName').value,
       attachedPolicies: policies,
       users: this.groupDetailsGroup.get('users').value
     };
