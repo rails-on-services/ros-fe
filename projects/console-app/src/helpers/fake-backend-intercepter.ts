@@ -15,78 +15,78 @@ import { FeatureFlagsService } from '../shared/services/feature-flags/feature-fl
 export class FakeBackendInterceptor implements HttpInterceptor {
 
   private users = {
-    'data': [{
-      'id': '1',
-      'type': 'users',
-      'links': { 'self': 'http://13.229.71.66:3000/users/1' },
-      'attributes': {
-        'urn': 'urn:perx:iam::222222222:user/Admin_2',
-        'username': 'Admin_2',
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:user/Admin_2', 'scope': '*' },
-        'attached_policies': { 'AdministratorAccess': 1 },
-        'attached_actions': {}
+    data: [{
+      id: '1',
+      type: 'users',
+      links: { self: 'http://13.229.71.66:3000/users/1' },
+      attributes: {
+        urn: 'urn:perx:iam::222222222:user/Admin_2',
+        username: 'Admin_2',
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/Admin_2', scope: '*' },
+        attached_policies: { AdministratorAccess: 1 },
+        attached_actions: {}
       }
     }, {
-      'id': '23',
-      'type': 'users',
-      'links': { 'self': 'http://13.229.71.66:3000/users/23' },
-      'attributes': {
-        'urn': 'urn:perx:iam::222222222:user/dink',
-        'username': 'dink',
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:user/dink', 'scope': '*' },
-        'attached_policies': {},
-        'attached_actions': {}
+      id: '23',
+      type: 'users',
+      links: { self: 'http://13.229.71.66:3000/users/23' },
+      attributes: {
+        urn: 'urn:perx:iam::222222222:user/dink',
+        username: 'dink',
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/dink', scope: '*' },
+        attached_policies: {},
+        attached_actions: {}
       }
     }, {
-      'id': '26',
-      'type': 'users',
-      'links': { 'self': 'http://13.229.71.66:3000/users/26' },
-      'attributes': {
-        'urn': 'urn:perx:iam::222222222:user/prianka',
-        'username': 'prianka',
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:user/prianka', 'scope': '*' },
-        'attached_policies': {},
-        'attached_actions': {}
+      id: '26',
+      type: 'users',
+      links: { self: 'http://13.229.71.66:3000/users/26' },
+      attributes: {
+        urn: 'urn:perx:iam::222222222:user/prianka',
+        username: 'prianka',
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/prianka', scope: '*' },
+        attached_policies: {},
+        attached_actions: {}
       }
     }]
   };
 
   private groups = {
-    'data': [{
-      'id': '1',
-      'type': 'groups',
-      'links': { 'self': 'http://13.229.71.66:3000/groups/1' },
-      'attributes': {
-        'groupname': 'group 1',
-        'urn': 'urn:perx:iam::222222222:group/1',
-        'users': ['Admin_2',],
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:group/1', 'scope': '*' },
-        'attached_policies': { 'AdministratorAccess': 1 },
-        'attached_actions': {}
+    data: [{
+      id: '1',
+      type: 'groups',
+      links: { self: 'http://13.229.71.66:3000/groups/1' },
+      attributes: {
+        groupname: 'group 1',
+        urn: 'urn:perx:iam::222222222:group/1',
+        users: ['Admin_2', ],
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/1', scope: '*' },
+        attached_policies: { AdministratorAccess: 1 },
+        attached_actions: {}
       }
     }, {
-      'id': '2',
-      'type': 'groups',
-      'links': { 'self': 'http://13.229.71.66:3000/groups/2' },
-      'attributes': {
-        'groupname': 'group 2',
-        'urn': 'urn:perx:iam::222222222:group/2',
-        'users': ['dink',],
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:group/2', 'scope': '*' },
-        'attached_policies': {},
-        'attached_actions': {}
+      id: '2',
+      type: 'groups',
+      links: { self: 'http://13.229.71.66:3000/groups/2' },
+      attributes: {
+        groupname: 'group 2',
+        urn: 'urn:perx:iam::222222222:group/2',
+        users: ['dink', ],
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/2', scope: '*' },
+        attached_policies: {},
+        attached_actions: {}
       }
     }, {
-      'id': '3',
-      'type': 'groups',
-      'links': { 'self': 'http://13.229.71.66:3000/groups/3' },
-      'attributes': {
-        'groupname': 'group 3',
-        'urn': 'urn:perx:iam::222222222:group/3',
-        'users': ['prianka', 'dink'],
-        'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:group/3', 'scope': '*' },
-        'attached_policies': {},
-        'attached_actions': {}
+      id: '3',
+      type: 'groups',
+      links: { self: 'http://13.229.71.66:3000/groups/3' },
+      attributes: {
+        groupname: 'group 3',
+        urn: 'urn:perx:iam::222222222:group/3',
+        users: ['prianka', 'dink'],
+        jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/3', scope: '*' },
+        attached_policies: {},
+        attached_actions: {}
       }
     }]
   };
@@ -94,15 +94,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   private policies = {
     data: [
       {
-        'id': '1',
-        'type': 'policy',
-        'links': { 'self': 'http://13.229.71.66:3000/policies/1' },
-        'attributes': {
-          'urn': 'urn:perx:iam::222222222:policy/AdministratorAccess',
-          'policyname': 'AdministratorAccess',
-          'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:user/prianka', 'scope': '*' },
-          'description': 'Admin',
-          'attached_actions': {}
+        id: '1',
+        type: 'policy',
+        links: { self: 'http://13.229.71.66:3000/policies/1' },
+        attributes: {
+          urn: 'urn:perx:iam::222222222:policy/AdministratorAccess',
+          policyname: 'AdministratorAccess',
+          jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/prianka', scope: '*' },
+          description: 'Admin',
+          attached_actions: {}
         }
       },
     ]
@@ -147,7 +147,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       if (this.featureFlagService.mockUsersDb) {
         if (request.url.includes('iam/users') && request.method === 'GET') {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') === 'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
             return of(new HttpResponse({ status: 200, body: this.users }));
           } else {
             // return 401 not authorised if token is null or invalid
