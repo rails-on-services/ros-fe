@@ -4,8 +4,8 @@
   "newProjectRoot": "projects",
   "projects": {
     "console-app": {
-      "root": "projects/console-app/",
-      "sourceRoot": "projects/console-app/src",
+      "root": "src/projects/console-app/",
+      "sourceRoot": "src/projects/console-app",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -14,16 +14,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/console-app",
-            "index": "projects/console-app/src/index.html",
-            "main": "projects/console-app/src/main.ts",
-            "polyfills": "projects/console-app/src/polyfills.ts",
+            "index": "src/projects/console-app/index.html",
+            "main": "src/projects/console-app/main.ts",
+            "polyfills": "src/projects/console-app/polyfills.ts",
             "tsConfig": "projects/console-app/tsconfig.app.json",
             "assets": [
-              "projects/console-app/src/favicon.ico",
-              "projects/console-app/src/assets"
+              "src/projects/console-app/favicon.ico",
+              "src/projects/console-app/assets"
             ],
             "styles": [
-              "projects/console-app/src/styles.scss"
+              "src/projects/console-app/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -69,17 +69,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/console-app/src/test.ts",
-            "polyfills": "projects/console-app/src/polyfills.ts",
+            "main": "src/projects/console-app/test.ts",
+            "polyfills": "src/projects/console-app/polyfills.ts",
             "tsConfig": "projects/console-app/tsconfig.spec.json",
             "karmaConfig": "projects/console-app/karma.conf.js",
             "styles": [
-              "projects/console-app/src/styles.scss"
+              "src/projects/console-app/styles.scss"
             ],
             "scripts": [],
             "assets": [
-              "projects/console-app/src/favicon.ico",
-              "projects/console-app/src/assets"
+              "src/projects/console-app/favicon.ico",
+              "src/projects/console-app/assets"
             ]
           }
         },
@@ -98,14 +98,14 @@
       }
     },
     "console-app-e2e": {
-      "root": "projects/console-app-e2e/",
+      "root": "e2e/console-app/",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/console-app-e2e/protractor.conf.js",
+            "protractorConfig": "e2e/console-app/protractor.conf.js",
             "devServerTarget": "console-app:serve"
           },
           "configurations": {
@@ -117,7 +117,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "projects/console-app-e2e/tsconfig.e2e.json",
+            "tsConfig": "e2e/console-app/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -126,32 +126,32 @@
       }
     },
     "whistler-iam": {
-      "root": "projects/whistler/iam",
-      "sourceRoot": "projects/whistler/iam/src",
+      "root": "src/projects/whistler/iam",
+      "sourceRoot": "src/projects/whistler/iam/src",
       "projectType": "library",
       "prefix": "iam",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/whistler/iam/tsconfig.lib.json",
-            "project": "projects/whistler/iam/ng-package.json"
+            "tsConfig": "src/projects/whistler/iam/tsconfig.lib.json",
+            "project": "src/projects/whistler/iam/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/whistler/iam/src/test.ts",
-            "tsConfig": "projects/whistler/iam/tsconfig.spec.json",
-            "karmaConfig": "projects/whistler/iam/karma.conf.js"
+            "main": "src/projects/whistler/iam/src/test.ts",
+            "tsConfig": "src/projects/whistler/iam/tsconfig.spec.json",
+            "karmaConfig": "src/projects/whistler/iam/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/whistler/iam/tsconfig.lib.json",
-              "projects/whistler/iam/tsconfig.spec.json"
+              "src/projects/whistler/iam/tsconfig.lib.json",
+              "src/projects/whistler/iam/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -161,32 +161,32 @@
       }
     },
     "whistler-cognito": {
-      "root": "projects/whistler/cognito",
-      "sourceRoot": "projects/whistler/cognito/src",
+      "root": "src/projects/whistler/cognito",
+      "sourceRoot": "src/projects/whistler/cognito/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/whistler/cognito/tsconfig.lib.json",
-            "project": "projects/whistler/cognito/ng-package.json"
+            "tsConfig": "src/projects/whistler/cognito/tsconfig.lib.json",
+            "project": "src/projects/whistler/cognito/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/whistler/cognito/src/test.ts",
-            "tsConfig": "projects/whistler/cognito/tsconfig.spec.json",
-            "karmaConfig": "projects/whistler/cognito/karma.conf.js"
+            "main": "src/projects/whistler/cognito/src/test.ts",
+            "tsConfig": "src/projects/whistler/cognito/tsconfig.spec.json",
+            "karmaConfig": "src/projects/whistler/cognito/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/whistler/cognito/tsconfig.lib.json",
-              "projects/whistler/cognito/tsconfig.spec.json"
+              "src/projects/whistler/cognito/tsconfig.lib.json",
+              "src/projects/whistler/cognito/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
