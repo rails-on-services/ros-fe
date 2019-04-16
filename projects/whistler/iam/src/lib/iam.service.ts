@@ -56,7 +56,7 @@ export class IamService {
     );
   }
 
-  createGroup(group: { groupName: string, attachedPolicies: {}, users: IamUser[]; }): Observable<IamGroup> {
+  createGroup(group: { groupName: string, attachedPolicies: [], users: IamUser[]; }): Observable<IamGroup> {
     const newGroup = this.datastore.createRecord(
       IamGroup,
       {
