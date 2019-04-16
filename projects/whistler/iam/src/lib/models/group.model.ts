@@ -27,12 +27,14 @@ export class IamGroup extends JsonApiModel {
   // @Attribute({ serializedName: 'api' })
   // apiAccess: boolean;
 
+  @Column({ name: 'Inline Policies' })
   @Attribute({ serializedName: 'attached_policies' })
   attachedPolicies: {};
 
   @Attribute({ serializedName: 'attached_actions' })
   attachedActions: {};
 
+  @Column({ name: 'Creation Time' })
   @Attribute({ serializedName: 'creation_time'})
-  creationTime: {};
+  creationTime: Date;
 }
