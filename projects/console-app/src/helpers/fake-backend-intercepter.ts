@@ -173,7 +173,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
             'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 200, body: 'success' }));
+            return of(new HttpResponse({ status: 201, body: 'success' }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
@@ -263,7 +263,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
             'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 200, body: 'success' }));
+            return of(new HttpResponse({ status: 201, body: 'success' }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
