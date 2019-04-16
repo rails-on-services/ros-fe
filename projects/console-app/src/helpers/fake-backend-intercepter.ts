@@ -168,6 +168,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return throwError({ error: { message: 'Unauthorised lol' } });
           }
         }
+
+        if (request.url.includes('iam/groups') && request.method === 'POST') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            return of(new HttpResponse({ status: 200, body: 'success' }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
       }
       // get user by id
       // if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
@@ -242,6 +253,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           if (request.headers.get('Authorization') ===
             'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
             return of(new HttpResponse({ status: 200, body: this.policies }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+
+        if (request.url.includes('iam/policies') && request.method === 'POST') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            return of(new HttpResponse({ status: 200, body: 'success' }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
