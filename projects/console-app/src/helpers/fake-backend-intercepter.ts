@@ -91,6 +91,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }]
   };
 
+  private policies = {
+    data: [
+      {
+        'id': '1',
+        'type': 'policy',
+        'links': { 'self': 'http://13.229.71.66:3000/policies/1' },
+        'attributes': {
+          'urn': 'urn:perx:iam::222222222:policy/AdministratorAccess',
+          'policyname': 'AdministratorAccess',
+          'jwt_payload': { 'iss': 'http://iam:3000', 'sub': 'urn:perx:iam::222222222:user/prianka', 'scope': '*' },
+          'description': 'Admin',
+          'attached_actions': {}
+        }
+      },
+    ]
+  };
+
   constructor(private featureFlagService: FeatureFlagsService) {
   }
 
@@ -217,6 +234,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       //     return throwError({ error: { message: 'Unauthorised' } });
       //   }
       // }
+
+
+      if (this.featureFlagService.mockPoliciesDb) {
+        if (request.url.includes('iam/policies') && request.method === 'GET') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            return of(new HttpResponse({ status: 200, body: this.policies }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+      }
 
       // pass through any requests not handled above
       return next.handle(request);

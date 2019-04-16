@@ -7,6 +7,7 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IamUser } from './models/user.model';
 import { Datastore } from './iam-datastore.service';
 import { IamGroup } from './models/group.model';
+import { IamPolicy } from './models/policy.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +40,10 @@ export class IamService {
     return newUser.save();
   }
 
-  removeUser(id: number | string): Observable<Response> {
+  removeUser(id: number|string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamUser,
-      `${id}`
+      `${ id }`
     );
   }
 
@@ -66,10 +67,37 @@ export class IamService {
     return newGroup.save();
   }
 
-  removeGroup(id: number | string): Observable<Response> {
+  removeGroup(id: number|string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamGroup,
-      `${id}`
+      `${ id }`
+    );
+  }
+
+  fetchPolicies(): Observable<JsonApiQueryData<IamPolicy>> {
+    return this.datastore.findAll(
+      IamPolicy,
+      {
+        page: { size: 10, number: 1 }
+      }
+    );
+  }
+
+  createPolicy(policy: { policyname: string; }): Observable<IamPolicy> {
+    const newPolicy = this.datastore.createRecord(
+      IamPolicy,
+      {
+        ...policy
+      }
+    );
+
+    return newPolicy.save();
+  }
+
+  removePolicy(id: number|string): Observable<Response> {
+    return this.datastore.deleteRecord(
+      IamPolicy,
+      `${ id }`
     );
   }
 }

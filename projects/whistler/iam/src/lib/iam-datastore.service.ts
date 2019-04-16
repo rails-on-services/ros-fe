@@ -5,13 +5,15 @@ import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig } from 'angul
 
 import { IamUser } from './models/user.model';
 import { IamGroup } from './models/group.model';
+import { IamPolicy } from './models/policy.model';
 
 
 const config: DatastoreConfig = {
   baseUrl: 'http://13.229.71.66:3000/iam',
   models: {
     users: IamUser,
-    groups: IamGroup
+    groups: IamGroup,
+    policies: IamPolicy,
   }
 };
 

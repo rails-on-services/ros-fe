@@ -8,11 +8,13 @@ export class FeatureFlagsService {
 
   mockUsersDb = false;
   mockGroupsDb = false;
+  mockPoliciesDb = false;
 
   constructor() {
     if (!environment.production) {
       this.mockUsersDb = false;
       this.mockGroupsDb = true;
+      this.mockPoliciesDb = true;
     }
   }
 }
