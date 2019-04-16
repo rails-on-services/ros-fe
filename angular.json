@@ -16,8 +16,8 @@
             "outputPath": "dist/console-app",
             "index": "src/projects/console-app/index.html",
             "main": "src/projects/console-app/main.ts",
-            "polyfills": "src/projects/polyfills.ts",
-            "tsConfig": "src/projects/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/projects/console-app/favicon.ico",
               "src/projects/console-app/assets"
@@ -69,10 +69,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/projects/test.ts",
-            "polyfills": "src/projects/polyfills.ts",
-            "tsConfig": "src/projects/tsconfig.spec.json",
-            "karmaConfig": "src/projects/karma.conf.js",
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/projects/console-app/styles.scss"
             ],
@@ -87,8 +87,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/projects/tsconfig.app.json",
-              "src/projects/tsconfig.spec.json"
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
