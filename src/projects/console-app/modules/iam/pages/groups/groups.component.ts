@@ -5,6 +5,7 @@ import { IamService, IamGroup } from '@whistler/iam';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
+import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-groups',
@@ -41,6 +42,19 @@ export class GroupsComponent implements OnInit {
       this.iamService.removeGroup(group.id).subscribe(() => {
         this.fetchGroups();
       });
+    });
+  }
+
+  showDeleteConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      width: '30vw',
+      data: { type: 'group' }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.removeGroups();
+      }
     });
   }
 

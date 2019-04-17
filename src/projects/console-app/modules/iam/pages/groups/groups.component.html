@@ -12,7 +12,7 @@
           <button mat-menu-item>
               <!--[disabled]="!(selection && selection.selected.length)">-->
               Add Users to Group</button>
-          <button mat-menu-item color="warn" (click)="removeGroups()">
+          <button mat-menu-item (click)="showDeleteConfirmationPopup()">
                   <!--[disabled]="!(selection && selection.selected.length)">-->
               Delete Groups<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
           </button>
