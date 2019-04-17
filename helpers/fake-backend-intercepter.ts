@@ -51,7 +51,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }]
   };
 
-  private groups = {
+  private groups: any = {
     data: [{
       id: '1',
       type: 'groups',
@@ -200,6 +200,32 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           if (request.headers.get('Authorization') ===
             'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
             return of(new HttpResponse({ status: 201, body: 'success' }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+
+        // delete user
+        if (request.url.match(/\/groups\/\d+$/) && request.method === 'DELETE') {
+          // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            // find user by id in groups array
+            const urlParts = request.url.split('/');
+            const id = parseInt(urlParts[urlParts.length - 1], 10);
+            for (let i = 0; i < this.groups.data.length; i++) {
+              const user = this.groups.data[i];
+              if (parseInt(user.id, 10) === id) {
+                // delete groups
+                this.groups.data.splice(i, 1);
+                // localStorage.setItem('users', JSON.stringify(this.users));
+                break;
+              }
+            }
+
+            // respond 200 OK
+            return of(new HttpResponse({ status: 204 }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
