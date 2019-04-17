@@ -57,7 +57,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       type: 'groups',
       links: { self: 'http://13.229.71.66:3000/groups/1' },
       attributes: {
-        groupname: 'group 1',
+        name: 'group 1',
         urn: 'urn:perx:iam::222222222:group/1',
         users: ['Admin_2', ],
         jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/1', scope: '*' },
@@ -69,7 +69,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       type: 'groups',
       links: { self: 'http://13.229.71.66:3000/groups/2' },
       attributes: {
-        groupname: 'group 2',
+        name: 'group 2',
         urn: 'urn:perx:iam::222222222:group/2',
         users: ['dink', ],
         jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/2', scope: '*' },
@@ -81,7 +81,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       type: 'groups',
       links: { self: 'http://13.229.71.66:3000/groups/3' },
       attributes: {
-        groupname: 'group 3',
+        name: 'group 3',
         urn: 'urn:perx:iam::222222222:group/3',
         users: ['prianka', 'dink'],
         jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:group/3', scope: '*' },
@@ -91,7 +91,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }]
   };
 
-  private policies = {
+  private policies: any = {
     data: [
       {
         id: '1',
@@ -199,14 +199,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
             'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 201, body: 'success' }));
+            // get new group object from post body
+            const newGroup = request.body;
+
+            // validation
+            const duplicateGroup = this.groups.data.filter(user => {
+              return user.attributes.name === newGroup.data.attributes.groupName;
+            }).length;
+            if (duplicateGroup) {
+              return throwError({ error: { message: 'Username "' + newGroup.groupName + '" is already taken' } });
+            }
+
+            // save new group
+            newGroup.data.id = this.groups.data.length + 1;
+            this.groups.data.push(newGroup.data);
+            // localStorage.setItem('groups', JSON.stringify(this.groups));
+
+            return of(new HttpResponse({ status: 201, body: newGroup }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
           }
         }
 
-        // delete user
+        // delete group
         if (request.url.match(/\/groups\/\d+$/) && request.method === 'DELETE') {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
