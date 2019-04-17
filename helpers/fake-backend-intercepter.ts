@@ -156,6 +156,33 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
         }
 
+        if (request.url.includes('iam/users') && request.method === 'POST') {
+          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            // get new user object from post body
+            const newUser = request.body;
+
+            // validation
+            const duplicateUser = this.users.data.filter(user => {
+              return user.attributes.username === newUser.data.attributes.username;
+            }).length;
+            if (duplicateUser) {
+              return throwError({ error: { message: 'User name "' + newUser.username + '" is already taken' } });
+            }
+
+            // save new user
+            newUser.data.id = this.users.data.length + 1;
+            this.users.data.push(newUser.data);
+            // localStorage.setItem('users', JSON.stringify(this.users));
+
+            return of(new HttpResponse({ status: 201, body: newUser }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+
         // delete user
         if (request.url.match(/\/users\/\d+$/) && request.method === 'DELETE') {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
