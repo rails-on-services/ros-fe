@@ -1,0 +1,136 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "console-app": {
+      "root": "projects/console-app/",
+      "sourceRoot": "projects/console-app/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/console-app",
+            "index": "projects/console-app/src/index.html",
+            "main": "projects/console-app/src/main.ts",
+            "polyfills": "projects/console-app/src/polyfills.ts",
+            "tsConfig": "projects/console-app/tsconfig.app.json",
+            "assets": [
+              "projects/console-app/src/favicon.ico",
+              "projects/console-app/src/assets"
+            ],
+            "styles": [
+              "projects/console-app/src/styles.css"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/console-app/src/environments/environment.ts",
+                  "with": "projects/console-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "console-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "console-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "console-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/console-app/src/test.ts",
+            "polyfills": "projects/console-app/src/polyfills.ts",
+            "tsConfig": "projects/console-app/tsconfig.spec.json",
+            "karmaConfig": "projects/console-app/karma.conf.js",
+            "styles": [
+              "projects/console-app/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/console-app/src/favicon.ico",
+              "projects/console-app/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/console-app/tsconfig.app.json",
+              "projects/console-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "console-app-e2e": {
+      "root": "projects/console-app-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/console-app-e2e/protractor.conf.js",
+            "devServerTarget": "console-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "console-app:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/console-app-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "console-app"
+}
