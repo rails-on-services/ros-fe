@@ -16,6 +16,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   ManageColumnModal
 } from 'shared/components/modal/manage-column-modal/manage-column-modal.component';
+import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -24,13 +25,13 @@ import {
 })
 export class UsersComponent implements OnInit, OnDestroy {
   document$: Observable<JsonApiQueryData<IamUser>>;
-  tableHeaders: {key: string, value: string}[];
+  tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
   selection: SelectionModel<IamUser>;
 
-  shownColumns$: Observable<(string | number | symbol)[]>;
-  shownColumns: (string | number | symbol)[];
+  shownColumns$: Observable<(string|number|symbol)[]>;
+  shownColumns: (string|number|symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -52,7 +53,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addUser() {
-    this.router.navigate(['new-user'], {relativeTo: this.activatedRoute});
+    this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
   }
 
   removeUsers() {
@@ -63,6 +64,19 @@ export class UsersComponent implements OnInit, OnDestroy {
       this.iamService.removeUser(user.id).subscribe(() => {
         this.fetchUsers();
       });
+    });
+  }
+
+  showDeleteConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      width: '30vw',
+      data: { type: 'user' }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.removeUsers();
+      }
     });
   }
 
