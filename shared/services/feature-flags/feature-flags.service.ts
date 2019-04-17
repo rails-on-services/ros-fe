@@ -12,7 +12,7 @@ export class FeatureFlagsService {
 
   constructor() {
     if (!environment.production) {
-      this.mockUsersDb = false;
+      this.mockUsersDb = true;
       this.mockGroupsDb = true;
       this.mockPoliciesDb = true;
     }
