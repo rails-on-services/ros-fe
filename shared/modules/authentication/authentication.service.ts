@@ -6,7 +6,7 @@ import {AuthService} from 'ngx-auth';
 import {CognitoService} from '@whistler/cognito';
 import {TokenStorage} from './token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {environment} from '../../../environments/environment';
+import { environment } from '../../../src/projects/console-app/environments/environment';
 
 interface AccessData {
   refreshToken: string;
