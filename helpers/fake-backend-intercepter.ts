@@ -203,11 +203,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const newGroup = request.body;
 
             // validation
-            const duplicateGroup = this.groups.data.filter(user => {
-              return user.attributes.name === newGroup.data.attributes.groupName;
+            const duplicateGroup = this.groups.data.filter(group => {
+              return group.attributes.name === newGroup.data.attributes.name;
             }).length;
             if (duplicateGroup) {
-              return throwError({ error: { message: 'Username "' + newGroup.groupName + '" is already taken' } });
+              return throwError({ error: { message: 'Group name "' + newGroup.name + '" is already taken' } });
             }
 
             // save new group

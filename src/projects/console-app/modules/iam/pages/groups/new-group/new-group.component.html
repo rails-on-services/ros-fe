@@ -9,10 +9,10 @@
           <!--<mat-card-subtitle> You can add multiple groups at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
             <mat-label>Group Name</mat-label>
-            <input matInput placeholder="Group Name" formControlName="groupName" required>
-            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
-            <mat-error *ngIf="hasError('groupName', 'required')">Group Name is required</mat-error>
-            <mat-error *ngIf="hasError('groupName', 'maxlength')">You have more than 60 characters</mat-error>
+            <input matInput placeholder="Group Name" formControlName="name" required>
+            <mat-hint>Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('name', 'required')">Group Name is required</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
           </mat-form-field>
 
 
@@ -87,7 +87,7 @@
           <h4 class="mat-h4">Group details</h4>
 
           <mat-label>Group Name:</mat-label>
-          <div>{{groupDetailsGroup.get('groupName').value}}</div>
+          <div>{{groupDetailsGroup.get('name').value}}</div>
 
           <div class="access-types">
             <mat-label>Access Type:</mat-label>

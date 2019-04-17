@@ -35,7 +35,7 @@ export class NewGroupComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.groupDetailsGroup = new FormGroup({
-      groupName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       attachedPolicies: new FormControl([]),
       users: new FormControl({}),
     });
@@ -75,7 +75,7 @@ export class NewGroupComponent implements OnInit, AfterViewInit {
     }
 
     const group = {
-      groupName: this.groupDetailsGroup.get('groupName').value,
+      name: this.groupDetailsGroup.get('name').value,
       attachedPolicies: policies,
       users: this.groupDetailsGroup.get('users').value
     };

@@ -9,7 +9,7 @@ import { IamUser } from './user.model';
 export class IamGroup extends JsonApiModel {
   @Column({ name: 'Group Name', sortable: true })
   @Attribute()
-  groupName: string;
+  name: string;
 
   @Column({ name: 'Users' })
   @Attribute()
