@@ -3,39 +3,86 @@
   </app-dismissable-content>
 </div>
 <div class="container">
-  <div class="action" fxLayout="row" fxLayoutGap="1rem">
-    <button mat-raised-button color="primary" (click)="addUser()">
-      Add User
-    </button>
-    <button mat-raised-button color="warn" (click)="showDeleteConfirmationPopup()" [disabled]="!(selection && selection.selected.length)">
-      Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
-    </button>
-    <div fxFlex fxLayout="row" fxLayoutAlign="end">
-      <mat-button-toggle-group
-        aria-label="Other Actions" 
-        name="otherActions" 
-        (change)="onOtherActionsChange($event)"
-      >
-        <mat-button-toggle value="reload">
-          <mat-icon>refresh</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="settings">
-          <mat-icon>settings</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="help">
-          <mat-icon>help</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
+  <div class="content">
+    <rsz-layout class="row" [directions]="['bottom']" [rFlex]="true" (resizeEnd)="rowResized($event)" (resizeStart)="resizeStart($event)">
+      <rsz-layout class="cell" [directions]="['none']" [rFlex]="false">
+        <div class="action" fxLayout="row" fxLayoutGap="1rem">
+          <button mat-raised-button color="primary" (click)="addUser()">
+            Add User
+          </button>
+          <button mat-raised-button color="warn" (click)="showDeleteConfirmationPopup()"
+                  [disabled]="!(selection && selection.selected.length)">
+            Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
+          </button>
+          <div fxFlex fxLayout="row" fxLayoutAlign="end">
+            <mat-button-toggle-group
+                aria-label="Other Actions"
+                name="otherActions"
+                (change)="onOtherActionsChange($event)"
+            >
+              <mat-button-toggle value="reload">
+                <mat-icon>refresh</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle value="settings">
+                <mat-icon>settings</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle value="help">
+                <mat-icon>help</mat-icon>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+        </div>
+        <ng-container class="users-table" *ngIf="document$ | async as document">
+          <app-filterable-table
+              [contents]="document.getModels()"
+              [selectable]=true
+              (selectionChange)="onUsersSelectionChange($event)"
+              [shownColumns]="shownColumns"
+          >
+          </app-filterable-table>
+        </ng-container>
+      </rsz-layout>
+    </rsz-layout>
+    <rsz-layout class="row" [directions]="['none']" [rFlex]="false">
+      <rsz-layout class="cell" [directions]="['none']" [rFlex]="false">
+        <mat-card>
+          <mat-card-title>More Trump Ipsum</mat-card-title>
+          <mat-card-content>
+            <p>
+              You have so many different things placeholder text has to be able to do, and I don't believe Lorem Ipsum
+              has the stamina. Look at that text! Would anyone use that? Can you imagine that, the text of your next
+              webpage?! I will write some great placeholder text – and nobody writes better placeholder text than me,
+              believe me – and I’ll write it very inexpensively. I will write some great, great text on your website’s
+              Southern border, and I will make Google pay for that text. Mark my words. Lorem Ipsum is the single greatest threat. We are not - we are not keeping up with other websites.
+            </p>
+            <p>
+              An 'extremely credible source' has called my office and told me that Lorem Ipsum's birth certificate is a fraud. The other thing with Lorem Ipsum is that you have to take out its family.
+            </p>
+            <p>
+              When other websites give you text, they’re not sending the best. They’re not sending you, they’re sending
+              words that have lots of problems and they’re bringing those problems with us. They’re bringing mistakes.
+              They’re bringing misspellings. They’re typists… And some, I assume, are good words. The best taco bowls
+              are made in Trump Tower Grill. I love Hispanics!
+            </p>
+            <p>
+              We have so many things that we have to do better... and certainly ipsum is one of them. I know words. I
+              have the best words.
+            </p>
+            <p>
+              Lorem Ipsum is unattractive, both inside and out. I fully understand why it’s former users left it for
+              something else. They made a good decision. That other text? Sadly, it’s no longer a 10. The concept of
+              Lorem Ipsum was created by and for the Chinese in order to make U.S. design jobs non-competitive. When
+              other websites give you text, they’re not sending the best. They’re not sending you, they’re sending words
+              that have lots of problems and they’re bringing those problems with us. They’re bringing mistakes. They’re
+              bringing misspellings. They’re typists… And some, I assume, are good words. Lorem Ipsum is the single
+              greatest threat. We are not - we are not keeping up with other websites.
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </rsz-layout>
+    </rsz-layout>
   </div>
-  <ng-container class="users-table" *ngIf="document$ | async as document">
-    <app-filterable-table
-      [contents]="document.getModels()"
-      [selectable]=true
-      (selectionChange)="onUsersSelectionChange($event)"
-      [shownColumns]="shownColumns"
-    >
-    </app-filterable-table>
-  </ng-container>
+
+
 </div>
 <router-outlet></router-outlet>
