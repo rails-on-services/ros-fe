@@ -74,6 +74,13 @@ export class IamService {
     );
   }
 
+  fetchGroup(id: number|string): Observable<IamGroup> {
+    return this.datastore.findRecord(
+      IamGroup,
+      `${ id }`
+    );
+  }
+
   fetchPolicies(): Observable<JsonApiQueryData<IamPolicy>> {
     return this.datastore.findAll(
       IamPolicy,
