@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AuthenticationModule} from './modules/authentication';
 import { ManageColumnModal } from './components/modal/manage-column-modal/manage-column-modal.component';
 import { ConfirmationModal } from './components/modal/confirmation-modal/confirmation-modal.component';
+import { RenameModal } from './components/modal/rename-modal/rename-modal.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ConfirmationModal } from './components/modal/confirmation-modal/confirm
     ModalComponent,
     DialogOverviewExampleDialogComponent,
     ManageColumnModal,
-    ConfirmationModal
+    ConfirmationModal,
+    RenameModal
   ],
   imports: [
     AuthenticationModule,
@@ -36,8 +38,8 @@ import { ConfirmationModal } from './components/modal/confirmation-modal/confirm
   entryComponents: [
     DialogOverviewExampleDialogComponent,
     ManageColumnModal,
-    ConfirmationModal
-
+    ConfirmationModal,
+    RenameModal
   ]
 })
 export class SharedModule {

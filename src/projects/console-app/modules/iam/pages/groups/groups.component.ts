@@ -6,6 +6,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
+import { RenameModal } from '../../../../../../../shared/components/modal/rename-modal/rename-modal.component';
 
 @Component({
   selector: 'app-groups',
@@ -54,6 +55,30 @@ export class GroupsComponent implements OnInit {
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
         this.removeGroups();
+      }
+    });
+  }
+
+  editGroupNamePopup() {
+    const confirmPopup = this.dialog.open(RenameModal, {
+      width: '40vw',
+      data: { type: 'group' }
+    });
+
+    confirmPopup.afterClosed().subscribe(newName => {
+      if (newName) {
+        if (!this.selection || this.selection.selected.length <= 0) {
+          return;
+        }
+        this.selection.selected.forEach(group => {
+          this.iamService.fetchGroup(group.id).subscribe( groupModel => {
+            groupModel.name = newName;
+            groupModel.save().subscribe();
+            this.fetchGroups();
+          });
+
+
+        });
       }
     });
   }
