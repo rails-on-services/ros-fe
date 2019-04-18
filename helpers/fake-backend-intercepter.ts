@@ -209,8 +209,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
         }
       }
-      // get groups
       if (this.featureFlagService.mockGroupsDb) {
+        // get groups
         if (request.url.includes('iam/groups') && request.method === 'GET') {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
@@ -222,6 +222,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
         }
 
+        // create group
         if (request.url.includes('iam/groups') && request.method === 'POST') {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (request.headers.get('Authorization') ===
@@ -269,6 +270,40 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             // respond 200 OK
             return of(new HttpResponse({ status: 204 }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+
+        // update group
+        if (request.url.match(/\/groups\/\d+$/) && request.method === 'PATCH') {
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            // get new group object from post body
+            const newGroup = request.body;
+            return of(new HttpResponse({ status: 201, body: newGroup }));
+          } else {
+            // return 401 not authorised if token is null or invalid
+            return throwError({ error: { message: 'Unauthorised' } });
+          }
+        }
+
+        // get group by id
+        debugger;
+
+        if (request.url.match(/\/groups\/\d+$/) && request.method === 'GET') {
+          // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+          if (request.headers.get('Authorization') ===
+            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
+            // find group by id in groups array
+            const urlParts = request.url.split('/');
+            const id = parseInt(urlParts[urlParts.length - 1], 10);
+            const matchedGroups = this.groups.data.filter(group => {
+              return group.id === id;
+            });
+            const group = matchedGroups.length ? matchedGroups[0] : null;
+            return of(new HttpResponse({ status: 200, body: group }));
           } else {
             // return 401 not authorised if token is null or invalid
             return throwError({ error: { message: 'Unauthorised' } });
