@@ -2,7 +2,8 @@
 const fs = require('fs');
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/projects/console-app/environments/environment.ts`;
+const dirPath = `./src/projects/console-app/environments`;
+const targetPath = `${dirPath}/environment.ts`;
 
 // Load node modules
 const colors = require('colors');
@@ -23,6 +24,8 @@ export const environment = {
 
 console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
 console.log(colors.grey(envConfigFile));
+
+fs.mkdirSync(dirPath, { recursive: true });
 
 fs.writeFile(targetPath, envConfigFile, (err) => {
   if (err) {

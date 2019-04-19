@@ -6,6 +6,8 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "../node_modules/@perx/open-ui-components/**/*.spec.ts",
+    "../node_modules/@perx/open-services/**/*.spec.ts"
   ]
 }
