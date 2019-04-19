@@ -1,11 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
+import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      imports: [
+        AppModule
       ],
     }).compileComponents();
   }));
@@ -26,6 +27,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to console-app!');
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
   });
 });

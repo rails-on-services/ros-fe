@@ -47,4 +47,4 @@ Thumbs.db
 
 # Angular
 /src/environments/*.ts
-/projects/console-app/src/environments/*.ts
+src/projects/*-app/environments/*.ts
