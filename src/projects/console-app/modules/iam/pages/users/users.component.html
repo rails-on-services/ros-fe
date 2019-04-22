@@ -32,12 +32,13 @@
             </mat-button-toggle-group>
           </div>
         </div>
-        <ng-container class="users-table" *ngIf="document$ | async as document">
+        <ng-container class="users-table" *ngIf="users$ | async as users">
           <app-filterable-table
-              [contents]="document.getModels()"
-              [selectable]=true
-              (selectionChange)="onUsersSelectionChange($event)"
-              [shownColumns]="shownColumns"
+            [columnProperties]="columnProperties"
+            [contents]="users"
+            [selectable]=true
+            (selectionChange)="onUsersSelectionChange($event)"
+            [shownColumns]="shownColumns"
           >
           </app-filterable-table>
         </ng-container>

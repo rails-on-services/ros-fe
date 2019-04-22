@@ -23,8 +23,14 @@
         </mat-checkbox>
       </td>
     </ng-container>
-    <ng-container [matColumnDef]="key" *ngFor="let key of columnPropertyKeys">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperties[key].sortable">{{columnProperties[key].name}}</th>
+    <ng-container [matColumnDef]="key" *ngFor="let key of attributes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperties[key] || !columnProperties[key].sortable">
+        {{
+          columnProperties && columnProperties[key] && columnProperties[key].name 
+          ? columnProperties[key].name 
+          : key
+        }}
+      </th>
       <td mat-cell *matCellDef="let element"> {{element[key]}} </td>
     </ng-container>
 

@@ -8,6 +8,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@whistler/iam';
@@ -16,7 +18,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   ManageColumnModal
 } from 'shared/components/modal/manage-column-modal/manage-column-modal.component';
-import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModal } from 'shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -25,6 +27,7 @@ import { ConfirmationModal } from '../../../../../../../shared/components/modal/
 })
 export class UsersComponent implements OnInit, OnDestroy {
   document$: Observable<JsonApiQueryData<IamUser>>;
+  users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
@@ -45,6 +48,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
     this.fetchUsers();
   }
 
@@ -118,7 +122,27 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsers() {
-    this.document$ = this.iamService.fetchUsers();
+    this.users$ = this.iamService.fetchUsers().pipe(
+      map(document => {
+        const iamUsers = document.getModels();
+        const users = iamUsers.map(iamUser => {
+          const user = { id: iamUser.id };
+          const keys = Object.keys(iamUser.getColumnProperties());
+
+          keys.forEach(key => {
+            user[key] = iamUser[key];
+          });
+
+          return user;
+        });
+
+        return users;
+      })
+    );
+  }
+
+  get columnProperties() {
+    return IamUser.prototype.getColumnProperties();
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {

@@ -8,9 +8,10 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./filterable-table.component.scss']
 })
 export class FilterableTableComponent implements OnInit {
+  @Input() columnProperties: {};
   @Input() contents: any[];
   @Input() selectable = false;
-  @Input() shownColumns;
+  @Input() shownColumns: any[];
 
   @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
 
@@ -28,34 +29,25 @@ export class FilterableTableComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  get columnProperties() {
-    if (this.contents.length > 0) {
-      return this.contents[0].getColumnProperties();
+  get attributes() {
+    if (this.contents && this.contents.length > 0) {
+      return Object.keys(this.contents[0]);
     }
-
-    return {};
-  }
-
-  get columnPropertyKeys() {
-    if (this.contents.length > 0) {
-      return Reflect.ownKeys(this.contents[0].getColumnProperties());
-    }
-
     return [];
   }
 
   get displayedColumns() {
-    const columnPropertyKeys = this.shownColumns ?
-      this.columnPropertyKeys.filter(column => (this.shownColumns.indexOf(column) !== -1 )) :
-      this.columnPropertyKeys;
+    const columns = this.shownColumns ?
+      this.attributes.filter(column => (this.shownColumns.indexOf(column) !== -1 )) :
+      this.attributes;
     if (this.selectable) {
       return [
         'select',
-        ...columnPropertyKeys
+        ...columns
       ];
     }
     return [
-      ...columnPropertyKeys
+      ...columns
     ];
   }
 
