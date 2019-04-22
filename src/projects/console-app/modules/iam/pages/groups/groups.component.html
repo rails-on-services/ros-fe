@@ -44,9 +44,10 @@
       </mat-button-toggle-group>
     </div>
   </div>
-  <ng-container class="groups-table" *ngIf="document$ | async as document">
+  <ng-container class="groups-table" *ngIf="groups$ | async as groups">
     <app-filterable-table
-        [contents]="document.getModels()"
+        [columnProperties]="columnProperties"
+        [contents]="groups"
         [selectable]=true
         (selectionChange)="onGroupsSelectionChange($event)"
         [shownColumns]="shownColumns">

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 import { RenameModal } from '../../../../../../../shared/components/modal/rename-modal/rename-modal.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-groups',
@@ -16,6 +17,7 @@ import { RenameModal } from '../../../../../../../shared/components/modal/rename
 export class GroupsComponent implements OnInit {
   document$: Observable<JsonApiQueryData<IamGroup>>;
   testGroupList: Observable<IamGroup[]>;
+  groups$: Observable<any[]>;
 
   showModal: boolean;
   selection: SelectionModel<IamGroup>;
@@ -31,6 +33,8 @@ export class GroupsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.shownColumns = Object.keys(IamGroup.prototype.getColumnProperties());
+
     this.fetchGroups();
   }
 
@@ -113,7 +117,27 @@ export class GroupsComponent implements OnInit {
   }
 
   private fetchGroups() {
-    this.document$ = this.iamService.fetchGroups();
+    this.groups$ = this.iamService.fetchGroups().pipe(
+      map(document => {
+        const iamUsers = document.getModels();
+        const users = iamUsers.map(iamUser => {
+          const user = { id: iamUser.id };
+          const keys = Object.keys(iamUser.getColumnProperties());
+
+          keys.forEach(key => {
+            user[key] = iamUser[key];
+          });
+
+          return user;
+        });
+
+        return users;
+      })
+    );
+  }
+
+  get columnProperties() {
+    return IamGroup.prototype.getColumnProperties();
   }
 
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {
