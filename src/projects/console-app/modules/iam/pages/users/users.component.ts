@@ -148,16 +148,4 @@ export class UsersComponent implements OnInit, OnDestroy {
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {
     this.selection = selection;
   }
-
-  rowResized(event) {
-    // todo: maybe make a version of the library where the height/width is properly tracked and not buggy
-    console.log('height of table cell:' + event.info.evt.target.parentElement.style.flexBasis);
-  }
-
-  resizeStart(event) {
-    return event;
-    // console.log('resize start width:' + event.info.width);
-    // console.log('resize start height:' + event.info.height);
-  }
-
 }
