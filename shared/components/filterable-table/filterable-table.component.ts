@@ -12,6 +12,7 @@ export class FilterableTableComponent implements OnInit {
   @Input() contents: any[];
   @Input() selectable = false;
   @Input() shownColumns: any[];
+  @Input() selectType = 'check';
 
   @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
 
@@ -25,6 +26,9 @@ export class FilterableTableComponent implements OnInit {
     if (this.contents.length <= 0) {
       return;
     }
+
+    console.log(this.selectType);
+
     this.dataSource = new MatTableDataSource(this.contents);
     this.dataSource.sort = this.sort;
   }
@@ -52,6 +56,10 @@ export class FilterableTableComponent implements OnInit {
   }
 
   onSelectionChange(row: any) {
+    if (this.selectType === 'radio') {
+      this.selection.clear();
+    }
+
     this.selection.toggle(row);
     this.selectionChange.emit(this.selection);
   }

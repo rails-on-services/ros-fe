@@ -37,6 +37,7 @@
             [columnProperties]="columnProperties"
             [contents]="users"
             [selectable]=true
+            [selectType]="'check'"
             (selectionChange)="onUsersSelectionChange($event)"
             [shownColumns]="shownColumns"
           >
