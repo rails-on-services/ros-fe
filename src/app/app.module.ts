@@ -8,15 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChildrenOutletContexts } from '@angular/router';
 import { CoreModule } from './core/core.module';
 
-import { IamModule as IamServiceModule } from '@perx/open-services';
-import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
-import { environment } from '../../environments/environment';
+import { IamModule as IamServiceModule } from '@perx/open-services/index';
+import { CognitoModule as CognitoServiceModule } from '@perx/open-services/index';
+import { environment } from '../projects/console-app/environments/environment';
 import { LoginComponent } from './login/login.component';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // used to create fake backend
-import { FakeBackendProvider } from '../../../../../helpers/fake-backend-intercepter';
+import { FakeBackendProvider } from '../../helpers/fake-backend-intercepter';
 
 
 @NgModule({
