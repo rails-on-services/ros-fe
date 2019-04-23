@@ -7,7 +7,6 @@
     "start:prod": "PRODUCTION=true npm run config && ng serve --aot --prod --host 0.0.0.0",
     "build": "PRODUCTION=false npm run config && ng build",
     "build:prod": "PRODUCTION=true npm run config && ng build --aot --prod",
-    "build-libraries": "ng build whistler-iam && ng build whistler-cognito",
     "config": "ts-node set-env.ts",
     "test": "ng test",
     "lint": "ng lint",
