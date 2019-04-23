@@ -27,8 +27,6 @@ export class FilterableTableComponent implements OnInit {
       return;
     }
 
-    console.log(this.selectType);
-
     this.dataSource = new MatTableDataSource(this.contents);
     this.dataSource.sort = this.sort;
   }

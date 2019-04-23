@@ -7,11 +7,10 @@ import { Column, Tablify } from '../decorators/column.decorator';
 })
 export class IamPolicy extends JsonApiModel {
   @Column({ name: 'Policy Name', sortable: true })
-  @Attribute()
+  @Attribute({ serializedName: 'policyname'})
   policyname: string;
 
-  @Column({ name: 'URN' })
-  @Attribute()
+  @Attribute({ serializedName: 'urn'})
   urn: string;
 
   // @Column({ name: 'Console Access' })
@@ -25,6 +24,22 @@ export class IamPolicy extends JsonApiModel {
   @Column({ name: 'Type' })
   @Attribute({ serializedName: 'type' })
   type: string;
+
+  @Column({ name: 'Attachments' })
+  @Attribute({ serializedName: 'attachments' })
+  attachments: number;
+
+  @Column({ name: 'Used as' })
+  @Attribute({ serializedName: 'used_as' })
+  usedAs: string;
+
+  @Column({ name: 'Creation time' })
+  @Attribute({ serializedName: 'creation_time' })
+  creationTime: string;
+
+  @Column({ name: 'Edited time' })
+  @Attribute({ serializedName: 'edited_time' })
+  editedTime: string;
 
   @Column({ name: 'Description' })
   @Attribute({ serializedName: 'description' })

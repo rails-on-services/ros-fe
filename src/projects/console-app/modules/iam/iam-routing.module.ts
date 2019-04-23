@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import {UsersComponent} from './pages/users/users.component';
 import {GroupsComponent} from './pages/groups/groups.component';
+import {PoliciesComponent} from './pages/policies/policies.component';
 import {ModalComponent} from '../../../../../shared/components/modal/modal.component';
 import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
@@ -43,6 +44,10 @@ export const router: Routes = [
       {
         path: 'groups',
         component: GroupsComponent,
+      },
+      {
+        path: 'policies',
+        component: PoliciesComponent,
       },
       {
         path: 'groups/new-group',
