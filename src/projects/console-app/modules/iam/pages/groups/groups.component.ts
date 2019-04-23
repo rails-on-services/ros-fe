@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
+import { ManageColumnModal } from '../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
-import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
-import { RenameModal } from '../../../../../../../shared/components/modal/rename-modal/rename-modal.component';
+import { ConfirmationModal } from '../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
+import { RenameModal } from '../../../../../../shared/components/modal/rename-modal/rename-modal.component';
 import { map } from 'rxjs/operators';
 
 @Component({

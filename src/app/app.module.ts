@@ -12,7 +12,7 @@ import { IamModule as IamServiceModule } from '@perx/open-services/index';
 import { CognitoModule as CognitoServiceModule } from '@perx/open-services/index';
 import { environment } from '../projects/console-app/environments/environment';
 import { LoginComponent } from './login/login.component';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // used to create fake backend

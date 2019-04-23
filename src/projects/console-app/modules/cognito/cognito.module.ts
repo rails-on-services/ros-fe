@@ -8,9 +8,9 @@ import { GroupsComponent } from './pages/groups/groups.component';
 import { CognitoMenuComponent } from './components/cognito-menu/cognito-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DismissableContentComponent } from '../../../../../shared/components/dismissable-content/dismissable-content.component';
+import { DismissableContentComponent } from '../../../../shared/components/dismissable-content/dismissable-content.component';
 import { NewUserComponent } from './pages/users/new-user/new-user.component';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { SharedModule } from '../../../../shared/shared.module';
 
 @NgModule({
   declarations: [

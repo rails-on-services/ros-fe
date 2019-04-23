@@ -17,8 +17,8 @@ import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
   ManageColumnModal
-} from 'shared/components/modal/manage-column-modal/manage-column-modal.component';
-import { ConfirmationModal } from 'shared/components/modal/confirmation-modal/confirmation-modal.component';
+} from 'src/shared/components/modal/manage-column-modal/manage-column-modal.component';
+import { ConfirmationModal } from 'src/shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-users',
