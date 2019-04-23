@@ -17,21 +17,7 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "@whistler/iam": [
-        "dist/whistler/iam"
-      ],
-      "@whistler/iam/*": [
-        "dist/whistler/iam/*"
-      ],
-      "@whistler/cognito": [
-        "dist/whistler/cognito"
-      ],
-      "@whistler/cognito/*": [
-        "dist/whistler/cognito/*"
-      ]
-    }
+    ]
   },
   "include": [
     "src/**/*",

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
-import { IamService, IamGroup } from '@whistler/iam';
+import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';

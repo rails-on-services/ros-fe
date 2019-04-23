@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChildrenOutletContexts } from '@angular/router';
 import { CoreModule } from './core/core.module';
 
-import { IamModule as IamServiceModule } from '@whistler/iam';
-import { CognitoModule as CognitoServiceModule } from '@whistler/cognito';
+import { IamModule as IamServiceModule } from '@perx/open-services';
+import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
 import { environment } from '../../environments/environment';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../../../../../shared/shared.module';

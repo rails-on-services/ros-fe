@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ModalService } from '../../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IamService, IamGroup, IamPolicy } from '@whistler/iam';
+import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { SelectionModel } from '@angular/cdk/collections';

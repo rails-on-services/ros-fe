@@ -2,13 +2,6 @@
 # yarn lockfile v1
 
 
-"@3dgenomes/ngx-resizable@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@3dgenomes/ngx-resizable/-/ngx-resizable-1.7.1.tgz#23898e41e80e4c880b56436e10d920c5764c8d6d"
-  integrity sha512-VrIRyy22j15Ho8PQCY+1pdOfqI8kfvpjzs6WCCpRG+zizznGMAfycqaGOIvcY8mBDWBBJmTAF9FV6p7fdjY4qQ==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular-devkit/architect@0.13.7":
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.13.7.tgz#b09e80dedeacddb86a94d3002c7fb8627733554f"
@@ -121,6 +114,13 @@
   version "7.2.11"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.2.11.tgz#379015467aa97f5987a2c4b56c5a7cbdfce3fefc"
   integrity sha512-YlZATC4Gnd3eOBuSW/QqsMPHeJWVKR8yfen2qKgFO3waK+6qXHXIdRF3j81l07jlUx5kBw+f1OCEeHl2QChBiw==
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/animations@~7.2.0":
+  version "7.2.13"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.2.13.tgz#9a49482ea2e0386a691d5b9d7be422251b66d767"
+  integrity sha512-Z0g0DthJnxTZ0dUc5BlojMq/0XIikhWzTqq0ym8w3G6jqBJD0OJ0jRCIfV0Leqlgzq6Jzvdrx0/JngBiKi5+uA==
   dependencies:
     tslib "^1.9.0"
 
@@ -340,6 +340,40 @@
     rxjs "6.3.3"
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
+
+"@perx/open-services@rails-on-services/open-services#da1a423":
+  version "0.0.0"
+  resolved "https://codeload.github.com/rails-on-services/open-services/tar.gz/da1a4233002f574e5d6494882f7153679b748005"
+  dependencies:
+    "@angular/animations" "~7.2.0"
+    "@angular/common" "~7.2.0"
+    "@angular/compiler" "~7.2.0"
+    "@angular/core" "~7.2.0"
+    "@angular/forms" "~7.2.0"
+    "@angular/platform-browser" "~7.2.0"
+    "@angular/platform-browser-dynamic" "~7.2.0"
+    "@angular/router" "~7.2.0"
+    core-js "^2.5.4"
+    rxjs "~6.3.3"
+    tslib "^1.9.0"
+    zone.js "~0.8.26"
+
+"@perx/open-ui-components@rails-on-services/open-ui-components":
+  version "0.0.0"
+  resolved "https://codeload.github.com/rails-on-services/open-ui-components/tar.gz/3d0369b8ebc9e06005659121864792741c5df264"
+  dependencies:
+    "@angular/animations" "~7.2.0"
+    "@angular/common" "~7.2.0"
+    "@angular/compiler" "~7.2.0"
+    "@angular/core" "~7.2.0"
+    "@angular/forms" "~7.2.0"
+    "@angular/platform-browser" "~7.2.0"
+    "@angular/platform-browser-dynamic" "~7.2.0"
+    "@angular/router" "~7.2.0"
+    core-js "^2.5.4"
+    rxjs "~6.3.3"
+    tslib "^1.9.0"
+    zone.js "~0.8.26"
 
 "@schematics/angular@7.3.7":
   version "7.3.7"
@@ -3077,11 +3111,6 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
-
-hammerjs@^2.0.8:
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
-  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
 
 handle-thing@^2.0.0:
   version "2.0.0"
