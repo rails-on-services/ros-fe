@@ -5,6 +5,7 @@ import { DashboardMenuComponent } from './components/dashboard-menu/dashboard-me
 import { SummaryComponent } from './pages/summary/summary.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../../../../shared/shared.module';
+import { OpenUiComponentsModule } from '@perx/open-ui-components';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { SharedModule } from '../../../../shared/shared.module';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    OpenUiComponentsModule
   ]
 })
 export class DashboardModule {
