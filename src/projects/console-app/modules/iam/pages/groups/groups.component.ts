@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
-import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
-import { RenameModal } from '../../../../../../../shared/components/modal/rename-modal/rename-modal.component';
 import { map } from 'rxjs/operators';
+import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-groups',
@@ -75,7 +73,7 @@ export class GroupsComponent implements OnInit {
           return;
         }
         this.selection.selected.forEach(group => {
-          this.iamService.fetchGroup(group.id).subscribe( groupModel => {
+          this.iamService.fetchGroup(group.id).subscribe(groupModel => {
             groupModel.name = newName;
             groupModel.save().subscribe();
             this.fetchGroups();

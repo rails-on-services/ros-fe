@@ -10,9 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { CognitoService } from '@perx/open-services';
+import { CognitoService, IamUser } from '@perx/open-services';
 import { CognitoUser as CUser } from '@perx/open-services';
-import { MatButtonToggleChange } from '@angular/material';
+import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { map } from 'rxjs/operators';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ConfirmationModal } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-users',
@@ -21,8 +24,13 @@ import { MatButtonToggleChange } from '@angular/material';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   document$: Observable<JsonApiQueryData<CUser>>;
+  users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
+
+  selection: SelectionModel<CUser>;
+  shownColumns$: Observable<(string|number|symbol)[]>;
+  shownColumns: (string|number|symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -30,11 +38,14 @@ export class UsersComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private cognitoService: CognitoService,
+    public dialog: MatDialog,
   ) {
     this.showModal = false;
   }
 
   ngOnInit() {
+    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
+
     this.fetchUsers();
   }
 
@@ -43,18 +54,32 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   addUser() {
-    this.openModal();
-    // this.cognitoService.addUser();
-    // this.users$ = this.cognitoService.fetchUsers();
-    // return;
+    this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
   }
 
-  removeUsers(id: number|string) {
-    // // todo: import from mock user list
-    // this.cognitoService.removeUser(id);
-    // this.users$ = this.cognitoService.fetchUsers();
+  removeUsers() {
+    if (!this.selection || this.selection.selected.length <= 0) {
+      return;
+    }
+    this.selection.selected.forEach(user => {
+      this.cognitoService.removeUser(user.id).subscribe(() => {
+        this.fetchUsers();
+      });
+    });
+  }
 
-    // return;
+
+  showDeleteConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      width: '30vw',
+      data: { type: 'user' }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.removeUsers();
+      }
+    });
   }
 
   onOtherActionsChange(event: MatButtonToggleChange) {
@@ -71,15 +96,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
   }
 
-  openModal() {
-    // this.showModal = true;
-    this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
-  }
-
-  closeModal() {
-    // this.showModal = false;
-  }
-
   private removeDialogComponentFromBody() {
     this.dismissableElement.nativeElement.remove();
   }
@@ -89,6 +105,30 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsers() {
-    this.document$ = this.cognitoService.fetchUsers();
+    this.users$ = this.cognitoService.fetchUsers().pipe(
+      map(document => {
+        const cognitoUsers = document.getModels();
+        const users = cognitoUsers.map(cognitoUser => {
+          const user = { id: cognitoUser.id };
+          const keys = Object.keys(cognitoUser.getColumnProperties());
+
+          keys.forEach(key => {
+            user[key] = cognitoUser[key];
+          });
+
+          return user;
+        });
+
+        return users;
+      })
+    );
+  }
+
+  get columnProperties() {
+    return CUser.prototype.getColumnProperties();
+  }
+
+  onUsersSelectionChange(selection: SelectionModel<CUser>) {
+    this.selection = selection;
   }
 }

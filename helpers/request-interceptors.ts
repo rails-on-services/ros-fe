@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { FeatureFlagsService } from '../shared/services/feature-flags/feature-flags.service';
+import { FeatureFlagsService } from '../src/shared/services/feature-flags/feature-flags.service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
@@ -304,8 +304,8 @@ export class MockRequestInterceptor implements HttpInterceptor {
             // find group by id in groups array
             const urlParts = request.url.split('/');
             const id = parseInt(urlParts[urlParts.length - 1], 10);
-            const matchedGroups = this.groups.data.filter(group => {
-              return group.id === id;
+            const matchedGroups = this.groups.data.filter(match => {
+              return match.id === id;
             });
             const group = matchedGroups.length ? matchedGroups[0] : null;
             return of(new HttpResponse({ status: 200, body: group }));
