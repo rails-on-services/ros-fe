@@ -66,6 +66,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
     this.selection.selected.forEach(user => {
       this.iamService.removeUser(user.id).subscribe(() => {
+        this.selection.deselect(user);
         this.fetchUsers();
       });
     });
@@ -74,7 +75,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   showDeleteConfirmationPopup() {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       width: '30vw',
-      data: { type: 'user' }
+      data: { type: this.selection.selected.length > 1 ? 'users' : 'user' }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
