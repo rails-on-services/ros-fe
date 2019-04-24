@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalService} from '../../../../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService, IamUser} from '@whistler/iam';
+import {IamService, IamUser} from '@perx/open-services';
 import { Observable } from 'rxjs';
 
 @Component({

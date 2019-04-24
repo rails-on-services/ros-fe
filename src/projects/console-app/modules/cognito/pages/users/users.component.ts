@@ -10,8 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { CognitoService } from '@whistler/cognito';
-import { CognitoUser as CUser } from '@whistler/cognito';
+import { CognitoService } from '@perx/open-services';
+import { CognitoUser as CUser } from '@perx/open-services';
 import { MatButtonToggleChange } from '@angular/material';
 
 @Component({
@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private iamService: CognitoService,
+    private cognitoService: CognitoService,
   ) {
     this.showModal = false;
   }
@@ -44,15 +44,15 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   addUser() {
     this.openModal();
-    // this.iamService.addUser();
-    // this.users$ = this.iamService.fetchUsers();
+    // this.cognitoService.addUser();
+    // this.users$ = this.cognitoService.fetchUsers();
     // return;
   }
 
   removeUsers(id: number|string) {
     // // todo: import from mock user list
-    // this.iamService.removeUser(id);
-    // this.users$ = this.iamService.fetchUsers();
+    // this.cognitoService.removeUser(id);
+    // this.users$ = this.cognitoService.fetchUsers();
 
     // return;
   }
@@ -89,6 +89,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsers() {
-    this.document$ = this.iamService.fetchUsers();
+    this.document$ = this.cognitoService.fetchUsers();
   }
 }

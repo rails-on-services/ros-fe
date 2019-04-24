@@ -3,7 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {tap, map} from 'rxjs/operators';
 import {AuthService} from 'ngx-auth';
-import {CognitoService} from '@whistler/cognito';
+import {CognitoService} from '@perx/open-services';
 import {TokenStorage} from './token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import { environment } from '../../../src/projects/console-app/environments/environment';

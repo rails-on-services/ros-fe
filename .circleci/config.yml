@@ -9,9 +9,6 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: yarn build-libraries
-      - run: yarn add file:./dist/whistler/iam
-      - run: yarn add file:./dist/whistler/cognito
       - run: yarn build:prod
       - persist_to_workspace:
           root: ~/project
