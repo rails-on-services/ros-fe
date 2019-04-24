@@ -4,6 +4,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {UsersComponent} from './pages/users/users.component';
 import {GroupsComponent} from './pages/groups/groups.component';
 import {PoliciesComponent} from './pages/policies/policies.component';
+import {PolicyAttachComponent} from './pages/policy-attach/policy-attach.component';
 import {ModalComponent} from '../../../../../shared/components/modal/modal.component';
 import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
@@ -48,6 +49,10 @@ export const router: Routes = [
       {
         path: 'policies',
         component: PoliciesComponent,
+      },
+      {
+        path: 'policies/policy-attach/:id',
+        component: PolicyAttachComponent,
       },
       {
         path: 'groups/new-group',

@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
 
@@ -25,6 +26,7 @@ export class PoliciesComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
+    private router: Router
   ) {
     this.showModal = false;
   }
@@ -114,5 +116,9 @@ export class PoliciesComponent implements OnInit {
 
   onPoliciesSelectionChange(selection: SelectionModel<IamPolicy>) {
     this.selection = selection;
+  }
+
+  attachPolicy() {
+    this.router.navigate(['/policies/policy-attach', this.selection.selected[0].id]);
   }
 }
