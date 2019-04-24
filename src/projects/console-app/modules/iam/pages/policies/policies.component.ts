@@ -4,7 +4,7 @@ import { IamService, IamPolicy } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
 
@@ -25,7 +25,8 @@ export class PoliciesComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.showModal = false;
   }
@@ -123,6 +124,6 @@ export class PoliciesComponent implements OnInit {
   }
 
   attachPolicy() {
-    this.router.navigate(['/policies/policy-attach', this.selection.selected[0].id]);
+    this.router.navigate(['policy-attach', this.selection.selected[0].id],  {relativeTo: this.route});
   }
 }
