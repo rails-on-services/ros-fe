@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
-import { JsonApiQueryData } from 'angular2-jsonapi';
 import { SelectionModel } from '@angular/cdk/collections';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-group',
@@ -13,9 +13,9 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./new-group.component.scss']
 })
 export class NewGroupComponent implements OnInit, AfterViewInit {
-  document$: Observable<JsonApiQueryData<IamPolicy>>;
+  policies$: Observable<any[]>;
   selection: IamPolicy[];
-
+  shownColumns: (string|number|symbol)[];
 
   groupDetailsGroup: FormGroup;
   isEditable = true;
@@ -86,7 +86,27 @@ export class NewGroupComponent implements OnInit, AfterViewInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+  get columnProperties() {
+    return IamPolicy.prototype.getColumnProperties();
+  }
+
   private fetchPolicies() {
-    this.document$ = this.iamService.fetchPolicies();
+    this.policies$ = this.iamService.fetchPolicies().pipe(
+      map(document => {
+        const iamPolicies = document.getModels();
+        const policies = iamPolicies.map(iamPolicy => {
+          const policy = { id: iamPolicy.id };
+          const keys = Object.keys(iamPolicy.getColumnProperties());
+
+          keys.forEach(key => {
+            policy[key] = iamPolicy[key];
+          });
+
+          return policy;
+        });
+
+        return policies;
+      })
+    );
   }
 }
