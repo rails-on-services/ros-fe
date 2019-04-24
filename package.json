@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "PRODUCTION=false npm run config && ng serve --host 0.0.0.0",
+    "start:mock": "PRODUCTION=false MOCK=true npm run config && ng serve --host 0.0.0.0",
     "start:prod": "PRODUCTION=true npm run config && ng serve --aot --prod --host 0.0.0.0",
     "build": "PRODUCTION=false npm run config && ng build",
     "build:prod": "PRODUCTION=true npm run config && ng build --aot --prod",

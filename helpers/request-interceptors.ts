@@ -12,7 +12,14 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { FeatureFlagsService } from '../shared/services/feature-flags/feature-flags.service';
 
 @Injectable()
-export class FakeBackendInterceptor implements HttpInterceptor {
+export class HttpRequestInterceptor implements HttpInterceptor {
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        return next.handle(request);
+    }
+}
+
+@Injectable()
+export class MockRequestInterceptor implements HttpInterceptor {
 
   users: any = {
     data: [{
@@ -386,9 +393,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 }
 
-export const FakeBackendProvider = {
-  // use fake backend in place of Http service for backend-less development
-  provide: HTTP_INTERCEPTORS,
-  useClass: FakeBackendInterceptor,
-  multi: true
-};
+// export const FakeBackendProvider = {
+//   // use fake backend in place of Http service for backend-less development
+//   provide: HTTP_INTERCEPTORS,
+//   useClass: FakeBackendInterceptor,
+//   multi: true
+// };

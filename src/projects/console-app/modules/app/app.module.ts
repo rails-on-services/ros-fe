@@ -16,8 +16,10 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // used to create fake backend
-import { FakeBackendProvider } from '../../../../../helpers/fake-backend-intercepter';
+import { MockRequestInterceptor, HttpRequestInterceptor } from '../../../../../helpers/request-interceptors';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+const isMock = environment.mock;
 
 @NgModule({
   declarations: [
@@ -37,7 +39,11 @@ import { FakeBackendProvider } from '../../../../../helpers/fake-backend-interce
   ],
   providers: [
     ChildrenOutletContexts,
-    FakeBackendProvider
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: isMock ? MockRequestInterceptor : HttpRequestInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
