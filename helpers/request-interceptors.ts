@@ -13,9 +13,9 @@ import { FeatureFlagsService } from '../shared/services/feature-flags/feature-fl
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request);
-    }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(request);
+  }
 }
 
 @Injectable()
