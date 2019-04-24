@@ -11,7 +11,7 @@ export class FeatureFlagsService {
   mockPoliciesDb = false;
 
   constructor() {
-    if (!environment.production) {
+    if (environment.mock) {
       this.mockUsersDb = true;
       this.mockGroupsDb = true;
       this.mockPoliciesDb = true;
