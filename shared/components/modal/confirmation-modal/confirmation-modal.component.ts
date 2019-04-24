@@ -2,7 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 export interface DialogData {
-  type: string;
+  header: string;
+  content: string;
+  btnColor: string;
+  action: string;
 }
 
 @Component({
@@ -14,7 +17,6 @@ export interface DialogData {
 // tslint:disable-next-line: component-class-suffix
 export class ConfirmationModal implements OnInit {
 
-  type: string;
   constructor(public dialogRef: MatDialogRef<ConfirmationModal>,
               @Inject(MAT_DIALOG_DATA) public injectedData: DialogData) {
   }

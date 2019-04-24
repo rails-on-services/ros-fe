@@ -73,8 +73,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   showDeleteConfirmationPopup() {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
-      width: '30vw',
-      data: { type: 'user' }
+      minWidth: '300px',
+      data: {
+        header: 'Deleting Users',
+        content: 'Are you sure you want to delete the users',
+        btnColor: 'warn',
+        action: 'Delete'
+       }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {

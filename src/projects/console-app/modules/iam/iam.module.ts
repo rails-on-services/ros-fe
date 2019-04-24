@@ -12,7 +12,6 @@ import {DismissableContentComponent} from '../../../../../shared/components/dism
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
-import { NgxResizableModule } from '@3dgenomes/ngx-resizable';
 import { PoliciesComponent } from './pages/policies/policies.component';
 import { PolicyAttachComponent } from './pages/policy-attach/policy-attach.component';
 

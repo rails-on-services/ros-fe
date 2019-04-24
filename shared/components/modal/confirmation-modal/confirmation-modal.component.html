@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Deleting User</h1>
+<h1 mat-dialog-title>{{injectedData.header}}</h1>
 <div mat-dialog-content>
   <div>
-    <p>Are you sure you want to delete the selected {{injectedData.type}}(s)</p>
+    <p>{{injectedData.content}}</p>
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onCancel()">Cancel</button>
-  <button mat-raised-button color="warn" [mat-dialog-close]="true" >Delete</button>
+  <button mat-raised-button [color]="injectedData.btnColor" [mat-dialog-close]="true" >{{injectedData.action}}</button>
 </div>

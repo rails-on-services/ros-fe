@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { IamService, IamUser } from '@perx/open-services';
+import { IamService, IamUser, IamGroup } from '@perx/open-services';
+import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
-import { JsonApiQueryData } from 'angular2-jsonapi';
+import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-policy-attach',
@@ -13,8 +13,10 @@ import { map } from 'rxjs/operators';
 })
 export class PolicyAttachComponent implements OnInit {
   users$: Observable<any[]>;
+  groups$: Observable<any[]>;
+  content$: Observable<any[]>;
 
-  selection: SelectionModel<IamUser>;
+  selection: SelectionModel<IamUser|IamGroup>;
 
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -30,18 +32,22 @@ export class PolicyAttachComponent implements OnInit {
   }
 
   private fetchUsers() {
-    this.users$ = this.iamService.fetchUsers().pipe(
-      map(document => {
-        const iamUsers = document.getModels();
-        const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
+    this.content$ = combineLatest(this.iamService.fetchUsers(), this.iamService.fetchGroups()).pipe(
+      map(([user, group]) => {
+        const iamUsers = user.getModels();
+        const iamGroups = group.getModels();
+        const allUsers = [...iamUsers, ...iamGroups];
+
+        const users = allUsers.map(singleUser => {
+          const userDetails = { id: singleUser.id };
+          const keys = Object.keys(singleUser.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = iamUser[key];
+            userDetails[key] = singleUser[key];
           });
-
-          return user;
+          userDetails['username'] = singleUser.username || singleUser.name;
+          userDetails['type'] = singleUser.type;
+          return userDetails;
         });
 
         return users;
@@ -50,11 +56,27 @@ export class PolicyAttachComponent implements OnInit {
   }
 
   get columnProperties() {
-    return { type: {value: 'users', sortable: true}, ...IamUser.prototype.getColumnProperties()};
+    return { username: {name: 'User Name', sortable: true}, type: {name: 'Type', sortable: true}};
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {
     this.selection = selection;
   }
+  showAttachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Attach Policy',
+        content: 'Are you sure you want to attach the policy to the users',
+        btnColor: 'primary',
+        action: 'Confirm'
+       }
+    });
 
+    confirmPopup.afterClosed().subscribe(confirm => {
+      if (confirm) {
+        console.log('Attach policy action place holder');
+      }
+    });
+  }
 }
