@@ -5,8 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal } from '../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
-import { ManageColumnModal } from '../../../../../../../shared/components/modal/manage-column-modal/manage-column-modal.component';
+import { ConfirmationModal, ManageColumnModal} from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-policies',
