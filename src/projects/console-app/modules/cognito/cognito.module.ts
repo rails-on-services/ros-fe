@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewUserComponent } from './pages/users/new-user/new-user.component';
 import { SharedModule } from '../../../../shared/shared.module';
-import { OpenUiComponentsModule, ConfirmationModal } from '@perx/open-ui-components';
+import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { OpenUiComponentsModule, ConfirmationModal } from '@perx/open-ui-compone
     OpenUiComponentsModule
   ],
   entryComponents: [
+    ManageColumnModal,
     ConfirmationModal,
     NewUserComponent]
 })

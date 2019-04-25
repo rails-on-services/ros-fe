@@ -11,7 +11,7 @@ import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
-import { OpenUiComponentsModule , ConfirmationModal} from '@perx/open-ui-components';
+import { OpenUiComponentsModule , ConfirmationModal, ManageColumnModal} from '@perx/open-ui-components';
 
 // import {routes} from './iam-routing.module';
 
@@ -35,6 +35,7 @@ import { OpenUiComponentsModule , ConfirmationModal} from '@perx/open-ui-compone
   ],
   exports: [HomeComponent, IamComponent],
   entryComponents: [
+    ManageColumnModal,
     ConfirmationModal,
     NewUserComponent]
 })
