@@ -1,0 +1,86 @@
+<mat-card>
+  <mat-card-title>Create New Policy</mat-card-title>
+  <form [formGroup]="userDetailsGroup" (ngSubmit)="submitForm()">
+
+    <mat-horizontal-stepper linear>
+      <mat-step label="Policy Details" [stepControl]="userDetailsGroup" [editable]="isEditable">
+        <mat-card-content>
+          <ng-template matStepLabel>Set user details</ng-template>
+          <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <mat-form-field>
+            <mat-label>Policyname</mat-label>
+            <input matInput placeholder="Policyname" formControlName="userName" required>
+            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('userName', 'required')">Policyname is required</mat-error>
+            <mat-error *ngIf="hasError('userName', 'maxlength')">You have more than 60 characters</mat-error>
+          </mat-form-field>
+          <div class="access-types">
+
+            <mat-label>Access Type:</mat-label>
+            <div>
+              <div>
+                <mat-checkbox formControlName="hasProgrammaticAccess">
+                  <div><strong>Programmatic Access</strong></div>
+                  <div>
+                    Enables an access key ID and secret access key for the API, SDK, and other development tools.
+                  </div>
+                </mat-checkbox>
+              </div>
+              <div>
+                <mat-checkbox formControlName="hasConsoleAccess">
+                  <div><strong>Console Access</strong></div>
+                  <div>Enables a password that allows users to sign-in to the Management Console.</div>
+                </mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Review" [editable]="false">
+        <mat-card-content>
+          <h3 class="mat-h3">Review details</h3>
+          <h4 class="mat-h4">Policy details</h4>
+
+          <mat-label>Policyname:</mat-label>
+          <div>{{userDetailsGroup.get('userName').value}}</div>
+
+          <div class="access-types">
+            <mat-label>Access Type:</mat-label>
+            <div *ngIf="userDetailsGroup.get('hasProgrammaticAccess').value">
+              <div><strong>Programmatic Access</strong> - with an access key</div>
+            </div>
+            <div *ngIf="userDetailsGroup.get('hasConsoleAccess').value">
+              <div><strong>Console Access</strong> - Console access with a username and password</div>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          <span>Back</span></button>
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Finish</button>
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+  <ng-container *ngIf="user$ | async">{{goBack()}}</ng-container>
+</mat-card>

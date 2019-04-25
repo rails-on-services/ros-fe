@@ -13,7 +13,8 @@ import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
 import { PoliciesComponent } from './pages/policies/policies.component';
-import { PolicyAttachComponent } from './pages/policy-attach/policy-attach.component';
+import { PolicyAttachComponent } from './pages/policies/policy-attach/policy-attach.component';
+import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
 
 // import {routes} from './iam-routing.module';
 
@@ -26,7 +27,8 @@ import { PolicyAttachComponent } from './pages/policy-attach/policy-attach.compo
     NewUserComponent,
     NewGroupComponent,
     PoliciesComponent,
-    PolicyAttachComponent],
+    PolicyAttachComponent,
+    NewPolicyComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
