@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmationModal } from '@perx/open-ui-components';
+import { ConfirmationModal } from '../../../../../../../../shared/components/modal/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-policy-attach',
