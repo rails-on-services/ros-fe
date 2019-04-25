@@ -107,11 +107,33 @@ export class MockRequestInterceptor implements HttpInterceptor {
         attributes: {
           urn: 'urn:perx:iam::222222222:policy/AdministratorAccess',
           policyname: 'AdministratorAccess',
+          type: 'Job function',
+          attachments: 1,
+          used_as: 'admin',
+          creation_time: '2015-02-07 02:12 UTC+0800',
+          edited_time: '2015-02-07 02:12 UTC+0800',
           jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/prianka', scope: '*' },
           description: 'Admin',
           attached_actions: {}
         }
       },
+      {
+        id: '2',
+        type: 'policy',
+        links: { self: 'http://13.229.71.66:3000/policies/1' },
+        attributes: {
+          urn: 'urn:perx:iam::222222222:policy/AdministratorAccess',
+          policyname: 'AdministratorAccess',
+          type: 'Job function',
+          attachments: 0,
+          used_as: 'admin',
+          creation_time: '2015-02-07 02:12 UTC+0800',
+          edited_time: '2015-02-07 02:12 UTC+0800',
+          jwt_payload: { iss: 'http://iam:3000', sub: 'urn:perx:iam::222222222:user/prianka', scope: '*' },
+          description: 'Admin',
+          attached_actions: {}
+        }
+      }
     ]
   };
 

@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="action" fxLayout="row" fxLayoutGap="1rem">
+    <button mat-raised-button color="primary" [routerLink]="['new-policy']">
+      Add Policy
+    </button>
+    <button mat-raised-button [matMenuTriggerFor]="appMenu"
+            [disabled]="!selection">
+      Policy Actions
+    </button>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="attachPolicy()"
+              [disabled]="!selection">
+        Attach
+      </button>
+      <button mat-menu-item
+              [disabled]="!selection || selection.selected.attachments < 1">
+        Detach
+      </button>
+      <button mat-menu-item
+              (click)="showDeleteConfirmationPopup()"
+              [disabled]="!selection">
+        Delete
+      </button>
+    </mat-menu>
+
+    <div fxFlex fxLayout="row" fxLayoutAlign="end">
+      <mat-button-toggle-group
+          aria-label="Other Actions"
+          name="otherActions"
+          (change)="onOtherActionsChange($event)">
+        <mat-button-toggle value="reload">
+          <mat-icon>refresh</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="settings">
+          <mat-icon>settings</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="help">
+          <mat-icon>help</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <ng-container class="policies-table" *ngIf="policies$ | async as policies">
+    <app-filterable-table
+        [columnProperties]="columnProperties"
+        [selectType]="'radio'"
+        [contents]="policies"
+        [selectable]=true
+        (selectionChange)="onPoliciesSelectionChange($event)"
+        [shownColumns]="shownColumns">
+    </app-filterable-table>
+  </ng-container>
+</div>
+<router-outlet></router-outlet>

@@ -50,8 +50,13 @@ export class GroupsComponent implements OnInit {
 
   showDeleteConfirmationPopup() {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
-      width: '30vw',
-      data: { type: 'group' }
+      minWidth: '300px',
+      data: {
+        header: 'Deleting Group',
+        content: 'Are you sure you want to delete the group',
+        btnColor: 'warn',
+        action: 'Delete'
+       }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
@@ -63,7 +68,7 @@ export class GroupsComponent implements OnInit {
 
   editGroupNamePopup() {
     const confirmPopup = this.dialog.open(RenameModal, {
-      width: '40vw',
+      minWidth: '300px',
       data: { type: 'group' }
     });
 
