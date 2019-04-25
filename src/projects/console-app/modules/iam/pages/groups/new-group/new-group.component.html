@@ -35,11 +35,14 @@
           <div class="group-policies">
 
             <mat-label>Attach Policies</mat-label>
-            <ng-container class="policies-table" *ngIf="document$ | async as document">
+            <ng-container class="policies-table" *ngIf="policies$ | async as policies">
               <app-filterable-table
-                  [contents]="document.getModels()"
+                  [columnProperties]="columnProperties"
+                  [contents]="policies"
                   [selectable]=true
-                  (selectionChange)="onPolicySelectionChange($event)">
+                  (selectionChange)="onPolicySelectionChange($event)"
+                  [shownColumns]="shownColumns"
+              >
               </app-filterable-table>
 
             </ng-container>

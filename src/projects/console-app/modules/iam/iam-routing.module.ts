@@ -6,10 +6,8 @@ import {GroupsComponent} from './pages/groups/groups.component';
 import {PoliciesComponent} from './pages/policies/policies.component';
 import {PolicyAttachComponent} from './pages/policies/policy-attach/policy-attach.component';
 import {NewPolicyComponent} from './pages/policies/new-policy/new-policy.component';
-import {ModalComponent} from '../../../../../shared/components/modal/modal.component';
 import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
-import {NewUserResolverService} from './pages/users/new-user/new-user-resolver.service';
 import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
 
 export const router: Routes = [

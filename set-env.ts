@@ -18,7 +18,8 @@ export const environment = {
   apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'http://localhost:3000'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
-  preAuthPath: '${process.env.PREAUTHPATH ? process.env.PREAUTHPATH : '/preauth'}'
+  preAuthPath: '${process.env.PREAUTHPATH ? process.env.PREAUTHPATH : '/preauth'}',
+  mock: ${process.env.MOCK ? process.env.MOCK : false},
 };
 `;
 
