@@ -25,7 +25,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     data: [{
       id: '1',
       type: 'users',
-      links: { self: 'http://13.229.71.66:3000/users/1' },
+      links: { self: 'https://api.ros.rails-on-services.org/users/1' },
       attributes: {
         urn: 'urn:perx:iam::222222222:user/Admin_2',
         username: 'Admin_2',
@@ -36,7 +36,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }, {
       id: '23',
       type: 'users',
-      links: { self: 'http://13.229.71.66:3000/users/23' },
+      links: { self: 'https://api.ros.rails-on-services.org/users/23' },
       attributes: {
         urn: 'urn:perx:iam::222222222:user/dink',
         username: 'dink',
@@ -47,7 +47,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }, {
       id: '26',
       type: 'users',
-      links: { self: 'http://13.229.71.66:3000/users/26' },
+      links: { self: 'https://api.ros.rails-on-services.org/users/26' },
       attributes: {
         urn: 'urn:perx:iam::222222222:user/prianka',
         username: 'prianka',
@@ -62,7 +62,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     data: [{
       id: '1',
       type: 'groups',
-      links: { self: 'http://13.229.71.66:3000/groups/1' },
+      links: { self: 'https://api.ros.rails-on-services.org/groups/1' },
       attributes: {
         name: 'group 1',
         urn: 'urn:perx:iam::222222222:group/1',
@@ -74,7 +74,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }, {
       id: '2',
       type: 'groups',
-      links: { self: 'http://13.229.71.66:3000/groups/2' },
+      links: { self: 'https://api.ros.rails-on-services.org/groups/2' },
       attributes: {
         name: 'group 2',
         urn: 'urn:perx:iam::222222222:group/2',
@@ -86,7 +86,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }, {
       id: '3',
       type: 'groups',
-      links: { self: 'http://13.229.71.66:3000/groups/3' },
+      links: { self: 'https://api.ros.rails-on-services.org/groups/3' },
       attributes: {
         name: 'group 3',
         urn: 'urn:perx:iam::222222222:group/3',
@@ -103,7 +103,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
       {
         id: '1',
         type: 'policy',
-        links: { self: 'http://13.229.71.66:3000/policies/1' },
+        links: { self: 'https://api.ros.rails-on-services.org/policies/1' },
         attributes: {
           urn: 'urn:perx:iam::222222222:policy/AdministratorAccess',
           policyname: 'AdministratorAccess',
@@ -120,7 +120,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
       {
         id: '2',
         type: 'policy',
-        links: { self: 'http://13.229.71.66:3000/policies/1' },
+        links: { self: 'https://api.ros.rails-on-services.org/policies/1' },
         attributes: {
           urn: 'urn:perx:iam::222222222:policy/AdministratorAccess',
           policyname: 'AdministratorAccess',
