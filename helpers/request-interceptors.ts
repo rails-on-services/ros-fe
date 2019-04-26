@@ -147,6 +147,11 @@ export class MockRequestInterceptor implements HttpInterceptor {
     // wrap in delayed observable to simulate server api call
     return of(null).pipe(mergeMap(() => {
 
+      // check for fake auth token in header and return data if valid, this security is implemented server side in a real application
+      if (!/^Basic\s.+$/.test(request.headers.get('Authorization'))) {
+        return throwError({ error: { message: 'Unauthorised lol' } });
+      }
+
       // authenticate
       // if (request.url.endsWith('/users/authenticate') && request.method === 'POST') {
       //   // find if any user matches login credentials
@@ -175,185 +180,125 @@ export class MockRequestInterceptor implements HttpInterceptor {
       // get users
       if (this.featureFlagService.mockUsersDb) {
         if (request.url.includes('iam/users') && request.method === 'GET') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 200, body: this.users }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised lol' } });
-          }
+          return of(new HttpResponse({ status: 200, body: this.users }));
         }
 
         if (request.url.includes('iam/users') && request.method === 'POST') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // get new user object from post body
-            const newUser = request.body;
+          // get new user object from post body
+          const newUser = request.body;
 
-            // validation
-            const duplicateUser = this.users.data.filter(user => {
-              return user.attributes.username === newUser.data.attributes.username;
-            }).length;
-            if (duplicateUser) {
-              return throwError({ error: { message: 'User name "' + newUser.username + '" is already taken' } });
-            }
-
-            // save new user
-            newUser.data.id = this.users.data.length + 1;
-            this.users.data.push(newUser.data);
-            // localStorage.setItem('users', JSON.stringify(this.users));
-
-            return of(new HttpResponse({ status: 201, body: newUser }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
+          // validation
+          const duplicateUser = this.users.data.filter(user => {
+            return user.attributes.username === newUser.data.attributes.username;
+          }).length;
+          if (duplicateUser) {
+            return throwError({ error: { message: 'User name "' + newUser.username + '" is already taken' } });
           }
+
+          // save new user
+          newUser.data.id = this.users.data.length + 1;
+          this.users.data.push(newUser.data);
+          // localStorage.setItem('users', JSON.stringify(this.users));
+
+          return of(new HttpResponse({ status: 201, body: newUser }));
         }
 
         // delete user
         if (request.url.match(/\/users\/\d+$/) && request.method === 'DELETE') {
-          // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // find user by id in users array
-            const urlParts = request.url.split('/');
-            const id = parseInt(urlParts[urlParts.length - 1], 10);
-            for (let i = 0; i < this.users.data.length; i++) {
-              const user = this.users.data[i];
-              if (parseInt(user.id, 10) === id) {
-                // delete user
-                this.users.data.splice(i, 1);
-                // localStorage.setItem('users', JSON.stringify(this.users));
-                break;
-              }
+          // find user by id in users array
+          const urlParts = request.url.split('/');
+          const id = parseInt(urlParts[urlParts.length - 1], 10);
+          for (let i = 0; i < this.users.data.length; i++) {
+            const user = this.users.data[i];
+            if (parseInt(user.id, 10) === id) {
+              // delete user
+              this.users.data.splice(i, 1);
+              // localStorage.setItem('users', JSON.stringify(this.users));
+              break;
             }
-
-            // respond 200 OK
-            return of(new HttpResponse({ status: 204 }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
           }
+
+          // respond 200 OK
+          return of(new HttpResponse({ status: 204 }));
         }
       }
       if (this.featureFlagService.mockGroupsDb) {
         // get groups
         if (request.url.includes('iam/groups') && request.method === 'GET') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 200, body: this.groups }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised lol' } });
-          }
+          return of(new HttpResponse({ status: 200, body: this.groups }));
         }
 
         // create group
         if (request.url.includes('iam/groups') && request.method === 'POST') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // get new group object from post body
-            const newGroup = request.body;
+          // get new group object from post body
+          const newGroup = request.body;
 
-            // validation
-            const duplicateGroup = this.groups.data.filter(group => {
-              return group.attributes.name === newGroup.data.attributes.name;
-            }).length;
-            if (duplicateGroup) {
-              return throwError({ error: { message: 'Group name "' + newGroup.name + '" is already taken' } });
-            }
-
-            // save new group
-            newGroup.data.id = this.groups.data.length + 1;
-            this.groups.data.push(newGroup.data);
-            // localStorage.setItem('groups', JSON.stringify(this.groups));
-
-            return of(new HttpResponse({ status: 201, body: newGroup }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
+          // validation
+          const duplicateGroup = this.groups.data.filter(group => {
+            return group.attributes.name === newGroup.data.attributes.name;
+          }).length;
+          if (duplicateGroup) {
+            return throwError({ error: { message: 'Group name "' + newGroup.name + '" is already taken' } });
           }
+
+          // save new group
+          newGroup.data.id = this.groups.data.length + 1;
+          this.groups.data.push(newGroup.data);
+          // localStorage.setItem('groups', JSON.stringify(this.groups));
+
+          return of(new HttpResponse({ status: 201, body: newGroup }));
         }
 
         // delete group
         if (request.url.match(/\/groups\/\d+$/) && request.method === 'DELETE') {
-          // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // find user by id in groups array
-            const urlParts = request.url.split('/');
-            const id = parseInt(urlParts[urlParts.length - 1], 10);
-            for (let i = 0; i < this.groups.data.length; i++) {
-              const user = this.groups.data[i];
-              if (parseInt(user.id, 10) === id) {
-                // delete groups
-                this.groups.data.splice(i, 1);
-                // localStorage.setItem('users', JSON.stringify(this.users));
-                break;
-              }
+          // find user by id in groups array
+          const urlParts = request.url.split('/');
+          const id = parseInt(urlParts[urlParts.length - 1], 10);
+          for (let i = 0; i < this.groups.data.length; i++) {
+            const user = this.groups.data[i];
+            if (parseInt(user.id, 10) === id) {
+              // delete groups
+              this.groups.data.splice(i, 1);
+              // localStorage.setItem('users', JSON.stringify(this.users));
+              break;
             }
-
-            // respond 200 OK
-            return of(new HttpResponse({ status: 204 }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
           }
+
+          // respond 200 OK
+          return of(new HttpResponse({ status: 204 }));
         }
 
         // update group
         if (request.url.match(/\/groups\/\d+$/) && request.method === 'PATCH') {
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // get new group object from post body
-            const newGroup = request.body;
-            return of(new HttpResponse({ status: 201, body: newGroup }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
-          }
+          // get new group object from post body
+          const newGroup = request.body;
+          return of(new HttpResponse({ status: 201, body: newGroup }));
         }
 
         // get group by id
         if (request.url.match(/\/groups\/\d+$/) && request.method === 'GET') {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            // find group by id in groups array
-            const urlParts = request.url.split('/');
-            const id = parseInt(urlParts[urlParts.length - 1], 10);
-            const matchedGroups = this.groups.data.filter(match => {
-              return match.id === id;
-            });
-            const group = matchedGroups.length ? matchedGroups[0] : null;
-            return of(new HttpResponse({ status: 200, body: group }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
-          }
+          // find group by id in groups array
+          const urlParts = request.url.split('/');
+          const id = parseInt(urlParts[urlParts.length - 1], 10);
+          const matchedGroups = this.groups.data.filter(match => {
+            return match.id === id;
+          });
+          const group = matchedGroups.length ? matchedGroups[0] : null;
+          return of(new HttpResponse({ status: 200, body: group }));
         }
       }
       // get user by id
       // if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
-      //   // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-      //   if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-      //     // find user by id in users array
-      //     const urlParts = request.url.split('/');
-      //     const id = parseInt(urlParts[urlParts.length - 1]);
-      //     const matchedUsers = users.filter(user => {
-      //       return user.id === id;
-      //     });
-      //     const user = matchedUsers.length ? matchedUsers[0] : null;
+      //   // find user by id in users array
+      //   const urlParts = request.url.split('/');
+      //   const id = parseInt(urlParts[urlParts.length - 1]);
+      //   const matchedUsers = users.filter(user => {
+      //     return user.id === id;
+      //   });
+      //   const user = matchedUsers.length ? matchedUsers[0] : null;
       //
-      //     return of(new HttpResponse({ status: 200, body: user }));
-      //   } else {
-      //     // return 401 not authorised if token is null or invalid
-      //     return throwError({ error: { message: 'Unauthorised' } });
-      //   }
+      //   return of(new HttpResponse({ status: 200, body: user }));
       // }
 
       // register user
@@ -381,25 +326,11 @@ export class MockRequestInterceptor implements HttpInterceptor {
 
       if (this.featureFlagService.mockPoliciesDb) {
         if (request.url.includes('iam/policies') && request.method === 'GET') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 200, body: this.policies }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
-          }
+          return of(new HttpResponse({ status: 200, body: this.policies }));
         }
 
         if (request.url.includes('iam/policies') && request.method === 'POST') {
-          // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-          if (request.headers.get('Authorization') ===
-            'Basic ADJJNEGQHXONNYIQOWLU:1chgEd6-lVBEMlb3sp8ewM0J46n3apBUb1cuM-f7SKsh1iEG37eomA') {
-            return of(new HttpResponse({ status: 201, body: 'success' }));
-          } else {
-            // return 401 not authorised if token is null or invalid
-            return throwError({ error: { message: 'Unauthorised' } });
-          }
+          return of(new HttpResponse({ status: 201, body: 'success' }));
         }
       }
 
