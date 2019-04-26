@@ -13,7 +13,7 @@
         Attach
       </button>
       <button mat-menu-item
-              [disabled]="!selection || selection.selected.attachments < 1">
+              [disabled]="!selection || selection.selected.length < 1">
         Detach
       </button>
       <button mat-menu-item
