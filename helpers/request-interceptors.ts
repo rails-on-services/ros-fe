@@ -137,6 +137,71 @@ export class MockRequestInterceptor implements HttpInterceptor {
     ]
   };
 
+  private campaigns: any = {
+    data: [
+      {
+        id: '1',
+        type: 'reward',
+        links: { self: 'https://api.ros.rails-on-services.org/campaigns/1' },
+        attributes: {
+          parent_id: null,
+          name: 'Cafe 1',
+          merchant_name: 'Starbucks',
+          status: 'Active',
+          start_date: '2019-04-26T08:32:54.689Z',
+          end_date: '2019-06-26T08:32:54.689Z',
+          reward_balance_current: 500,
+          reward_balance_max: 1000
+        }
+      },
+      {
+        id: '2',
+        type: 'reward',
+        links: { self: 'https://api.ros.rails-on-services.org/campaigns/2' },
+        attributes: {
+          parent_id: null,
+          name: 'Cafe 2',
+          merchant_name: 'Starbucks',
+          status: 'Active',
+          start_date: '2019-04-26T08:32:54.689Z',
+          end_date: '2019-06-26T08:32:54.689Z',
+          reward_balance_current: 500,
+          reward_balance_max: 1000
+        }
+      },
+      {
+        id: '3',
+        type: 'reward',
+        links: { self: 'https://api.ros.rails-on-services.org/campaigns/3' },
+        attributes: {
+          parent_id: '1',
+          name: 'Cafe 1 - Sub #3',
+          merchant_name: 'Starbucks',
+          status: 'Active',
+          start_date: '2019-04-26T08:32:54.689Z',
+          end_date: '2019-06-26T08:32:54.689Z',
+          reward_balance_current: 500,
+          reward_balance_max: 1000
+        }
+      },
+      {
+        id: '4',
+        type: 'reward',
+        links: { self: 'https://api.ros.rails-on-services.org/campaigns/4' },
+        attributes: {
+          parent_id: '1',
+          name: 'Cafe 1 - Sub #4',
+          merchant_name: 'Starbucks',
+          status: 'Active',
+          start_date: '2019-04-26T08:32:54.689Z',
+          end_date: '2019-06-26T08:32:54.689Z',
+          reward_balance_current: 500,
+          reward_balance_max: 1000
+        }
+      }
+    ]
+  };
+
   constructor(private featureFlagService: FeatureFlagsService) {
   }
 
@@ -330,6 +395,16 @@ export class MockRequestInterceptor implements HttpInterceptor {
         }
 
         if (request.url.includes('iam/policies') && request.method === 'POST') {
+          return of(new HttpResponse({ status: 201, body: 'success' }));
+        }
+      }
+
+      if (this.featureFlagService.mockRewardsDb) {
+        if (request.url.includes('/campaigns') && request.method === 'GET') {
+          return of(new HttpResponse({ status: 200, body: this.campaigns }));
+        }
+
+        if (request.url.includes('/campaigns') && request.method === 'POST') {
           return of(new HttpResponse({ status: 201, body: 'success' }));
         }
       }

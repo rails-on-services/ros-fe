@@ -9,12 +9,14 @@ export class FeatureFlagsService {
   mockUsersDb = false;
   mockGroupsDb = false;
   mockPoliciesDb = false;
+  mockRewardsDb = false;
 
   constructor() {
     if (environment.mock) {
       this.mockUsersDb = true;
       this.mockGroupsDb = true;
       this.mockPoliciesDb = true;
+      this.mockRewardsDb = true;
     }
   }
 }
