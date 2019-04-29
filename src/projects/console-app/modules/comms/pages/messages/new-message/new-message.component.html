@@ -1,20 +1,33 @@
 <mat-card>
   <mat-card-title>Create New Group</mat-card-title>
-  <form [formGroup]="groupDetailsGroup" (ngSubmit)="submitForm()">
+  <form [formGroup]="messageDetailsGroup" (ngSubmit)="submitForm()">
 
-    <mat-horizontal-stepper linear>
-      <mat-step label="Group Details" [stepControl]="groupDetailsGroup" [editable]="isEditable">
+    <mat-horizontal-stepper formArrayName="formArray" linear>
+      <mat-step label="Message Details" formGroupName="0" [stepControl]="formArray.get([0])"
+                [editable]="isEditable">
         <mat-card-content>
-          <ng-template matStepLabel>Set group details</ng-template>
+          <ng-template matStepLabel>Set Message details</ng-template>
           <!--<mat-card-subtitle> You can add multiple groups at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
-            <mat-label>Group Name</mat-label>
-            <input matInput placeholder="Group Name" formControlName="name" required>
-            <mat-hint>Not more than 60 characters long.</mat-hint>
-            <mat-error *ngIf="hasError('name', 'required')">Group Name is required</mat-error>
-            <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-label>Message Name</mat-label>
+            <input matInput placeholder="Message Name" formControlName="name">
+            <mat-hint>Not more than 100 characters long.</mat-hint>
+            <mat-error *ngIf="hasError(0,'name','required')">Message Name is required</mat-error>
+            <mat-error *ngIf="hasError(0,'name','maxlength')">You have more than 100 characters
+            </mat-error>
           </mat-form-field>
 
+          <mat-form-field>
+            <mat-label>Channel Type:</mat-label>
+            <mat-select placeholder="Channel Type" formControlName="channel">
+              <!--              <mat-option *ngFor="let channel of channels" [value]="channel.value">-->
+              <!--                {{channel.value}}-->
+              <!--              </mat-option>-->
+              <mat-option value="sms">SMS</mat-option>
+              <mat-option value="email">Email</mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError(0,'name','required')">Please select an option</mat-error>
+          </mat-form-field>
 
         </mat-card-content>
         <mat-card-actions>
@@ -29,45 +42,25 @@
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Attach Policy">
+      <mat-step label="Customise Content" formGroupName="1" [stepControl]="formArray.get([1])"
+                [editable]="isEditable">
         <mat-card-content>
-          <ng-template matStepLabel>Set group policies</ng-template>
-          <div class="group-policies">
-
-            <mat-label>Attach Policies</mat-label>
-            <ng-container class="policies-table" *ngIf="policies$ | async as policies">
-              <app-filterable-table
-                  [columnProperties]="columnProperties"
-                  [contents]="policies"
-                  [selectable]=true
-                  (selectionChange)="onPolicySelectionChange($event)"
-                  [shownColumns]="shownColumns"
-              >
-              </app-filterable-table>
-
-            </ng-container>
-          </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
-            <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
-
-        </span>
-          </div>
-        </mat-card-actions>
-      </mat-step>
-      <mat-step label="Add Users to Group">
-        <mat-card-content>
-          <ng-template matStepLabel>Add Users</ng-template>
-          <div class="add-users">
-          </div>
+          <ng-template matStepLabel>Customise Content</ng-template>
+          <mat-form-field>
+            <mat-label>From:</mat-label>
+            <input matInput placeholder="From" formControlName="from" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>To:</mat-label>
+            <input matInput placeholder="To" formControlName="to" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Body:</mat-label>
+            <textarea matInput
+                      placeholder="Body"
+                      formControlName="body"
+                      required></textarea>
+          </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
@@ -87,21 +80,35 @@
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
           <h3 class="mat-h3">Review details</h3>
-          <h4 class="mat-h4">Group details</h4>
+          <h4 class="mat-h4">Message details</h4>
 
-          <mat-label>Group Name:</mat-label>
-          <div>{{groupDetailsGroup.get('name').value}}</div>
+          <mat-label>Message Name:</mat-label>
+          <div *ngIf="formArray.get([0]).get('name').value">
+            <div>{{formArray.get([0]).get('name').value}}</div>
+          </div>
+          <mat-label>Channel:</mat-label>
+          <div *ngIf="formArray.get([0]).get('channel').value">
+
+            <div>{{formArray.get([0]).get('channel').value}}</div>
+          </div>
 
           <div class="access-types">
-            <mat-label>Access Type:</mat-label>
-            <div *ngIf="groupDetailsGroup.get('attachedPolicies').value">
-              <div><strong>Attached Policies</strong></div>
-              <ul>
-                <li *ngFor="let policy of selection; index as i; ">
-                  {{policy.policyname}}
-                </li>
-              </ul>
+            <mat-label>From:</mat-label>
+            <div *ngIf="formArray.get([1]).get('from').value">
+              <div>{{formArray.get([1]).get('from').value}}</div>
             </div>
+
+            <mat-label>To:</mat-label>
+            <div *ngIf="formArray.get([1]).get('to').value">
+              <div>{{formArray.get([1]).get('to').value}}</div>
+            </div>
+
+            <mat-label>Body:</mat-label>
+            <div *ngIf="formArray.get([1]).get('body').value">
+              <div>{{formArray.get([1]).get('body').value}}</div>
+            </div>
+
+
           </div>
         </mat-card-content>
         <mat-card-actions>
@@ -120,5 +127,5 @@
       </mat-step>
     </mat-horizontal-stepper>
   </form>
-  <ng-container *ngIf="group$ | async">{{goBack()}}</ng-container>
+<!--  <ng-container *ngIf="message$ | async">{{goBack()}}</ng-container>-->
 </mat-card>

@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommsService, CommsMessage } from '@perx/open-services';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class NewMessageComponent implements OnInit, AfterViewInit {
   selection: CommsMessage[];
   shownColumns: (string|number|symbol)[];
 
-  messageDetailsMessage: FormGroup;
+  messageDetailsGroup: FormGroup;
   isEditable = true;
 
   createMessagenamePage: boolean;
@@ -25,31 +25,37 @@ export class NewMessageComponent implements OnInit, AfterViewInit {
   constructor(private modalService: ModalService,
               private router: Router,
               private route: ActivatedRoute,
-              private commService: CommsService) {
+              private commService: CommsService,
+              private _formBuilder: FormBuilder) {
     this.createMessagenamePage = true;
     this.reviewPage = false;
   }
 
   ngOnInit() {
-    this.messageDetailsMessage = new FormGroup(
-      {
-        name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
-        channel: this.messageDetailsMessage.get('channel').value,
-        from: new FormControl(''),
-        to: new FormControl(''),
-        ownerType: new FormControl(''),
-      });
-
+    this.messageDetailsGroup = this._formBuilder.group({
+      formArray: this._formBuilder.array([
+        this._formBuilder.group({
+          name: ['', [Validators.required, Validators.maxLength(100)]],
+          channel: ['', Validators.required],
+        }),
+        this._formBuilder.group({
+          body: [''],
+          from: [''],
+          to: [''],
+          ownerType: ['']
+        }),
+      ])
+    });
   }
+  get formArray(): AbstractControl | null {return this.messageDetailsGroup.get('formArray'); }
 
   ngAfterViewInit() {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-
-  hasError(controlName: string, errorName: string) {
-    return this.messageDetailsMessage.controls[controlName].hasError(errorName);
+  hasError(section: number, controlName: string, errorName: string) {
+    return this.formArray.get([section]).get(controlName).hasError(errorName);
   }
 
 
@@ -59,27 +65,14 @@ export class NewMessageComponent implements OnInit, AfterViewInit {
 
   submitForm() {
 
-    // should only need ids of attached policies and let the backend do the heavy lifiting
-    const policies = [];
-    if (this.messageDetailsMessage.get('attachedPolicies').value) {
-      this.messageDetailsMessage.get('attachedPolicies').value.forEach((policy) => {
-          policies.push(policy.id);
-        }
-      );
-    }
-
     const message = {
-      name: this.messageDetailsMessage.get('name').value,
-      channel: this.messageDetailsMessage.get('channel').value,
-      from: this.messageDetailsMessage.get('from').value,
-      to: this.messageDetailsMessage.get('to').value,
-      ownerType: this.messageDetailsMessage.get('ownerType').value
+      name: this.formArray.get([0]).get('name').value,
+      channel: this.formArray.get([0]).get('channel').value,
+      body: this.formArray.get([1]).get('body').value,
+      from: this.formArray.get([1]).get('from').value,
+      to: this.formArray.get([1]).get('to').value,
+      ownerType: this.formArray.get([1]).get('ownerType').value
     };
-    // {
-    //   name: this.messageDetailsMessage.get('name').value,
-    //   attachedPolicies: policies,
-    //   users: this.messageDetailsMessage.get('users').value
-    // };
     this.message$ = this.commService.createMessage(message);
   }
 

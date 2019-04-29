@@ -31,7 +31,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "@perx/open-ui-components": "rails-on-services/open-ui-components#master",
-    "@perx/open-services": "rails-on-services/open-services#017980b",
+    "@perx/open-services": "rails-on-services/open-services#7588282",
     "angular2-jsonapi": "^6.1.3",
     "core-js": "^2.5.4",
     "ngx-auth": "^5.0.0",

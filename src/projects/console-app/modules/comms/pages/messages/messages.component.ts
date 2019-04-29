@@ -3,9 +3,9 @@ import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { CommsService, CommsMessage } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
-import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-messages',
@@ -13,7 +13,6 @@ import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit {
-  document$: Observable<JsonApiQueryData<CommsMessage>>;
   testGroupList: Observable<CommsMessage[]>;
   messages$: Observable<any[]>;
 
@@ -25,6 +24,8 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private commsService: CommsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
   ) {
     this.showModal = false;
@@ -36,6 +37,9 @@ export class MessagesComponent implements OnInit {
     this.fetchMessages();
   }
 
+  addMessage() {
+    this.router.navigate(['new-message'], { relativeTo: this.activatedRoute });
+  }
 
   removeMessages() {
     if (!this.selection || this.selection.selected.length <= 0) {
@@ -56,36 +60,12 @@ export class MessagesComponent implements OnInit {
         content: 'Are you sure you want to delete the message',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
         this.removeMessages();
-      }
-    });
-  }
-
-  editGroupNamePopup() {
-    const confirmPopup = this.dialog.open(RenameModal, {
-      minWidth: '300px',
-      data: { type: 'group' }
-    });
-
-    confirmPopup.afterClosed().subscribe(newName => {
-      if (newName) {
-        if (!this.selection || this.selection.selected.length <= 0) {
-          return;
-        }
-        this.selection.selected.forEach(group => {
-          this.commsService.fetchMessage(group.id).subscribe(messageModel => {
-            messageModel.name = newName;
-            messageModel.save().subscribe();
-            this.fetchMessages();
-          });
-
-
-        });
       }
     });
   }
