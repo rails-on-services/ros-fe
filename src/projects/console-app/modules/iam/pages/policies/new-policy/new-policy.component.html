@@ -1,50 +1,84 @@
 <mat-card>
   <mat-card-title>Create New Policy</mat-card-title>
-  <form [formGroup]="userDetailsGroup" (ngSubmit)="submitForm()">
+  <form [formGroup]="policyDetailsForm" (ngSubmit)="submitForm()">
 
     <mat-horizontal-stepper linear>
-      <mat-step label="Policy Details" [stepControl]="userDetailsGroup" [editable]="isEditable">
+      <mat-step label="Policy Details" [stepControl]="policyDetailsForm" [editable]="isEditable">
         <mat-card-content>
-          <ng-template matStepLabel>Set user details</ng-template>
-          <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <ng-template matStepLabel>Set policy details</ng-template>
           <mat-form-field>
-            <mat-label>Policyname</mat-label>
-            <input matInput placeholder="Policyname" formControlName="userName" required>
-            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
-            <mat-error *ngIf="hasError('userName', 'required')">Policyname is required</mat-error>
-            <mat-error *ngIf="hasError('userName', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-label>name</mat-label>
+            <input matInput placeholder="Policyname" formControlName="policyName" required>
+            <mat-hint>Use alphanumeric and '+=,.@-_' characters. Maximum 128 characters.</mat-hint>
+            <mat-error *ngIf="hasError('policyName', 'required')">Policyname is required</mat-error>
+            <mat-error *ngIf="hasError('policyName', 'maxlength')">You have more than 128 characters</mat-error>
           </mat-form-field>
-          <div class="access-types">
-
-            <mat-label>Access Type:</mat-label>
-            <div>
-              <div>
-                <mat-checkbox formControlName="hasProgrammaticAccess">
-                  <div><strong>Programmatic Access</strong></div>
-                  <div>
-                    Enables an access key ID and secret access key for the API, SDK, and other development tools.
-                  </div>
-                </mat-checkbox>
-              </div>
-              <div>
-                <mat-checkbox formControlName="hasConsoleAccess">
-                  <div><strong>Console Access</strong></div>
-                  <div>Enables a password that allows users to sign-in to the Management Console.</div>
-                </mat-checkbox>
-              </div>
+          
+          <mat-form-field>
+            <mat-label>description</mat-label>
+            <textarea matInput formControlName="policyDescription"></textarea>
+            <mat-hint>Use alphanumeric and '+=,.@-_' characters. Maximum 1000 characters.</mat-hint>
+            <mat-error *ngIf="hasError('policyDescription', 'maxlength')">You have more than 1000 characters</mat-error>
+          </mat-form-field>
+          <div formArrayName="permissions">
+            <div *ngFor="let permission of permissionLists.controls;  trackBy: trackByFn; let permissionIndex=index" [formGroupName]="permissionIndex">
+              <mat-accordion>
+                <mat-expansion-panel [expanded]="true">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <h3>Select a service</h3>
+                      <button mat-button color="primary" (click)="deletePermission(permissionIndex)" type="button">Remove permission</button>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <fieldset>
+                    <legend>Service</legend>
+                    <mat-radio-group [class.md-input-invalid]="hasPermissionError(permission, 'service', 'required')" aria-label="Select an option" formControlName="service" required>
+                      <mat-error *ngIf="hasPermissionError(permission, 'service', 'required')">Service is required</mat-error>
+                        <mat-radio-button value="IAM">IAM</mat-radio-button>
+                        <mat-radio-button value="Cognito">Cognito</mat-radio-button>
+                        <mat-radio-button value="Comm">Comm</mat-radio-button>
+                    </mat-radio-group>
+                  </fieldset>
+                  <fieldset>
+                    <legend>Actions</legend>
+                    <div formGroupName="actions" required>
+                      <mat-checkbox formControlName="list">List</mat-checkbox>
+                      <mat-checkbox formControlName="read">Read</mat-checkbox>
+                      <mat-checkbox formControlName="tagging">Tagging</mat-checkbox>
+                      <mat-checkbox formControlName="write">Write</mat-checkbox>
+                      <mat-checkbox formControlName="permissionManagement">Permissions Management</mat-checkbox>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <legend>Request conditions</legend>
+                    <div formGroupName="conditions">
+                      <mat-checkbox formControlName="mfa">
+                          <div><strong>MFA required</strong></div>
+                          <div class="text-wrap">Requires users to authenticate with an MFA device to perform the specified actions
+                          </div>
+                      </mat-checkbox>
+                      <mat-checkbox formControlName="sourceIp">
+                          <div><strong>Source IP</strong></div>
+                          <div class="text-wrap">Allow access to the specified actions only when the request comes from the specified IP address range.
+                          </div>
+                      </mat-checkbox>
+                    </div>
+                  </fieldset>
+                </mat-expansion-panel>
+              </mat-accordion>
             </div>
           </div>
-
+          <div class="text-right">
+            <button mat-button color="primary" (click)="addAdditionalPermission()" type="button">Add additional permissions</button>
+          </div>
         </mat-card-content>
+        <mat-divider></mat-divider>
         <mat-card-actions>
-          <div class="button-container">
-        <span class="align-left">
-        </span>
-            <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
-
-        </span>
+          <div class="button-container text-right">
+            <span>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button" (click)="goNextStep()">Next</button>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
@@ -53,16 +87,24 @@
           <h3 class="mat-h3">Review details</h3>
           <h4 class="mat-h4">Policy details</h4>
 
-          <mat-label>Policyname:</mat-label>
-          <div>{{userDetailsGroup.get('userName').value}}</div>
-
-          <div class="access-types">
-            <mat-label>Access Type:</mat-label>
-            <div *ngIf="userDetailsGroup.get('hasProgrammaticAccess').value">
-              <div><strong>Programmatic Access</strong> - with an access key</div>
-            </div>
-            <div *ngIf="userDetailsGroup.get('hasConsoleAccess').value">
-              <div><strong>Console Access</strong> - Console access with a username and password</div>
+          <mat-label>Policy name:</mat-label>
+          <div>{{policyDetailsForm.get('policyName').value}}</div>
+          <mat-label>Policy description:</mat-label>
+          <div>{{policyDetailsForm.get('policyDescription').value}}</div>
+          <h4 class="mat-h4">Permissions</h4>
+          <div formArrayName="permissions">
+            <div *ngFor="let permission of permissionLists.controls;  let permissionIndex=index" [formGroupName]="permissionIndex">
+                <h4 class="mat-h4">Services:</h4>
+                <div>{{permission.get('service').value}}</div>
+                <h4 class="mat-h4">Actions:</h4>
+                <div *ngIf="permission.get('actions').get('list').value == true">List</div>
+                <div *ngIf="permission.get('actions').get('read').value == true">Read</div>
+                <div *ngIf="permission.get('actions').get('tagging').value == true">Tagging</div>
+                <div *ngIf="permission.get('actions').get('write').value == true">Write</div>
+                <div *ngIf="permission.get('actions').get('permissionManagement').value == true">Permission Management</div>
+                <h4 class="mat-h4">Conditions:</h4>
+                <div *ngIf="permission.get('conditions').get('mfa').value == true">Requires users to authenticate with an MFA device to perform the specified actions</div>
+                <div *ngIf="permission.get('conditions').get('sourceIp').value == true">Allow access to the specified actions only when the request comes from the specified IP address range.</div>
             </div>
           </div>
         </mat-card-content>
@@ -82,5 +124,5 @@
       </mat-step>
     </mat-horizontal-stepper>
   </form>
-  <ng-container *ngIf="user$ | async">{{goBack()}}</ng-container>
+  <ng-container *ngIf="policy$ | async">{{goBack()}}</ng-container>
 </mat-card>
