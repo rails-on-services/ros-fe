@@ -26,6 +26,11 @@ const router: Routes = [
         // loadChildren: () => DashboardModule
         loadChildren: '../../projects/console-app/modules/dashboard/dashboard.module#DashboardModule'
       },
+      {
+        path: 'comms',
+        // loadChildren: () => DashboardModule
+        loadChildren: '../../projects/console-app/modules/comms/comms.module#CommsModule'
+      },
     ]
   },
 ];
