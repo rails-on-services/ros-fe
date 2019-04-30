@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { IamService, IamUser } from '@perx/open-services';
+import { CommsService, CommsEvent } from '@perx/open-services';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -21,17 +21,17 @@ import {
 } from '@perx/open-ui-components';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
-  document$: Observable<JsonApiQueryData<IamUser>>;
-  users$: Observable<any[]>;
+  document$: Observable<JsonApiQueryData<CommsEvent>>;
+  events$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
-  selection: SelectionModel<IamUser>;
+  selection: SelectionModel<CommsEvent>;
 
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -41,33 +41,33 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private iamService: IamService,
+    private commsService: CommsService,
     public dialog: MatDialog,
   ) {
     this.showModal = false;
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
-    this.fetchUsers();
+    this.shownColumns = Object.keys(CommsEvent.prototype.getColumnProperties());
+    this.fetchEvents();
   }
 
   ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
+    // this.eventsSubsription.unsubscribe();
   }
 
-  addUser() {
-    this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
+  addEvent() {
+    this.router.navigate(['new-event'], { relativeTo: this.activatedRoute });
   }
 
-  removeUsers() {
+  removeEvents() {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
-    this.selection.selected.forEach(user => {
-      this.iamService.removeUser(user.id).subscribe(() => {
-        this.selection.deselect(user);
-        this.fetchUsers();
+    this.selection.selected.forEach(event => {
+      this.commsService.removeEvent(event.id).subscribe(() => {
+        this.selection.deselect(event);
+        this.fetchEvents();
       });
     });
   }
@@ -76,8 +76,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
-        header: 'Deleting Users',
-        content: 'Are you sure you want to delete the users',
+        header: 'Deleting Events',
+        content: 'Are you sure you want to delete the events',
         btnColor: 'warn',
         action: 'Delete'
        }
@@ -85,7 +85,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.removeUsers();
+        this.removeEvents();
       }
     });
   }
@@ -98,13 +98,13 @@ export class EventsComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchUsers();
+        this.fetchEvents();
         break;
       case 'settings':
         this.shownColumns$ = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: IamUser.prototype.getColumnProperties(),
+            columnProperties: CommsEvent.prototype.getColumnProperties(),
             selected: this.shownColumns
           }
         }).componentInstance.selectionChange;
@@ -127,31 +127,31 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchUsers() {
-    this.users$ = this.iamService.fetchUsers().pipe(
+  private fetchEvents() {
+    this.events$ = this.commsService.fetchEvents().pipe(
       map(document => {
-        const iamUsers = document.getModels();
-        const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
+        const commEvents = document.getModels();
+        const events = commEvents.map(commsEvent => {
+          const event = { id: commsEvent.id };
+          const keys = Object.keys(commsEvent.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = iamUser[key];
+            event[key] = commsEvent[key];
           });
 
-          return user;
+          return event;
         });
 
-        return users;
+        return events;
       })
     );
   }
 
   get columnProperties() {
-    return IamUser.prototype.getColumnProperties();
+    return CommsEvent.prototype.getColumnProperties();
   }
 
-  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+  onEventsSelectionChange(selection: SelectionModel<CommsEvent>) {
     this.selection = selection;
   }
 }

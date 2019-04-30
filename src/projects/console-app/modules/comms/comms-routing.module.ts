@@ -37,7 +37,7 @@ export const router: Routes = [
         ],
       },
       {
-        path: 'events/new-events',
+        path: 'events/new-event',
         component: NewEventComponent
       },
       {
