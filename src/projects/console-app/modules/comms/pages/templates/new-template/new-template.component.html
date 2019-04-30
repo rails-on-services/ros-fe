@@ -1,38 +1,24 @@
 <mat-card>
-  <mat-card-title>Create New User</mat-card-title>
-  <form [formGroup]="userDetailsGroup" (ngSubmit)="submitForm()">
+  <mat-card-title>Create New Template</mat-card-title>
+  <form [formGroup]="templateDetailsGroup" (ngSubmit)="submitForm()">
 
     <mat-horizontal-stepper linear>
-      <mat-step label="User Details" [stepControl]="userDetailsGroup" [editable]="isEditable">
+      <mat-step label="Template Details" [stepControl]="templateDetailsGroup" [editable]="isEditable">
         <mat-card-content>
-          <ng-template matStepLabel>Set user details</ng-template>
-          <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <ng-template matStepLabel>Set template details</ng-template>
+          <!--<mat-card-subtitle> You can add multiple templates at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
-            <mat-label>Username</mat-label>
-            <input matInput placeholder="Username" formControlName="userName" required>
+            <mat-label>Template name</mat-label>
+            <input matInput placeholder="Template name" formControlName="templateName" required>
             <mat-hint align="end">Not more than 60 characters long.</mat-hint>
-            <mat-error *ngIf="hasError('userName', 'required')">Username is required</mat-error>
-            <mat-error *ngIf="hasError('userName', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-error *ngIf="hasError('templateName', 'required')">Template name is required</mat-error>
+            <mat-error *ngIf="hasError('templateName', 'maxlength')">You have more than 60 characters</mat-error>
           </mat-form-field>
           <div class="access-types">
-
-            <mat-label>Access Type:</mat-label>
-            <div>
-              <div>
-                <mat-checkbox formControlName="hasProgrammaticAccess">
-                  <div><strong>Programmatic Access</strong></div>
-                  <div>
-                    Enables an access key ID and secret access key for the API, SDK, and other development tools.
-                  </div>
-                </mat-checkbox>
-              </div>
-              <div>
-                <mat-checkbox formControlName="hasConsoleAccess">
-                  <div><strong>Console Access</strong></div>
-                  <div>Enables a password that allows users to sign-in to the Management Console.</div>
-                </mat-checkbox>
-              </div>
-            </div>
+            <mat-form-field>
+              <mat-label>Content:</mat-label>
+              <textarea matInput placeholder="template content" formControlName="content"></textarea>
+            </mat-form-field>
           </div>
 
         </mat-card-content>
@@ -51,18 +37,17 @@
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
           <h3 class="mat-h3">Review details</h3>
-          <h4 class="mat-h4">User details</h4>
+          <h4 class="mat-h4">Template details</h4>
 
-          <mat-label>Username:</mat-label>
-          <div>{{userDetailsGroup.get('userName').value}}</div>
+          <mat-label>Template name:</mat-label>
+          <div>{{templateDetailsGroup.get('templateName').value}}</div>
 
           <div class="access-types">
-            <mat-label>Access Type:</mat-label>
-            <div *ngIf="userDetailsGroup.get('hasProgrammaticAccess').value">
-              <div><strong>Programmatic Access</strong> - with an access key</div>
-            </div>
-            <div *ngIf="userDetailsGroup.get('hasConsoleAccess').value">
-              <div><strong>Console Access</strong> - Console access with a username and password</div>
+            <mat-label>Content:</mat-label>
+            <div *ngIf="templateDetailsGroup.get('content').value">
+              <div>
+                <p>{{templateDetailsGroup.get('content').value}}</p>
+              </div>
             </div>
           </div>
         </mat-card-content>
@@ -82,5 +67,4 @@
       </mat-step>
     </mat-horizontal-stepper>
   </form>
-  <ng-container *ngIf="user$ | async">{{goBack()}}</ng-container>
 </mat-card>

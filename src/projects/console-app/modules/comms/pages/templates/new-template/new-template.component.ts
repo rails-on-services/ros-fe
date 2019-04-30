@@ -1,37 +1,33 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ModalService} from '../../../../../../../shared/services/modal.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService, IamUser} from '@perx/open-services';
-import { Observable } from 'rxjs';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ModalService } from '../../../../../../../shared/services/modal.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommsService, CommsTemplate } from '@perx/open-services';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-new-user',
+  selector: 'app-new-template',
   templateUrl: './new-template.component.html',
   styleUrls: ['./new-template.component.scss']
 })
 export class NewTemplateComponent implements OnInit, AfterViewInit {
-  userDetailsGroup: FormGroup;
+  templateDetailsGroup: FormGroup;
   isEditable = true;
 
-  createUsernamePage: boolean;
-  reviewPage: boolean;
-
-  user$: Observable<IamUser>;
+  private templateUnsubscribe$ = new Subject<void>();
 
   constructor(private modalService: ModalService,
               private router: Router,
               private route: ActivatedRoute,
-              private iamService: IamService) {
-    this.createUsernamePage = true;
-    this.reviewPage = false;
+              private commsService: CommsService) {
   }
 
   ngOnInit() {
-    this.userDetailsGroup = new FormGroup({
-      userName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
-      hasProgrammaticAccess: new FormControl(false),
-      hasConsoleAccess: new FormControl(false),
+    this.templateDetailsGroup = new FormGroup({
+      templateName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      content: new FormControl(''),
+      status: new FormControl(''),
     });
   }
 
@@ -41,25 +37,23 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   }
 
   hasError(controlName: string, errorName: string) {
-    return this.userDetailsGroup.controls[controlName].hasError(errorName);
+    return this.templateDetailsGroup.controls[controlName].hasError(errorName);
   }
 
 
   cancelClicked() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   submitForm() {
-    const user = {
-      username: this.userDetailsGroup.get('userName').value,
-      api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
-      console: this.userDetailsGroup.get('hasConsoleAccess').value,
+    const template = {
+      name: this.templateDetailsGroup.get('templateName').value,
+      content: this.templateDetailsGroup.get('content').value,
+      status: this.templateDetailsGroup.get('status').value,
     };
 
-    this.user$ = this.iamService.createUser(user);
+    this.commsService.createTemplate(template).pipe(takeUntil(this.templateUnsubscribe$)).subscribe(() => {
+    });
   }
 
-  goBack() {
-    this.router.navigate(['../'], {relativeTo: this.route});
-  }
 }
