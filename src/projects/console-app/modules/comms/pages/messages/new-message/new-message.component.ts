@@ -3,7 +3,8 @@ import { ModalService } from '../../../../../../../shared/services/modal.service
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommsService, CommsMessage } from '@perx/open-services';
-import { Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-new-message',
@@ -20,7 +21,7 @@ export class NewMessageComponent implements OnInit, AfterViewInit {
   createMessagenamePage: boolean;
   reviewPage: boolean;
 
-  message$: Observable<CommsMessage>;
+  private messageUnsubscribe$ = new Subject<void>();
 
   constructor(private modalService: ModalService,
               private router: Router,
@@ -73,7 +74,7 @@ export class NewMessageComponent implements OnInit, AfterViewInit {
       to: this.formArray.get([1]).get('to').value,
       ownerType: this.formArray.get([1]).get('ownerType').value
     };
-    this.message$ = this.commService.createMessage(message);
+    this.commService.createMessage(message).pipe(takeUntil(this.messageUnsubscribe$)).subscribe(() => { return; });
   }
 
   goBack() {
