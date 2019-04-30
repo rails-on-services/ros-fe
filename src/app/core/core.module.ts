@@ -6,6 +6,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { CoreComponent } from './core.component';
 import { IamModule } from '../../projects/console-app/modules/iam/iam.module';
 import { CognitoModule } from '../../projects/console-app/modules/cognito/cognito.module';
+import { CampaignsModule } from '../../projects/console-app/modules/campaigns/campaigns.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CognitoModule } from '../../projects/console-app/modules/cognito/cognit
     // routes,
     IamModule,
     CognitoModule,
+    CampaignsModule,
   ],
   exports: [
     HeaderComponent,

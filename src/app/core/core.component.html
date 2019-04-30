@@ -1,4 +1,3 @@
-<!--<app-header [enableMenuButton]=true (menuButtonClick)="menuButtonClick()"></app-header>-->
 <mat-sidenav-container class="core-container">
     <mat-sidenav #mainnav mode="side" [(opened)]="opened">
         <mat-nav-list>
@@ -14,8 +13,13 @@
                routerLinkActive="mat-accent"
                [routerLinkActiveOptions]="{exact: true}"
                [routerLink]="'/cognito'">Cognito</a>
+            <a mat-list-item
+               routerLinkActive="mat-accent"
+               [routerLinkActiveOptions]="{exact: true}"
+               [routerLink]="'/campaigns'">Campaigns</a>
         </mat-nav-list>
-        <button mat-stroked-button (click)="mainnav.toggle()">mainnav.toggle()</button>
+
+        <button mat-stroked-button (click)="mainnav.toggle()" style="margin-top: 100px">mainnav.toggle()</button>
     </mat-sidenav>
     <mat-sidenav-content>
         <router-outlet></router-outlet>
