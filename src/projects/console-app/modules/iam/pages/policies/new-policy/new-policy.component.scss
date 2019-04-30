@@ -1,0 +1,21 @@
+.mat-card-content {
+    display: flex;
+    flex-direction: column;
+    fieldset {
+        width: 100%;
+        max-width: 600px;
+        min-width: 300px;
+    }
+    .mat-form-field {
+        max-width: 350px;
+    }
+    .mat-checkbox {
+        display: block;
+        .mat-checkbox-layout {
+            white-space: unset;
+        }
+    }
+    .md-input-invalid.mat-radio-group {
+        color: #f44336;
+    }
+} 
