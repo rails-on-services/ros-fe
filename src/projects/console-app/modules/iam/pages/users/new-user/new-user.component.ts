@@ -2,8 +2,10 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalService} from '../../../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService, IamUser} from '@perx/open-services';
-import { Observable } from 'rxjs';
+import { Credential, IamService, IamUser } from '@perx/open-services';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-new-user',
@@ -18,6 +20,10 @@ export class NewUserComponent implements OnInit, AfterViewInit {
   reviewPage: boolean;
 
   user$: Observable<IamUser>;
+  credential$: Observable<Credential>;
+
+  private userUnsubscribe$ = new Subject<void>();
+  private credentialUnsubscribe$ = new Subject<void>();
 
   constructor(private modalService: ModalService,
               private router: Router,
@@ -49,14 +55,20 @@ export class NewUserComponent implements OnInit, AfterViewInit {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  submitForm() {
-    const user = {
+  submitForm(stepper: MatStepper) {
+    const u = {
       username: this.userDetailsGroup.get('userName').value,
       api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
       console: this.userDetailsGroup.get('hasConsoleAccess').value,
     };
 
-    this.user$ = this.iamService.createUser(user);
+    this.iamService.createUser(u).pipe(takeUntil(this.userUnsubscribe$))
+      .subscribe(user => {
+        this.iamService.createCredentialFor(user).pipe(takeUntil(this.credentialUnsubscribe$))
+          .subscribe(credential => {
+            stepper.next();
+          });
+      });
   }
 
   goBack() {
