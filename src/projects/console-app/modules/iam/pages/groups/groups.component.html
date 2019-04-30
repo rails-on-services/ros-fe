@@ -8,8 +8,8 @@
       Group Actions
     </button>
     <mat-menu #appMenu="matMenu">
-      <button mat-menu-item
-              [disabled]="!(selection && selection.selected.length)">
+      <button mat-menu-item (click)="addUsersToGroup()"
+              [disabled]="!(selection && selection.selected.length == 1)">
         Add Users to Group
       </button>
       <button mat-menu-item (click)="showDeleteConfirmationPopup()"
@@ -18,11 +18,11 @@
       </button>
       <button mat-menu-item
               (click)="editGroupNamePopup()"
-              [disabled]="!(selection && selection.selected.length < 2)">
+              [disabled]="!(selection && selection.selected.length == 1)">
         Edit Group Name
       </button>
-      <button mat-menu-item
-              [disabled]="!(selection && selection.selected.length)">
+      <button mat-menu-item (click)="removeUsersFromGroup()"
+              [disabled]="!(selection && selection.selected.length == 1)">
         Remove Users from Group
       </button>
     </mat-menu>

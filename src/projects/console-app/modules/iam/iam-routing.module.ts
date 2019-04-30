@@ -9,6 +9,7 @@ import {NewPolicyComponent} from './pages/policies/new-policy/new-policy.compone
 import {IamComponent} from './iam.component';
 import {NewUserComponent} from './pages/users/new-user/new-user.component';
 import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
+import { UserManagementComponent } from './pages/groups/user-management/user-management.component';
 
 export const router: Routes = [
   {
@@ -60,6 +61,10 @@ export const router: Routes = [
       {
         path: 'groups/new-group',
         component: NewGroupComponent
+      },
+      {
+        path: 'groups/user-management',
+        component: UserManagementComponent
       },
     ]
   },

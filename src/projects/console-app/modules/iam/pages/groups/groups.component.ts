@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
@@ -26,6 +27,8 @@ export class GroupsComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.showModal = false;
   }
@@ -145,5 +148,13 @@ export class GroupsComponent implements OnInit {
 
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection;
+  }
+
+  addUsersToGroup() {
+    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'add'}], {relativeTo: this.route});
+  }
+
+  removeUsersFromGroup() {
+    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'remove'}],  {relativeTo: this.route});
   }
 }
