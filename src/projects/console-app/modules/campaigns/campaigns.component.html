@@ -1,0 +1,25 @@
+<h1>Campaigns</h1>
+
+<div class="container">
+  <div class="action" fxLayout="row" fxLayoutGap="1rem">
+    <button mat-raised-button color="primary">
+      Add Campaign
+    </button>
+    <button
+      mat-raised-button color="warn"
+      [disabled]="!(selection && selection.selected.length)">
+      Remove Campaign(s)
+    </button>
+  </div>
+
+  <app-filterable-table
+    [columnProperties]="columnProperties"
+    [contents]="campaigns"
+    [selectable]=true
+    (selectionChange)="onSelectionChange($event)"
+    [shownColumns]="shownColumns"
+  >
+  </app-filterable-table>
+
+</div>
+<router-outlet></router-outlet>
