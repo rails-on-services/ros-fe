@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { IamService, IamUser } from '@perx/open-services';
+import { CommsService, CommsTemplate } from '@perx/open-services';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -21,53 +21,51 @@ import {
 } from '@perx/open-ui-components';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-templates',
   templateUrl: './templates.component.html',
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
-  document$: Observable<JsonApiQueryData<IamUser>>;
-  users$: Observable<any[]>;
+  document$: Observable<JsonApiQueryData<CommsTemplate>>;
+  templates$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
-  selection: SelectionModel<IamUser>;
+  selection: SelectionModel<CommsTemplate>;
 
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
 
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private iamService: IamService,
+    private commsService: CommsService,
     public dialog: MatDialog,
   ) {
     this.showModal = false;
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
-    this.fetchUsers();
+    this.shownColumns = Object.keys(CommsTemplate.prototype.getColumnProperties());
+    this.fetchTemplates();
   }
 
   ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
+    // this.templatesSubsription.unsubscribe();
   }
 
-  addUser() {
-    this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
+  addTemplate() {
+    this.router.navigate(['new-template'], { relativeTo: this.activatedRoute });
   }
 
-  removeUsers() {
+  removeTemplates() {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
-    this.selection.selected.forEach(user => {
-      this.iamService.removeUser(user.id).subscribe(() => {
-        this.selection.deselect(user);
-        this.fetchUsers();
+    this.selection.selected.forEach(template => {
+      this.commsService.removeTemplate(template.id).subscribe(() => {
+        this.selection.deselect(template);
+        this.fetchTemplates();
       });
     });
   }
@@ -76,8 +74,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
-        header: 'Deleting Users',
-        content: 'Are you sure you want to delete the users',
+        header: 'Deleting Templates',
+        content: 'Are you sure you want to delete the templates',
         btnColor: 'warn',
         action: 'Delete'
        }
@@ -85,7 +83,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.removeUsers();
+        this.removeTemplates();
       }
     });
   }
@@ -98,13 +96,13 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchUsers();
+        this.fetchTemplates();
         break;
       case 'settings':
         this.shownColumns$ = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: IamUser.prototype.getColumnProperties(),
+            columnProperties: CommsTemplate.prototype.getColumnProperties(),
             selected: this.shownColumns
           }
         }).componentInstance.selectionChange;
@@ -119,39 +117,31 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
-  }
-
-  closeButtonClick() {
-    this.removeDialogComponentFromBody();
-  }
-
-  private fetchUsers() {
-    this.users$ = this.iamService.fetchUsers().pipe(
+  private fetchTemplates() {
+    this.templates$ = this.commsService.fetchTemplates().pipe(
       map(document => {
-        const iamUsers = document.getModels();
-        const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
+        const commsTemplates = document.getModels();
+        const templates = commsTemplates.map(commsTemplate => {
+          const template = { id: commsTemplate.id };
+          const keys = Object.keys(commsTemplate.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = iamUser[key];
+            template[key] = commsTemplate[key];
           });
 
-          return user;
+          return template;
         });
 
-        return users;
+        return templates;
       })
     );
   }
 
   get columnProperties() {
-    return IamUser.prototype.getColumnProperties();
+    return CommsTemplate.prototype.getColumnProperties();
   }
 
-  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+  onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {
     this.selection = selection;
   }
 }

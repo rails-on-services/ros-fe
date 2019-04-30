@@ -53,7 +53,7 @@ export const router: Routes = [
         component: TemplatesComponent,
       },
       {
-        path: 'templates/new-templates',
+        path: 'templates/new-template',
         component: NewTemplateComponent
       },
     ]
