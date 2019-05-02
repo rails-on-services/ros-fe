@@ -38,6 +38,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           eventName: ['', [Validators.required, Validators.maxLength(60)]],
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
+          sendTime: [(''), [Validators.required]],
           // sendTime: [(''), [Validators.required]],
         }),
         this._formBuilder.group({
@@ -71,10 +72,12 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
+
+    const dateTime = this.formArray.get([0]).get('sendDate').value + this.formArray.get([0]).get('sendTime').value;
     const event = {
       name: this.formArray.get([0]).get('eventName').value,
       channel: this.formArray.get([0]).get('channel').value,
-      sendAt: this.formArray.get([0]).get('sendDate').value,
+      sendAt: dateTime,
       status: this.formArray.get([1]).get('status').value,
       targetId: this.formArray.get([1]).get('targetId').value,
       targetType: this.formArray.get([1]).get('targetType').value,

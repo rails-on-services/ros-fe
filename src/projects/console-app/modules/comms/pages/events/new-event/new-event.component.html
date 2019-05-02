@@ -32,6 +32,15 @@
             <mat-datepicker #sendAtDatepicker></mat-datepicker>
             <mat-error *ngIf="hasError(0,'sendDate','required')">Please select an option</mat-error>
           </mat-form-field>
+          <div>
+          <mat-form-field>
+            <mat-label>Send time:</mat-label>
+            <input matInput [ngxTimepicker]="default" readonly formControlName="sendTime">
+            <ngx-material-timepicker-toggle matSuffix [for]="default"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #default></ngx-material-timepicker>
+            <mat-error *ngIf="hasError(0,'sendTime','required')">Please select a time</mat-error>
+          </mat-form-field>
+          </div>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">

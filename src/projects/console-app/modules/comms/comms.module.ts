@@ -14,6 +14,7 @@ import { NewTemplateComponent } from './pages/templates/new-template/new-templat
 import { EventsComponent } from './pages/events/events.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 // import {routes} from './comms-routing.module';
 
@@ -36,6 +37,7 @@ import { TemplatesComponent } from './pages/templates/templates.component';
     ReactiveFormsModule,
     FormsModule,
     OpenUiComponentsModule,
+    NgxMaterialTimepickerModule,
     SharedModule
   ],
   exports: [HomeComponent, CommsComponent],
