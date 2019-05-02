@@ -2,15 +2,17 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ModalService} from '../../../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService, IamUser} from '@perx/open-services';
-import { Observable } from 'rxjs';
+import { Credential, IamService, IamUser } from '@perx/open-services';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-new-user',
-  templateUrl: './new-user.component.html',
-  styleUrls: ['./new-user.component.scss']
+  templateUrl: './new-iam-user.component.html',
+  styleUrls: ['./new-iam-user.component.scss']
 })
-export class NewUserComponent implements OnInit, AfterViewInit {
+export class NewIamUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
   isEditable = true;
 
@@ -18,6 +20,10 @@ export class NewUserComponent implements OnInit, AfterViewInit {
   reviewPage: boolean;
 
   user$: Observable<IamUser>;
+  credential$: Observable<Credential>;
+
+  private userUnsubscribe$ = new Subject<void>();
+  private credentialUnsubscribe$ = new Subject<void>();
 
   constructor(private modalService: ModalService,
               private router: Router,
@@ -49,19 +55,20 @@ export class NewUserComponent implements OnInit, AfterViewInit {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  submitForm() {
-    console.log(this.userDetailsGroup.value); // outputs values in object format
-
-
-    // save to api
-    const user = {
+  submitForm(stepper: MatStepper) {
+    const u = {
       username: this.userDetailsGroup.get('userName').value,
       api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
       console: this.userDetailsGroup.get('hasConsoleAccess').value,
     };
 
-    this.user$ = this.iamService.createUser(user);
-    // this.router.navigate(['../'], {relativeTo: this.route});
+    this.iamService.createUser(u).pipe(takeUntil(this.userUnsubscribe$))
+      .subscribe(user => {
+        this.iamService.createCredentialFor(user).pipe(takeUntil(this.credentialUnsubscribe$))
+          .subscribe(credential => {
+            stepper.next();
+          });
+      });
   }
 
   goBack() {

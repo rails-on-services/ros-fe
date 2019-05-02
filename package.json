@@ -11,7 +11,8 @@
     "config": "ts-node set-env.ts",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "precommit": "node scripts/export-to-index.js && git add index.ts"
   },
   "private": true,
   "peerDependencies": {
@@ -50,6 +51,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~4.5.0",
     "dotenv": "^7.0.0",
+    "husky": "^2.2.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",

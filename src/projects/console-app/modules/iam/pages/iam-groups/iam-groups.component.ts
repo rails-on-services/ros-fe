@@ -10,10 +10,10 @@ import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui
 
 @Component({
   selector: 'app-groups',
-  templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  templateUrl: './iam-groups.component.html',
+  styleUrls: ['./iam-groups.component.scss']
 })
-export class GroupsComponent implements OnInit {
+export class IamGroupsComponent implements OnInit {
   document$: Observable<JsonApiQueryData<IamGroup>>;
   testGroupList: Observable<IamGroup[]>;
   groups$: Observable<any[]>;
