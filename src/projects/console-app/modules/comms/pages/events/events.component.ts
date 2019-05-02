@@ -26,9 +26,7 @@ import {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
-  document$: Observable<JsonApiQueryData<CommsEvent>>;
   events$: Observable<any[]>;
-  tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
   selection: SelectionModel<CommsEvent>;
