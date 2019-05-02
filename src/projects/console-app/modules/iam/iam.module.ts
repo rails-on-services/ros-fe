@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { OpenUiComponentsModule , ConfirmationModal, ManageColumnModal} from '@perx/open-ui-components';
+import { OpenUiComponentsModule , ConfirmationModal, ManageColumnModal, RenameModal} from '@perx/open-ui-components';
 import {UsersComponent} from './pages/users/users.component';
 import {GroupsComponent} from './pages/groups/groups.component';
 import {HomeComponent} from './pages/home/home.component';
@@ -45,6 +45,7 @@ import { UserManagementComponent } from './pages/groups/user-management/user-man
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,
+    RenameModal,
     NewUserComponent]
 })
 export class IamModule {

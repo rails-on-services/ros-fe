@@ -77,17 +77,15 @@ export class GroupsComponent implements OnInit {
 
     confirmPopup.afterClosed().subscribe(newName => {
       if (newName) {
-        if (!this.selection || this.selection.selected.length <= 0) {
-          return;
-        }
         this.selection.selected.forEach(group => {
           this.iamService.fetchGroup(group.id).subscribe(groupModel => {
             groupModel.name = newName;
-            groupModel.save().subscribe();
-            this.fetchGroups();
+            groupModel.save().subscribe(
+              () => {
+                this.fetchGroups();
+              }
+            );
           });
-
-
         });
       }
     });
