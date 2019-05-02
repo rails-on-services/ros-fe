@@ -1,11 +1,22 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {CampaignsComponent} from './campaigns.component';
+import {NewCampaignComponent} from './new-campaign/new-campaign.component';
+
 
 export const router: Routes = [
   {
     path: '',
-    component: CampaignsComponent
+    children: [
+      {
+        path: '',
+        component: CampaignsComponent
+      },
+      {
+        path: 'new-campaign',
+        component: NewCampaignComponent
+      }
+    ]
   },
 
 ];
@@ -14,5 +25,4 @@ export const router: Routes = [
   imports: [RouterModule.forChild(router)],
   exports: [RouterModule]
 })
-export class CampaignsRoutingModule {
-}
+export class CampaignsRoutingModule {}

@@ -1,0 +1,88 @@
+:host ::ng-deep .mat-card-actions button {
+  width: 100px;
+
+  &:last-child {
+    margin: 0;
+  }
+}
+
+:host ::ng-deep [matstepperprevious] {
+  margin-right: calc(100% - 336px);
+  margin-left: 10px;
+}
+
+:host ::ng-deep mat-form-field {
+  width: 100%;
+}
+
+:host ::ng-deep .mat-radio-container {
+  display: none;
+}
+
+:host ::ng-deep .mat-table {
+  margin: 10px 0 !important;
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+
+  tr.mat-header-row {
+    height: 42px;
+  }
+
+  th {
+    background: #F2F8FB;
+    font-weight: bold;
+    font-size: 14px;
+  }
+}
+
+.campaign-type-content {
+  text-align: center;
+
+  img {
+    margin-bottom: 8px;
+  }
+}
+
+.campaign-type-img-tile {
+  background: rgba(102, 149, 187, 0.05);
+  border: 2px solid rgba(102, 149, 187, 0.05);
+  border-radius: 4px;
+
+  .mat-radio-checked & {
+    border-color: #116FFF;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 14px;
+      height: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #fff;
+      mask-image: url(/assets/icons/checkmark.svg);
+      z-index: 1;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: -1px;
+      right: -18px;
+      width: 59px;
+      height: 59px;
+      transform-origin: left top;
+      transform: rotate(-45deg);
+      background: #116FFF;
+    }
+  }
+}
+
+.campaign-type-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}

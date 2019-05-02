@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-campaigns',
@@ -52,6 +54,22 @@ export class CampaignsComponent implements OnInit {
       actions: null
     }
   ];
+
+  constructor(
+    public iconRegistry: MatIconRegistry,
+    public domSanitizer: DomSanitizer
+  ) {
+    // this.icons.forEach(iconName => {
+    //   const url = domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${iconName}.svg`);
+    //
+    //   console.log('url: ', url);
+    //   iconRegistry.addSvgIcon(iconName, url);
+    // });
+
+    // gift-box
+
+    iconRegistry.addSvgIcon('gift-box', domSanitizer.bypassSecurityTrustResourceUrl(`assets/icons/gift-box.svg`));
+  }
 
   ngOnInit() {
     this.shownColumns = Object.keys(this.columnProperties);
