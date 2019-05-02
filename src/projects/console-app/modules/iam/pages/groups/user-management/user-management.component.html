@@ -1,26 +1,20 @@
 <mat-card-content>
   <div class="container">
-    <ng-container class="users-table" *ngIf="users$ | async as users">
-      <app-filterable-table [columnProperties]="columnProperties" [contents]="users" [selectable]=true
+    <ng-container class="users-table" *ngIf="group$ | async as group">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="group.users" [selectable]=true
         (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
       </app-filterable-table>
     </ng-container>
   </div>
   <router-outlet></router-outlet>
-  <p>
-    user-management works!
-    id: {{id}}
-    action: {{action}}
-    columnProperties: {{columnProperties | json}}
-  </p>
 </mat-card-content>
 <mat-divider></mat-divider>
 <mat-card-actions>
   <div class="button-container text-right">
     <span>
       <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-      <button mat-raised-button color="primary" (click)="addUser()">
-        Add User
+      <button mat-raised-button color="primary" (click)="manageUser()">
+        {{this.action}} User
       </button>
     </span>
   </div>

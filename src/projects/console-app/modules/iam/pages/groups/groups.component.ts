@@ -151,10 +151,10 @@ export class GroupsComponent implements OnInit {
   }
 
   addUsersToGroup() {
-    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'add'}], {relativeTo: this.route});
+    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Add'}], {relativeTo: this.route});
   }
 
   removeUsersFromGroup() {
-    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'remove'}],  {relativeTo: this.route});
+    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Remove'}],  {relativeTo: this.route});
   }
 }
