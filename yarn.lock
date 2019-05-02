@@ -334,9 +334,9 @@
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
 
-"@perx/open-services@rails-on-services/open-services#7588282":
+"@perx/open-services@rails-on-services/open-services#fe2d601":
   version "0.0.0"
-  resolved "https://codeload.github.com/rails-on-services/open-services/tar.gz/7588282c9b6c78dc3b3881b1c781546d5d5d0bb7"
+  resolved "https://codeload.github.com/rails-on-services/open-services/tar.gz/fe2d601cf941ae362cf1685a1d17d9eea2099b14"
   dependencies:
     "@angular/animations" "~7.2.0"
     "@angular/common" "~7.2.0"

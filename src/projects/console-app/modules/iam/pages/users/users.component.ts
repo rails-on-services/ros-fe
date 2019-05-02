@@ -134,14 +134,23 @@ export class UsersComponent implements OnInit, OnDestroy {
   private fetchUsers() {
     this.users$ = this.iamService.fetchUsers().pipe(
       map(document => {
-        const iamUsers = document.getModels();
+        const iamUsers: IamUser[] = document.getModels();
         const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
-
-          keys.forEach(key => {
-            user[key] = iamUser[key];
-          });
+          const groups = iamUser.groups || [];
+          const user = {
+            id: iamUser.id,
+            username: {
+              value: iamUser.username,
+              link: `/users/${iamUser.id}`
+            },
+            groups: groups.map(group => ({
+              value: group.name,
+              link: `groups/${group.id}`
+            })),
+            urn: iamUser.urn,
+            apiAccess: iamUser.apiAccess,
+            consoleAccess: iamUser.consoleAccess
+          };
 
           return user;
         });
