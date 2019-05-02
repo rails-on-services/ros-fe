@@ -6,21 +6,21 @@ import {
 } from '@angular/router';
 import {Observable, of, EMPTY} from 'rxjs';
 
-import {NewUserComponent} from './new-user.component';
+import {NewIamUserComponent} from './new-iam-user.component';
 import {ModalService} from 'src/shared/services/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NewUserResolverService implements Resolve<NewUserComponent> {
+export class NewIamUserResolverService implements Resolve<NewIamUserComponent> {
   constructor(private modalService: ModalService,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NewUserComponent> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NewIamUserComponent> | Observable<never> {
 
-    this.modalService.componentToRender = NewUserComponent;
+    this.modalService.componentToRender = NewIamUserComponent;
 
     this.modalService.previousURL = location.pathname;
     if (this.modalService.componentToRender) {

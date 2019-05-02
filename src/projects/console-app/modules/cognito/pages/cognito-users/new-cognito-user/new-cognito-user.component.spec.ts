@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupsComponent } from './groups.component';
+import { NewCognitoUserComponent } from './new-cognito-user.component';
 
-describe('GroupsComponent', () => {
-  let component: GroupsComponent;
-  let fixture: ComponentFixture<GroupsComponent>;
+describe('NewCognitoUserComponent', () => {
+  let component: NewCognitoUserComponent;
+  let fixture: ComponentFixture<NewCognitoUserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupsComponent ]
+      declarations: [ NewCognitoUserComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupsComponent);
+    fixture = TestBed.createComponent(NewCognitoUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
