@@ -122,20 +122,23 @@ export class GroupsComponent implements OnInit {
 
   private fetchGroups() {
     this.groups$ = this.iamService.fetchGroups().pipe(
-      map(document => {
-        const iamUsers = document.getModels();
-        const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
+      map(data => {
+        const iamGroups = data.getModels();
+        const groups = iamGroups.map(iamGroup => {
+          const group = { id: iamGroup.id };
+          const keys = Object.keys(iamGroup.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = iamUser[key];
+            group[key] = iamGroup[key];
           });
-
-          return user;
+          group['name'] = {
+            value: iamGroup.name,
+            link: `/groups/${iamGroup.id}`
+          }
+          return group;
         });
 
-        return users;
+        return groups;
       })
     );
   }
@@ -148,11 +151,11 @@ export class GroupsComponent implements OnInit {
     this.selection = selection;
   }
 
-  addUsersToGroup() {
-    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Add'}], {relativeTo: this.route});
-  }
+  // addUsersToGroup() {
+  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Add'}], {relativeTo: this.route});
+  // }
 
-  removeUsersFromGroup() {
-    this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Remove'}],  {relativeTo: this.route});
-  }
+  // removeUsersFromGroup() {
+  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Remove'}],  {relativeTo: this.route});
+  // }
 }

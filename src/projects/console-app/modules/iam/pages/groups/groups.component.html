@@ -8,10 +8,6 @@
       Group Actions
     </button>
     <mat-menu #appMenu="matMenu">
-      <button mat-menu-item (click)="addUsersToGroup()"
-              [disabled]="!(selection && selection.selected.length == 1)">
-        Add Users to Group
-      </button>
       <button mat-menu-item (click)="showDeleteConfirmationPopup()"
               [disabled]="!(selection && selection.selected.length)">
         Delete Groups<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
@@ -20,10 +16,6 @@
               (click)="editGroupNamePopup()"
               [disabled]="!(selection && selection.selected.length == 1)">
         Edit Group Name
-      </button>
-      <button mat-menu-item (click)="removeUsersFromGroup()"
-              [disabled]="!(selection && selection.selected.length == 1)">
-        Remove Users from Group
       </button>
     </mat-menu>
 

@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
-  selector: 'app-user-management',
-  templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss']
+  selector: 'app-add-group-users',
+  templateUrl: './add-group-users.component.html',
+  styleUrls: ['./add-group-users.component.scss']
 })
-export class UserManagementComponent implements OnInit, OnDestroy {
+export class AddGroupUsersComponent implements OnInit, OnDestroy {
   id: number;
   action: string;
   private sub: any;
@@ -64,13 +64,15 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsersNotInGroup() {
-    this.group$ = combineLatest(this.iamService.fetchUsers(), this.iamService.fetchGroup(this.id)).pipe(
+    this.group$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroup(this.id)).pipe(
       map(([usersData, groupData]) => {
         const iamUsers = usersData.getModels();
         const usersInGroup = groupData.users || [];
 
         const users = iamUsers.filter(singleUser => {
-          const notInGroup = usersInGroup.indexOf(singleUser) === -1;
+          const notInGroup = usersInGroup.some(userInGroup => {
+            return userInGroup.id !== singleUser.id;
+          });
           if (notInGroup) {
             return singleUser;
           }

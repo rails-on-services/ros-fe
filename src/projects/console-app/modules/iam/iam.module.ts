@@ -15,7 +15,7 @@ import { PoliciesComponent } from './pages/policies/policies.component';
 import { PolicyAttachComponent } from './pages/policies/policy-attach/policy-attach.component';
 import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
 import {SharedModule} from '../../../../shared/shared.module';
-import { UserManagementComponent } from './pages/groups/user-management/user-management.component';
+import { AddGroupUsersComponent } from './pages/groups/add-group-users/add-group-users.component';
 
 // import {routes} from './iam-routing.module';
 
@@ -30,7 +30,7 @@ import { UserManagementComponent } from './pages/groups/user-management/user-man
     PoliciesComponent,
     PolicyAttachComponent,
     NewPolicyComponent,
-    UserManagementComponent],
+    AddGroupUsersComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
