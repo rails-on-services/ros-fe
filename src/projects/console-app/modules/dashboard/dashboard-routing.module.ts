@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { SummaryComponent } from './pages/summary/summary.component';
 
-export const router: Routes = [
+const router: Routes = [
   {
     path: '',
     redirectTo: 'summary',

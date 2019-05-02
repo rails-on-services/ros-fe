@@ -1,16 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './pages/home/home.component';
-import {UsersComponent} from './pages/users/users.component';
-import {GroupsComponent} from './pages/groups/groups.component';
+import {IamHomeComponent} from './pages/iam-home/iam-home.component';
+import {IamUsersComponent} from './pages/iam-users/iam-users.component';
+import {IamGroupsComponent} from './pages/iam-groups/iam-groups.component';
 import {PoliciesComponent} from './pages/policies/policies.component';
 import {PolicyAttachComponent} from './pages/policies/policy-attach/policy-attach.component';
 import {NewPolicyComponent} from './pages/policies/new-policy/new-policy.component';
 import {IamComponent} from './iam.component';
-import {NewUserComponent} from './pages/users/new-user/new-user.component';
-import { NewGroupComponent } from './pages/groups/new-group/new-group.component';
+import {NewIamUserComponent} from './pages/iam-users/new-iam-user/new-iam-user.component';
+import { NewGroupComponent } from './pages/iam-groups/new-group/new-group.component';
+import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-group-users.component';
 
-export const router: Routes = [
+const router: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -22,28 +23,28 @@ export const router: Routes = [
     children: [
       {
         path: 'home',
-        component: HomeComponent,
+        component: IamHomeComponent,
       },
       {
         path: 'users',
-        component: UsersComponent,
+        component: IamUsersComponent,
         children: [
           // {
           //   path: 'new-user',
           //   component: ModalComponent,
           //   resolve: {
-          //     modal: NewUserResolverService
+          //     modal: NewCognitoUserResolverService
           //   }
           // },
         ],
       },
       {
         path: 'users/new-user',
-        component: NewUserComponent
+        component: NewIamUserComponent
       },
       {
         path: 'groups',
-        component: GroupsComponent,
+        component: IamGroupsComponent,
       },
       {
         path: 'policies',
@@ -60,6 +61,10 @@ export const router: Routes = [
       {
         path: 'groups/new-group',
         component: NewGroupComponent
+      },
+      {
+        path: 'groups/user-management',
+        component: AddGroupUsersComponent
       },
     ]
   },
