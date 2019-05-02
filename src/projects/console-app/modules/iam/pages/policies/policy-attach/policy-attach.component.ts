@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModal } from '@perx/open-ui-components';
 
@@ -32,10 +32,10 @@ export class PolicyAttachComponent implements OnInit {
   }
 
   private fetchUsers() {
-    this.content$ = combineLatest(this.iamService.fetchUsers(), this.iamService.fetchGroups()).pipe(
-      map(([user, group]) => {
-        const iamUsers = user.getModels();
-        const iamGroups = group.getModels();
+    this.content$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroups()).pipe(
+      map(([usersData, groupsData]) => {
+        const iamUsers = usersData.getModels();
+        const iamGroups = groupsData.getModels();
         const allUsers = [...iamUsers, ...iamGroups];
 
         const users = allUsers.map(singleUser => {

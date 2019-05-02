@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
@@ -26,6 +27,8 @@ export class GroupsComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.showModal = false;
   }
@@ -74,17 +77,15 @@ export class GroupsComponent implements OnInit {
 
     confirmPopup.afterClosed().subscribe(newName => {
       if (newName) {
-        if (!this.selection || this.selection.selected.length <= 0) {
-          return;
-        }
         this.selection.selected.forEach(group => {
           this.iamService.fetchGroup(group.id).subscribe(groupModel => {
             groupModel.name = newName;
-            groupModel.save().subscribe();
-            this.fetchGroups();
+            groupModel.save().subscribe(
+              () => {
+                this.fetchGroups();
+              }
+            );
           });
-
-
         });
       }
     });
@@ -121,20 +122,23 @@ export class GroupsComponent implements OnInit {
 
   private fetchGroups() {
     this.groups$ = this.iamService.fetchGroups().pipe(
-      map(document => {
-        const iamUsers = document.getModels();
-        const users = iamUsers.map(iamUser => {
-          const user = { id: iamUser.id };
-          const keys = Object.keys(iamUser.getColumnProperties());
+      map(data => {
+        const iamGroups = data.getModels();
+        const groups = iamGroups.map(iamGroup => {
+          const group = { id: iamGroup.id };
+          const keys = Object.keys(iamGroup.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = iamUser[key];
+            group[key] = iamGroup[key];
           });
-
-          return user;
+          group['name'] = {
+            value: iamGroup.name,
+            link: `/groups/${iamGroup.id}`
+          }
+          return group;
         });
 
-        return users;
+        return groups;
       })
     );
   }
@@ -146,4 +150,12 @@ export class GroupsComponent implements OnInit {
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection;
   }
+
+  // addUsersToGroup() {
+  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Add'}], {relativeTo: this.route});
+  // }
+
+  // removeUsersFromGroup() {
+  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Remove'}],  {relativeTo: this.route});
+  // }
 }
