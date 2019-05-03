@@ -1,0 +1,118 @@
+<mat-card>
+  <mat-card-title>Create New User</mat-card-title>
+  <form [formGroup]="eventDetailsGroup" (ngSubmit)="submitForm()">
+
+    <mat-horizontal-stepper formArrayName="formArray" linear>
+      <mat-step label="Set User Details" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
+        <mat-card-content>
+          <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <mat-form-field>
+            <mat-label>Event Name:</mat-label>
+            <input matInput formControlName="eventName" required>
+            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError(0, 'eventName', 'required')">Event name is required</mat-error>
+            <mat-error *ngIf="hasError(0, 'eventName', 'maxlength')">You have more than 60 characters</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Channel Type:</mat-label>
+            <mat-select formControlName="channel">
+              <!--              <mat-option *ngFor="let channel of channels" [value]="channel.value">-->
+              <!--                {{channel.value}}-->
+              <!--              </mat-option>-->
+              <mat-option value="sms">SMS</mat-option>
+              <mat-option value="email">Email</mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError(0,'channel','required')">Please select an option</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Send date:</mat-label>
+            <input matInput [matDatepicker]="sendAtDatepicker" formControlName="sendDate">
+            <mat-datepicker-toggle matSuffix [for]="sendAtDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #sendAtDatepicker></mat-datepicker>
+            <mat-error *ngIf="hasError(0,'sendDate','required')">Please select an option</mat-error>
+          </mat-form-field>
+          <div>
+          <mat-form-field>
+            <mat-label>Send time:</mat-label>
+            <input matInput [ngxTimepicker]="default" readonly formControlName="sendTime">
+            <ngx-material-timepicker-toggle matSuffix [for]="default"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #default></ngx-material-timepicker>
+            <mat-error *ngIf="hasError(0,'sendTime','required')">Please select a time</mat-error>
+          </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Attach Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+        <mat-card-content>
+          <ng-container class="cognito-table" *ngIf="cognitoGroups$ | async as cognitoGroups">
+            <app-filterable-table
+                [columnProperties]="columnProperties"
+                [contents]="cognitoGroups"
+                [selectable]=true
+                (selectionChange)="onCognitoGroupSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Review" [editable]="false">
+        <mat-card-content>
+          <h3 class="mat-h3">Review details</h3>
+          <h4 class="mat-h4">User details</h4>
+
+          <mat-label>Event Name:</mat-label>
+          <div>{{formArray.get([0]).get('eventName').value}}</div>
+
+
+          <mat-label>Delivery Channel:</mat-label>
+          <div>{{formArray.get([0]).get('channel').value}}</div>
+
+          <mat-label>Send Date:</mat-label>
+          <div>{{formArray.get([0]).get('sendDate').value}}</div>
+
+          <mat-label>Target group:</mat-label>
+          <div>[{{formArray.get([1]).get('targetType').value}}] {{formArray.get([1]).get('targetId').value}}</div>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          <span>Back</span></button>
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Finish</button>
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</mat-card>
