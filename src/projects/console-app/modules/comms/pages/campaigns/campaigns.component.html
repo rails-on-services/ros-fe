@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="action" fxLayout="row" fxLayoutGap="1rem">
+    <button mat-raised-button color="primary" (click)="addMessage()">
+      Add Message
+    </button>
+    <button mat-raised-button color="warn" (click)="showDeleteConfirmationPopup()"
+            [disabled]="!(selection && selection.selected.length)">
+      Remove Message<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
+    </button>
+    <div fxFlex fxLayout="row" fxLayoutAlign="end">
+      <mat-button-toggle-group
+          aria-label="Other Actions"
+          name="otherActions"
+          (change)="onOtherActionsChange($event)">
+        <mat-button-toggle value="reload">
+          <mat-icon>refresh</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="settings">
+          <mat-icon>settings</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="help">
+          <mat-icon>help</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <ng-container class="campaigns-table" *ngIf="campaigns$ | async as campaigns">
+    <app-filterable-table
+        [columnProperties]="columnProperties"
+        [contents]="campaigns"
+        [selectable]=true
+        (selectionChange)="onMessagesSelectionChange($event)"
+        [shownColumns]="shownColumns">
+    </app-filterable-table>
+  </ng-container>
+</div>
+<router-outlet></router-outlet>
