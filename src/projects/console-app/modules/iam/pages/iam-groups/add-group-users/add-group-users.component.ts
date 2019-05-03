@@ -12,7 +12,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class AddGroupUsersComponent implements OnInit, OnDestroy {
   id: number;
-  action: string;
   private sub: any;
   group$: Observable<any>;
   tableHeaders: { key: string, value: string }[];
@@ -28,13 +27,9 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     this.shownColumns = ['username', 'urn', 'created_at'];
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
-      this.action = params['action'];
     });
-    if (this.action === 'Add') {
-      this.fetchUsersNotInGroup();
-    } else {
-      this.fetchUsersInGroup();
-    }
+    this.fetchUsersNotInGroup();
+    
   }
 
   ngOnDestroy() {
@@ -84,6 +79,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     );
   }
 
+  //Later can move this to group detail page to fetch group users
   private fetchUsersInGroup() {
     this.group$ = this.iamService.fetchGroup(this.id).pipe(
       map(group => {
@@ -107,7 +103,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  manageUser() {
+  addUsersToGroup() {
     console.log(this.selection);
   }
 }
