@@ -133,7 +133,7 @@ export class IamGroupsComponent implements OnInit {
           });
           group['name'] = {
             value: iamGroup.name,
-            link: `/groups/${iamGroup.id}`
+            link: `${iamGroup.id}`
           }
           return group;
         });

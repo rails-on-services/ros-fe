@@ -1,31 +1,13 @@
-<mat-sidenav-container class="core-container">
-  <mat-sidenav #mainnav mode="side" [(opened)]="opened">
-    <mat-nav-list>
-      <a mat-list-item
-         routerLinkActive="mat-accent"
-         [routerLinkActiveOptions]="{exact: true}"
-         [routerLink]="'/dashboard'">Dashboard</a>
-      <a mat-list-item
-         routerLinkActive="mat-accent"
-         [routerLinkActiveOptions]="{exact: true}"
-         [routerLink]="'/iam'">IAM</a>
-      <a mat-list-item
-         routerLinkActive="mat-accent"
-         [routerLinkActiveOptions]="{exact: true}"
-         [routerLink]="'/cognito'">Cognito</a>
-      <a mat-list-item
-         routerLinkActive="mat-accent"
-         [routerLinkActiveOptions]="{exact: true}"
-         [routerLink]="'/comms'">Comms</a>
-      <a mat-list-item
-         routerLinkActive="mat-accent"
-         [routerLinkActiveOptions]="{exact: true}"
-         [routerLink]="'/campaigns'">Campaigns</a>
-    </mat-nav-list>
-
-    <button mat-stroked-button (click)="mainnav.toggle()" style="margin-top: 100px">mainnav.toggle()</button>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<mat-toolbar class="mat-elevation-z8" fxLayoutGap="10px">
+  <img class="logo" src="https://www.perxtech.com/wp-content/uploads/2019/03/logo-color.png">
+  <div fxFlex fxLayout fxLayoutGap="10px">
+    <a [routerLink]="'/dashboard'">Dashboard</a>
+    <a [routerLink]="'/iam'">IAM</a>
+    <a [routerLink]="'/cognito'">Cognito</a>
+    <a [routerLink]="'/comms'">Comms</a>
+    <a [routerLink]="'/campaigns'">Campaigns</a>
+  </div>
+</mat-toolbar>
+<div class="core-container">
+  <router-outlet></router-outlet>
+</div>

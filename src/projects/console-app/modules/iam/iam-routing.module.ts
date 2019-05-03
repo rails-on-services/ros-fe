@@ -41,24 +41,24 @@ const router: Routes = [
         ],
       },
       {
-        path: 'users/:id',
-        component: IamUserComponent
-      },
-      {
         path: 'users/new-user',
         component: NewIamUserComponent
+      },
+      {
+        path: 'users/:id',
+        component: IamUserComponent
       },
       {
         path: 'groups',
         component: IamGroupsComponent,
       },
       {
-        path: 'groups/:id',
-        component: IamGroupComponent
-      },
-      {
         path: 'groups/new-group',
         component: NewIamGroupComponent
+      },
+      {
+        path: 'groups/:id',
+        component: IamGroupComponent
       },
       {
         path: 'policies',
