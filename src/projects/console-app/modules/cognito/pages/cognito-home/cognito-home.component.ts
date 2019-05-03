@@ -17,7 +17,11 @@ export class CognitoHomeComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private cognitoService: CognitoService
-  ) {}
+  ) {
+    this.usersCount = 0;
+    this.groupsCount = 0;
+    this.appsCount = 0;
+  }
 
   ngOnInit() {
     this.fetchUsers();
