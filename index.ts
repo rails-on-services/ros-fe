@@ -11,6 +11,7 @@ export * from './src/projects/console-app/modules/cognito/cognito-routing.module
 export * from './src/projects/console-app/modules/cognito/cognito.component';
 export * from './src/projects/console-app/modules/cognito/cognito.module';
 export * from './src/projects/console-app/modules/cognito/components/cognito-menu/cognito-menu.component';
+export * from './src/projects/console-app/modules/cognito/pages/cognito-apps/cognito-apps.component';
 export * from './src/projects/console-app/modules/cognito/pages/cognito-groups/cognito-groups.component';
 export * from './src/projects/console-app/modules/cognito/pages/cognito-home/cognito-home.component';
 export * from './src/projects/console-app/modules/cognito/pages/cognito-users/cognito-users.component';
