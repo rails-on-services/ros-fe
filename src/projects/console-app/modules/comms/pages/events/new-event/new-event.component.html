@@ -1,9 +1,9 @@
 <mat-card>
-  <mat-card-title>Create New User</mat-card-title>
+  <mat-card-title>Create New Event</mat-card-title>
   <form [formGroup]="eventDetailsGroup" (ngSubmit)="submitForm()">
 
     <mat-horizontal-stepper formArrayName="formArray" linear>
-      <mat-step label="Set User Details" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
+      <mat-step label="Set Event Details" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
         <mat-card-content>
           <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
@@ -21,7 +21,6 @@
               <!--                {{channel.value}}-->
               <!--              </mat-option>-->
               <mat-option value="sms">SMS</mat-option>
-              <mat-option value="email">Email</mat-option>
             </mat-select>
             <mat-error *ngIf="hasError(0,'channel','required')">Please select an option</mat-error>
           </mat-form-field>

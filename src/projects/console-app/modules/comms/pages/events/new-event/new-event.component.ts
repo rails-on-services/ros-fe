@@ -86,10 +86,6 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     this.event$ = this.commsService.createEvent(event);
   }
 
-  goBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
   get columnProperties() {
     // todo: change IAM to Cognito
     return IamGroup.prototype.getColumnProperties();
