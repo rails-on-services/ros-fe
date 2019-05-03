@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {HomeComponent} from './pages/home/home.component';
-import {UsersComponent} from './pages/users/users.component';
-import {GroupsComponent} from './pages/groups/groups.component';
+import {CognitoHomeComponent} from './pages/cognito-home/cognito-home.component';
+import {CognitoUsersComponent} from './pages/cognito-users/cognito-users.component';
+import {CognitoGroupsComponent} from './pages/cognito-groups/cognito-groups.component';
 // import {ModalComponent} from '../../shared/components/modal/modal.component';
 import {CognitoComponent} from './cognito.component';
-import {NewUserComponent} from './pages/users/new-user/new-user.component';
-// import {NewUserResolverService} from './pages/users/new-user/new-user-resolver.service';
+import {NewCognitoUserComponent} from './pages/cognito-users/new-cognito-user/new-cognito-user.component';
+// import {NewCognitoUserResolverService} from './pages/users/new-user/new-user-resolver.service';
 
-export const router: Routes = [
+const router: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -20,28 +20,28 @@ export const router: Routes = [
     children: [
       {
         path: 'home',
-        component: HomeComponent,
+        component: CognitoHomeComponent,
       },
       {
         path: 'users',
-        component: UsersComponent,
+        component: CognitoUsersComponent,
         children: [
           // {
           //   path: 'new-user',
           //   component: ModalComponent,
           //   resolve: {
-          //     modal: NewUserResolverService
+          //     modal: NewCognitoUserResolverService
           //   }
           // },
         ],
       },
       {
         path: 'users/new-user',
-        component: NewUserComponent
+        component: NewCognitoUserComponent
       },
       {
         path: 'groups',
-        component: GroupsComponent,
+        component: CognitoGroupsComponent,
       }
     ]
   },

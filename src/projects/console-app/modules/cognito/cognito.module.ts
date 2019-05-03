@@ -2,24 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CognitoComponent } from './cognito.component';
 import { CognitoRoutingModule } from './cognito-routing.module';
-import { HomeComponent } from './pages/home/home.component';
-import { UsersComponent } from './pages/users/users.component';
-import { GroupsComponent } from './pages/groups/groups.component';
+import { CognitoHomeComponent } from './pages/cognito-home/cognito-home.component';
+import { CognitoUsersComponent } from './pages/cognito-users/cognito-users.component';
+import { CognitoGroupsComponent } from './pages/cognito-groups/cognito-groups.component';
 import { CognitoMenuComponent } from './components/cognito-menu/cognito-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NewUserComponent } from './pages/users/new-user/new-user.component';
+import { NewCognitoUserComponent } from './pages/cognito-users/new-cognito-user/new-cognito-user.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @NgModule({
   declarations: [
     CognitoComponent,
-    HomeComponent,
-    UsersComponent,
-    GroupsComponent,
+    CognitoHomeComponent,
+    CognitoUsersComponent,
+    CognitoGroupsComponent,
     CognitoMenuComponent,
-    NewUserComponent
+    NewCognitoUserComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +33,7 @@ import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@p
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,
-    NewUserComponent]
+    NewCognitoUserComponent]
 })
 export class CognitoModule {
 }
