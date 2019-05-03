@@ -1,5 +1,19 @@
 .core-container {
-  position: relative;
-  //top: 4em;
-  height: 100%;
+  height: calc(100% - 6.4rem);
+}
+
+.mat-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+  height: 6.4rem;
+}
+
+.logo {
+  height: 50%;
+}
+
+a {
+  color: blue;
 }
