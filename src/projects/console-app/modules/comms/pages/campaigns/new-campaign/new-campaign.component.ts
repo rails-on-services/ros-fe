@@ -2,9 +2,10 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CommsMessage } from '@perx/open-services';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { CommsService, IamService, IamGroup } from '@perx/open-services';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-new-campaign',
@@ -12,14 +13,12 @@ import { Subject } from 'rxjs';
   styleUrls: ['./new-campaign.component.scss']
 })
 export class NewCampaignComponent implements OnInit, AfterViewInit {
-  selection: CommsMessage[];
+  cognitoGroups$: Observable<any[]>;
+  selection: IamGroup[];
   shownColumns: (string|number|symbol)[];
 
   campaignDetailsGroup: FormGroup;
   isEditable = true;
-
-  createMessagenamePage: boolean;
-  reviewPage: boolean;
 
   private campaignUnsubscribe$ = new Subject<void>();
 
@@ -27,23 +26,25 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
               private router: Router,
               private route: ActivatedRoute,
               private commService: CommsService,
+              private iamService: IamService,
               private _formBuilder: FormBuilder) {
-    this.createMessagenamePage = true;
-    this.reviewPage = false;
   }
 
   ngOnInit() {
     this.campaignDetailsGroup = this._formBuilder.group({
       formArray: this._formBuilder.array([
         this._formBuilder.group({
-          ownerId: ['', [Validators.required, Validators.maxLength(100)]],
-          ownerType: ['', Validators.required],
+          name: ['', [Validators.required]],
+          ownerId: [''],
+          ownerType: [''],
         }),
         this._formBuilder.group({
           cognitoEndpointId: [''],
         }),
       ])
     });
+
+    this.fetchGroups();
   }
   get formArray(): AbstractControl | null {return this.campaignDetailsGroup.get('formArray'); }
 
@@ -64,15 +65,43 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   submitForm() {
 
     const campaign = {
-      ownerId: this.formArray.get([0]).get('owner').value,
+      name: this.formArray.get([0]).get('name').value,
+      ownerId: this.formArray.get([0]).get('ownerId').value,
       ownerType: this.formArray.get([0]).get('ownerType').value,
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
     this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => { return; });
   }
 
-  goBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+
+  get columnProperties() {
+    // todo: change IAM to Cognito
+    return IamGroup.prototype.getColumnProperties();
+  }
+
+  onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
+    this.selection = selection.selected;
+    this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
+  }
+
+  private fetchGroups() {
+    this.cognitoGroups$ = this.iamService.fetchGroups().pipe(
+      map(document => {
+        const iamGroups = document.getModels();
+        const groups = iamGroups.map(iamGroup => {
+          const group = { id: iamGroup.id };
+          const keys = Object.keys(iamGroup.getColumnProperties());
+
+          keys.forEach(key => {
+            group[key] = iamGroup[key];
+          });
+
+          return group;
+        });
+
+        return groups;
+      })
+    );
   }
 
 }
