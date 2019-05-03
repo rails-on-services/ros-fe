@@ -10,7 +10,8 @@ function init() {
       '.module',
       '.model',
       '.service',
-      '.component'
+      '.component',
+      '.interceptor'
     ],
     excludesNames: [
       '.spec.ts',

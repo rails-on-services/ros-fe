@@ -9,14 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { FeatureFlagsService } from '../src/shared/services/feature-flags/feature-flags.service';
-
-@Injectable()
-export class HttpRequestInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(request);
-  }
-}
+import { FeatureFlagsService } from '../shared/services/feature-flags/feature-flags.service';
 
 @Injectable()
 export class MockRequestInterceptor implements HttpInterceptor {
