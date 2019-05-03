@@ -9,10 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-campaigns',
-  templateUrl: './campaigns.component.html',
-  styleUrls: ['./campaigns.component.scss']
+  templateUrl: './comms-campaigns.component.html',
+  styleUrls: ['./comms-campaigns.component.scss']
 })
-export class CampaignsComponent implements OnInit {
+export class CommsCampaignsComponent implements OnInit {
   campaigns$: Observable<any[]>;
 
   showModal: boolean;
