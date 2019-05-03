@@ -4,6 +4,8 @@ export * from './src/app/core/core-routing.module';
 export * from './src/app/core/core.component';
 export * from './src/app/core/core.module';
 export * from './src/app/login/login.component';
+export * from './src/helpers/http-request.interceptor';
+export * from './src/helpers/mock-request.interceptor';
 export * from './src/projects/console-app/modules/campaigns/campaigns-routing.module';
 export * from './src/projects/console-app/modules/campaigns/campaigns.component';
 export * from './src/projects/console-app/modules/campaigns/campaigns.module';
