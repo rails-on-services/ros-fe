@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { CommsService, CommsMessage } from '@perx/open-services';
+import { CommsService, CommsCampaign } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,11 +13,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./campaigns.component.scss']
 })
 export class CampaignsComponent implements OnInit {
-  testGroupList: Observable<CommsMessage[]>;
   campaigns$: Observable<any[]>;
 
   showModal: boolean;
-  selection: SelectionModel<CommsMessage>;
+  selection: SelectionModel<CommsCampaign>;
 
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -32,7 +31,7 @@ export class CampaignsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsMessage.prototype.getColumnProperties());
+    this.shownColumns = Object.keys(CommsCampaign.prototype.getColumnProperties());
 
     this.fetchMessages();
   }
@@ -56,7 +55,7 @@ export class CampaignsComponent implements OnInit {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
-        header: 'Deleting Messages',
+        header: 'Deleting Campaign',
         content: 'Are you sure you want to delete the campaign',
         btnColor: 'warn',
         action: 'Delete'
@@ -84,7 +83,7 @@ export class CampaignsComponent implements OnInit {
         this.shownColumns$ = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsMessage.prototype.getColumnProperties(),
+            columnProperties: CommsCampaign.prototype.getColumnProperties(),
             selected: this.shownColumns
           }
         }).componentInstance.selectionChange;
@@ -102,28 +101,28 @@ export class CampaignsComponent implements OnInit {
   private fetchMessages() {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
       map(document => {
-        const commsUsers = document.getModels();
-        const users = commsUsers.map(commsUser => {
-          const user = { id: commsUser.id };
-          const keys = Object.keys(commsUser.getColumnProperties());
+        const commsCampaigns = document.getModels();
+        const campaigns = commsCampaigns.map(commsCampaign => {
+          const campaign = { id: commsCampaign.id };
+          const keys = Object.keys(commsCampaign.getColumnProperties());
 
           keys.forEach(key => {
-            user[key] = commsUser[key];
+            campaign[key] = commsCampaign[key];
           });
 
-          return user;
+          return campaign;
         });
 
-        return users;
+        return campaigns;
       })
     );
   }
 
   get columnProperties() {
-    return CommsMessage.prototype.getColumnProperties();
+    return CommsCampaign.prototype.getColumnProperties();
   }
 
-  onMessagesSelectionChange(selection: SelectionModel<CommsMessage>) {
+  onMessagesSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.selection = selection;
   }
 }
