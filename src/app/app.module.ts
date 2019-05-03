@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 
 import { IamModule as IamServiceModule } from '@perx/open-services';
 import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
+import { CommsModule as CommsServiceModule } from '@perx/open-services';
 import { environment } from '../projects/console-app/environments/environment';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
@@ -35,6 +36,7 @@ const isMock = environment.mock;
     SharedModule,
     CoreModule,
     IamServiceModule,
+    CommsServiceModule,
     CognitoServiceModule.forRoot({ env: environment })
   ],
   providers: [

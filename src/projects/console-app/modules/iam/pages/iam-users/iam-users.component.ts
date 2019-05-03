@@ -141,12 +141,20 @@ export class IamUsersComponent implements OnInit, OnDestroy {
             id: iamUser.id,
             username: {
               value: iamUser.username,
-              link: `/users/${iamUser.id}`
+              link: `${iamUser.id}`
             },
-            groups: groups.map(group => ({
-              value: group.name,
-              link: `groups/${group.id}`
-            })),
+            groups: groups.map((group, index) => {
+              if (index === groups.length - 1 && groups.length < iamUser.groups.length) {
+                return {
+                  value: `${iamUser.groups.length - groups.length + 1} more`,
+                  link: `${iamUser.id}`
+                }
+              }
+              return {
+                value: group.name,
+                link: `../groups/${group.id}`
+              }
+            }),
             urn: iamUser.urn,
             apiAccess: iamUser.apiAccess,
             consoleAccess: iamUser.consoleAccess

@@ -8,11 +8,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-new-group',
-  templateUrl: './new-group.component.html',
-  styleUrls: ['./new-group.component.scss']
+  selector: 'app-new-iam-group',
+  templateUrl: './new-iam-group.component.html',
+  styleUrls: ['./new-iam-group.component.scss']
 })
-export class NewGroupComponent implements OnInit, AfterViewInit {
+export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
   selection: IamPolicy[];
   shownColumns: (string|number|symbol)[];
