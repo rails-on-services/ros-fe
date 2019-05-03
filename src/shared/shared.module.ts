@@ -1,9 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {MaterialDesignModule} from './modules/material-design/material-design.module';
-import {ModalComponent} from './components/modal/modal.component';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MaterialDesignModule } from './modules/material-design/material-design.module';
+import { ModalComponent } from './components/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {AuthenticationModule} from './modules/authentication';
+import { AuthenticationModule } from './modules/authentication';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -14,12 +15,14 @@ import {AuthenticationModule} from './modules/authentication';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    FlexLayoutModule
   ],
   exports: [
     ModalComponent,
     AuthenticationModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    FlexLayoutModule
   ],
   entryComponents: []
 })
