@@ -336,7 +336,7 @@
 
 "@perx/open-services@rails-on-services/open-services#master":
   version "0.0.0"
-  resolved "https://codeload.github.com/rails-on-services/open-services/tar.gz/e86d9cb65904b750070641369fdf167304f8ec8a"
+  resolved "https://codeload.github.com/rails-on-services/open-services/tar.gz/849a48bde5d7ee21367a54f5ae19c7e6029af1e4"
   dependencies:
     "@angular/animations" "~7.2.0"
     "@angular/common" "~7.2.0"
