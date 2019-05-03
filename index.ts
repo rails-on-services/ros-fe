@@ -27,7 +27,6 @@ export * from './src/projects/console-app/modules/comms/pages/events/new-event/n
 export * from './src/projects/console-app/modules/comms/pages/events/new-event/new-event.component';
 export * from './src/projects/console-app/modules/comms/pages/home/home.component';
 export * from './src/projects/console-app/modules/comms/pages/messages/messages.component';
-export * from './src/projects/console-app/modules/comms/pages/messages/new-message/new-message.component';
 export * from './src/projects/console-app/modules/comms/pages/templates/new-template/new-template-resolver.service';
 export * from './src/projects/console-app/modules/comms/pages/templates/new-template/new-template.component';
 export * from './src/projects/console-app/modules/comms/pages/templates/templates.component';

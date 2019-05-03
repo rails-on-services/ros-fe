@@ -5,7 +5,6 @@ import { EventsComponent } from './pages/events/events.component';
 import { CommsComponent } from './comms.component';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
 import { MessagesComponent } from './pages/messages/messages.component';
-import { NewMessageComponent } from './pages/messages/new-message/new-message.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
@@ -45,10 +44,6 @@ export const router: Routes = [
       {
         path: 'messages',
         component: MessagesComponent,
-      },
-      {
-        path: 'messages/new-message',
-        component: NewMessageComponent
       },
       {
         path: 'templates',

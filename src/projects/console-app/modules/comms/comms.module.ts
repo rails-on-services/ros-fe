@@ -9,7 +9,6 @@ import { CommsMenuComponent } from './components/comms-menu/comms-menu.component
 import { CommsComponent } from './comms.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
-import { NewMessageComponent } from './pages/messages/new-message/new-message.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { EventsComponent } from './pages/events/events.component';
 import { MessagesComponent } from './pages/messages/messages.component';
@@ -27,7 +26,6 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     TemplatesComponent,
     CommsCampaignsComponent,
     NewEventComponent,
-    NewMessageComponent,
     NewTemplateComponent,
     NewCampaignComponent,
     HomeComponent,
@@ -50,7 +48,6 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     ManageColumnModal,
     ConfirmationModal,
     NewEventComponent,
-    NewMessageComponent,
     NewTemplateComponent,
     NewCampaignComponent]
 })

@@ -4,8 +4,7 @@ import { CommsService, CommsMessage } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-messages',
@@ -13,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./messages.component.scss']
 })
 export class MessagesComponent implements OnInit {
-  testGroupList: Observable<CommsMessage[]>;
   messages$: Observable<any[]>;
 
   showModal: boolean;
@@ -24,8 +22,6 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private commsService: CommsService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
   ) {
     this.showModal = false;
@@ -35,39 +31,6 @@ export class MessagesComponent implements OnInit {
     this.shownColumns = Object.keys(CommsMessage.prototype.getColumnProperties());
 
     this.fetchMessages();
-  }
-
-  addMessage() {
-    this.router.navigate(['new-message'], { relativeTo: this.activatedRoute });
-  }
-
-  removeMessages() {
-    if (!this.selection || this.selection.selected.length <= 0) {
-      return;
-    }
-    this.selection.selected.forEach(group => {
-      this.commsService.removeMessage(group.id).subscribe(() => {
-        this.fetchMessages();
-      });
-    });
-  }
-
-  showDeleteConfirmationPopup() {
-    const confirmPopup = this.dialog.open(ConfirmationModal, {
-      minWidth: '300px',
-      data: {
-        header: 'Deleting Messages',
-        content: 'Are you sure you want to delete the message',
-        btnColor: 'warn',
-        action: 'Delete'
-      }
-    });
-
-    confirmPopup.afterClosed().subscribe(shouldDelete => {
-      if (shouldDelete) {
-        this.removeMessages();
-      }
-    });
   }
 
   onOtherActionsChange(event: MatButtonToggleChange) {
