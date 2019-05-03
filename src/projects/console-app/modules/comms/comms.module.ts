@@ -16,7 +16,7 @@ import { MessagesComponent } from './pages/messages/messages.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
-import { CampaignsComponent } from './pages/campaigns/campaigns.component';
+import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
 
 // import {routes} from './comms-routing.module';
 
@@ -25,7 +25,7 @@ import { CampaignsComponent } from './pages/campaigns/campaigns.component';
     EventsComponent,
     MessagesComponent,
     TemplatesComponent,
-    CampaignsComponent,
+    CommsCampaignsComponent,
     NewEventComponent,
     NewMessageComponent,
     NewTemplateComponent,
