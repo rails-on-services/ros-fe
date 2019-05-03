@@ -16,6 +16,8 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
+import { CommsProvidersComponent } from './pages/providers/providers.component';
+import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
 
 // import {routes} from './comms-routing.module';
 
@@ -24,10 +26,12 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     EventsComponent,
     MessagesComponent,
     TemplatesComponent,
+    CommsProvidersComponent,
     CommsCampaignsComponent,
     NewEventComponent,
     NewTemplateComponent,
     NewCampaignComponent,
+    NewProviderComponent,
     HomeComponent,
     CommsMenuComponent,
     CommsComponent,
@@ -49,6 +53,7 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     ConfirmationModal,
     NewEventComponent,
     NewTemplateComponent,
+    NewProviderComponent,
     NewCampaignComponent]
 })
 export class CommsModule {

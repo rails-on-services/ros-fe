@@ -9,6 +9,8 @@ import { NewTemplateComponent } from './pages/templates/new-template/new-templat
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
+import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
+import { CommsProvidersComponent } from './pages/providers/providers.component';
 
 export const router: Routes = [
   {
@@ -60,6 +62,14 @@ export const router: Routes = [
       {
         path: 'campaigns/new-campaign',
         component: NewCampaignComponent
+      },
+      {
+        path: 'providers',
+        component: CommsProvidersComponent,
+      },
+      {
+        path: 'providers/new-provider',
+        component: NewProviderComponent
       },
     ]
   },
