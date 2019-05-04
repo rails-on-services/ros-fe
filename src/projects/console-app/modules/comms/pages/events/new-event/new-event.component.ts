@@ -11,9 +11,9 @@ import {
   CommsCampaign,
   CommsTemplate
 } from '@perx/open-services';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 
 
@@ -23,6 +23,8 @@ import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, AfterViewInit {
+  private eventUnsubscribe$ = new Subject<void>();
+
   cognitoGroups$: Observable<any[]>;
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
@@ -35,8 +37,6 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   eventDetailsGroup: FormGroup;
   isEditable = true;
-
-  event$: Observable<CommsEvent>;
 
   @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 
@@ -120,7 +120,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       // templateId: this.formArray.get([4]).get('templateId').value,
     };
 
-    this.event$ = this.commsService.createEvent(event);
+    this.commsService.createEvent(event).pipe(takeUntil(this.eventUnsubscribe$)).subscribe(() => {
+    });;
   }
 
   get columnProperties() {
