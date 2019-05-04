@@ -2,7 +2,15 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CommsEvent, IamService, IamGroup, CommsProvider, CommsCampaign } from '@perx/open-services';
+import {
+  CommsService,
+  CommsEvent,
+  IamService,
+  IamGroup,
+  CommsProvider,
+  CommsCampaign,
+  CommsTemplate
+} from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
@@ -17,9 +25,11 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   cognitoGroups$: Observable<any[]>;
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
+  templates$: Observable<any[]>;
   selection: IamGroup[];
   providerSelection: CommsProvider[];
   campaignSelection: CommsCampaign[];
+  templateSelection: CommsTemplate[];
   shownColumns: (string|number|symbol)[];
 
   eventDetailsGroup: FormGroup;
@@ -43,7 +53,10 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
           sendTime: [(''), [Validators.required]],
-          // sendTime: [(''), [Validators.required]],
+          // eventName: [''],
+          // channel: [''],
+          // sendDate: [''],
+          // sendTime: [''],
         }),
         this._formBuilder.group({
           status: [('')],
@@ -56,12 +69,16 @@ export class NewEventComponent implements OnInit, AfterViewInit {
         this._formBuilder.group({
           providerId: [('')],
         }),
+        this._formBuilder.group({
+          templateId: [('')],
+        }),
       ])
     });
 
     this.fetchGroups();
     this.fetchCampaigns();
     this.fetchProviders();
+    this.fetchTemplates();
   }
 
   get formArray(): AbstractControl|null {
@@ -93,7 +110,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       targetId: this.formArray.get([1]).get('targetId').value,
       targetType: this.formArray.get([1]).get('targetType').value,
       // campaignId: this.formArray.get([2]).get('campaignId').value,
-      // providerId: this.formArray.get([2]).get('providerId').value,
+      // providerId: this.formArray.get([3]).get('providerId').value,
+      // templateId: this.formArray.get([4]).get('templateId').value,
     };
 
     this.event$ = this.commsService.createEvent(event);
@@ -109,6 +127,9 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   get providerColumnProperties() {
     return CommsProvider.prototype.getColumnProperties();
   }
+  get templateColumnProperties() {
+    return CommsTemplate.prototype.getColumnProperties();
+  }
 
   onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection.selected;
@@ -119,13 +140,16 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
     this.providerSelection = selection.selected;
     this.formArray.get([2]).get('campaignId').setValue(selection.selected[0].id);
-
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.campaignSelection = selection.selected;
     this.formArray.get([3]).get('providerId').setValue(selection.selected[0].id);
+  }
 
+  onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
+    this.templateSelection = selection.selected;
+    this.formArray.get([4]).get('templateId').setValue(selection.selected[0].id);
   }
 
   private fetchGroups() {
@@ -182,6 +206,25 @@ export class NewEventComponent implements OnInit, AfterViewInit {
         });
 
         return campaigns;
+      })
+    );
+  }
+  private fetchTemplates() {
+    this.templates$ = this.commsService.fetchTemplates().pipe(
+      map(document => {
+        const commsTemplates = document.getModels();
+        const templates = commsTemplates.map(commsCampaign => {
+          const template = { id: commsCampaign.id };
+          const keys = Object.keys(commsCampaign.getColumnProperties());
+
+          keys.forEach(key => {
+            template[key] = commsCampaign[key];
+          });
+
+          return template;
+        });
+
+        return templates;
       })
     );
   }

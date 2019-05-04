@@ -131,6 +131,32 @@
           </div>
         </mat-card-actions>
       </mat-step>
+      <mat-step label="Choose template" formGroupName="4" [stepControl]="formArray.get([4])" [editable]="isEditable">
+        <mat-card-content>
+          <ng-container class="templates-table" *ngIf="templates$ | async as templates">
+            <app-filterable-table
+                [columnProperties]="templateColumnProperties"
+                [contents]="templates"
+                [selectable]=true
+                (selectionChange)="onTemplateSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
           <h3 class="mat-h3">Review details</h3>
@@ -153,6 +179,9 @@
 
           <mat-label>Provider:</mat-label>
           <div>{{formArray.get([3]).get('providerId').value}}</div>
+
+          <mat-label>Template:</mat-label>
+          <div>{{formArray.get([4]).get('templateId').value}}</div>
 
         </mat-card-content>
         <mat-card-actions>
