@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CommsService,
   CommsEvent,
@@ -14,6 +14,7 @@ import {
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
+import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 
 
 @Component({
@@ -36,6 +37,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   isEditable = true;
 
   event$: Observable<CommsEvent>;
+
+  @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 
   constructor(private modalService: ModalService,
               private router: Router,
@@ -101,11 +104,14 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   submitForm() {
 
-    const dateTime = this.formArray.get([0]).get('sendDate').value + this.formArray.get([0]).get('sendTime').value;
+    const dateTime = new Date(this.formArray.get([0]).get('sendDate').value);
+    dateTime.setMinutes(this.sendAtTimepicker.selectedMinute.time);
+    dateTime.setHours(this.sendAtTimepicker.selectedHour.time);
+
     const event = {
       name: this.formArray.get([0]).get('eventName').value,
       channel: this.formArray.get([0]).get('channel').value,
-      sendAt: dateTime,
+      sendAt: dateTime.toString(),
       status: this.formArray.get([1]).get('status').value,
       targetId: this.formArray.get([1]).get('targetId').value,
       targetType: this.formArray.get([1]).get('targetType').value,
@@ -121,12 +127,15 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     // todo: change IAM to Cognito
     return IamGroup.prototype.getColumnProperties();
   }
+
   get campaignsColumnProperties() {
     return CommsCampaign.prototype.getColumnProperties();
   }
+
   get providerColumnProperties() {
     return CommsProvider.prototype.getColumnProperties();
   }
+
   get templateColumnProperties() {
     return CommsTemplate.prototype.getColumnProperties();
   }
@@ -171,6 +180,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       })
     );
   }
+
   private fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
       map(document => {
@@ -190,6 +200,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       })
     );
   }
+
   private fetchCampaigns() {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
       map(document => {
@@ -209,6 +220,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       })
     );
   }
+
   private fetchTemplates() {
     this.templates$ = this.commsService.fetchTemplates().pipe(
       map(document => {

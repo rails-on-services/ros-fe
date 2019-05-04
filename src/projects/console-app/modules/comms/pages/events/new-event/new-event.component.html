@@ -34,9 +34,9 @@
           <div>
           <mat-form-field>
             <mat-label>Send time:</mat-label>
-            <input matInput [ngxTimepicker]="default" readonly formControlName="sendTime">
-            <ngx-material-timepicker-toggle matSuffix [for]="default"></ngx-material-timepicker-toggle>
-            <ngx-material-timepicker #default></ngx-material-timepicker>
+            <input matInput [ngxTimepicker]="sendAtTimepicker" [format]="24" readonly formControlName="sendTime">
+            <ngx-material-timepicker-toggle matSuffix [for]="sendAtTimepicker"></ngx-material-timepicker-toggle>
+            <ngx-material-timepicker #sendAtTimepicker></ngx-material-timepicker>
             <mat-error *ngIf="hasError(0,'sendTime','required')">Please select a time</mat-error>
           </mat-form-field>
           </div>
