@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CommsEvent, IamService, IamGroup } from '@perx/open-services';
+import { CommsService, CommsEvent, IamService, IamGroup, CommsProvider, CommsCampaign } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,11 @@ import { map } from 'rxjs/operators';
 })
 export class NewEventComponent implements OnInit, AfterViewInit {
   cognitoGroups$: Observable<any[]>;
+  providers$: Observable<any[]>;
+  campaigns$: Observable<any[]>;
   selection: IamGroup[];
+  providerSelection: CommsProvider[];
+  campaignSelection: CommsCampaign[];
   shownColumns: (string|number|symbol)[];
 
   eventDetailsGroup: FormGroup;
@@ -45,12 +49,19 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           status: [('')],
           targetId: [('')],
           targetType: [('')],
-        })
+        }),
+        this._formBuilder.group({
+          campaignId: [('')],
+        }),
+        this._formBuilder.group({
+          providerId: [('')],
+        }),
       ])
     });
 
     this.fetchGroups();
-
+    this.fetchCampaigns();
+    this.fetchProviders();
   }
 
   get formArray(): AbstractControl|null {
@@ -81,6 +92,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       status: this.formArray.get([1]).get('status').value,
       targetId: this.formArray.get([1]).get('targetId').value,
       targetType: this.formArray.get([1]).get('targetType').value,
+      // campaignId: this.formArray.get([2]).get('campaignId').value,
+      // providerId: this.formArray.get([2]).get('providerId').value,
     };
 
     this.event$ = this.commsService.createEvent(event);
@@ -90,11 +103,29 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     // todo: change IAM to Cognito
     return IamGroup.prototype.getColumnProperties();
   }
+  get campaignsColumnProperties() {
+    return CommsCampaign.prototype.getColumnProperties();
+  }
+  get providerColumnProperties() {
+    return CommsProvider.prototype.getColumnProperties();
+  }
 
   onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection.selected;
     this.formArray.get([1]).get('targetId').setValue(selection.selected[0].id);
     this.formArray.get([1]).get('targetType').setValue('IamGroup');
+  }
+
+  onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
+    this.providerSelection = selection.selected;
+    this.formArray.get([2]).get('campaignId').setValue(selection.selected[0].id);
+
+  }
+
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
+    this.campaignSelection = selection.selected;
+    this.formArray.get([3]).get('providerId').setValue(selection.selected[0].id);
+
   }
 
   private fetchGroups() {
@@ -113,6 +144,44 @@ export class NewEventComponent implements OnInit, AfterViewInit {
         });
 
         return groups;
+      })
+    );
+  }
+  private fetchProviders() {
+    this.providers$ = this.commsService.fetchProviders().pipe(
+      map(document => {
+        const commsProviders = document.getModels();
+        const providers = commsProviders.map(commsProvider => {
+          const provider = { id: commsProvider.id };
+          const keys = Object.keys(commsProvider.getColumnProperties());
+
+          keys.forEach(key => {
+            provider[key] = commsProvider[key];
+          });
+
+          return provider;
+        });
+
+        return providers;
+      })
+    );
+  }
+  private fetchCampaigns() {
+    this.campaigns$ = this.commsService.fetchCampaigns().pipe(
+      map(document => {
+        const commsCampaigns = document.getModels();
+        const campaigns = commsCampaigns.map(commsCampaign => {
+          const campaign = { id: commsCampaign.id };
+          const keys = Object.keys(commsCampaign.getColumnProperties());
+
+          keys.forEach(key => {
+            campaign[key] = commsCampaign[key];
+          });
+
+          return campaign;
+        });
+
+        return campaigns;
       })
     );
   }

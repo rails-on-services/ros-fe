@@ -53,7 +53,7 @@
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Attach Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+      <mat-step label="Target Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="cognito-table" *ngIf="cognitoGroups$ | async as cognitoGroups">
             <app-filterable-table
@@ -61,6 +61,58 @@
                 [contents]="cognitoGroups"
                 [selectable]=true
                 (selectionChange)="onCognitoGroupSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Assign Campaign" formGroupName="2" [stepControl]="formArray.get([2])" [editable]="isEditable">
+        <mat-card-content>
+          <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
+            <app-filterable-table
+                [columnProperties]="campaignsColumnProperties"
+                [contents]="campaigns"
+                [selectable]=true
+                (selectionChange)="onCampaignsSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Choose provider" formGroupName="3" [stepControl]="formArray.get([3])" [editable]="isEditable">
+        <mat-card-content>
+          <ng-container class="provider-table" *ngIf="providers$ | async as providers">
+            <app-filterable-table
+                [columnProperties]="providerColumnProperties"
+                [contents]="providers"
+                [selectable]=true
+                (selectionChange)="onProviderSelectionChange($event)"
                 [shownColumns]="shownColumns"
             >
             </app-filterable-table>
@@ -87,7 +139,6 @@
           <mat-label>Event Name:</mat-label>
           <div>{{formArray.get([0]).get('eventName').value}}</div>
 
-
           <mat-label>Delivery Channel:</mat-label>
           <div>{{formArray.get([0]).get('channel').value}}</div>
 
@@ -96,6 +147,12 @@
 
           <mat-label>Target group:</mat-label>
           <div>[{{formArray.get([1]).get('targetType').value}}] {{formArray.get([1]).get('targetId').value}}</div>
+
+          <mat-label>Campaign:</mat-label>
+          <div>{{formArray.get([2]).get('campaignId').value}}</div>
+
+          <mat-label>Provider:</mat-label>
+          <div>{{formArray.get([3]).get('providerId').value}}</div>
 
         </mat-card-content>
         <mat-card-actions>
