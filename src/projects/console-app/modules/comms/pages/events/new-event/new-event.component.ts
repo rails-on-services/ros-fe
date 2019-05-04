@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CommsService,
-  CommsEvent,
   IamService,
   IamGroup,
   CommsProvider,
@@ -121,7 +120,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     };
 
     this.commsService.createEvent(event).pipe(takeUntil(this.eventUnsubscribe$)).subscribe(() => {
-    });;
+    });
   }
 
   get columnProperties() {
