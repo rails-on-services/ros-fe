@@ -1,12 +1,16 @@
-<mat-toolbar class="mat-elevation-z8" fxLayoutGap="10px">
+<mat-toolbar class="mat-elevation-z4" fxLayoutGap="10px">
   <img class="logo" src="https://www.perxtech.com/wp-content/uploads/2019/03/logo-color.png">
-  <div fxFlex fxLayout fxLayoutGap="10px">
-    <a [routerLink]="'/dashboard'">Dashboard</a>
-    <a [routerLink]="'/iam'">IAM</a>
-    <a [routerLink]="'/cognito'">Cognito</a>
-    <a [routerLink]="'/comms'">Comms</a>
-    <a [routerLink]="'/campaigns'">Campaigns</a>
-  </div>
+  <mat-menu #appMenu="matMenu" overlapTrigger=true (closed)="onClose()">
+    <a class="mat-menu-item" [routerLink]="'/dashboard'" routerLinkActive="active-service">Dashboard</a>
+    <a class="mat-menu-item" [routerLink]="'/iam'" routerLinkActive="active-service">IAM</a>
+    <a class="mat-menu-item" [routerLink]="'/cognito'" routerLinkActive="active-service">Cognito</a>
+    <a class="mat-menu-item" [routerLink]="'/comms'" routerLinkActive="active-service">Comms</a>
+    <a class="mat-menu-item" [routerLink]="'/campaigns'" routerLinkActive="active-service">Campaigns</a>
+  </mat-menu>
+  <button mat-button [matMenuTriggerFor]="appMenu">
+    {{services[selectedService]}}
+    <mat-icon>expand_more</mat-icon>
+  </button>
 </mat-toolbar>
 <div class="core-container">
   <router-outlet></router-outlet>
