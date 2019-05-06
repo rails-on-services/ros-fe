@@ -6,15 +6,15 @@ import { environment } from '../../../projects/console-app/environments/environm
 })
 export class FeatureFlagsService {
 
-  mockUsersDb = false;
-  mockGroupsDb = false;
-  mockPoliciesDb = false;
+  mockIamUsersDb = false;
+  mockIamGroupsDb = false;
+  mockIamPoliciesDb = false;
 
   constructor() {
     if (environment.mock) {
-      this.mockUsersDb = true;
-      this.mockGroupsDb = true;
-      this.mockPoliciesDb = true;
+      this.mockIamUsersDb = true;
+      this.mockIamGroupsDb = true;
+      this.mockIamPoliciesDb = true;
     }
   }
 }
