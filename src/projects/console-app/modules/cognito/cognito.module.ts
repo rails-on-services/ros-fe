@@ -11,6 +11,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NewCognitoUserComponent } from './pages/cognito-users/new-cognito-user/new-cognito-user.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
+import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@p
     CognitoUsersComponent,
     CognitoGroupsComponent,
     CognitoMenuComponent,
-    NewCognitoUserComponent
+    NewCognitoUserComponent,
+    CognitoAppsComponent
   ],
   imports: [
     CommonModule,

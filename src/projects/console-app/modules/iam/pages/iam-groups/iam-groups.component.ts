@@ -9,7 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
-  selector: 'app-groups',
+  selector: 'app-iam-groups',
   templateUrl: './iam-groups.component.html',
   styleUrls: ['./iam-groups.component.scss']
 })
