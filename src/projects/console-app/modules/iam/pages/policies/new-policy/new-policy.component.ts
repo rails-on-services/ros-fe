@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { IamService, IamPolicy } from '@perx/open-services';
@@ -19,7 +18,6 @@ export class NewPolicyComponent {
   policyDetailsForm: FormGroup;
 
   constructor(
-    private modalService: ModalService,
     private router: Router,
     private route: ActivatedRoute,
     private iamService: IamService,

@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ModalService } from '../../../../../../../shared/services/modal.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsService, IamService, IamGroup } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
@@ -22,8 +21,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
   private campaignUnsubscribe$ = new Subject<void>();
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private commService: CommsService,
               private iamService: IamService,

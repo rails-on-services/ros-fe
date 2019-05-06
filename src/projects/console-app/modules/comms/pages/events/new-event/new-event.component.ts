@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -39,8 +38,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private commsService: CommsService,
               private iamService: IamService,

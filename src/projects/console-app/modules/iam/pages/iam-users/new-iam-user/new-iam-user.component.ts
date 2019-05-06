@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ModalService} from '../../../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Credential, IamService, IamUser } from '@perx/open-services';
@@ -25,8 +24,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
   private userUnsubscribe$ = new Subject<void>();
   private credentialUnsubscribe$ = new Subject<void>();
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private iamService: IamService) {
     this.createUsernamePage = true;
