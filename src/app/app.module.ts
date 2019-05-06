@@ -17,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // used to create fake backend
-import { MockRequestInterceptor, HttpRequestInterceptor } from 'helpers/request-interceptors';
+import { HttpRequestInterceptor } from 'src/helpers/http-request.interceptor';
+import { MockRequestInterceptor } from 'src/helpers/mock-request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const isMock = environment.mock;

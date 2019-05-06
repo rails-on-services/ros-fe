@@ -8,6 +8,8 @@ import { MessagesComponent } from './pages/messages/messages.component';
 import { NewMessageComponent } from './pages/messages/new-message/new-message.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
+import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
+import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
 
 export const router: Routes = [
   {
@@ -55,6 +57,14 @@ export const router: Routes = [
       {
         path: 'templates/new-template',
         component: NewTemplateComponent
+      },
+      {
+        path: 'campaigns',
+        component: CommsCampaignsComponent,
+      },
+      {
+        path: 'campaigns/new-campaign',
+        component: NewCampaignComponent
       },
     ]
   },
