@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-core',
@@ -7,17 +8,30 @@ import { MatSidenav } from '@angular/material';
   styleUrls: ['./core.component.scss']
 })
 export class CoreComponent implements OnInit {
+  selectedService = 'dashboard';
 
-  @ViewChild('mainnav') public mainNav: MatSidenav;
-  opened: boolean;
-  constructor() {
-    this.opened = true;
+  services = {
+    dashboard: 'Dashboard',
+    iam: 'IAM',
+    cognito: 'Cognito',
+    comms: 'Comms',
+    campaigns: 'Campaigns'
+  };
+
+  constructor(
+    private router: Router,
+  ) {
   }
 
   ngOnInit() {
+    if (this.router.url) {
+      this.selectedService = this.router.url.split('/')[1];
+    }
   }
 
-  // menuButtonClick() {
-  //   this.mainNav.toggle();
-  // }
+  onClose() {
+    if (this.router.url) {
+      this.selectedService = this.router.url.split('/')[1];
+    }
+  }
 }
