@@ -1,0 +1,94 @@
+<mat-card>
+  <mat-card-title>Create New Provider</mat-card-title>
+  <form [formGroup]="providerDetailsGroup" (ngSubmit)="submitForm()">
+
+    <mat-horizontal-stepper linear>
+      <mat-step label="Provider Details" [stepControl]="providerDetailsGroup" [editable]="isEditable">
+        <mat-card-content>
+          <ng-template matStepLabel>Set provider details</ng-template>
+          <!--<mat-card-subtitle> You can add multiple providers at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <mat-form-field>
+            <mat-label>Provider name</mat-label>
+            <input matInput placeholder="Provider name" formControlName="providerName" required>
+            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('providerName', 'required')">Provider name is required</mat-error>
+            <mat-error *ngIf="hasError('providerName', 'maxlength')">You have more than 60 characters</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Encrypted Secret:</mat-label>
+            <input matInput formControlName="encryptedSecret">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Encrypted Secret IV:</mat-label>
+            <input matInput formControlName="encryptedSecretIv">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Key:</mat-label>
+            <input matInput formControlName="key">
+          </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Review" [editable]="false">
+        <mat-card-content>
+          <h3 class="mat-h3">Review details</h3>
+          <h4 class="mat-h4">Provider details</h4>
+
+          <mat-label>Provider name:</mat-label>
+          <div>{{providerDetailsGroup.get('providerName').value}}</div>
+
+          <div class="access-types">
+            <mat-label>Encrypted Secret:</mat-label>
+            <div *ngIf="providerDetailsGroup.get('encryptedSecret').value">
+              <div>
+                <p>{{providerDetailsGroup.get('encryptedSecret').value}}</p>
+              </div>
+            </div>
+
+            <mat-label>Encrypted Secret IV:</mat-label>
+            <div *ngIf="providerDetailsGroup.get('encryptedSecretIv').value">
+              <div>
+                <p>{{providerDetailsGroup.get('encryptedSecretIv').value}}</p>
+              </div>
+            </div>
+
+            <mat-label>Key:</mat-label>
+            <div *ngIf="providerDetailsGroup.get('key').value">
+              <div>
+                <p>{{providerDetailsGroup.get('key').value}}</p>
+              </div>
+            </div>
+
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          <span>Back</span></button>
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-raised-button color="primary" type="submit">Finish</button>
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</mat-card>

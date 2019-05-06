@@ -9,7 +9,6 @@ import { CommsMenuComponent } from './components/comms-menu/comms-menu.component
 import { CommsComponent } from './comms.component';
 import { SharedModule } from '../../../../shared/shared.module';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
-import { NewMessageComponent } from './pages/messages/new-message/new-message.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { EventsComponent } from './pages/events/events.component';
 import { MessagesComponent } from './pages/messages/messages.component';
@@ -17,6 +16,8 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
+import { CommsProvidersComponent } from './pages/providers/providers.component';
+import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
 
 // import {routes} from './comms-routing.module';
 
@@ -25,11 +26,12 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     EventsComponent,
     MessagesComponent,
     TemplatesComponent,
+    CommsProvidersComponent,
     CommsCampaignsComponent,
     NewEventComponent,
-    NewMessageComponent,
     NewTemplateComponent,
     NewCampaignComponent,
+    NewProviderComponent,
     HomeComponent,
     CommsMenuComponent,
     CommsComponent,
@@ -50,8 +52,8 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
     ManageColumnModal,
     ConfirmationModal,
     NewEventComponent,
-    NewMessageComponent,
     NewTemplateComponent,
+    NewProviderComponent,
     NewCampaignComponent]
 })
 export class CommsModule {

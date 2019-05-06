@@ -5,11 +5,12 @@ import { EventsComponent } from './pages/events/events.component';
 import { CommsComponent } from './comms.component';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
 import { MessagesComponent } from './pages/messages/messages.component';
-import { NewMessageComponent } from './pages/messages/new-message/new-message.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
+import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
+import { CommsProvidersComponent } from './pages/providers/providers.component';
 
 export const router: Routes = [
   {
@@ -47,10 +48,6 @@ export const router: Routes = [
         component: MessagesComponent,
       },
       {
-        path: 'messages/new-message',
-        component: NewMessageComponent
-      },
-      {
         path: 'templates',
         component: TemplatesComponent,
       },
@@ -65,6 +62,14 @@ export const router: Routes = [
       {
         path: 'campaigns/new-campaign',
         component: NewCampaignComponent
+      },
+      {
+        path: 'providers',
+        component: CommsProvidersComponent,
+      },
+      {
+        path: 'providers/new-provider',
+        component: NewProviderComponent
       },
     ]
   },
