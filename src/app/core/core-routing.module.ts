@@ -13,6 +13,7 @@ const router: Routes = [
     children: [
       {
         path: 'iam',
+        // switch back to static routes until routes are fixed for `perx-dashboard-ng`
         loadChildren: () => IamModule,
         // loadChildren: '../../projects/console-app/modules/iam/iam.module#IamModule'
       },
@@ -31,11 +32,7 @@ const router: Routes = [
         path: 'comms',
         loadChildren: () => CommsModule,
         // loadChildren: '../../projects/console-app/modules/comms/comms.module#CommsModule'
-      },
-      // {
-      //   path: 'campaigns',
-      //   loadChildren: '../../projects/console-app/modules/campaigns/campaigns.module#CampaignsModule'
-      // },
+      }
     ]
   },
 ];
