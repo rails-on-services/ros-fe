@@ -7,7 +7,7 @@ import {
 import {Observable, of, EMPTY} from 'rxjs';
 
 import {NewTemplateComponent} from './new-template.component';
-import {ModalService} from 'src/shared/services/modal.service';
+import {ModalService} from '../../../../../../../shared/services/modal.service';
 
 @Injectable({
   providedIn: 'root',

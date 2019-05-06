@@ -1,8 +1,12 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
 const fs = require('fs');
+const path = require('path');
+
+const isModule = fs.existsSync(path.join(__dirname, '../../node_modules')) ||
+  fs.existsSync(path.join(__dirname, '../../../node_modules'));
 
 // Configure Angular `environment.ts` file path
-const dirPath = `./src/projects/console-app/environments`;
+const dirPath = path.join(__dirname, 'src/projects/console-app/environments');
 const targetPath = `${dirPath}/environment.ts`;
 
 // Load node modules
@@ -23,15 +27,23 @@ export const environment = {
 };
 `;
 
-console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
-console.log(colors.grey(envConfigFile));
+if (!isModule) {
+  // tslint:disable-next-line:no-console
+  console.debug(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
+
+  // tslint:disable-next-line:no-console
+  console.debug(colors.grey(envConfigFile));
+}
 
 fs.mkdirSync(dirPath, { recursive: true });
 
 fs.writeFile(targetPath, envConfigFile, (err) => {
   if (err) {
     throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
+  }
+
+  if (!isModule) {
+    // tslint:disable-next-line:no-console
+    console.debug(colors.magenta(`Angular environment.ts file generated correctly \nat ${targetPath} \n`));
   }
 });

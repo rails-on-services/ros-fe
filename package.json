@@ -12,7 +12,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "node scripts/export-to-index.js && git add index.ts"
+    "precommit": "node scripts/export-to-index.js && git add index.ts",
+    "postinstall": "ts-node set-env.ts"
   },
   "private": true,
   "peerDependencies": {

@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ModalService} from '../../../../../../../shared/services/modal.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {IamService, IamUser} from '@perx/open-services';
@@ -19,8 +18,7 @@ export class NewCognitoUserComponent implements OnInit, AfterViewInit {
 
   user$: Observable<IamUser>;
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private iamService: IamService) {
     this.createUsernamePage = true;

@@ -7,7 +7,6 @@ import { CoreComponent } from './core.component';
 import { IamModule } from '../../projects/console-app/modules/iam/iam.module';
 import { CognitoModule } from '../../projects/console-app/modules/cognito/cognito.module';
 import { CommsModule } from '../../projects/console-app/modules/comms/comms.module';
-import { CampaignsModule } from '../../projects/console-app/modules/campaigns/campaigns.module';
 
 @NgModule({
   declarations: [
@@ -22,8 +21,7 @@ import { CampaignsModule } from '../../projects/console-app/modules/campaigns/ca
     // routes,
     IamModule,
     CognitoModule,
-    CommsModule,
-    CampaignsModule,
+    CommsModule
   ],
   exports: [
     HeaderComponent,

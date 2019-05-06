@@ -7,7 +7,7 @@ import {
 import {Observable, of, EMPTY} from 'rxjs';
 
 import {NewIamUserComponent} from './new-iam-user.component';
-import {ModalService} from 'src/shared/services/modal.service';
+import {ModalService} from '../../../../../../../shared/services/modal.service';
 
 @Injectable({
   providedIn: 'root',

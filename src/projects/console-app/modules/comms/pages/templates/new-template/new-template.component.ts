@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CommsTemplate } from '@perx/open-services';
-import { Observable, Subject } from 'rxjs';
+import { CommsService } from '@perx/open-services';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -17,8 +16,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   private templateUnsubscribe$ = new Subject<void>();
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private commsService: CommsService) {
   }
