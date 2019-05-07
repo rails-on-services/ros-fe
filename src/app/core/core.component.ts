@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class CoreComponent implements OnInit {
   selectedService = 'dashboard';
 
-  protected services = {
+  public services = {
     dashboard: 'Dashboard',
     iam: 'IAM',
     cognito: 'Cognito',
