@@ -136,6 +136,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
       map(document => {
         const commsTemplates = document.getModels();
         const templates = commsTemplates.map(commsTemplate => {
+          const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
           const template = { id: commsTemplate.id };
           const keys = Object.keys(commsTemplate.getColumnProperties());
 
@@ -144,7 +145,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
           });
           template['content'] = {
             value: commsTemplate.content,
-            link: `${commsTemplate.id}`
+            link: templateLink
           };
           return template;
         });

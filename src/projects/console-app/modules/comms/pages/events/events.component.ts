@@ -159,9 +159,10 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   fetchEvents() {
     this.events$ = this.commsService.fetchEvents().pipe(
-      map(document => {
-        const commEvents = document.getModels();
+      map(eventsData => {
+        const commEvents = eventsData.getModels();
         const events = commEvents.map(commsEvent => {
+          const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;
           const event = { id: commsEvent.id };
           const keys = Object.keys(commsEvent.getColumnProperties());
 
@@ -170,7 +171,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           });
           event['name'] = {
             value: commsEvent.name,
-            link: `${commsEvent.id}`
+            link: eventLink
           };
           return event;
         });
