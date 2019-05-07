@@ -2,15 +2,20 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { EventsComponent } from './pages/events/events.component';
+import { EventComponent } from './pages/events/event/event.component';
 import { CommsComponent } from './comms.component';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
 import { MessagesComponent } from './pages/messages/messages.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
+import { TemplateComponent } from './pages/templates/template/template.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
+import { CommsCampaignComponent } from './pages/campaigns/comms-campaign/comms-campaign.component';
+import { AttachEventsToCampaignComponent } from './pages/campaigns/attach-events-to-campaign/attach-events-to-campaign.component';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
 import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
 import { CommsProvidersComponent } from './pages/providers/providers.component';
+import { ProviderComponent } from './pages/providers/provider/provider.component';
 
 export const router: Routes = [
   {
@@ -44,6 +49,10 @@ export const router: Routes = [
         component: NewEventComponent
       },
       {
+        path: 'events/:id',
+        component: EventComponent
+      },
+      {
         path: 'messages',
         component: MessagesComponent,
       },
@@ -56,12 +65,24 @@ export const router: Routes = [
         component: NewTemplateComponent
       },
       {
+        path: 'templates/:id',
+        component: TemplateComponent
+      },
+      {
         path: 'campaigns',
         component: CommsCampaignsComponent,
       },
       {
+        path: 'campaigns/:id',
+        component: CommsCampaignComponent,
+      },
+      {
         path: 'campaigns/new-campaign',
         component: NewCampaignComponent
+      },
+      {
+        path: 'campaigns/:id/attach-events',
+        component: AttachEventsToCampaignComponent
       },
       {
         path: 'providers',
@@ -70,6 +91,10 @@ export const router: Routes = [
       {
         path: 'providers/new-provider',
         component: NewProviderComponent
+      },
+      {
+        path: 'providers/:id',
+        component: ProviderComponent
       },
     ]
   },

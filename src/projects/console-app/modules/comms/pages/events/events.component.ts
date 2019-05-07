@@ -4,13 +4,14 @@ import {
   OnInit,
   ViewChild,
   OnDestroy,
+  EventEmitter,
+  Output,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { CommsService, CommsEvent } from '@perx/open-services';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
@@ -26,6 +27,11 @@ import {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  @Output() attachEventsToCampaign = new EventEmitter();
+  @Output() detachEventsFromCampaign = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() campaignId: number;
+
   events$: Observable<any[]>;
   showModal: boolean;
 
@@ -52,6 +58,32 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // this.eventsSubsription.unsubscribe();
+  }
+
+  attachEvents() {
+    this.attachEventsToCampaign.emit();
+  }
+
+  detachEvents() {
+    this.detachEventsFromCampaign.emit(this.selection);
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Events',
+        content: 'Are you sure you want to detach the events from campaign',
+        btnColor: 'warn',
+        action: 'Detach'
+       }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachEvents();
+      }
+    });
   }
 
   addEvent() {
@@ -125,7 +157,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchEvents() {
+  fetchEvents() {
     this.events$ = this.commsService.fetchEvents().pipe(
       map(document => {
         const commEvents = document.getModels();
@@ -136,7 +168,10 @@ export class EventsComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             event[key] = commsEvent[key];
           });
-
+          event['name'] = {
+            value: commsEvent.name,
+            link: `${commsEvent.id}`
+          };
           return event;
         });
 

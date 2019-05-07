@@ -1,0 +1,17 @@
+<div class="container">
+    <h1 class="mat-h1">
+      Summary
+    </h1>
+    <mat-divider></mat-divider>
+    <div *ngIf="provider$ | async as provider">
+      <h3 class="mat-h3">
+        Detail
+      </h3>
+      <div *ngFor="let item of provider | keyvalue">
+        <mat-list role="list">
+          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>

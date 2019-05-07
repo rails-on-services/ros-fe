@@ -1,0 +1,36 @@
+<div class="container">
+    <h1 class="mat-h1">
+      Summary
+    </h1>
+    <mat-divider></mat-divider>
+    <div *ngIf="template$ | async as template">
+      <h3 class="mat-h3">
+        Detail
+      </h3>
+      <div *ngFor="let item of template.detail | keyvalue">
+        <mat-list role="list">
+          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+        </mat-list>
+      </div>
+      <mat-divider></mat-divider>
+      <h3 class="mat-h3">
+        Campaign
+      </h3>
+      <div *ngFor="let item of template.campaign | keyvalue">
+        <mat-list role="list">
+          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+        </mat-list>
+      </div>
+      <mat-divider></mat-divider>
+      <h3 class="mat-h3">
+        Event
+      </h3>
+      <div *ngFor="let item of template.event | keyvalue">
+        <mat-list role="list">
+          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+        </mat-list>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+  <router-outlet></router-outlet>

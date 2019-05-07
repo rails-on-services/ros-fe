@@ -1,9 +1,10 @@
 import {
   Component,
-  ElementRef,
   OnInit,
-  ViewChild,
   OnDestroy,
+  EventEmitter,
+  Output,
+  Input,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -26,6 +27,11 @@ import {
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
+  @Output() attachTemplatesToCampaign = new EventEmitter();
+  @Output() detachTemplatesFromCampaign = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() campaignId: number;
+
   document$: Observable<JsonApiQueryData<CommsTemplate>>;
   templates$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
@@ -52,6 +58,14 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // this.templatesSubsription.unsubscribe();
+  }
+
+  attachTemplates() {
+    this.attachTemplatesToCampaign.emit();
+  }
+
+  detachTemplates() {
+    this.detachTemplatesFromCampaign.emit(this.selection);
   }
 
   addTemplate() {
@@ -117,7 +131,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fetchTemplates() {
+  fetchTemplates() {
     this.templates$ = this.commsService.fetchTemplates().pipe(
       map(document => {
         const commsTemplates = document.getModels();
@@ -128,7 +142,10 @@ export class TemplatesComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             template[key] = commsTemplate[key];
           });
-
+          template['content'] = {
+            value: commsTemplate.content,
+            link: `${commsTemplate.id}`
+          };
           return template;
         });
 

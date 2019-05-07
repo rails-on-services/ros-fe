@@ -122,7 +122,10 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             provider[key] = commsProvider[key];
           });
-
+          provider['name'] = {
+            value: commsProvider.name,
+            link: `${commsProvider.id}`
+          };
           return provider;
         });
 
