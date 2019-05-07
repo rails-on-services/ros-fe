@@ -14,7 +14,7 @@ import { FeatureFlagsService } from '../shared/services/feature-flags/feature-fl
 @Injectable()
 export class MockRequestInterceptor implements HttpInterceptor {
 
-  users: any = {
+  private iamUsers: any = {
     data: [{
       id: '1',
       type: 'users',
@@ -51,7 +51,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }]
   };
 
-  private groups: any = {
+  private iamGroups: any = {
     data: [{
       id: '1',
       type: 'groups',
@@ -91,7 +91,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
     }]
   };
 
-  private policies: any = {
+  private iamPolicies: any = {
     data: [
       {
         id: '1',
@@ -128,6 +128,56 @@ export class MockRequestInterceptor implements HttpInterceptor {
         }
       }
     ]
+  };
+  private commsCampaigns: any = {
+    data: [
+      {
+        id: '1',
+        type: 'campaigns',
+        links: {
+          self: 'http://api.ros.rails-on-services.org/campaigns/1'
+        },
+        attributes: {
+          urn: 'urn:ros:comm::222222222:campaign/1',
+          created_at: '2019-04-28T17:04:36.165Z',
+          updated_at: '2019-04-28T17:04:36.165Z',
+          owner_type: 'Perx::Survey::Campaign',
+          owner_id: 1
+        }
+      },
+      {
+        id: '2',
+        type: 'campaigns',
+        links: {
+          self: 'http://api.ros.rails-on-services.org/campaigns/2'
+        },
+        attributes: {
+          urn: 'urn:ros:comm::222222222:campaign/2',
+          created_at: '2019-05-03T13:23:37.939Z',
+          updated_at: '2019-05-03T13:23:37.939Z',
+          owner_type: '',
+          owner_id: null
+        }
+      },
+      {
+        id: '3',
+        type: 'campaigns',
+        links: {
+          self: 'http://api.ros.rails-on-services.org/campaigns/3'
+        },
+        attributes: {
+          urn: 'urn:ros:comm::222222222:campaign/3',
+          created_at: '2019-05-06T07:41:02.429Z',
+          updated_at: '2019-05-06T07:41:02.429Z',
+          owner_type: '<string>',
+          owner_id: 0
+        }
+      }
+    ],
+    links: {
+      first: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10',
+      last: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10'
+    }
   };
 
   constructor(private featureFlagService: FeatureFlagsService) {
@@ -171,9 +221,9 @@ export class MockRequestInterceptor implements HttpInterceptor {
       // }
 
       // get users
-      if (this.featureFlagService.mockUsersDb) {
+      if (this.featureFlagService.mockIamUsersDb) {
         if (request.url.includes('iam/users') && request.method === 'GET') {
-          return of(new HttpResponse({ status: 200, body: this.users }));
+          return of(new HttpResponse({ status: 200, body: this.iamUsers }));
         }
 
         if (request.url.includes('iam/users') && request.method === 'POST') {
@@ -181,7 +231,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
           const newUser = request.body;
 
           // validation
-          const duplicateUser = this.users.data.filter(user => {
+          const duplicateUser = this.iamUsers.data.filter(user => {
             return user.attributes.username === newUser.data.attributes.username;
           }).length;
           if (duplicateUser) {
@@ -189,9 +239,9 @@ export class MockRequestInterceptor implements HttpInterceptor {
           }
 
           // save new user
-          newUser.data.id = this.users.data.length + 1;
-          this.users.data.push(newUser.data);
-          // localStorage.setItem('users', JSON.stringify(this.users));
+          newUser.data.id = this.iamUsers.data.length + 1;
+          this.iamUsers.data.push(newUser.data);
+          // localStorage.setItem('users', JSON.stringify(this.iamUsers));
 
           return of(new HttpResponse({ status: 201, body: newUser }));
         }
@@ -201,12 +251,12 @@ export class MockRequestInterceptor implements HttpInterceptor {
           // find user by id in users array
           const urlParts = request.url.split('/');
           const id = parseInt(urlParts[urlParts.length - 1], 10);
-          for (let i = 0; i < this.users.data.length; i++) {
-            const user = this.users.data[i];
+          for (let i = 0; i < this.iamUsers.data.length; i++) {
+            const user = this.iamUsers.data[i];
             if (parseInt(user.id, 10) === id) {
               // delete user
-              this.users.data.splice(i, 1);
-              // localStorage.setItem('users', JSON.stringify(this.users));
+              this.iamUsers.data.splice(i, 1);
+              // localStorage.setItem('users', JSON.stringify(this.iamUsers));
               break;
             }
           }
@@ -215,10 +265,10 @@ export class MockRequestInterceptor implements HttpInterceptor {
           return of(new HttpResponse({ status: 204 }));
         }
       }
-      if (this.featureFlagService.mockGroupsDb) {
+      if (this.featureFlagService.mockIamGroupsDb) {
         // get groups
         if (request.url.includes('iam/groups') && request.method === 'GET') {
-          return of(new HttpResponse({ status: 200, body: this.groups }));
+          return of(new HttpResponse({ status: 200, body: this.iamGroups }));
         }
 
         // create group
@@ -227,7 +277,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
           const newGroup = request.body;
 
           // validation
-          const duplicateGroup = this.groups.data.filter(group => {
+          const duplicateGroup = this.iamGroups.data.filter(group => {
             return group.attributes.name === newGroup.data.attributes.name;
           }).length;
           if (duplicateGroup) {
@@ -235,9 +285,9 @@ export class MockRequestInterceptor implements HttpInterceptor {
           }
 
           // save new group
-          newGroup.data.id = this.groups.data.length + 1;
-          this.groups.data.push(newGroup.data);
-          // localStorage.setItem('groups', JSON.stringify(this.groups));
+          newGroup.data.id = this.iamGroups.data.length + 1;
+          this.iamGroups.data.push(newGroup.data);
+          // localStorage.setItem('groups', JSON.stringify(this.iamGroups));
 
           return of(new HttpResponse({ status: 201, body: newGroup }));
         }
@@ -247,12 +297,12 @@ export class MockRequestInterceptor implements HttpInterceptor {
           // find user by id in groups array
           const urlParts = request.url.split('/');
           const id = parseInt(urlParts[urlParts.length - 1], 10);
-          for (let i = 0; i < this.groups.data.length; i++) {
-            const user = this.groups.data[i];
+          for (let i = 0; i < this.iamGroups.data.length; i++) {
+            const user = this.iamGroups.data[i];
             if (parseInt(user.id, 10) === id) {
               // delete groups
-              this.groups.data.splice(i, 1);
-              // localStorage.setItem('users', JSON.stringify(this.users));
+              this.iamGroups.data.splice(i, 1);
+              // localStorage.setItem('users', JSON.stringify(this.iamUsers));
               break;
             }
           }
@@ -274,7 +324,7 @@ export class MockRequestInterceptor implements HttpInterceptor {
           // find group by id in groups array
           const urlParts = request.url.split('/');
           const id = parseInt(urlParts[urlParts.length - 1], 10);
-          const matchedGroups = this.groups.data.filter(match => {
+          const matchedGroups = this.iamGroups.data.filter(match => {
             return match.id === id;
           });
           const group = matchedGroups.length ? matchedGroups[0] : null;
@@ -317,9 +367,9 @@ export class MockRequestInterceptor implements HttpInterceptor {
       // }
 
 
-      if (this.featureFlagService.mockPoliciesDb) {
+      if (this.featureFlagService.mockIamPoliciesDb) {
         if (request.url.includes('iam/policies') && request.method === 'GET') {
-          return of(new HttpResponse({ status: 200, body: this.policies }));
+          return of(new HttpResponse({ status: 200, body: this.iamPolicies }));
         }
 
         if (request.url.includes('iam/policies') && request.method === 'POST') {

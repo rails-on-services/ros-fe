@@ -14,8 +14,7 @@ export class CoreComponent implements OnInit {
     dashboard: 'Dashboard',
     iam: 'IAM',
     cognito: 'Cognito',
-    comms: 'Comms',
-    campaigns: 'Campaigns'
+    comms: 'Comms'
   };
 
   constructor(

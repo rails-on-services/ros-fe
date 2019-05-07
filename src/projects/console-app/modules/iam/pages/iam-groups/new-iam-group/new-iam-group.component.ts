@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
@@ -25,8 +24,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
 
   group$: Observable<IamGroup>;
 
-  constructor(private modalService: ModalService,
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private iamService: IamService) {
     this.createGroupnamePage = true;
