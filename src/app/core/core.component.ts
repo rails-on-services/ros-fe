@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class CoreComponent implements OnInit {
   selectedService = 'dashboard';
 
-  public services = {
+  services = {
     dashboard: 'Dashboard',
     iam: 'IAM',
     cognito: 'Cognito',
@@ -31,5 +31,9 @@ export class CoreComponent implements OnInit {
     if (this.router.url) {
       this.selectedService = this.router.url.split('/')[1];
     }
+  }
+
+  public getServices() {
+    return this.services;
   }
 }
