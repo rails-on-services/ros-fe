@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsService, IamService, IamGroup } from '@perx/open-services';
+import { CommsService, CognitoService, CognitoPool } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-new-campaign',
@@ -35,7 +34,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private commService: CommsService,
-              private iamService: IamService,
+              private cognitoService: CognitoService,
               private formBuilder: FormBuilder) {
   }
 
@@ -52,7 +51,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
       ])
     });
 
-    this.fetchGroups();
+    this.fetchPools();
   }
 
   get formArray(): AbstractControl|null {
@@ -88,31 +87,30 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
 
   get columnProperties() {
-    // todo: change IAM to Cognito
-    return IamGroup.prototype.getColumnProperties();
+    return CognitoPool.prototype.getColumnProperties();
   }
 
-  // onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
+  // onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
   //   this.selection = selection.selected;
   //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
   // }
 
-  private fetchGroups() {
-    this.cognitoPools$ = this.iamService.fetchGroups().pipe(
+  private fetchPools() {
+    this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
       map(document => {
-        const iamGroups = document.getModels();
-        const groups = iamGroups.map(iamGroup => {
-          const group = { id: iamGroup.id };
-          const keys = Object.keys(iamGroup.getColumnProperties());
+        const cognitoPools = document.getModels();
+        const pools = cognitoPools.map(cognitoPool => {
+          const pool = { id: cognitoPool.id };
+          const keys = Object.keys(cognitoPool.getColumnProperties());
 
           keys.forEach(key => {
-            group[key] = iamGroup[key];
+            pool[key] = cognitoPool[key];
           });
 
-          return group;
+          return pool;
         });
 
-        return groups;
+        return pools;
       })
     );
   }
