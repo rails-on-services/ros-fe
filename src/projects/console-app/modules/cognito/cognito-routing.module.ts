@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CognitoHomeComponent } from './pages/cognito-home/cognito-home.component';
 import { CognitoUsersComponent } from './pages/cognito-users/cognito-users.component';
 import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.component';
-import { CognitoGroupsComponent } from './pages/cognito-groups/cognito-groups.component';
+import { CognitoPoolsComponent } from './pages/cognito-pools/cognito-pools.component';
 // import {ModalComponent} from '../../shared/components/modal/modal.component';
 import { CognitoComponent } from './cognito.component';
 import { NewCognitoUserComponent } from './pages/cognito-users/new-cognito-user/new-cognito-user.component';
@@ -41,8 +41,8 @@ const router: Routes = [
         component: NewCognitoUserComponent
       },
       {
-        path: 'groups',
-        component: CognitoGroupsComponent,
+        path: 'pools',
+        component: CognitoPoolsComponent,
       },
       {
         path: 'apps',
