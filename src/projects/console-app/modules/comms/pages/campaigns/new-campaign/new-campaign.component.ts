@@ -15,6 +15,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   cognitoPools$: Observable<any[]>;
   shownColumns: (string|number|symbol)[];
 
+  // todo: replace this object with a API call to retrieve list of types of campaigns
   owners = [
     {
       type: 'Survey',
