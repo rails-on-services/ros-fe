@@ -13,8 +13,18 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class NewCampaignComponent implements OnInit, AfterViewInit {
   cognitoPools$: Observable<any[]>;
-  selection: IamGroup[];
   shownColumns: (string|number|symbol)[];
+
+  owners = [
+    {
+      type: 'Survey',
+      id: '1'
+    },
+    {
+      type: 'None',
+      id: ''
+    }
+  ];
 
   campaignDetailsGroup: FormGroup;
   isEditable = true;
@@ -33,18 +43,20 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           name: ['', [Validators.required, Validators.maxLength(140)]],
-          ownerId: [''],
-          ownerType: [''],
         }),
         this.formBuilder.group({
           cognitoEndpointId: [''],
+          owner: ['']
         }),
       ])
     });
 
     this.fetchGroups();
   }
-  get formArray(): AbstractControl | null {return this.campaignDetailsGroup.get('formArray'); }
+
+  get formArray(): AbstractControl|null {
+    return this.campaignDetailsGroup.get('formArray');
+  }
 
   ngAfterViewInit() {
     // fix ExpressionChangedAfterItHasBeenCheckedError
@@ -64,11 +76,13 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
     const campaign = {
       name: this.formArray.get([0]).get('name').value,
-      ownerId: this.formArray.get([0]).get('ownerId').value,
-      ownerType: this.formArray.get([0]).get('ownerType').value,
+      ownerId: this.formArray.get([1]).get('owner').value.id,
+      ownerType: this.formArray.get([1]).get('owner').value.type,
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
-    this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => { return; });
+    this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => {
+      return;
+    });
   }
 
 
@@ -77,10 +91,10 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     return IamGroup.prototype.getColumnProperties();
   }
 
-  onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
-    this.selection = selection.selected;
-    this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
-  }
+  // onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
+  //   this.selection = selection.selected;
+  //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
+  // }
 
   private fetchGroups() {
     this.cognitoPools$ = this.iamService.fetchGroups().pipe(

@@ -27,19 +27,16 @@
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Attach Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+      <mat-step label="Associate to a Marketing Campaign" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
-          <ng-container class="cognito-table" *ngIf="cognitoPools$ | async as cognitoPools">
-            <app-filterable-table
-                [columnProperties]="columnProperties"
-                [contents]="cognitoPools"
-                [selectable]=true
-                (selectionChange)="onCognitoPoolSelectionChange($event)"
-                [shownColumns]="shownColumns"
-            >
-            </app-filterable-table>
-
-          </ng-container>
+          <mat-form-field>
+            <mat-label>Owner Type</mat-label>
+            <mat-select formControlName="owner">
+              <mat-option *ngFor="let owner of owners" [value]="owner">
+                {{owner.type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
@@ -56,14 +53,14 @@
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
           <h3 class="mat-h3">Review details</h3>
-          <h4 class="mat-h4">User details</h4>
+          <h4 class="mat-h4">Campaign details</h4>
 
           <mat-label>Event Name:</mat-label>
           <div>{{formArray.get([0]).get('name').value}}</div>
 
 
-          <mat-label>Target Group:</mat-label>
-          <div>{{formArray.get([1]).get('cognitoEndpointId').value}}</div>
+          <mat-label>Marketing Campaign Owner Type:</mat-label>
+          <div>{{formArray.get([1]).get('owner').value.type}}</div>
 
         </mat-card-content>
         <mat-card-actions>
