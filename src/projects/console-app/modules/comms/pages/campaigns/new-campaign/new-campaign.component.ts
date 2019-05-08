@@ -12,7 +12,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./new-campaign.component.scss']
 })
 export class NewCampaignComponent implements OnInit, AfterViewInit {
-  cognitoGroups$: Observable<any[]>;
+  cognitoPools$: Observable<any[]>;
   selection: IamGroup[];
   shownColumns: (string|number|symbol)[];
 
@@ -77,13 +77,13 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     return IamGroup.prototype.getColumnProperties();
   }
 
-  onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
+  onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection.selected;
     this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
   }
 
   private fetchGroups() {
-    this.cognitoGroups$ = this.iamService.fetchGroups().pipe(
+    this.cognitoPools$ = this.iamService.fetchGroups().pipe(
       map(document => {
         const iamGroups = document.getModels();
         const groups = iamGroups.map(iamGroup => {

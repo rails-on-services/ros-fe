@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { CognitoService, CognitoGroup } from '@perx/open-services';
+import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,15 +8,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 
 @Component({
-  selector: 'app-cognito-groups',
-  templateUrl: './cognito-groups.component.html',
-  styleUrls: ['./cognito-groups.component.scss']
+  selector: 'app-cognito-pools',
+  templateUrl: './cognito-pools.component.html',
+  styleUrls: ['./cognito-pools.component.scss']
 })
-export class CognitoGroupsComponent implements OnInit {
-  groups$: Observable<any[]>;
+export class CognitoPoolsComponent implements OnInit {
+  pools$: Observable<any[]>;
 
   showModal: boolean;
-  selection: SelectionModel<CognitoGroup>;
+  selection: SelectionModel<CognitoPool>;
 
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -31,19 +31,19 @@ export class CognitoGroupsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CognitoGroup.prototype.getColumnProperties());
+    this.shownColumns = Object.keys(CognitoPool.prototype.getColumnProperties());
 
-    this.fetchGroups();
+    this.fetchPools();
   }
 
 
-  removeGroups() {
+  removePools() {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
-    this.selection.selected.forEach(group => {
-      this.cognitoService.removeGroup(group.id).subscribe(() => {
-        this.fetchGroups();
+    this.selection.selected.forEach(pool => {
+      this.cognitoService.removePool(pool.id).subscribe(() => {
+        this.fetchPools();
       });
     });
   }
@@ -52,8 +52,8 @@ export class CognitoGroupsComponent implements OnInit {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
-        header: 'Deleting Group',
-        content: 'Are you sure you want to delete the group',
+        header: 'Deleting Pool',
+        content: 'Are you sure you want to delete the pool',
         btnColor: 'warn',
         action: 'Delete'
        }
@@ -61,25 +61,25 @@ export class CognitoGroupsComponent implements OnInit {
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.removeGroups();
+        this.removePools();
       }
     });
   }
 
-  editGroupNamePopup() {
+  editPoolNamePopup() {
     const confirmPopup = this.dialog.open(RenameModal, {
       minWidth: '300px',
-      data: { type: 'group' }
+      data: { type: 'pool' }
     });
 
     confirmPopup.afterClosed().subscribe(newName => {
       if (newName) {
-        this.selection.selected.forEach(group => {
-          this.cognitoService.fetchGroup(group.id).subscribe(groupModel => {
-            groupModel.name = newName;
-            groupModel.save().subscribe(
+        this.selection.selected.forEach(pool => {
+          this.cognitoService.fetchPool(pool.id).subscribe(poolModel => {
+            poolModel.name = newName;
+            poolModel.save().subscribe(
               () => {
-                this.fetchGroups();
+                this.fetchPools();
               }
             );
           });
@@ -96,13 +96,13 @@ export class CognitoGroupsComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchGroups();
+        this.fetchPools();
         break;
       case 'settings':
         this.shownColumns$ = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CognitoGroup.prototype.getColumnProperties(),
+            columnProperties: CognitoPool.prototype.getColumnProperties(),
             selected: this.shownColumns
           }
         }).componentInstance.selectionChange;
@@ -117,34 +117,34 @@ export class CognitoGroupsComponent implements OnInit {
     }
   }
 
-  private fetchGroups() {
-    this.groups$ = this.cognitoService.fetchGroups().pipe(
+  private fetchPools() {
+    this.pools$ = this.cognitoService.fetchPools().pipe(
       map(data => {
-        const cognitoGroups = data.getModels();
-        const groups = cognitoGroups.map(cognitoGroup => {
-          const group = { id: cognitoGroup.id };
-          const keys = Object.keys(cognitoGroup.getColumnProperties());
+        const cognitoPools = data.getModels();
+        const pools = cognitoPools.map(cognitoPool => {
+          const pool = { id: cognitoPool.id };
+          const keys = Object.keys(cognitoPool.getColumnProperties());
 
           keys.forEach(key => {
-            group[key] = cognitoGroup[key];
+            pool[key] = cognitoPool[key];
           });
-          group['name'] = {
-            value: cognitoGroup.name,
-            link: `/groups/${cognitoGroup.id}`
-          }
-          return group;
+          pool.name = {
+            value: cognitoPool.name,
+            link: `/pools/${cognitoPool.id}`
+          };
+          return pool;
         });
 
-        return groups;
+        return pools;
       })
     );
   }
 
   get columnProperties() {
-    return CognitoGroup.prototype.getColumnProperties();
+    return CognitoPool.prototype.getColumnProperties();
   }
 
-  onGroupsSelectionChange(selection: SelectionModel<CognitoGroup>) {
+  onPoolsSelectionChange(selection: SelectionModel<CognitoPool>) {
     this.selection = selection;
   }
 }

@@ -55,12 +55,12 @@
       </mat-step>
       <mat-step label="Target Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
-          <ng-container class="cognito-table" *ngIf="cognitoGroups$ | async as cognitoGroups">
+          <ng-container class="cognito-table" *ngIf="cognitoPools$ | async as cognitoPools">
             <app-filterable-table
                 [columnProperties]="columnProperties"
-                [contents]="cognitoGroups"
+                [contents]="cognitoPools"
                 [selectable]=true
-                (selectionChange)="onCognitoGroupSelectionChange($event)"
+                (selectionChange)="onCognitoPoolSelectionChange($event)"
                 [shownColumns]="shownColumns"
             >
             </app-filterable-table>

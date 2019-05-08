@@ -23,7 +23,7 @@ import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 export class NewEventComponent implements OnInit, AfterViewInit {
   private eventUnsubscribe$ = new Subject<void>();
 
-  cognitoGroups$: Observable<any[]>;
+  cognitoPools$: Observable<any[]>;
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
   templates$: Observable<any[]>;
@@ -138,7 +138,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     return CommsTemplate.prototype.getColumnProperties();
   }
 
-  onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
+  onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection.selected;
     this.formArray.get([1]).get('targetId').setValue(selection.selected[0].id);
     this.formArray.get([1]).get('targetType').setValue('IamGroup');
@@ -160,7 +160,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   private fetchGroups() {
-    this.cognitoGroups$ = this.iamService.fetchGroups().pipe(
+    this.cognitoPools$ = this.iamService.fetchGroups().pipe(
       map(document => {
         const iamGroups = document.getModels();
         const groups = iamGroups.map(iamGroup => {

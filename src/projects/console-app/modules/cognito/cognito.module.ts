@@ -4,7 +4,7 @@ import { CognitoComponent } from './cognito.component';
 import { CognitoRoutingModule } from './cognito-routing.module';
 import { CognitoHomeComponent } from './pages/cognito-home/cognito-home.component';
 import { CognitoUsersComponent } from './pages/cognito-users/cognito-users.component';
-import { CognitoGroupsComponent } from './pages/cognito-groups/cognito-groups.component';
+import { CognitoPoolsComponent } from './pages/cognito-pools/cognito-pools.component';
 import { CognitoMenuComponent } from './components/cognito-menu/cognito-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -18,7 +18,7 @@ import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.componen
     CognitoComponent,
     CognitoHomeComponent,
     CognitoUsersComponent,
-    CognitoGroupsComponent,
+    CognitoPoolsComponent,
     CognitoMenuComponent,
     NewCognitoUserComponent,
     CognitoAppsComponent

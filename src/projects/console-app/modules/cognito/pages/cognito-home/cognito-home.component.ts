@@ -1,7 +1,7 @@
 import { CognitoService } from '@perx/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cognito-home',
@@ -46,9 +46,9 @@ export class CognitoHomeComponent implements OnInit {
   fetchGroups() {
     // this.cognitoService.fetchGroups().pipe(
     //   map(data => {
-    //     const cognitoGroups = data.getModels();
+    //     const cognitoPools = data.getModels();
 
-    //     return cognitoGroups;
+    //     return cognitoPools;
     //   })
     // ).subscribe(
     //   response => {
