@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CognitoService, CognitoApplication, CognitoUser, CognitoGroup } from '@perx/open-services';
+import { CognitoService, CognitoApplication, CognitoUser, CognitoPool } from '@perx/open-services';
 import { MatDialog, MatButtonToggleChange } from '@angular/material';
 import { ConfirmationModal } from '@perx/open-ui-components';
 import { map } from 'rxjs/operators';
@@ -19,10 +19,10 @@ export class CognitoAppsComponent implements OnInit {
   showModal: boolean;
 
   selection: SelectionModel<CognitoApplication>;
-  shownColumns$: Observable<(string | number | symbol)[]>;
-  shownColumns: (string | number | symbol)[];
+  shownColumns$: Observable<(string|number|symbol)[]>;
+  shownColumns: (string|number|symbol)[];
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -38,9 +38,6 @@ export class CognitoAppsComponent implements OnInit {
     this.fetchApplications();
   }
 
-  ngOnDestroy(): void {
-    // this.appsSubsription.unsubscribe();
-  }
 
   addApplication() {
     this.router.navigate(['new-app'], { relativeTo: this.activatedRoute });

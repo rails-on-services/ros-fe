@@ -9,9 +9,9 @@
           <mat-form-field>
             <mat-label>Event Name:</mat-label>
             <input matInput formControlName="eventName" required>
-            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-hint align="end">Not more than 140 characters long.</mat-hint>
             <mat-error *ngIf="hasError(0, 'eventName', 'required')">Event name is required</mat-error>
-            <mat-error *ngIf="hasError(0, 'eventName', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-error *ngIf="hasError(0, 'eventName', 'maxlength')">You have more than 140 characters</mat-error>
           </mat-form-field>
 
           <mat-form-field>
@@ -53,14 +53,14 @@
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Target Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+      <mat-step label="Target Cognito Pool" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
-          <ng-container class="cognito-table" *ngIf="cognitoGroups$ | async as cognitoGroups">
+          <ng-container class="cognito-table" *ngIf="cognitoPools$ | async as cognitoPools">
             <app-filterable-table
                 [columnProperties]="columnProperties"
-                [contents]="cognitoGroups"
+                [contents]="cognitoPools"
                 [selectable]=true
-                (selectionChange)="onCognitoGroupSelectionChange($event)"
+                (selectionChange)="onCognitoPoolSelectionChange($event)"
                 [shownColumns]="shownColumns"
             >
             </app-filterable-table>
@@ -171,7 +171,7 @@
       </mat-step>
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
-          <h3 class="mat-h3">Review details</h3>
+          <h2 class="mat-h2">Review details</h2>
           <h4 class="mat-h4">User details</h4>
 
           <mat-label>Event Name:</mat-label>
@@ -183,7 +183,7 @@
           <mat-label>Send Date:</mat-label>
           <div>{{formArray.get([0]).get('sendDate').value}}</div>
 
-          <mat-label>Target group:</mat-label>
+          <mat-label>Target Cognito group:</mat-label>
           <div>[{{formArray.get([1]).get('targetType').value}}] {{formArray.get([1]).get('targetId').value}}</div>
 
           <mat-label>Campaign:</mat-label>
