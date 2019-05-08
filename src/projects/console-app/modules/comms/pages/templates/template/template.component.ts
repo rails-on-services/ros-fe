@@ -43,25 +43,17 @@ export class TemplateComponent implements OnInit, OnDestroy {
   private fetchTemplate() {
     this.template$ = this.commsService.fetchTemplate(this.id).pipe(
       map(templateDetails => {
-        const data = templateDetails.data;
-        const campaign = templateDetails.included.filter(item => item.type === 'campaigns');
-        const event = templateDetails.included.filter(item => item.type === 'event');
+        const campaigns = templateDetails.lastSyncModels.filter(item => item.type === 'campaigns').map(item => ({...item.attributes}));
+        // const events = templateDetails.lastSyncModels.filter(item => item.type === 'events').map(item => ({...item.attributes}));
         const template = {
           detail: {
-            name: data.name,
-            urn: data.urn,
-            target_type: data.target_type,
-            channel: data.channel,
-            created_at: data.created_at,
-            updated_at: data.updated_at,
-            send_at: data.send_at,
+            name: templateDetails.name,
+            status: templateDetails.status,
+            created_at: templateDetails.createdAt,
+            updated_at: templateDetails.updatedAt
           },
-          campaign: {
-            ...campaign.attributes
-          },
-          event: {
-            ...event.attributes
-          }
+          campaigns,
+          // events
         };
         return template;
       })

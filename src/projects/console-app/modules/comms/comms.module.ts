@@ -19,7 +19,7 @@ import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.compo
 import { CommsProvidersComponent } from './pages/providers/providers.component';
 import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
 import { CommsCampaignComponent } from './pages/campaigns/comms-campaign/comms-campaign.component';
-import { AttachEventsToCampaignComponent } from './pages/campaigns/attach-events-to-campaign/attach-events-to-campaign.component';
+import { AttachTemplatesToCampaignComponent } from './pages/campaigns/attach-templates-to-campaign/attach-templates-to-campaign.component';
 import { EventComponent } from './pages/events/event/event.component';
 import { TemplateComponent } from './pages/templates/template/template.component';
 import { ProviderComponent } from './pages/providers/provider/provider.component';
@@ -41,7 +41,7 @@ import { ProviderComponent } from './pages/providers/provider/provider.component
     CommsMenuComponent,
     CommsComponent,
     CommsCampaignComponent,
-    AttachEventsToCampaignComponent,
+    AttachTemplatesToCampaignComponent,
     EventComponent,
     TemplateComponent,
     ProviderComponent,

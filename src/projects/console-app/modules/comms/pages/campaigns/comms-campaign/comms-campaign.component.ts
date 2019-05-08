@@ -4,19 +4,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { EventsComponent } from './../../events/events.component';
 import { TemplatesComponent } from './../../templates/templates.component';
 
 @Component({
   selector: 'app-comms-campaign',
   templateUrl: './comms-campaign.component.html',
-  styleUrls: ['./comms-campaign.component.scss']
+  styleUrls: ['./comms-campaign.component.scss'],
 })
 export class CommsCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild(EventsComponent)
-  @ViewChild(TemplatesComponent)
-  private events: EventsComponent;
-  private templates: TemplatesComponent;
+  @ViewChild(TemplatesComponent) templates: TemplatesComponent;
   private sub: any;
   campaign$: Observable<any>;
   id: number;
@@ -40,7 +36,7 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
 
   detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
     this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.events = selection.selected;
+      campaign.templates = campaign.templates.filter(campaign => campaign.id !== selection.selected[0].id);
       campaign.save().subscribe(
         () => {
           this.templates.fetchTemplates();
@@ -50,11 +46,8 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
     console.log(selection);
   }
 
-  fetchEvents() {
-    console.log('fetch events');
-  }
-  attachEventsToCampaign() {
-    this.router.navigate(['attach-events'], { relativeTo: this.route });
+  attachTemplatesToCampaign() {
+    this.router.navigate(['attach-templates'], { relativeTo: this.route });
   }
 
   private fetchCampaign() {

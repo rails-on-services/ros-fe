@@ -30,7 +30,7 @@
     <app-filterable-table
         [columnProperties]="columnProperties"
         [contents]="events"
-        [selectable]=true
+        [selectable]="!tabMode"
         (selectionChange)="onEventsSelectionChange($event)"
         [shownColumns]="shownColumns"
     >

@@ -20,7 +20,7 @@ export * from './src/projects/console-app/modules/comms/comms-routing.module';
 export * from './src/projects/console-app/modules/comms/comms.component';
 export * from './src/projects/console-app/modules/comms/comms.module';
 export * from './src/projects/console-app/modules/comms/components/comms-menu/comms-menu.component';
-export * from './src/projects/console-app/modules/comms/pages/campaigns/attach-events-to-campaign/attach-events-to-campaign.component';
+export * from './src/projects/console-app/modules/comms/pages/campaigns/attach-templates-to-campaign/attach-templates-to-campaign.component';
 export * from './src/projects/console-app/modules/comms/pages/campaigns/comms-campaign/comms-campaign.component';
 export * from './src/projects/console-app/modules/comms/pages/campaigns/comms-campaigns.component';
 export * from './src/projects/console-app/modules/comms/pages/campaigns/new-campaign/new-campaign.component';

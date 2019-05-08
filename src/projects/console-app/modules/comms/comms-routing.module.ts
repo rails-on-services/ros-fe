@@ -11,7 +11,7 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 import { TemplateComponent } from './pages/templates/template/template.component';
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
 import { CommsCampaignComponent } from './pages/campaigns/comms-campaign/comms-campaign.component';
-import { AttachEventsToCampaignComponent } from './pages/campaigns/attach-events-to-campaign/attach-events-to-campaign.component';
+import { AttachTemplatesToCampaignComponent } from './pages/campaigns/attach-templates-to-campaign/attach-templates-to-campaign.component';
 import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaign.component';
 import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
 import { CommsProvidersComponent } from './pages/providers/providers.component';
@@ -81,8 +81,8 @@ export const router: Routes = [
         component: NewCampaignComponent
       },
       {
-        path: 'campaigns/:id/attach-events',
-        component: AttachEventsToCampaignComponent
+        path: 'campaigns/:id/attach-templates',
+        component: AttachTemplatesToCampaignComponent
       },
       {
         path: 'providers',

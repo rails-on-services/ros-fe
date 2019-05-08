@@ -25,6 +25,15 @@
     </div>
   </div>
   <ng-container class="campaigns-table" *ngIf="campaigns$ | async as campaigns">
+    <mat-form-field>
+      <mat-label>Providers</mat-label>
+      <mat-select [(value)]="selected">
+        <mat-option *ngFor="let campaign of campaigns" [value]="campaign" >
+          {{campaign.id}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    {{selected | json}}
     <app-filterable-table
         [columnProperties]="columnProperties"
         [contents]="campaigns"

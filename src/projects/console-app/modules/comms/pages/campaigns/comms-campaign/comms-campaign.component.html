@@ -14,16 +14,15 @@
           <app-templates 
             [tabMode]="true"
             [campaignId]="campaign.ownerId"
-            (detachEventsFromCampaign)="detachTemplatesFromCampaign($event)"
-            (attachEventsToCampaign)="attachTemplatesToCampaign($event)">
+            (detachTemplatesFromCampaign)="detachTemplatesFromCampaign($event)"
+            (attachTemplatesToCampaign)="attachTemplatesToCampaign($event)">
           </app-templates> 
         </mat-tab>
         <mat-tab label="Event">
           <app-events 
             [tabMode]="true"
             [campaignId]="campaign.ownerId"
-            (detachEventsFromCampaign)="detachEventsFromCampaign($event)"
-            (attachEventsToCampaign)="attachEventsToCampaign($event)">
+            >
           </app-events> 
         </mat-tab>
       </mat-tab-group>

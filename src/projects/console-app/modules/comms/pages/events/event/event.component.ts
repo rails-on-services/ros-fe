@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommsService, CommsTemplate } from '@perx/open-services';
+import { CommsService, CommsTemplate, CommsProvider } from '@perx/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
@@ -18,6 +18,8 @@ export class EventComponent implements OnInit, OnDestroy {
   id: number;
   private isProviderEditable = false;
   private isTemplateEditable = false;
+  selectedTemplate: SelectionModel<CommsTemplate>;
+  selectedProvider: SelectionModel<CommsProvider>;
 
 
   constructor(
@@ -49,30 +51,33 @@ export class EventComponent implements OnInit, OnDestroy {
   private fetchEvent() {
     this.event$ = this.commsService.fetchEvent(this.id).pipe(
       map(eventDetails => {
-        const data = eventDetails.data;
-        const campaign = eventDetails.included.filter(item => item.type === 'campaigns');
-        const provider = eventDetails.included.filter(item => item.type === 'provider');
-        const template = eventDetails.included.filter(item => item.type === 'template');
+        const campaign = eventDetails.lastSyncModels.filter(item => item.type === 'campaigns')[0];
+        // const provider = eventDetailsData.lastSyncModels.filter(item => item.type === 'providers')[0];
+        const template = eventDetails.lastSyncModels.filter(item => item.type === 'templates')[0];
         const event = {
           detail: {
-            name: data.name,
-            urn: data.urn,
-            target_type: data.target_type,
-            channel: data.channel,
-            created_at: data.created_at,
-            updated_at: data.updated_at,
-            send_at: data.send_at,
+            name: eventDetails.name,
+            urn: eventDetails.urn,
+            target_type: eventDetails.targetType,
+            channel: eventDetails.channel,
+            created_at: eventDetails.createdAt,
+            updated_at: eventDetails.updatedAt,
+            send_at: eventDetails.sendAt,
+            status: eventDetails.status
           },
           campaign: {
             ...campaign.attributes
           },
-          provider: {
-            ...provider.attributes
-          },
+          // provider: {
+          //   ...provider.attributes
+          // },
           template: {
             ...template.attributes
           }
         };
+        // this.selectedProvider = provider;
+        this.selectedTemplate = template;
+        console.log(this.selectedTemplate);
         return event;
       })
     );
@@ -86,9 +91,14 @@ export class EventComponent implements OnInit, OnDestroy {
       map(templatesData => {
         const commTemplates = templatesData.getModels();
         const templates = commTemplates.map(commTemplate => {
-          return { id: commTemplate.id, name: commTemplate.name };
-        });
+          const template = { id: commTemplate.id };
+          const keys = Object.keys(commTemplate.getColumnProperties());
 
+          keys.forEach(key => {
+            template[key] = commTemplate[key];
+          });
+          return template;
+        });
         return templates;
       })
     );
@@ -96,10 +106,17 @@ export class EventComponent implements OnInit, OnDestroy {
 
   fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
-      map(providersData => {
-        const commProviders = providersData.getModels();
-        const providers = commProviders.map(commProvider => {
-          return { id: commProvider.id, name: commProvider.name };
+      map(document => {
+        const commsProviders = document.getModels();
+        const providers = commsProviders.map(commsProvider => {
+          const provider = { id: commsProvider.id };
+          const keys = Object.keys(commsProvider.getColumnProperties());
+
+          keys.forEach(key => {
+            provider[key] = commsProvider[key];
+          });
+
+          return provider;
         });
 
         return providers;
@@ -120,8 +137,11 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   saveTemplateChange() {
-
     this.isTemplateEditable = false;
+  }
+  cancelEdit() {
+    this.isTemplateEditable = false;
+    this.isProviderEditable = false;
   }
 }
 

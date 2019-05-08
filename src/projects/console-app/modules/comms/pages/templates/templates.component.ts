@@ -68,6 +68,23 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     this.detachTemplatesFromCampaign.emit(this.selection);
   }
 
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Events',
+        content: 'Are you sure you want to detach the events from campaign',
+        btnColor: 'warn',
+        action: 'Detach'
+       }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachTemplates();
+      }
+    });
+  }
   addTemplate() {
     this.router.navigate(['new-template'], { relativeTo: this.activatedRoute });
   }

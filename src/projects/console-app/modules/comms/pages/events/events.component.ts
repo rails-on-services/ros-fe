@@ -27,8 +27,6 @@ import {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
-  @Output() attachEventsToCampaign = new EventEmitter();
-  @Output() detachEventsFromCampaign = new EventEmitter();
   @Input() tabMode: string;
   @Input() campaignId: number;
 
@@ -58,32 +56,6 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // this.eventsSubsription.unsubscribe();
-  }
-
-  attachEvents() {
-    this.attachEventsToCampaign.emit();
-  }
-
-  detachEvents() {
-    this.detachEventsFromCampaign.emit(this.selection);
-  }
-
-  showDetachConfirmationPopup() {
-    const confirmPopup = this.dialog.open(ConfirmationModal, {
-      minWidth: '300px',
-      data: {
-        header: 'Detach Events',
-        content: 'Are you sure you want to detach the events from campaign',
-        btnColor: 'warn',
-        action: 'Detach'
-       }
-    });
-
-    confirmPopup.afterClosed().subscribe(shouldDetach => {
-      if (shouldDetach) {
-        this.detachEvents();
-      }
-    });
   }
 
   addEvent() {
@@ -158,7 +130,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   fetchEvents() {
-    this.events$ = this.commsService.fetchEvents().pipe(
+    this.events$ = this.commsService.fetchEvents(this.campaignId).pipe(
       map(eventsData => {
         const commEvents = eventsData.getModels();
         const events = commEvents.map(commsEvent => {
