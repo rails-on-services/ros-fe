@@ -42,13 +42,13 @@ export class NewEventComponent implements OnInit, AfterViewInit {
               private route: ActivatedRoute,
               private commsService: CommsService,
               private iamService: IamService,
-              private _formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.eventDetailsGroup = this._formBuilder.group({
-      formArray: this._formBuilder.array([
-        this._formBuilder.group({
+    this.eventDetailsGroup = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
           eventName: ['', [Validators.required, Validators.maxLength(60)]],
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
@@ -58,18 +58,18 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           // sendDate: [''],
           // sendTime: [''],
         }),
-        this._formBuilder.group({
+        this.formBuilder.group({
           status: [('')],
           targetId: [('')],
           targetType: [('')],
         }),
-        this._formBuilder.group({
+        this.formBuilder.group({
           campaignId: [('')],
         }),
-        this._formBuilder.group({
+        this.formBuilder.group({
           providerId: [('')],
         }),
-        this._formBuilder.group({
+        this.formBuilder.group({
           templateId: [('')],
         }),
       ])

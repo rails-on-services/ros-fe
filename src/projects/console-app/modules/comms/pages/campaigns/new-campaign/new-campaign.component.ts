@@ -25,18 +25,18 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
               private route: ActivatedRoute,
               private commService: CommsService,
               private iamService: IamService,
-              private _formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.campaignDetailsGroup = this._formBuilder.group({
-      formArray: this._formBuilder.array([
-        this._formBuilder.group({
+    this.campaignDetailsGroup = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
           name: ['', [Validators.required, Validators.maxLength(140)]],
           ownerId: [''],
           ownerType: [''],
         }),
-        this._formBuilder.group({
+        this.formBuilder.group({
           cognitoEndpointId: [''],
         }),
       ])
