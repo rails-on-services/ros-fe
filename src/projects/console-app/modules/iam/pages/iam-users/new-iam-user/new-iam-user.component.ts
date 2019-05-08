@@ -1,6 +1,7 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ModalService } from '../../../../../../../shared/services/modal.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Credential, IamService, IamUser } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -61,7 +62,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
     };
 
     this.iamService.createUser(u).pipe(takeUntil(this.userUnsubscribe$))
-      .subscribe(user => {
+      .subscribe((user: IamUser) => {
         this.iamService.createCredentialFor(user).pipe(takeUntil(this.credentialUnsubscribe$))
           .subscribe(credential => {
             stepper.next();
