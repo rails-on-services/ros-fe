@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CommsService,
-  IamService,
-  IamGroup,
+  CognitoService,
+  CognitoPool,
   CommsProvider,
   CommsCampaign,
   CommsTemplate
@@ -27,7 +27,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
   templates$: Observable<any[]>;
-  selection: IamGroup[];
+  cognitoPoolSelection: CognitoPool[];
   providerSelection: CommsProvider[];
   campaignSelection: CommsCampaign[];
   templateSelection: CommsTemplate[];
@@ -41,7 +41,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private commsService: CommsService,
-              private iamService: IamService,
+              private cognitoService: CognitoService,
               private formBuilder: FormBuilder) {
   }
 
@@ -75,7 +75,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       ])
     });
 
-    this.fetchGroups();
+    this.fetchCognitoPools();
     this.fetchCampaigns();
     this.fetchProviders();
     this.fetchTemplates();
@@ -122,8 +122,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   get columnProperties() {
-    // todo: change IAM to Cognito
-    return IamGroup.prototype.getColumnProperties();
+    return CognitoPool.prototype.getColumnProperties();
   }
 
   get campaignsColumnProperties() {
@@ -138,20 +137,20 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     return CommsTemplate.prototype.getColumnProperties();
   }
 
-  onCognitoPoolSelectionChange(selection: SelectionModel<IamGroup>) {
-    this.selection = selection.selected;
+  onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
+    this.cognitoPoolSelection = selection.selected;
     this.formArray.get([1]).get('targetId').setValue(selection.selected[0].id);
-    this.formArray.get([1]).get('targetType').setValue('IamGroup');
+    this.formArray.get([1]).get('targetType').setValue('CognitoPool');
   }
 
   onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
     this.providerSelection = selection.selected;
-    this.formArray.get([2]).get('campaignId').setValue(selection.selected[0].id);
+    this.formArray.get([2]).get('providerId').setValue(selection.selected[0].id);
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.campaignSelection = selection.selected;
-    this.formArray.get([3]).get('providerId').setValue(selection.selected[0].id);
+    this.formArray.get([3]).get('campaignId').setValue(selection.selected[0].id);
   }
 
   onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
@@ -159,22 +158,22 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     this.formArray.get([4]).get('templateId').setValue(selection.selected[0].id);
   }
 
-  private fetchGroups() {
-    this.cognitoPools$ = this.iamService.fetchGroups().pipe(
+  private fetchCognitoPools() {
+    this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
       map(document => {
-        const iamGroups = document.getModels();
-        const groups = iamGroups.map(iamGroup => {
-          const group = { id: iamGroup.id };
-          const keys = Object.keys(iamGroup.getColumnProperties());
+        const cognitoPools = document.getModels();
+        const pools = cognitoPools.map(cognitoPool => {
+          const pool = { id: cognitoPool.id };
+          const keys = Object.keys(cognitoPool.getColumnProperties());
 
           keys.forEach(key => {
-            group[key] = iamGroup[key];
+            pool[key] = cognitoPool[key];
           });
 
-          return group;
+          return pool;
         });
 
-        return groups;
+        return pools;
       })
     );
   }
