@@ -65,10 +65,10 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           targetType: [('')],
         }),
         this.formBuilder.group({
-          campaignId: [('')],
+          providerId: [('')],
         }),
         this.formBuilder.group({
-          providerId: [('')],
+          campaignId: [('')],
         }),
         this.formBuilder.group({
           templateId: [('')],
