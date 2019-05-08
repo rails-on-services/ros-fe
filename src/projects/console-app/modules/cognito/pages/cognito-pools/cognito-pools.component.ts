@@ -56,7 +56,7 @@ export class CognitoPoolsComponent implements OnInit {
         content: 'Are you sure you want to delete the pool',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
@@ -122,7 +122,10 @@ export class CognitoPoolsComponent implements OnInit {
       map(data => {
         const cognitoPools = data.getModels();
         const pools = cognitoPools.map(cognitoPool => {
-          const pool = { id: cognitoPool.id };
+          const pool = {
+            id: cognitoPool.id,
+            name: undefined
+          };
           const keys = Object.keys(cognitoPool.getColumnProperties());
 
           keys.forEach(key => {
@@ -130,7 +133,7 @@ export class CognitoPoolsComponent implements OnInit {
           });
           pool.name = {
             value: cognitoPool.name,
-            link: `/pools/${cognitoPool.id}`
+            link: `/pools/${ cognitoPool.id }`
           };
           return pool;
         });
