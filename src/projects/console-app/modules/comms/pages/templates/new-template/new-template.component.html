@@ -10,9 +10,9 @@
           <mat-form-field>
             <mat-label>Template name</mat-label>
             <input matInput placeholder="Template name" formControlName="templateName" required>
-            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-hint align="end">Not more than 140 characters long.</mat-hint>
             <mat-error *ngIf="hasError('templateName', 'required')">Template name is required</mat-error>
-            <mat-error *ngIf="hasError('templateName', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-error *ngIf="hasError('templateName', 'maxlength')">You have more than 140 characters</mat-error>
           </mat-form-field>
           <div class="access-types">
             <mat-form-field>

@@ -11,7 +11,7 @@
             <input matInput formControlName="name" required>
             <mat-hint align="end">Not more than 140 characters long.</mat-hint>
             <mat-error *ngIf="hasError(0, 'name', 'required')">Event name is required</mat-error>
-            <mat-error *ngIf="hasError(0, 'name', 'maxlength')">You have more than 60 characters</mat-error>
+            <mat-error *ngIf="hasError(0, 'name', 'maxlength')">You have more than 140 characters</mat-error>
           </mat-form-field>
 
         </mat-card-content>

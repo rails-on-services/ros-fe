@@ -49,7 +49,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     this.eventDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
-          eventName: ['', [Validators.required, Validators.maxLength(60)]],
+          eventName: ['', [Validators.required, Validators.maxLength(140)]],
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
           sendTime: [(''), [Validators.required]],
