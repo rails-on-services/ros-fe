@@ -15,6 +15,11 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Event Description:</mat-label>
+            <textarea matInput placeholder="What is this Event for?" formControlName="description"></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>Channel Type:</mat-label>
             <mat-select formControlName="channel">
               <!--              <mat-option *ngFor="let channel of channels" [value]="channel.value">-->
