@@ -32,7 +32,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     this.campaignDetailsGroup = this._formBuilder.group({
       formArray: this._formBuilder.array([
         this._formBuilder.group({
-          name: ['', [Validators.required]],
+          name: ['', [Validators.required, Validators.maxLength(140)]],
           ownerId: [''],
           ownerType: [''],
         }),

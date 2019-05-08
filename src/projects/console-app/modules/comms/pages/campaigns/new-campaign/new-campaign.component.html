@@ -3,13 +3,13 @@
   <form [formGroup]="campaignDetailsGroup" (ngSubmit)="submitForm()">
 
     <mat-horizontal-stepper formArrayName="formArray" linear>
-      <mat-step label="Set User Details" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
+      <mat-step label="Set Campaign Name" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
         <mat-card-content>
           <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
             <mat-label>Campaign Name:</mat-label>
             <input matInput formControlName="name" required>
-            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
+            <mat-hint align="end">Not more than 140 characters long.</mat-hint>
             <mat-error *ngIf="hasError(0, 'name', 'required')">Event name is required</mat-error>
             <mat-error *ngIf="hasError(0, 'name', 'maxlength')">You have more than 60 characters</mat-error>
           </mat-form-field>
