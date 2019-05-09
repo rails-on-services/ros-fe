@@ -23,7 +23,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.templateDetailsGroup = new FormGroup({
-      templateName: new FormControl('', [Validators.required, Validators.maxLength(140)]),
+      templateName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       content: new FormControl(''),
       status: new FormControl(''),
     });

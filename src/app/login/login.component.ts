@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { AuthenticationService } from '../../shared/modules/authentication';
+import { environment } from '../../projects/console-app/environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from '../../../shared/modules/authentication';
-import { environment } from '../../../projects/console-app/environments/environment';
 
 @Component({
   selector: 'app-perx-login',

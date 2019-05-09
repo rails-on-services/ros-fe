@@ -3,15 +3,15 @@
   <form [formGroup]="campaignDetailsGroup" (ngSubmit)="submitForm()">
 
     <mat-horizontal-stepper formArrayName="formArray" linear>
-      <mat-step label="Set Campaign Name" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
+      <mat-step label="Set User Details" formGroupName="0" [stepControl]="formArray.get([0])" [editable]="isEditable">
         <mat-card-content>
           <!--<mat-card-subtitle> You can add multiple users at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
           <mat-form-field>
             <mat-label>Campaign Name:</mat-label>
             <input matInput formControlName="name" required>
-            <mat-hint align="end">Not more than 140 characters long.</mat-hint>
+            <mat-hint align="end">Not more than 60 characters long.</mat-hint>
             <mat-error *ngIf="hasError(0, 'name', 'required')">Event name is required</mat-error>
-            <mat-error *ngIf="hasError(0, 'name', 'maxlength')">You have more than 140 characters</mat-error>
+            <mat-error *ngIf="hasError(0, 'name', 'maxlength')">You have more than 60 characters</mat-error>
           </mat-form-field>
 
         </mat-card-content>
@@ -27,16 +27,19 @@
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Associate to a Marketing Campaign" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+      <mat-step label="Attach Cognito Group" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
-          <mat-form-field>
-            <mat-label>Owner Type</mat-label>
-            <mat-select formControlName="owner">
-              <mat-option *ngFor="let owner of owners" [value]="owner">
-                {{owner.type}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <ng-container class="cognito-table" *ngIf="cognitoGroups$ | async as cognitoGroups">
+            <app-filterable-table
+                [columnProperties]="columnProperties"
+                [contents]="cognitoGroups"
+                [selectable]=true
+                (selectionChange)="onCognitoGroupSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
@@ -52,15 +55,15 @@
       </mat-step>
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
-          <h2 class="mat-h2">Review details</h2>
-          <h4 class="mat-h4">Campaign details</h4>
+          <h3 class="mat-h3">Review details</h3>
+          <h4 class="mat-h4">User details</h4>
 
           <mat-label>Event Name:</mat-label>
           <div>{{formArray.get([0]).get('name').value}}</div>
 
 
-          <mat-label>Marketing Campaign Owner Type:</mat-label>
-          <div>{{formArray.get([1]).get('owner').value.type}}</div>
+          <mat-label>Target Group:</mat-label>
+          <div>{{formArray.get([1]).get('cognitoEndpointId').value}}</div>
 
         </mat-card-content>
         <mat-card-actions>

@@ -23,7 +23,7 @@ export class NewProviderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.providerDetailsGroup = new FormGroup({
-      providerName: new FormControl('', [Validators.required, Validators.maxLength(140)]),
+      providerName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       encryptedSecret: new FormControl(''),
       encryptedSecretIv: new FormControl(''),
       key: new FormControl(''),

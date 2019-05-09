@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   CommsService,
-  CognitoService,
-  CognitoPool,
+  IamService,
+  IamGroup,
   CommsProvider,
   CommsCampaign,
   CommsTemplate
@@ -23,11 +23,11 @@ import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 export class NewEventComponent implements OnInit, AfterViewInit {
   private eventUnsubscribe$ = new Subject<void>();
 
-  cognitoPools$: Observable<any[]>;
+  cognitoGroups$: Observable<any[]>;
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
   templates$: Observable<any[]>;
-  cognitoPoolSelection: CognitoPool[];
+  selection: IamGroup[];
   providerSelection: CommsProvider[];
   campaignSelection: CommsCampaign[];
   templateSelection: CommsTemplate[];
@@ -41,15 +41,15 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private commsService: CommsService,
-              private cognitoService: CognitoService,
-              private formBuilder: FormBuilder) {
+              private iamService: IamService,
+              private _formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.eventDetailsGroup = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          eventName: ['', [Validators.required, Validators.maxLength(140)]],
+    this.eventDetailsGroup = this._formBuilder.group({
+      formArray: this._formBuilder.array([
+        this._formBuilder.group({
+          eventName: ['', [Validators.required, Validators.maxLength(60)]],
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
           sendTime: [(''), [Validators.required]],
@@ -58,24 +58,24 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           // sendDate: [''],
           // sendTime: [''],
         }),
-        this.formBuilder.group({
+        this._formBuilder.group({
           status: [('')],
           targetId: [('')],
           targetType: [('')],
         }),
-        this.formBuilder.group({
+        this._formBuilder.group({
           campaignId: [('')],
         }),
-        this.formBuilder.group({
+        this._formBuilder.group({
           providerId: [('')],
         }),
-        this.formBuilder.group({
+        this._formBuilder.group({
           templateId: [('')],
         }),
       ])
     });
 
-    this.fetchCognitoPools();
+    this.fetchGroups();
     this.fetchCampaigns();
     this.fetchProviders();
     this.fetchTemplates();
@@ -122,7 +122,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   get columnProperties() {
-    return CognitoPool.prototype.getColumnProperties();
+    // todo: change IAM to Cognito
+    return IamGroup.prototype.getColumnProperties();
   }
 
   get campaignsColumnProperties() {
@@ -137,20 +138,20 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     return CommsTemplate.prototype.getColumnProperties();
   }
 
-  onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
-    this.cognitoPoolSelection = selection.selected;
+  onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
+    this.selection = selection.selected;
     this.formArray.get([1]).get('targetId').setValue(selection.selected[0].id);
-    this.formArray.get([1]).get('targetType').setValue('CognitoPool');
+    this.formArray.get([1]).get('targetType').setValue('IamGroup');
   }
 
   onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
     this.providerSelection = selection.selected;
-    this.formArray.get([2]).get('providerId').setValue(selection.selected[0].id);
+    this.formArray.get([2]).get('campaignId').setValue(selection.selected[0].id);
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.campaignSelection = selection.selected;
-    this.formArray.get([3]).get('campaignId').setValue(selection.selected[0].id);
+    this.formArray.get([3]).get('providerId').setValue(selection.selected[0].id);
   }
 
   onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
@@ -158,22 +159,22 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     this.formArray.get([4]).get('templateId').setValue(selection.selected[0].id);
   }
 
-  private fetchCognitoPools() {
-    this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
+  private fetchGroups() {
+    this.cognitoGroups$ = this.iamService.fetchGroups().pipe(
       map(document => {
-        const cognitoPools = document.getModels();
-        const pools = cognitoPools.map(cognitoPool => {
-          const pool = { id: cognitoPool.id };
-          const keys = Object.keys(cognitoPool.getColumnProperties());
+        const iamGroups = document.getModels();
+        const groups = iamGroups.map(iamGroup => {
+          const group = { id: iamGroup.id };
+          const keys = Object.keys(iamGroup.getColumnProperties());
 
           keys.forEach(key => {
-            pool[key] = cognitoPool[key];
+            group[key] = iamGroup[key];
           });
 
-          return pool;
+          return group;
         });
 
-        return pools;
+        return groups;
       })
     );
   }

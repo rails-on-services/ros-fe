@@ -1,21 +1,21 @@
 <div class="container">
     <div class="action" fxLayout="row" fxLayoutGap="1rem">
-      <button mat-raised-button color="primary" routerLink="new-pool">
-        Add Pool
+      <button mat-raised-button color="primary" routerLink="new-group">
+        Add Group
       </button>
       <button mat-raised-button [matMenuTriggerFor]="appMenu"
               [disabled]="!(selection && selection.selected.length)">
-        Pool Actions
+        Group Actions
       </button>
       <mat-menu #appMenu="matMenu">
         <button mat-menu-item (click)="showDeleteConfirmationPopup()"
                 [disabled]="!(selection && selection.selected.length)">
-          Delete Pools<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
+          Delete Groups<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
         </button>
         <button mat-menu-item
-                (click)="editPoolNamePopup()"
+                (click)="editGroupNamePopup()"
                 [disabled]="!(selection && selection.selected.length == 1)">
-          Edit Pool Name
+          Edit Group Name
         </button>
       </mat-menu>
   
@@ -36,14 +36,15 @@
         </mat-button-toggle-group>
       </div>
     </div>
-    <ng-container class="pools-table" *ngIf="pools$ | async as pools">
+    <ng-container class="groups-table" *ngIf="groups$ | async as groups">
       <app-filterable-table
           [columnProperties]="columnProperties"
-          [contents]="pools"
+          [contents]="groups"
           [selectable]=true
-          (selectionChange)="onPoolsSelectionChange($event)"
+          (selectionChange)="onGroupsSelectionChange($event)"
           [shownColumns]="shownColumns">
       </app-filterable-table>
     </ng-container>
   </div>
   <router-outlet></router-outlet>
+  

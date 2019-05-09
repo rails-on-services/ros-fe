@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CognitoService, CognitoPool } from '@perx/open-services';
+import { CommsService, IamService, IamGroup } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-new-campaign',
@@ -11,20 +12,9 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./new-campaign.component.scss']
 })
 export class NewCampaignComponent implements OnInit, AfterViewInit {
-  cognitoPools$: Observable<any[]>;
+  cognitoGroups$: Observable<any[]>;
+  selection: IamGroup[];
   shownColumns: (string|number|symbol)[];
-
-  // todo: replace this object with a API call to retrieve list of types of campaigns
-  owners = [
-    {
-      type: 'Survey',
-      id: '1'
-    },
-    {
-      type: 'None',
-      id: ''
-    }
-  ];
 
   campaignDetailsGroup: FormGroup;
   isEditable = true;
@@ -34,29 +24,27 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private commService: CommsService,
-              private cognitoService: CognitoService,
-              private formBuilder: FormBuilder) {
+              private iamService: IamService,
+              private _formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.campaignDetailsGroup = this.formBuilder.group({
-      formArray: this.formBuilder.array([
-        this.formBuilder.group({
-          name: ['', [Validators.required, Validators.maxLength(140)]],
+    this.campaignDetailsGroup = this._formBuilder.group({
+      formArray: this._formBuilder.array([
+        this._formBuilder.group({
+          name: ['', [Validators.required]],
+          ownerId: [''],
+          ownerType: [''],
         }),
-        this.formBuilder.group({
+        this._formBuilder.group({
           cognitoEndpointId: [''],
-          owner: ['']
         }),
       ])
     });
 
-    this.fetchPools();
+    this.fetchGroups();
   }
-
-  get formArray(): AbstractControl|null {
-    return this.campaignDetailsGroup.get('formArray');
-  }
+  get formArray(): AbstractControl | null {return this.campaignDetailsGroup.get('formArray'); }
 
   ngAfterViewInit() {
     // fix ExpressionChangedAfterItHasBeenCheckedError
@@ -76,41 +64,40 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
     const campaign = {
       name: this.formArray.get([0]).get('name').value,
-      ownerId: this.formArray.get([1]).get('owner').value.id,
-      ownerType: this.formArray.get([1]).get('owner').value.type,
+      ownerId: this.formArray.get([0]).get('ownerId').value,
+      ownerType: this.formArray.get([0]).get('ownerType').value,
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
-    this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => {
-      return;
-    });
+    this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => { return; });
   }
 
 
   get columnProperties() {
-    return CognitoPool.prototype.getColumnProperties();
+    // todo: change IAM to Cognito
+    return IamGroup.prototype.getColumnProperties();
   }
 
-  // onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
-  //   this.selection = selection.selected;
-  //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
-  // }
+  onCognitoGroupSelectionChange(selection: SelectionModel<IamGroup>) {
+    this.selection = selection.selected;
+    this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
+  }
 
-  private fetchPools() {
-    this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
+  private fetchGroups() {
+    this.cognitoGroups$ = this.iamService.fetchGroups().pipe(
       map(document => {
-        const cognitoPools = document.getModels();
-        const pools = cognitoPools.map(cognitoPool => {
-          const pool = { id: cognitoPool.id };
-          const keys = Object.keys(cognitoPool.getColumnProperties());
+        const iamGroups = document.getModels();
+        const groups = iamGroups.map(iamGroup => {
+          const group = { id: iamGroup.id };
+          const keys = Object.keys(iamGroup.getColumnProperties());
 
           keys.forEach(key => {
-            pool[key] = cognitoPool[key];
+            group[key] = iamGroup[key];
           });
 
-          return pool;
+          return group;
         });
 
-        return pools;
+        return groups;
       })
     );
   }

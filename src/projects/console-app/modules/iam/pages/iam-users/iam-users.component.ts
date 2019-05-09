@@ -49,7 +49,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
-    this.fetchUsers(true);
+    this.fetchUsers();
   }
 
   ngOnDestroy(): void {
@@ -67,7 +67,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     this.selection.selected.forEach(user => {
       this.iamService.removeUser(user.id).subscribe(() => {
         this.selection.deselect(user);
-        this.fetchUsers(true);
+        this.fetchUsers();
       });
     });
   }
@@ -131,23 +131,23 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchUsers(force = false) {
-    this.users$ = this.iamService.getUsers(force).pipe(
-      map((users: IamUser[]) => {
-        return users.map(user => {
-          const groups = [...(user.groups || [])];
-          groups.splice(3);
-          return {
-            id: user.id,
+  private fetchUsers() {
+    this.users$ = this.iamService.fetchUsers().pipe(
+      map(document => {
+        const iamUsers: IamUser[] = document.getModels();
+        const users = iamUsers.map(iamUser => {
+          const groups = iamUser.groups || [];
+          const user = {
+            id: iamUser.id,
             username: {
-              value: user.username,
-              link: `${user.id}`
+              value: iamUser.username,
+              link: `${iamUser.id}`
             },
-            groups: groups.length <= 0 ? 'None' : groups.map((group, index) => {
-              if (index === groups.length - 1 && groups.length < user.groups.length) {
+            groups: groups.map((group, index) => {
+              if (index === groups.length - 1 && groups.length < iamUser.groups.length) {
                 return {
-                  value: `${user.groups.length - groups.length + 1} more`,
-                  link: `${user.id}`
+                  value: `${iamUser.groups.length - groups.length + 1} more`,
+                  link: `${iamUser.id}`
                 }
               }
               return {
@@ -155,11 +155,15 @@ export class IamUsersComponent implements OnInit, OnDestroy {
                 link: `../groups/${group.id}`
               }
             }),
-            urn: user.urn,
-            apiAccess: user.apiAccess,
-            consoleAccess: user.consoleAccess
-          }
+            urn: iamUser.urn,
+            apiAccess: iamUser.apiAccess,
+            consoleAccess: iamUser.consoleAccess
+          };
+
+          return user;
         });
+
+        return users;
       })
     );
   }

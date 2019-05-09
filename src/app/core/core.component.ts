@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-core',
@@ -17,7 +18,7 @@ export class CoreComponent implements OnInit {
   };
 
   constructor(
-    public router: Router,
+    private router: Router,
   ) {
   }
 
@@ -31,9 +32,5 @@ export class CoreComponent implements OnInit {
     if (this.router.url) {
       this.selectedService = this.router.url.split('/')[1];
     }
-  }
-
-  public getServices() {
-    return this.services;
   }
 }
