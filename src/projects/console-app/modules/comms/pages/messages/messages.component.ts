@@ -64,8 +64,7 @@ export class MessagesComponent implements OnInit {
 
   private fetchMessages() {
     this.messages$ = this.commsService.fetchMessages().pipe(
-      map(document => {
-        const commsUsers = document.getModels();
+      map(commsUsers => {
         const users = commsUsers.map(commsUser => {
           const user = { id: commsUser.id };
           const keys = Object.keys(commsUser.getColumnProperties());

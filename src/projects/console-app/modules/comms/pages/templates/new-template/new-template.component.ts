@@ -49,6 +49,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
       description: this.templateDetailsGroup.get('description').value,
       content: this.templateDetailsGroup.get('content').value,
       status: this.templateDetailsGroup.get('status').value,
+      description: ''
     };
 
     this.commsService.createTemplate(template).pipe(takeUntil(this.templateUnsubscribe$)).subscribe(() => {

@@ -113,8 +113,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   private fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
-      map(document => {
-        const commsProviders = document.getModels();
+      map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
           const keys = Object.keys(commsProvider.getColumnProperties());
@@ -122,7 +121,10 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             provider[key] = commsProvider[key];
           });
-
+          provider['name'] = {
+            value: commsProvider.name,
+            link: `${commsProvider.id}`
+          };
           return provider;
         });
 

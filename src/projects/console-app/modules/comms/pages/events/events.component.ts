@@ -4,13 +4,14 @@ import {
   OnInit,
   ViewChild,
   OnDestroy,
+  EventEmitter,
+  Output,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { CommsService, CommsEvent } from '@perx/open-services';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
@@ -26,6 +27,9 @@ import {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit, OnDestroy {
+  @Input() tabMode: string;
+  @Input() campaignId: number;
+
   events$: Observable<any[]>;
   showModal: boolean;
 
@@ -125,18 +129,21 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchEvents() {
-    this.events$ = this.commsService.fetchEvents().pipe(
-      map(document => {
-        const commEvents = document.getModels();
+  fetchEvents() {
+    this.events$ = this.commsService.fetchEvents(this.campaignId).pipe(
+      map(commEvents => {
         const events = commEvents.map(commsEvent => {
+          const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;
           const event = { id: commsEvent.id };
           const keys = Object.keys(commsEvent.getColumnProperties());
 
           keys.forEach(key => {
             event[key] = commsEvent[key];
           });
-
+          event['name'] = {
+            value: commsEvent.name,
+            link: eventLink
+          };
           return event;
         });
 

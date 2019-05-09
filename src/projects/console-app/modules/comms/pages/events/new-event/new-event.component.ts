@@ -182,8 +182,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   private fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
-      map(document => {
-        const commsProviders = document.getModels();
+      map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
           const keys = Object.keys(commsProvider.getColumnProperties());
@@ -202,8 +201,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   private fetchCampaigns() {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
-      map(document => {
-        const commsCampaigns = document.getModels();
+      map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
           const keys = Object.keys(commsCampaign.getColumnProperties());
@@ -222,8 +220,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   private fetchTemplates() {
     this.templates$ = this.commsService.fetchTemplates().pipe(
-      map(document => {
-        const commsTemplates = document.getModels();
+      map(commsTemplates => {
         const templates = commsTemplates.map(commsCampaign => {
           const template = { id: commsCampaign.id };
           const keys = Object.keys(commsCampaign.getColumnProperties());
