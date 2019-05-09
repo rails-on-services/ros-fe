@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsService } from '@perx/open-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -18,15 +18,26 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private commsService: CommsService) {
+              private commsService: CommsService,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.templateDetailsGroup = new FormGroup({
-      templateName: new FormControl('', [Validators.required, Validators.maxLength(140)]),
-      content: new FormControl(''),
-      status: new FormControl(''),
+    this.templateDetailsGroup = this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          templateName: ['', [Validators.required, Validators.maxLength(140)]],
+          description: [('')],
+          content: [''],
+          status: ['']
+        }),
+      ])
     });
+
+  }
+
+  get formArray(): AbstractControl|null {
+    return this.templateDetailsGroup.get('formArray');
   }
 
   ngAfterViewInit() {
@@ -34,8 +45,8 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(controlName: string, errorName: string) {
-    return this.templateDetailsGroup.controls[controlName].hasError(errorName);
+  hasError(section: number, controlName: string, errorName: string) {
+    return this.formArray.get([section]).get(controlName).hasError(errorName);
   }
 
 
@@ -45,10 +56,10 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   submitForm() {
     const template = {
-      name: this.templateDetailsGroup.get('templateName').value,
-      description: this.templateDetailsGroup.get('description').value,
-      content: this.templateDetailsGroup.get('content').value,
-      status: this.templateDetailsGroup.get('status').value,
+      name: this.formArray.get([0]).get('templateName').value,
+      description: this.formArray.get([0]).get('description').value,
+      content: this.formArray.get([0]).get('content').value,
+      status: this.formArray.get([0]).get('status').value,
     };
 
     this.commsService.createTemplate(template).pipe(takeUntil(this.templateUnsubscribe$)).subscribe(() => {
