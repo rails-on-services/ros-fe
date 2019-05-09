@@ -78,6 +78,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
       name: this.formArray.get([0]).get('name').value,
       ownerId: this.formArray.get([1]).get('owner').value.id,
       ownerType: this.formArray.get([1]).get('owner').value.type,
+      description: '',
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
     this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => {

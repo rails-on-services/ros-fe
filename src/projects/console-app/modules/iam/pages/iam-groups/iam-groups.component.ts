@@ -134,7 +134,7 @@ export class IamGroupsComponent implements OnInit {
           group['name'] = {
             value: iamGroup.name,
             link: `${iamGroup.id}`
-          }
+          };
           return group;
         });
 

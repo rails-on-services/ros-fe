@@ -1,0 +1,84 @@
+<div class="container">
+  <h1 class="mat-h1">
+    Summary
+  </h1>
+  <mat-divider></mat-divider>
+  <div *ngIf="event$ | async as event">
+    <h3 class="mat-h3">
+      Detail
+    </h3>
+    <div *ngFor="let item of event.detail | keyvalue">
+      <mat-list role="list">
+        <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+      </mat-list>
+    </div>
+    <mat-divider></mat-divider>
+    <h3 class="mat-h3">
+      Campaign
+    </h3>
+    <div *ngFor="let item of event.campaign | keyvalue">
+      <mat-list role="list">
+        <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+    </div>
+    <!-- <h3 class="mat-h3">
+      Provider
+    </h3>
+    <button *ngIf="!isTemplateEditable"  mat-raised-button (click)="switchProvider()">
+      <span>Swtich Provider</span>
+    </button>
+    <div *ngIf="isProviderEditable && providers$ | async as providers">
+        <mat-form-field>
+          <mat-label>Providers</mat-label>
+          <mat-select [(value)]="selectedProvider">
+            <mat-option *ngFor="let provider of providers" [value]="provider" >
+              {{provider.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button (click)="cancelEdit()">
+          <span>Cancel</span>
+        </button>
+        <button mat-raised-button color="primary" (click)="saveProviderChange()">
+        <span>Save</span>
+    </button>
+    </div>
+    <div *ngFor="let item of event.provider | keyvalue">
+      <mat-list role="list">
+        <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider> 
+    </div>
+  -->
+    <h3 class="mat-h3">
+      Template
+    </h3>
+    <button *ngIf="!isTemplateEditable" mat-raised-button (click)="switchTemplate()">
+      <span>Swtich Template</span>
+    </button>
+    <div *ngIf="isTemplateEditable && templates$ | async as templates">
+      <mat-form-field>
+        <mat-label>Templates</mat-label>
+        <mat-select [(value)]="selectedTemplate">
+          <mat-option *ngFor="let template of templates" [value]="template">
+            {{template.createdAt}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button (click)="cancelEdit()">
+        <span>Cancel</span>
+      </button>
+      <button mat-raised-button color="primary" (click)="saveTemplateChange()">
+        <span>Save</span>
+      </button>
+    </div>
+    <div *ngFor="let item of event.template | keyvalue">
+      <mat-list role="list">
+        <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

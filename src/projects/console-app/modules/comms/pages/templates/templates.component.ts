@@ -1,9 +1,10 @@
 import {
   Component,
-  ElementRef,
   OnInit,
-  ViewChild,
   OnDestroy,
+  EventEmitter,
+  Output,
+  Input,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -26,6 +27,11 @@ import {
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
+  @Output() attachTemplatesToCampaign = new EventEmitter();
+  @Output() detachTemplatesFromCampaign = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() campaignId: number;
+
   document$: Observable<JsonApiQueryData<CommsTemplate>>;
   templates$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
@@ -54,6 +60,31 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     // this.templatesSubsription.unsubscribe();
   }
 
+  attachTemplates() {
+    this.attachTemplatesToCampaign.emit();
+  }
+
+  detachTemplates() {
+    this.detachTemplatesFromCampaign.emit(this.selection);
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Events',
+        content: 'Are you sure you want to detach the events from campaign',
+        btnColor: 'warn',
+        action: 'Detach'
+       }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachTemplates();
+      }
+    });
+  }
   addTemplate() {
     this.router.navigate(['new-template'], { relativeTo: this.activatedRoute });
   }
@@ -117,18 +148,22 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fetchTemplates() {
+  fetchTemplates() {
     this.templates$ = this.commsService.fetchTemplates().pipe(
       map(document => {
         const commsTemplates = document.getModels();
         const templates = commsTemplates.map(commsTemplate => {
+          const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
           const template = { id: commsTemplate.id };
           const keys = Object.keys(commsTemplate.getColumnProperties());
 
           keys.forEach(key => {
             template[key] = commsTemplate[key];
           });
-
+          template['content'] = {
+            value: commsTemplate.content,
+            link: templateLink
+          };
           return template;
         });
 

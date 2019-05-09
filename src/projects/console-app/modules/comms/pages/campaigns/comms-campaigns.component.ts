@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CommsCampaignsComponent implements OnInit {
   campaigns$: Observable<any[]>;
 
+  selected: SelectionModel<CommsCampaign>;
   showModal: boolean;
   selection: SelectionModel<CommsCampaign>;
 
@@ -33,20 +34,20 @@ export class CommsCampaignsComponent implements OnInit {
   ngOnInit() {
     this.shownColumns = Object.keys(CommsCampaign.prototype.getColumnProperties());
 
-    this.fetchMessages();
+    this.fetchCampaigns();
   }
 
   addMessage() {
     this.router.navigate(['new-campaign'], { relativeTo: this.activatedRoute });
   }
 
-  removeMessages() {
+  removeCampaigns() {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
     this.selection.selected.forEach(group => {
       this.commsService.removeMessage(group.id).subscribe(() => {
-        this.fetchMessages();
+        this.fetchCampaigns();
       });
     });
   }
@@ -64,7 +65,7 @@ export class CommsCampaignsComponent implements OnInit {
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
-        this.removeMessages();
+        this.removeCampaigns();
       }
     });
   }
@@ -77,7 +78,7 @@ export class CommsCampaignsComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchMessages();
+        this.fetchCampaigns();
         break;
       case 'settings':
         this.shownColumns$ = this.dialog.open(ManageColumnModal, {
@@ -98,10 +99,10 @@ export class CommsCampaignsComponent implements OnInit {
     }
   }
 
-  private fetchMessages() {
+  private fetchCampaigns() {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
-      map(document => {
-        const commsCampaigns = document.getModels();
+      map(item => {
+        const commsCampaigns = item.getModels();
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
           const keys = Object.keys(commsCampaign.getColumnProperties());
@@ -109,7 +110,10 @@ export class CommsCampaignsComponent implements OnInit {
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
           });
-
+          campaign['ownerType'] = {
+            value: commsCampaign.ownerType,
+            link: `${commsCampaign.id}`
+          };
           return campaign;
         });
 
@@ -122,7 +126,7 @@ export class CommsCampaignsComponent implements OnInit {
     return CommsCampaign.prototype.getColumnProperties();
   }
 
-  onMessagesSelectionChange(selection: SelectionModel<CommsCampaign>) {
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.selection = selection;
   }
 }

@@ -18,6 +18,11 @@ import { NewCampaignComponent } from './pages/campaigns/new-campaign/new-campaig
 import { CommsCampaignsComponent } from './pages/campaigns/comms-campaigns.component';
 import { CommsProvidersComponent } from './pages/providers/providers.component';
 import { NewProviderComponent } from './pages/providers/new-provider/new-provider.component';
+import { CommsCampaignComponent } from './pages/campaigns/comms-campaign/comms-campaign.component';
+import { AttachTemplatesToCampaignComponent } from './pages/campaigns/attach-templates-to-campaign/attach-templates-to-campaign.component';
+import { EventComponent } from './pages/events/event/event.component';
+import { TemplateComponent } from './pages/templates/template/template.component';
+import { ProviderComponent } from './pages/providers/provider/provider.component';
 
 // import {routes} from './comms-routing.module';
 
@@ -35,6 +40,11 @@ import { NewProviderComponent } from './pages/providers/new-provider/new-provide
     HomeComponent,
     CommsMenuComponent,
     CommsComponent,
+    CommsCampaignComponent,
+    AttachTemplatesToCampaignComponent,
+    EventComponent,
+    TemplateComponent,
+    ProviderComponent,
   ],
   imports: [
     CommonModule,
