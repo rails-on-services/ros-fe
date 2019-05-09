@@ -88,8 +88,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   fetchTemplatesUnderCampaign(campaignId: number) {
     this.templates$ = this.commsService.fetchTemplates().pipe(
-      map(templatesData => {
-        const commTemplates = templatesData.getModels();
+      map(commTemplates => {
         const templates = commTemplates.map(commTemplate => {
           const template = { id: commTemplate.id };
           const keys = Object.keys(commTemplate.getColumnProperties());
@@ -106,8 +105,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
-      map(document => {
-        const commsProviders = document.getModels();
+      map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
           const keys = Object.keys(commsProvider.getColumnProperties());

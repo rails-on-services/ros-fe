@@ -101,8 +101,7 @@ export class CommsCampaignsComponent implements OnInit {
 
   private fetchCampaigns() {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
-      map(item => {
-        const commsCampaigns = item.getModels();
+      map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
           const keys = Object.keys(commsCampaign.getColumnProperties());

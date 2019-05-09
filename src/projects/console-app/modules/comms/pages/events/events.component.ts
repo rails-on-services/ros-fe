@@ -131,8 +131,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   fetchEvents() {
     this.events$ = this.commsService.fetchEvents(this.campaignId).pipe(
-      map(eventsData => {
-        const commEvents = eventsData.getModels();
+      map(commEvents => {
         const events = commEvents.map(commsEvent => {
           const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;
           const event = { id: commsEvent.id };

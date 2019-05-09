@@ -60,10 +60,9 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   fetchTemplatesNotInCampaign() {
     this.campaign$ = forkJoin(this.commsService.fetchTemplates(), this.commsService.fetchCampaign(this.campaignId)).pipe(
       map(([templatesData, campaignData]) => {
-        const commsTemplates = templatesData.getModels();
         const templatesInCampaign = campaignData.templates || [];
 
-        const templates = commsTemplates.filter(singleTemplate => {
+        const templates = templatesData.filter(singleTemplate => {
           const notInCampaign = templatesInCampaign.some(templateInCampaign => {
             return templateInCampaign.id !== singleTemplate.id;
           });
