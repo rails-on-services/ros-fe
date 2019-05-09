@@ -1,43 +1,46 @@
 <div class="container">
-    <h1 class="mat-h1">
-      Summary
-    </h1>
-    <mat-divider></mat-divider>
-    <div *ngIf="template$ | async as template">
-      <h3 class="mat-h3">
+  <h1 class="mat-h1">
+    Summary
+  </h1>
+  <div *ngIf="template$ | async as template">
+    <mat-card>
+      <mat-card-title>
         Detail
-      </h3>
-      <div *ngFor="let item of template.detail | keyvalue">
-        <mat-list role="list">
-          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
-        </mat-list>
-      </div>
-      <mat-divider></mat-divider>
-      <h3 class="mat-h3">
+      </mat-card-title>
+      <mat-card-content>
+        <div *ngFor="let item of template.detail | keyvalue">
+          <mat-list role="list">
+            <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-content>
+      <mat-card-title>
         Campaigns
-      </h3>
-      <div *ngFor="let campaign of template.campaigns">
+      </mat-card-title>
+      <mat-card-content>
+        <div *ngFor="let campaign of template.campaigns">
           <div *ngFor="let item of campaign | keyvalue">
-              <mat-list role="list">
-                <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
-              </mat-list>
-            </div>
-          <mat-divider></mat-divider>
-      </div>
-     
-      <!-- <mat-divider></mat-divider>
-      <h3 class="mat-h3">
+            <mat-list role="list">
+              <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-card-content>
+      <!-- 
+       <mat-card-title>
         Events
-      </h3>
+      </mat-card-title>
+      <mat-card-content>
       <div *ngFor="let event of template.events">
         <div *ngFor="let item of event | keyvalue">
           <mat-list role="list">
             <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
           </mat-list>
         </div>
-        <mat-divider></mat-divider> 
       </div>
+      </mat-card-content>
       -->
-    </div>
+    </mat-card>
   </div>
-  <router-outlet></router-outlet>
+</div>
+<router-outlet></router-outlet>

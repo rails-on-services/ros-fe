@@ -2,30 +2,28 @@
   <h1 class="mat-h1">
     Summary
   </h1>
-  <mat-divider></mat-divider>
   <div *ngIf="campaign$ | async as campaign">
-    <div *ngFor="let item of campaign | keyvalue">
-        <mat-list role="list">
-          <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
-        </mat-list>
-      </div>
-      <mat-tab-group>
-        <mat-tab label="Template">
-          <app-templates 
-            [tabMode]="true"
-            [campaignId]="id"
-            (detachTemplatesFromCampaign)="detachTemplatesFromCampaign($event)"
-            (attachTemplatesToCampaign)="attachTemplatesToCampaign($event)">
-          </app-templates> 
-        </mat-tab>
-        <mat-tab label="Event">
-          <app-events 
-            [tabMode]="true"
-            [campaignId]="id"
-            >
-          </app-events> 
-        </mat-tab>
-      </mat-tab-group>
+    <mat-card>
+      <mat-card-title>
+        <div *ngFor="let item of campaign | keyvalue">
+          <mat-list role="list">
+            <mat-list-item role="listitem">{{item.key}}: {{item.value}}</mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-title>
+    </mat-card>
+    <mat-tab-group>
+      <mat-tab label="Template">
+        <app-templates [tabMode]="true" [campaignId]="id"
+          (detachTemplatesFromCampaign)="detachTemplatesFromCampaign($event)"
+          (attachTemplatesToCampaign)="attachTemplatesToCampaign($event)">
+        </app-templates>
+      </mat-tab>
+      <mat-tab label="Event">
+        <app-events [tabMode]="true" [campaignId]="id">
+        </app-events>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
 <router-outlet></router-outlet>
