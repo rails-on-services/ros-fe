@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CommsCampaignsComponent implements OnInit {
   campaigns$: Observable<any[]>;
 
-  selected: SelectionModel<CommsCampaign>;
   showModal: boolean;
   selection: SelectionModel<CommsCampaign>;
 

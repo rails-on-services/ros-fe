@@ -36,7 +36,7 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
 
   detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
     this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = campaign.templates.filter(campaign => campaign.id !== selection.selected[0].id);
+      campaign.templates = campaign.templates.filter(item => item.id !== selection.selected[0].id);
       campaign.save().subscribe(
         () => {
           this.templates.fetchTemplates();
