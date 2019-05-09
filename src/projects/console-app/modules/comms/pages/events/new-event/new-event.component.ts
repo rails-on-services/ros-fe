@@ -120,6 +120,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     };
 
     this.commsService.createEvent(event).pipe(takeUntil(this.eventUnsubscribe$)).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 

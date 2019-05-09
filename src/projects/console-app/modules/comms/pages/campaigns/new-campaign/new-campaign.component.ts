@@ -83,7 +83,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
     this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => {
-      return;
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 

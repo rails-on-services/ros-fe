@@ -52,6 +52,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     };
 
     this.commsService.createTemplate(template).pipe(takeUntil(this.templateUnsubscribe$)).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 
