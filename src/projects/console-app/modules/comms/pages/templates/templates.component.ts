@@ -96,7 +96,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     this.selection.selected.forEach(template => {
       this.commsService.removeTemplate(template.id).subscribe(() => {
         this.selection.deselect(template);
-        this.fetchTemplates();
+        this.fetchTemplates(true);
       });
     });
   }
@@ -148,8 +148,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  fetchTemplates() {
-    this.templates$ = this.commsService.fetchTemplates(this.campaignId).pipe(
+  fetchTemplates(force?: boolean) {
+    this.templates$ = this.commsService.fetchTemplates(this.campaignId, force).pipe(
       map(commsTemplates => {
         const templates = commsTemplates.map(commsTemplate => {
           const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
