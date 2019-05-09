@@ -13,7 +13,7 @@
         <mat-tab label="Template">
           <app-templates 
             [tabMode]="true"
-            [campaignId]="campaign.ownerId"
+            [campaignId]="id"
             (detachTemplatesFromCampaign)="detachTemplatesFromCampaign($event)"
             (attachTemplatesToCampaign)="attachTemplatesToCampaign($event)">
           </app-templates> 
@@ -21,7 +21,7 @@
         <mat-tab label="Event">
           <app-events 
             [tabMode]="true"
-            [campaignId]="campaign.ownerId"
+            [campaignId]="id"
             >
           </app-events> 
         </mat-tab>
