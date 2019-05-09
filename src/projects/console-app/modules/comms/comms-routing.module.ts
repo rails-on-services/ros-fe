@@ -73,12 +73,12 @@ export const router: Routes = [
         component: CommsCampaignsComponent,
       },
       {
-        path: 'campaigns/:id',
-        component: CommsCampaignComponent,
-      },
-      {
         path: 'campaigns/new-campaign',
         component: NewCampaignComponent
+      },
+      {
+        path: 'campaigns/:id',
+        component: CommsCampaignComponent,
       },
       {
         path: 'campaigns/:id/attach-templates',
