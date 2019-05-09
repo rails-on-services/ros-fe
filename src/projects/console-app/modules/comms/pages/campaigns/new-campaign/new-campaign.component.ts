@@ -43,6 +43,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           name: ['', [Validators.required, Validators.maxLength(140)]],
+          description: [''],
         }),
         this.formBuilder.group({
           cognitoEndpointId: [''],
@@ -76,9 +77,9 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
     const campaign = {
       name: this.formArray.get([0]).get('name').value,
+      description: this.formArray.get([0]).get('description').value,
       ownerId: this.formArray.get([1]).get('owner').value.id,
       ownerType: this.formArray.get([1]).get('owner').value.type,
-      description: '',
       cognitoEndpointId: this.formArray.get([1]).get('cognitoEndpointId').value,
     };
     this.commService.createCampaign(campaign).pipe(takeUntil(this.campaignUnsubscribe$)).subscribe(() => {

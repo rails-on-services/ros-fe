@@ -50,6 +50,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       formArray: this.formBuilder.array([
         this.formBuilder.group({
           eventName: ['', [Validators.required, Validators.maxLength(140)]],
+          description: [('')],
           channel: [(''), [Validators.required]],
           sendDate: [(''), [Validators.required]],
           sendTime: [(''), [Validators.required]],
@@ -64,10 +65,10 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           targetType: [('')],
         }),
         this.formBuilder.group({
-          campaignId: [('')],
+          providerId: [('')],
         }),
         this.formBuilder.group({
-          providerId: [('')],
+          campaignId: [('')],
         }),
         this.formBuilder.group({
           templateId: [('')],
@@ -107,6 +108,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
     const event = {
       name: this.formArray.get([0]).get('eventName').value,
+      description: this.formArray.get([0]).get('description').value,
       channel: this.formArray.get([0]).get('channel').value,
       sendAt: dateTime.toString(),
       status: this.formArray.get([1]).get('status').value,

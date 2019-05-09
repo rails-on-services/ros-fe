@@ -14,6 +14,12 @@
             <mat-error *ngIf="hasError('templateName', 'required')">Template name is required</mat-error>
             <mat-error *ngIf="hasError('templateName', 'maxlength')">You have more than 140 characters</mat-error>
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Template Description:</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+
           <div class="access-types">
             <mat-form-field>
               <mat-label>Content:</mat-label>

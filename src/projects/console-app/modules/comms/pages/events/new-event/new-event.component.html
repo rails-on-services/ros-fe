@@ -15,6 +15,11 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Event Description:</mat-label>
+            <textarea matInput placeholder="What is this Event for?" formControlName="description"></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>Channel Type:</mat-label>
             <mat-select formControlName="channel">
               <!--              <mat-option *ngFor="let channel of channels" [value]="channel.value">-->
@@ -187,10 +192,10 @@
           <div>[{{formArray.get([1]).get('targetType').value}}] {{formArray.get([1]).get('targetId').value}}</div>
 
           <mat-label>Campaign:</mat-label>
-          <div>{{formArray.get([2]).get('campaignId').value}}</div>
+          <div>{{formArray.get([2]).get('providerId').value}}</div>
 
           <mat-label>Provider:</mat-label>
-          <div>{{formArray.get([3]).get('providerId').value}}</div>
+          <div>{{formArray.get([3]).get('campaignId').value}}</div>
 
           <mat-label>Template:</mat-label>
           <div>{{formArray.get([4]).get('templateId').value}}</div>
