@@ -12,7 +12,6 @@ import { IamModule as IamServiceModule } from '@perx/open-services';
 import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
 import { CommsModule as CommsServiceModule } from '@perx/open-services';
 import { environment } from '../projects/console-app/environments/environment';
-import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -20,13 +19,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
 import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PublicModule } from './public/public.module';
 
 const isMock = environment.mock;
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +35,7 @@ const isMock = environment.mock;
     ReactiveFormsModule,
     SharedModule,
     CoreModule,
+    PublicModule,
     IamServiceModule,
     CommsServiceModule,
     CognitoServiceModule.forRoot({ env: environment })

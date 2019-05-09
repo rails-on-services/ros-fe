@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 // import { CoreModule } from './core/core.module';
-import { LoginComponent } from './login/login.component';
+// import { PublicModule } from './public/public.module';
 
 const router: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    // loadChildren: () => CoreModule
-    loadChildren: './core/core.module#CoreModule'
+    loadChildren: './public/public.module#PublicModule'
   },
   {
-    path: 'login',
+    path: '',
     pathMatch: 'full',
-    component: LoginComponent
-  },
+    // loadChildren: () => CoreModule
+    loadChildren: './core/core.module#CoreModule'
+  }
 ];
 
 @NgModule({
