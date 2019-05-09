@@ -113,8 +113,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   private fetchProviders() {
     this.providers$ = this.commsService.fetchProviders().pipe(
-      map(document => {
-        const commsProviders = document.getModels();
+      map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
           const keys = Object.keys(commsProvider.getColumnProperties());

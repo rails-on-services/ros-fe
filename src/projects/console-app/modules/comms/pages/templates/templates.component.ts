@@ -150,8 +150,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   fetchTemplates() {
     this.templates$ = this.commsService.fetchTemplates().pipe(
-      map(document => {
-        const commsTemplates = document.getModels();
+      map(commsTemplates => {
         const templates = commsTemplates.map(commsTemplate => {
           const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
           const template = { id: commsTemplate.id };
