@@ -40,6 +40,35 @@
           </div>
         </mat-card-actions>
       </mat-step>
+      <mat-step label="Assign Campaign" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+        <mat-card-content>
+          <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
+            <app-filterable-table
+                [columnProperties]="campaignsColumnProperties"
+                [contents]="campaigns"
+                [selectable]=true
+                (selectionChange)="onCampaignsSelectionChange($event)"
+                [shownColumns]="shownColumns"
+            >
+            </app-filterable-table>
+
+          </ng-container>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+        <span class="align-left">
+        <button mat-stroked-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+          <span>Back</span></button>
+        </span>
+            <span class="align-right">
+          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+          <button mat-stroked-button matStepperNext type="button">Next</button>
+
+        </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
       <mat-step label="Review" [editable]="false">
         <mat-card-content>
           <h2 class="mat-h2">Review details</h2>
@@ -59,6 +88,10 @@
               </div>
             </div>
           </div>
+
+          <mat-label>Campaign:</mat-label>
+          <div>{{formArray.get([1]).get('campaignId').value}}</div>
+
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
