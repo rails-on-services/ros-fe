@@ -129,8 +129,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  fetchEvents() {
-    this.events$ = this.commsService.fetchEvents(this.campaignId).pipe(
+  fetchEvents(force?: boolean) {
+    this.events$ = this.commsService.fetchEvents(this.campaignId, force).pipe(
       map(commEvents => {
         const events = commEvents.map(commsEvent => {
           const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;

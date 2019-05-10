@@ -59,7 +59,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     this.selection.selected.forEach(provider => {
       this.commsService.removeProvider(provider.id).subscribe(() => {
         this.selection.deselect(provider);
-        this.fetchProviders();
+        this.fetchProviders(true);
       });
     });
   }
@@ -72,7 +72,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
         content: 'Are you sure you want to delete the providers',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
@@ -111,8 +111,8 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     }
   }
 
-  private fetchProviders() {
-    this.providers$ = this.commsService.fetchProviders().pipe(
+  private fetchProviders(force?: boolean) {
+    this.providers$ = this.commsService.fetchProviders(null, force).pipe(
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
@@ -123,7 +123,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
           });
           provider['name'] = {
             value: commsProvider.name,
-            link: `${commsProvider.id}`
+            link: `${ commsProvider.id }`
           };
           return provider;
         });

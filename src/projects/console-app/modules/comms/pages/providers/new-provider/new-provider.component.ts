@@ -53,6 +53,7 @@ export class NewProviderComponent implements OnInit, AfterViewInit {
     };
 
     this.commsService.createProvider(provider).pipe(takeUntil(this.providerUnsubscribe$)).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 
