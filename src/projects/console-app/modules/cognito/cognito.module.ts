@@ -32,6 +32,7 @@ import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.componen
     FormsModule,
     OpenUiComponentsModule
   ],
+  exports: [CognitoHomeComponent, CognitoComponent],
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,
