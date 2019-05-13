@@ -20,6 +20,7 @@ import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
 import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PublicModule } from './public/public.module';
+import { CORE_SERVICES_MENU, coreServicesMenuValue } from './core/core-services-menu.value';
 
 const isMock = environment.mock;
 
@@ -46,6 +47,10 @@ const isMock = environment.mock;
       provide: HTTP_INTERCEPTORS,
       useClass: isMock ? MockRequestInterceptor : HttpRequestInterceptor,
       multi: true
+    },
+    {
+      provide: CORE_SERVICES_MENU,
+      useValue: coreServicesMenuValue
     }
   ],
   bootstrap: [AppComponent]

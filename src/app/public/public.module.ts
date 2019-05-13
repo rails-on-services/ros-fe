@@ -20,10 +20,10 @@ const COMPONENTS = [
     PublicRoutingModule,
     SharedModule,
     ReactiveFormsModule
-
   ],
   exports: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    PublicRoutingModule
   ],
 })
 export class PublicModule { }

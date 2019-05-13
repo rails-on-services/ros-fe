@@ -11,7 +11,8 @@ function init() {
       '.model',
       '.service',
       '.component',
-      '.interceptor'
+      '.interceptor',
+      '.value',
     ],
     excludesNames: [
       '.spec.ts',

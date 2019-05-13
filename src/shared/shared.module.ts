@@ -6,9 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthenticationModule } from './modules/authentication';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+const COMPONENTS = [
+  ModalComponent,
+];
+
 @NgModule({
   declarations: [
-    ModalComponent,
+    ...COMPONENTS
   ],
   imports: [
     AuthenticationModule,
@@ -19,7 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule
   ],
   exports: [
-    ModalComponent,
+    ...COMPONENTS,
     AuthenticationModule,
     MaterialDesignModule,
     FlexLayoutModule
