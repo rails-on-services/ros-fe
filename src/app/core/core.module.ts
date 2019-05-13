@@ -8,10 +8,14 @@ import { IamModule } from '../../projects/console-app/modules/iam/iam.module';
 import { CognitoModule } from '../../projects/console-app/modules/cognito/cognito.module';
 import { CommsModule } from '../../projects/console-app/modules/comms/comms.module';
 
+const COMPONENTS = [
+  HeaderComponent,
+  CoreComponent,
+];
+
 @NgModule({
   declarations: [
-    HeaderComponent,
-    CoreComponent,
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
@@ -24,8 +28,7 @@ import { CommsModule } from '../../projects/console-app/modules/comms/comms.modu
     CommsModule
   ],
   exports: [
-    HeaderComponent,
-    CoreComponent
+    ...COMPONENTS
   ]
 })
 export class CoreModule {
