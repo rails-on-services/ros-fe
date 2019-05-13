@@ -10,6 +10,8 @@ import { CORE_SERVICES_MENU } from './core-services-menu.value';
 export class CoreComponent implements OnInit {
   selectedService = null;
 
+  routerUrl: string = null;
+
   constructor(
     public router: Router,
     @Inject(CORE_SERVICES_MENU) public services: any,
@@ -27,6 +29,7 @@ export class CoreComponent implements OnInit {
 
   setSelectedService() {
     if (this.router.url) {
+      this.routerUrl = this.router.url;
       this.selectedService = this.services.find(s => this.router.url.indexOf(s.url) === 0);
     }
   }

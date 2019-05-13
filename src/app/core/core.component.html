@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z4" fxLayoutGap="10px">
+<mat-toolbar class="mat-elevation-z4" fxLayoutGap="10px" [attr.router-url]="routerUrl">
   <img class="logo" src="https://www.perxtech.com/wp-content/uploads/2019/03/logo-color.png">
   <mat-menu #appMenu="matMenu" overlapTrigger=true>
     <a
@@ -13,6 +13,3 @@
     <mat-icon>expand_more</mat-icon>
   </button>
 </mat-toolbar>
-<div class="core-container">
-  <router-outlet></router-outlet>
-</div>
