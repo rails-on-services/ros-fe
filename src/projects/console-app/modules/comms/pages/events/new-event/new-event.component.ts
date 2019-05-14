@@ -65,13 +65,13 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           targetType: [('')],
         }),
         this.formBuilder.group({
-          providerId: [('')],
+          provider: [('')],
         }),
         this.formBuilder.group({
-          campaignId: [('')],
+          campaign: [('')],
         }),
         this.formBuilder.group({
-          templateId: [('')],
+          template: [('')],
         }),
       ])
     });
@@ -114,9 +114,9 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       status: this.formArray.get([1]).get('status').value,
       targetId: this.formArray.get([1]).get('targetId').value,
       targetType: this.formArray.get([1]).get('targetType').value,
-      // campaignId: this.formArray.get([2]).get('campaignId').value,
-      // providerId: this.formArray.get([3]).get('providerId').value,
-      // templateId: this.formArray.get([4]).get('templateId').value,
+      campaignId: this.formArray.get([2]).get('campaign').value.id,
+      // providerId: this.formArray.get([3]).get('provider').value.id,
+      // templateId: this.formArray.get([4]).get('template').value.id,
     };
 
     this.commsService.createEvent(event).pipe(takeUntil(this.eventUnsubscribe$)).subscribe(() => {
@@ -148,17 +148,17 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
     this.providerSelection = selection.selected;
-    this.formArray.get([2]).get('providerId').setValue(selection.selected[0].id);
+    this.formArray.get([2]).get('provider').setValue(selection.selected[0]);
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.campaignSelection = selection.selected;
-    this.formArray.get([3]).get('campaignId').setValue(selection.selected[0].id);
+    this.formArray.get([3]).get('campaign').setValue(selection.selected[0]);
   }
 
   onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
     this.templateSelection = selection.selected;
-    this.formArray.get([4]).get('templateId').setValue(selection.selected[0].id);
+    this.formArray.get([4]).get('template').setValue(selection.selected[0]);
   }
 
   private fetchCognitoPools() {
