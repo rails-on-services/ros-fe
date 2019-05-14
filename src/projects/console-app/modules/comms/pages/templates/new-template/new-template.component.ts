@@ -38,7 +38,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
           status: ['']
         }),
         this.formBuilder.group({
-          campaignId: [''],
+          campaigns: [''],
         }),
       ])
     });
@@ -70,7 +70,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
       description: this.formArray.get([0]).get('description').value,
       content: this.formArray.get([0]).get('content').value,
       status: this.formArray.get([0]).get('status').value,
-      campaignId: this.formArray.get([1]).get('campaignId').value,
+      campaigns: this.formArray.get([1]).get('campaigns').value.map(item => item.id),
     };
 
     this.commsService.createTemplate(template).pipe(takeUntil(this.templateUnsubscribe$)).subscribe(() => {
@@ -106,6 +106,6 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
     this.campaignSelection = selection.selected;
-    this.formArray.get([1]).get('campaignId').setValue(selection.selected[0].id);
+    this.formArray.get([1]).get('campaigns').setValue([...selection.selected]);
   }
 }
