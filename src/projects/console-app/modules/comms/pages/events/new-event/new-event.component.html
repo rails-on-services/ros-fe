@@ -37,141 +37,128 @@
             <mat-error *ngIf="hasError(0,'sendDate','required')">Please select an option</mat-error>
           </mat-form-field>
           <div>
-          <mat-form-field>
-            <mat-label>Send time:</mat-label>
-            <input matInput [ngxTimepicker]="sendAtTimepicker" [format]="24" readonly formControlName="sendTime">
-            <ngx-material-timepicker-toggle matSuffix [for]="sendAtTimepicker"></ngx-material-timepicker-toggle>
-            <ngx-material-timepicker #sendAtTimepicker></ngx-material-timepicker>
-            <mat-error *ngIf="hasError(0,'sendTime','required')">Please select a time</mat-error>
-          </mat-form-field>
+            <mat-form-field>
+              <mat-label>Send time:</mat-label>
+              <input matInput [ngxTimepicker]="sendAtTimepicker" [format]="24" readonly formControlName="sendTime">
+              <ngx-material-timepicker-toggle matSuffix [for]="sendAtTimepicker"></ngx-material-timepicker-toggle>
+              <ngx-material-timepicker #sendAtTimepicker></ngx-material-timepicker>
+              <mat-error *ngIf="hasError(0,'sendTime','required')">Please select a time</mat-error>
+            </mat-form-field>
           </div>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        </span>
+            <span class="align-left">
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
-      <mat-step label="Target Cognito Pool" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
+      <mat-step label="Target Cognito Pool" formGroupName="1" [stepControl]="formArray.get([1])"
+        [editable]="isEditable">
         <mat-card-content>
           <ng-container class="cognito-table" *ngIf="cognitoPools$ | async as cognitoPools">
-            <app-filterable-table
-                [columnProperties]="columnProperties"
-                [contents]="cognitoPools"
-                [selectable]=true
-                (selectionChange)="onCognitoPoolSelectionChange($event)"
-                [shownColumns]="shownColumns"
-            >
+            <app-filterable-table [columnProperties]="columnProperties" [contents]="cognitoPools" [selectable]=true
+              (selectionChange)="onCognitoPoolSelectionChange($event)" [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
       <mat-step label="Assign Campaign" formGroupName="2" [stepControl]="formArray.get([2])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
-            <app-filterable-table
-                [columnProperties]="campaignsColumnProperties"
-                [selectType]="'radio'"
-                [contents]="campaigns"
-                [selectable]=true
-                (selectionChange)="onCampaignsSelectionChange($event)"
-                [shownColumns]="shownColumns"
-            >
+            <app-filterable-table [columnProperties]="campaignsColumnProperties" [selectType]="'radio'"
+              [contents]="campaigns" [selectable]=true (selectionChange)="onCampaignsSelectionChange($event)"
+              [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
       <mat-step label="Choose provider" formGroupName="3" [stepControl]="formArray.get([3])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="provider-table" *ngIf="providers$ | async as providers">
-            <app-filterable-table
-                [columnProperties]="providerColumnProperties"
-                [contents]="providers"
-                [selectable]=true
-                (selectionChange)="onProviderSelectionChange($event)"
-                [shownColumns]="shownColumns"
-            >
+            <app-filterable-table [columnProperties]="providerColumnProperties" [contents]="providers"
+              [selectType]="'radio'" [selectable]=true (selectionChange)="onProviderSelectionChange($event)"
+              [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
       <mat-step label="Choose template" formGroupName="4" [stepControl]="formArray.get([4])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="templates-table" *ngIf="templates$ | async as templates">
-            <app-filterable-table
-                [columnProperties]="templateColumnProperties"
-                [contents]="templates"
-                [selectable]=true
-                (selectionChange)="onTemplateSelectionChange($event)"
-                [shownColumns]="shownColumns"
-            >
+            <app-filterable-table [columnProperties]="templateColumnProperties" [contents]="templates"
+              [selectType]="'radio'" [selectable]=true (selectionChange)="onTemplateSelectionChange($event)"
+              [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
@@ -192,49 +179,44 @@
           <mat-label>Target Cognito group:</mat-label>
           <div>[{{formArray.get([1]).get('targetType').value}}] {{formArray.get([1]).get('targetId').value}}</div>
 
-          <mat-label>Provider:</mat-label>
-          <div *ngFor="let provider of formArray.get([2]).get('provider').value">
-            <div *ngFor="let item of provider | keyvalue">
-              <div *ngIf="item.value">
-                <mat-label>{{item.key}}:</mat-label>
-                <div>{{item.value}}</div>
-              </div>
+
+          <mat-label>Campaign:</mat-label>
+          <div *ngFor="let item of formArray.get([2]).get('campaign').value | keyvalue">
+            <div *ngIf="item.value">
+              <mat-label>{{item.key}}:</mat-label>
+              <div>{{item.value}}</div>
             </div>
           </div>
 
-          <mat-label>Campaigns:</mat-label>
-          <div *ngFor="let campaign of formArray.get([3]).get('campaigns').value">
-            <div *ngFor="let item of campaign | keyvalue">
+          <!-- <mat-label>Provider:</mat-label>
+            <div *ngFor="let item of formArray.get([3]).get('provider').value | keyvalue">
               <div *ngIf="item.value">
                 <mat-label>{{item.key}}:</mat-label>
                 <div>{{item.value}}</div>
               </div>
-            </div>
-          </div>
+            </div> -->
 
           <mat-label>Template:</mat-label>
-          <div>{{formArray.get([4]).get('templateId').value}}</div>
-          <div *ngFor="let template of formArray.get([4]).get('template').value">
-            <div *ngFor="let item of template | keyvalue">
-              <div *ngIf="item.value">
-                <mat-label>{{item.key}}:</mat-label>
-                <div>{{item.value}}</div>
-              </div>
+          <div *ngFor="let item of formArray.get([4]).get('template').value | keyvalue">
+            <div *ngIf="item.value">
+              <mat-label>{{item.key}}:</mat-label>
+              <div>{{item.value}}</div>
             </div>
           </div>
 
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-raised-button color="primary" type="submit">Finish</button>
-        </span>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-raised-button color="primary" type="submit">Finish</button>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
