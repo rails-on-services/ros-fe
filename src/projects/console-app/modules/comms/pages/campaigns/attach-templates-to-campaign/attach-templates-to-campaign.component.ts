@@ -23,7 +23,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService) { }
 
   ngOnInit() {
-    this.shownColumns = ['templatename', 'urn', 'created_at'];
+    this.shownColumns = ['name', 'content', 'status', 'createdAt', 'updatedAt'];
     this.sub = this.route.params.subscribe(params => {
       this.campaignId = params['id'];
     });
@@ -61,14 +61,14 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.campaign$ = forkJoin(this.commsService.fetchTemplates(), this.commsService.fetchCampaign(this.campaignId)).pipe(
       map(([templatesData, campaignData]) => {
         const templatesInCampaign = campaignData.templates || [];
-
+        debugger
         const templates = templatesData.filter(singleTemplate => {
-          const notInCampaign = templatesInCampaign.some(templateInCampaign => {
-            return templateInCampaign.id !== singleTemplate.id;
+          if (templatesInCampaign.length <= 0) { return true; }
+          const isInCampaign = templatesInCampaign.some(templateInCampaign => {
+            return templateInCampaign.id === singleTemplate.id;
           });
-          if (notInCampaign) {
-            return singleTemplate;
-          }
+
+          return !isInCampaign;
         });
         const campaignDetails = this.getCampaignInfo(campaignData, templates);
 
@@ -89,7 +89,29 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  attachTemplatesToCampaign() {
+  onEventsSelectionChange(selection: SelectionModel<CommsTemplate>) {
+    this.selection = selection;
+  }
 
+  attachTemplatesToCampaign() {
+    let selectedTemplates = [];
+    const selectedTemplateIds = this.selection.selected.map(item => item.id);
+    this.commsService.fetchTemplates()
+    .subscribe(templates => {
+      templates.forEach(template => {
+        if (selectedTemplateIds.includes(template.id)) {
+          selectedTemplates.push(template);
+        }
+      });
+    });
+    if (selectedTemplates.length > 0) {
+      this.commsService.fetchCampaign(this.campaignId).subscribe(campaign => {
+          campaign.templates = [ ...campaign.templates || [], ...selectedTemplates];
+          campaign.save().subscribe(
+            () => this.router.navigate(['../'], { relativeTo: this.route })
+          );
+        }
+      );
+    }
   }
 }
