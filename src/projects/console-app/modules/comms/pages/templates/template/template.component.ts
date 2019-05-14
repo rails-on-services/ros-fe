@@ -32,13 +32,6 @@ export class TemplateComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
-    this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = selection.selected;
-      campaign.save();
-    });
-  }
-
   private fetchTemplate() {
     this.template$ = this.commsService.fetchTemplate(this.id).pipe(
       map(templateDetails => {
