@@ -7,16 +7,25 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../../../../shared/shared.module';
 import { OpenUiComponentsModule } from '@perx/open-ui-components';
 
+const COMPONENTS = [
+  DashboardComponent,
+  DashboardMenuComponent,
+  SummaryComponent
+];
+
 @NgModule({
   declarations: [
-    DashboardComponent,
-    DashboardMenuComponent,
-    SummaryComponent],
+    ...COMPONENTS
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
     OpenUiComponentsModule
+  ],
+  exports: [
+    ...COMPONENTS,
+    DashboardRoutingModule
   ]
 })
 export class DashboardModule {

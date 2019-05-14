@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { CoreModule } from './core/core.module';
-// import { PublicModule } from './public/public.module';
 
 const router: Routes = [
   {
@@ -10,10 +8,21 @@ const router: Routes = [
     loadChildren: './public/public.module#PublicModule'
   },
   {
-    path: '',
-    pathMatch: 'full',
-    // loadChildren: () => CoreModule
-    loadChildren: './core/core.module#CoreModule'
+    path: 'iam',
+    loadChildren: '../projects/console-app/modules/iam/iam.module#IamModule'
+  },
+  {
+    path: 'cognito',
+    loadChildren: '../projects/console-app/modules/cognito/cognito.module#CognitoModule'
+
+  },
+  {
+    path: 'dashboard',
+    loadChildren: '../projects/console-app/modules/dashboard/dashboard.module#DashboardModule'
+  },
+  {
+    path: 'comms',
+    loadChildren: '../projects/console-app/modules/comms/comms.module#CommsModule'
   }
 ];
 

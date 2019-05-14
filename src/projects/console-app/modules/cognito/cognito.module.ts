@@ -13,15 +13,19 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
 import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.component';
 
+const COMPONENTS = [
+  CognitoComponent,
+  CognitoHomeComponent,
+  CognitoUsersComponent,
+  CognitoPoolsComponent,
+  CognitoMenuComponent,
+  NewCognitoUserComponent,
+  CognitoAppsComponent
+];
+
 @NgModule({
   declarations: [
-    CognitoComponent,
-    CognitoHomeComponent,
-    CognitoUsersComponent,
-    CognitoPoolsComponent,
-    CognitoMenuComponent,
-    NewCognitoUserComponent,
-    CognitoAppsComponent
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
@@ -31,6 +35,10 @@ import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.componen
     ReactiveFormsModule,
     FormsModule,
     OpenUiComponentsModule
+  ],
+  exports: [
+    ...COMPONENTS,
+    CognitoRoutingModule
   ],
   entryComponents: [
     ManageColumnModal,

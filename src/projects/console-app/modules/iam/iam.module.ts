@@ -19,22 +19,25 @@ import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.compon
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { SharedModule } from '../../../../shared/shared.module';
 
-// import {routes} from './iam-routing.module';
+const COMPONENTS = [
+  IamUsersComponent,
+  IamGroupsComponent,
+  IamHomeComponent,
+  IamMenuComponent,
+  IamComponent,
+  NewIamUserComponent,
+  NewIamGroupComponent,
+  PoliciesComponent,
+  PolicyAttachComponent,
+  NewPolicyComponent,
+  AddGroupUsersComponent,
+  IamGroupComponent,
+  IamUserComponent
+];
 
 @NgModule({
-  declarations: [IamUsersComponent,
-    IamGroupsComponent,
-    IamHomeComponent,
-    IamMenuComponent,
-    IamComponent,
-    NewIamUserComponent,
-    NewIamGroupComponent,
-    PoliciesComponent,
-    PolicyAttachComponent,
-    NewPolicyComponent,
-    AddGroupUsersComponent,
-    IamGroupComponent,
-    IamUserComponent
+  declarations: [
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
@@ -46,7 +49,10 @@ import { SharedModule } from '../../../../shared/shared.module';
     OpenUiComponentsModule,
     SharedModule
   ],
-  exports: [IamHomeComponent, IamComponent],
+  exports: [
+    ...COMPONENTS,
+    IamRoutingModule
+  ],
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,

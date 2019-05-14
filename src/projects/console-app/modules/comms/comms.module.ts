@@ -23,28 +23,37 @@ import { AttachTemplatesToCampaignComponent } from './pages/campaigns/attach-tem
 import { EventComponent } from './pages/events/event/event.component';
 import { TemplateComponent } from './pages/templates/template/template.component';
 import { ProviderComponent } from './pages/providers/provider/provider.component';
+import {CognitoComponent} from "../cognito/cognito.component";
+import {CognitoHomeComponent} from "../cognito/pages/cognito-home/cognito-home.component";
+import {CognitoUsersComponent} from "../cognito/pages/cognito-users/cognito-users.component";
+import {CognitoPoolsComponent} from "../cognito/pages/cognito-pools/cognito-pools.component";
+import {CognitoMenuComponent} from "../cognito/components/cognito-menu/cognito-menu.component";
+import {NewCognitoUserComponent} from "../cognito/pages/cognito-users/new-cognito-user/new-cognito-user.component";
+import {CognitoAppsComponent} from "../cognito/pages/cognito-apps/cognito-apps.component";
 
-// import {routes} from './comms-routing.module';
+const COMPONENTS = [
+  EventsComponent,
+  MessagesComponent,
+  TemplatesComponent,
+  CommsProvidersComponent,
+  CommsCampaignsComponent,
+  NewEventComponent,
+  NewTemplateComponent,
+  NewCampaignComponent,
+  NewProviderComponent,
+  HomeComponent,
+  CommsMenuComponent,
+  CommsComponent,
+  CommsCampaignComponent,
+  AttachTemplatesToCampaignComponent,
+  EventComponent,
+  TemplateComponent,
+  ProviderComponent,
+];
 
 @NgModule({
   declarations: [
-    EventsComponent,
-    MessagesComponent,
-    TemplatesComponent,
-    CommsProvidersComponent,
-    CommsCampaignsComponent,
-    NewEventComponent,
-    NewTemplateComponent,
-    NewCampaignComponent,
-    NewProviderComponent,
-    HomeComponent,
-    CommsMenuComponent,
-    CommsComponent,
-    CommsCampaignComponent,
-    AttachTemplatesToCampaignComponent,
-    EventComponent,
-    TemplateComponent,
-    ProviderComponent,
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
@@ -57,7 +66,10 @@ import { ProviderComponent } from './pages/providers/provider/provider.component
     NgxMaterialTimepickerModule,
     SharedModule
   ],
-  exports: [HomeComponent, CommsComponent],
+  exports: [
+    ...COMPONENTS,
+    CommsRoutingModule
+  ],
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,

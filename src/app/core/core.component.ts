@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { CORE_SERVICES_MENU } from './core-services-menu.value';
 
 @Component({
   selector: 'app-core',
@@ -7,33 +8,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./core.component.scss']
 })
 export class CoreComponent implements OnInit {
-  selectedService = 'dashboard';
+  selectedService = null;
 
-  services = {
-    dashboard: 'Dashboard',
-    iam: 'IAM',
-    cognito: 'Cognito',
-    comms: 'Comms'
-  };
+  routerUrl: string = null;
 
   constructor(
     public router: Router,
-  ) {
-  }
+    @Inject(CORE_SERVICES_MENU) public services: any,
+  ) { }
 
   ngOnInit() {
-    if (this.router.url) {
-      this.selectedService = this.router.url.split('/')[1];
-    }
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.setSelectedService();
+      }
+    });
+
+    this.setSelectedService();
   }
 
-  onClose() {
+  setSelectedService() {
     if (this.router.url) {
-      this.selectedService = this.router.url.split('/')[1];
+      this.routerUrl = this.router.url;
+      this.selectedService = this.services.find(s => this.router.url.indexOf(s.url) === 0);
     }
-  }
-
-  public getServices() {
-    return this.services;
   }
 }

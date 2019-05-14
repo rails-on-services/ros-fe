@@ -1,21 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from '../../shared/shared.module';
-import { CoreRoutingModule } from './core-routing.module';
 import { CoreComponent } from './core.component';
 import { IamModule } from '../../projects/console-app/modules/iam/iam.module';
 import { CognitoModule } from '../../projects/console-app/modules/cognito/cognito.module';
 import { CommsModule } from '../../projects/console-app/modules/comms/comms.module';
 
+const COMPONENTS = [
+  HeaderComponent,
+  CoreComponent,
+];
+
 @NgModule({
   declarations: [
-    HeaderComponent,
-    CoreComponent,
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule,
+    RouterModule,
     SharedModule,
 
     // routes,
@@ -24,7 +28,7 @@ import { CommsModule } from '../../projects/console-app/modules/comms/comms.modu
     CommsModule
   ],
   exports: [
-    HeaderComponent,
+    ...COMPONENTS
   ]
 })
 export class CoreModule {
