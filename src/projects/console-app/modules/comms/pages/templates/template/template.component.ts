@@ -37,7 +37,6 @@ export class TemplateComponent implements OnInit, OnDestroy {
       campaign.templates = selection.selected;
       campaign.save();
     });
-    console.log(selection);
   }
 
   private fetchTemplate() {
