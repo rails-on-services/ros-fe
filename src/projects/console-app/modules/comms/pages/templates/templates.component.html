@@ -8,11 +8,11 @@
       Remove Template<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
     <button *ngIf="tabMode" mat-raised-button color="primary" (click)="attachTemplates()">
-      Attach Template<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> to campaign
+      Attach Template<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> to Campaign
     </button>
     <button *ngIf="tabMode" mat-raised-button color="warn" (click)="showDetachConfirmationPopup()"
             [disabled]="!(selection && selection.selected.length)">
-      Detach Template<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> to campaign
+      Detach Template<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> from Campaign
     </button>
     <div fxFlex fxLayout="row" fxLayoutAlign="end">
       <mat-button-toggle-group

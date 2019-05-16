@@ -61,10 +61,9 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   private fetchUsersNotInGroup() {
     this.group$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroup(this.id)).pipe(
       map(([usersData, groupData]) => {
-        const iamUsers = usersData.getModels();
         const usersInGroup = groupData.users || [];
 
-        const users = iamUsers.filter(singleUser => {
+        const users = usersData.filter(singleUser => {
           const notInGroup = usersInGroup.some(userInGroup => {
             return userInGroup.id !== singleUser.id;
           });
