@@ -1,5 +1,5 @@
 <div class="container">
-  <ng-container *ngIf="user">
+  <ng-container *ngIf="user$ | asyc as user">
     <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">Users</a>&nbsp;>&nbsp;{{user.username}}</div>
     <h2>Details</h2>
     <div fxLayout="column" fxLayoutGap="1rem">
