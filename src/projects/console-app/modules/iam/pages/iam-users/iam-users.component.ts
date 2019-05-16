@@ -132,7 +132,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsers(force = false) {
-    this.users$ = this.iamService.getUsers(force).pipe(
+    this.users$ = this.iamService.fetchUsers(force).pipe(
       map((users: IamUser[]) => {
         return users.map(user => {
           const groups = [...(user.groups || [])];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -14,6 +14,11 @@ import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui
   styleUrls: ['./iam-groups.component.scss']
 })
 export class IamGroupsComponent implements OnInit {
+  @Output() attachGroupsToUser = new EventEmitter();
+  @Output() detachGroupsFromUser = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() userId: number;
+
   document$: Observable<JsonApiQueryData<IamGroup>>;
   testGroupList: Observable<IamGroup[]>;
   groups$: Observable<any[]>;
@@ -39,6 +44,13 @@ export class IamGroupsComponent implements OnInit {
     this.fetchGroups();
   }
 
+  attachGroups() {
+    this.attachGroupsToUser.emit();
+  }
+
+  detachGroups() {
+    this.detachGroupsFromUser.emit(this.selection);
+  }
 
   removeGroups() {
     if (!this.selection || this.selection.selected.length <= 0) {
@@ -48,6 +60,24 @@ export class IamGroupsComponent implements OnInit {
       this.iamService.removeGroup(group.id).subscribe(() => {
         this.fetchGroups();
       });
+    });
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Groups',
+        content: 'Are you sure you want to detach the groups from user',
+        btnColor: 'warn',
+        action: 'Detach'
+       }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachGroups();
+      }
     });
   }
 
@@ -120,11 +150,13 @@ export class IamGroupsComponent implements OnInit {
     }
   }
 
-  private fetchGroups() {
+  fetchGroups(force?: boolean) {
+    //API is not ready for this userId checking
+    // force = this.userId ? true : false;
     this.groups$ = this.iamService.fetchGroups().pipe(
-      map(data => {
-        const iamGroups = data.getModels();
+      map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
+          const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
           const group = { id: iamGroup.id };
           const keys = Object.keys(iamGroup.getColumnProperties());
 
@@ -133,7 +165,7 @@ export class IamGroupsComponent implements OnInit {
           });
           group['name'] = {
             value: iamGroup.name,
-            link: `${iamGroup.id}`
+            link: groupLink
           };
           return group;
         });
@@ -149,6 +181,10 @@ export class IamGroupsComponent implements OnInit {
 
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {
     this.selection = selection;
+  }
+
+  clearSelection() {
+    this.selection.clear();
   }
 
   // addUsersToGroup() {

@@ -97,8 +97,7 @@ export class PoliciesComponent implements OnInit {
 
   private fetchPolicies() {
     this.policies$ = this.iamService.fetchPolicies().pipe(
-      map(policy => {
-        const iamPolicies = policy.getModels();
+      map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policyDetails = { id: iamPolicy.id };
           const keys = Object.keys(iamPolicy.getColumnProperties());

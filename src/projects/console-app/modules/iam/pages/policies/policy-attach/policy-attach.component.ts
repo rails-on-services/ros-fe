@@ -34,9 +34,7 @@ export class PolicyAttachComponent implements OnInit {
   private fetchUsers() {
     this.content$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroups()).pipe(
       map(([usersData, groupsData]) => {
-        const iamUsers = usersData.getModels();
-        const iamGroups = groupsData.getModels();
-        const allUsers = [...iamUsers, ...iamGroups];
+        const allUsers = [...usersData, ...groupsData];
 
         const users = allUsers.map(singleUser => {
           const userDetails = { id: singleUser.id };

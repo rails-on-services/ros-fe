@@ -90,8 +90,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
 
   private fetchPolicies() {
     this.policies$ = this.iamService.fetchPolicies().pipe(
-      map(document => {
-        const iamPolicies = document.getModels();
+      map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policy = { id: iamPolicy.id };
           const keys = Object.keys(iamPolicy.getColumnProperties());

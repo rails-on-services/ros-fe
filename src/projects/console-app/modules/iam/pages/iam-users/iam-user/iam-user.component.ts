@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SelectionModel } from '@angular/cdk/collections';
+import { IamGroupsComponent } from '../../iam-groups/iam-groups.component';
 
 @Component({
   selector: 'app-iam-user',
@@ -12,37 +14,47 @@ import { takeUntil } from 'rxjs/operators';
 export class IamUserComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['groupName', 'remove'];
 
-  user$: Observable<IamUser>;
-  user: IamUser;
-
-  private userUnsubscribe$ = new Subject<void>();
-  private paramsUnsubscribe$ = new Subject<void>();
+  @ViewChild(IamGroupsComponent) iamGroupsComponent: IamGroupsComponent;
+  private sub: any;
+  user$: Observable<any>;
+  userId: number;
 
   constructor(
+    private iamService: IamService,
+    private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService
   ) { }
 
   ngOnInit() {
-    this.route.params.pipe(takeUntil(this.paramsUnsubscribe$)).subscribe((params: Params) => {
-      this.iamService.getUser(params.id).pipe(takeUntil(this.userUnsubscribe$))
-        .subscribe((user: IamUser) => {
-          this.user = user;
-        });
+    this.sub = this.route.params.subscribe(params => {
+      this.userId = params['id'];
     });
+    this.fetchUser();
   }
 
   ngOnDestroy() {
-    this.userUnsubscribe$.next();
-    this.userUnsubscribe$.complete();
-
-    this.paramsUnsubscribe$.next();
-    this.paramsUnsubscribe$.complete();
+    this.sub.unsubscribe();
   }
 
-  onRemove(group: IamGroup) {
-    const newGroups = this.user.groups.filter(g => g.id !== group.id);
-    this.user.groups = newGroups;
-    this.user.save().subscribe();
+  detachGroupsFromUser(selection: SelectionModel<IamGroup>) {
+    const selectedGroups = selection.selected.map(item => item.id);
+    this.iamService.fetchUser(this.userId).subscribe(user => {
+      user.groups = user.groups.filter(item => !selectedGroups.includes(item.id));
+      user.save().subscribe(
+        () => {
+          this.iamGroupsComponent.clearSelection();
+          this.iamGroupsComponent.fetchGroups();
+        }
+      );
+    });
   }
+
+  attachGroupsToCampaign() {
+    this.router.navigate(['attach-groups'], { relativeTo: this.route });
+  }
+
+  private fetchUser() {
+    this.user$ = this.iamService.fetchUser(this.userId);
+  }
+
 }
