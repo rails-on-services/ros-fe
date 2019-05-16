@@ -27,10 +27,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   providers$: Observable<any[]>;
   campaigns$: Observable<any[]>;
   templates$: Observable<any[]>;
-  cognitoPoolSelection: CognitoPool[];
-  providerSelection: CommsProvider[];
-  campaignSelection: CommsCampaign[];
-  templateSelection: CommsTemplate[];
+
   shownColumns: (string|number|symbol)[];
 
   eventDetailsGroup: FormGroup;
@@ -65,10 +62,10 @@ export class NewEventComponent implements OnInit, AfterViewInit {
           targetType: [('')],
         }),
         this.formBuilder.group({
-          provider: [('')],
+          campaign: [('')],
         }),
         this.formBuilder.group({
-          campaign: [('')],
+          provider: [('')],
         }),
         this.formBuilder.group({
           template: [('')],
@@ -116,7 +113,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       targetType: this.formArray.get([1]).get('targetType').value,
       campaignId: this.formArray.get([2]).get('campaign').value.id,
       // providerId: this.formArray.get([3]).get('provider').value.id,
-      // templateId: this.formArray.get([4]).get('template').value.id,
+      templateId: this.formArray.get([4]).get('template').value.id,
     };
 
     this.commsService.createEvent(event).pipe(takeUntil(this.eventUnsubscribe$)).subscribe(() => {
@@ -141,23 +138,20 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
-    this.cognitoPoolSelection = selection.selected;
-    this.formArray.get([1]).get('targetId').setValue(selection.selected[0].id);
+    this.formArray.get([1]).get('targetId').setValue(selection.selected[0] ? selection.selected[0].id : '');
     this.formArray.get([1]).get('targetType').setValue('CognitoPool');
   }
 
-  onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
-    this.providerSelection = selection.selected;
-    this.formArray.get([2]).get('provider').setValue(selection.selected[0]);
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
+    this.formArray.get([2]).get('campaign').setValue(selection.selected[0]);
   }
 
-  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
-    this.campaignSelection = selection.selected;
-    this.formArray.get([3]).get('campaign').setValue(selection.selected[0]);
+  onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
+    this.formArray.get([3]).get('provider').setValue(selection.selected[0]);
   }
+
 
   onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
-    this.templateSelection = selection.selected;
     this.formArray.get([4]).get('template').setValue(selection.selected[0]);
   }
 

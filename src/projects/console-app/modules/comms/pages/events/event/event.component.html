@@ -69,8 +69,8 @@
           <div class="action" fxLayout="row" fxLayoutGap="1rem">
             <mat-form-field>
               <mat-label>Templates</mat-label>
-              <mat-select [(value)]="selectedTemplate">
-                <mat-option *ngFor="let template of templates" [value]="template">
+              <mat-select [(value)]="selectedTemplateId">
+                <mat-option *ngFor="let template of templates" [value]="template.id">
                   {{template.createdAt}}
                 </mat-option>
               </mat-select>

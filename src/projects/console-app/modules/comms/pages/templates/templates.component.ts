@@ -179,4 +179,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {
     this.selection = selection;
   }
+
+  clearSelection() {
+    this.selection.clear();
+  }
 }

@@ -18,8 +18,8 @@ export class EventComponent implements OnInit, OnDestroy {
   id: number;
   private isProviderEditable = false;
   private isTemplateEditable = false;
-  selectedTemplate: SelectionModel<CommsTemplate>;
-  selectedProvider: SelectionModel<CommsProvider>;
+  selectedTemplateId: number|string;
+  selectedProviderId: number|string;
 
 
   constructor(
@@ -40,16 +40,8 @@ export class EventComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
-    this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = selection.selected;
-      campaign.save();
-    });
-    console.log(selection);
-  }
-
-  private fetchEvent() {
-    this.event$ = this.commsService.fetchEvent(this.id).pipe(
+  private fetchEvent(force?: boolean) {
+    this.event$ = this.commsService.fetchEvent(this.id, force).pipe(
       map(eventDetails => {
         const campaign = eventDetails.lastSyncModels.filter(item => item.type === 'campaigns')[0];
         // const provider = eventDetailsData.lastSyncModels.filter(item => item.type === 'providers')[0];
@@ -76,8 +68,7 @@ export class EventComponent implements OnInit, OnDestroy {
           }
         };
         // this.selectedProvider = provider;
-        this.selectedTemplate = template;
-        console.log(this.selectedTemplate);
+        this.selectedTemplateId = template.id;
         return event;
       })
     );
@@ -135,7 +126,20 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   saveTemplateChange() {
-    this.isTemplateEditable = false;
+    let selectedTemplate: CommsTemplate = null;
+    this.commsService.fetchTemplate(this.selectedTemplateId)
+    .subscribe(template => {
+      selectedTemplate = template;
+      });
+    this.commsService.fetchEvent(this.id).subscribe(event => {
+      event.template = selectedTemplate;
+      event.save().subscribe(
+        () => {
+          this.isTemplateEditable = false;
+          this.fetchEvent(true);
+        }
+      );
+    });
   }
   cancelEdit() {
     this.isTemplateEditable = false;

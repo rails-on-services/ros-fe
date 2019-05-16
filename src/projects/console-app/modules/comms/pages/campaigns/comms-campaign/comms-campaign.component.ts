@@ -12,7 +12,7 @@ import { TemplatesComponent } from './../../templates/templates.component';
   styleUrls: ['./comms-campaign.component.scss'],
 })
 export class CommsCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild(TemplatesComponent) templates: TemplatesComponent;
+  @ViewChild(TemplatesComponent) templatesComponnet: TemplatesComponent;
   private sub: any;
   campaign$: Observable<any>;
   id: number;
@@ -35,15 +35,16 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
   }
 
   detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
+    const selectedTemplates = selection.selected.map(item => item.id);
     this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = campaign.templates.filter(item => item.id !== selection.selected[0].id);
+      campaign.templates = campaign.templates.filter(item => !selectedTemplates.includes(item.id));
       campaign.save().subscribe(
         () => {
-          this.templates.fetchTemplates();
+          this.templatesComponnet.clearSelection();
+          this.templatesComponnet.fetchTemplates();
         }
       );
     });
-    console.log(selection);
   }
 
   attachTemplatesToCampaign() {

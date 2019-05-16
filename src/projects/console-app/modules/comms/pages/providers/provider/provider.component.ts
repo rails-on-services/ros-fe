@@ -32,14 +32,6 @@ export class ProviderComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
-    this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = selection.selected;
-      campaign.save();
-    });
-    console.log(selection);
-  }
-
   private fetchProvider() {
     this.provider$ = this.commsService.fetchProvider(this.id).pipe(
       map(providerDetails => {
