@@ -104,7 +104,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     dateTime.setHours(this.sendAtTimepicker.selectedHour.time);
 
     const event = {
-      title: this.formArray.get([0]).get('eventName').value,
+      name: this.formArray.get([0]).get('eventName').value,
       description: this.formArray.get([0]).get('description').value,
       channel: this.formArray.get([0]).get('channel').value,
       sendAt: dateTime.toString(),
