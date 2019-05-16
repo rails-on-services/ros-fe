@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ModalService } from '../../../../../../../shared/services/modal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Credential, IamService, IamUser } from '@perx/open-services';
+import { IamCredential, IamService, IamUser } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatStepper } from '@angular/material';
@@ -20,7 +20,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
   reviewPage: boolean;
 
   user$: Observable<IamUser>;
-  credential$: Observable<Credential>;
+  credential$: Observable<IamCredential>;
 
   private userUnsubscribe$ = new Subject<void>();
   private credentialUnsubscribe$ = new Subject<void>();
