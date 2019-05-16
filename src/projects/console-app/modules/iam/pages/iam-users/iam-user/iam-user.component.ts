@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,9 +9,10 @@ import { IamGroupsComponent } from '../../iam-groups/iam-groups.component';
 @Component({
   selector: 'app-iam-user',
   templateUrl: './iam-user.component.html',
-  styleUrls: ['./iam-user.component.scss']
+  styleUrls: ['./iam-user.component.scss'],
 })
-export class IamUserComponent implements OnInit {
+export class IamUserComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = ['groupName', 'remove'];
 
   @ViewChild(IamGroupsComponent) iamGroupsComponent: IamGroupsComponent;
   private sub: any;
@@ -55,4 +56,5 @@ export class IamUserComponent implements OnInit {
   private fetchUser() {
     this.user$ = this.iamService.fetchUser(this.userId);
   }
+
 }
