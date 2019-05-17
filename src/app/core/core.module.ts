@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CoreComponent } from './core.component';
-import { IamModule } from '../../projects/console-app/modules/iam/iam.module';
-import { CognitoModule } from '../../projects/console-app/modules/cognito/cognito.module';
-import { CommsModule } from '../../projects/console-app/modules/comms/comms.module';
+import { IamModule } from '../modules/iam/iam.module';
+import { CognitoModule } from '../modules/cognito/cognito.module';
+import { CommsModule } from '../modules/comms/comms.module';
 
 const COMPONENTS = [
   HeaderComponent,

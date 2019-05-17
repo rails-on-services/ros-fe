@@ -6,21 +6,21 @@ import {
 } from '@angular/router';
 import {Observable, of, EMPTY} from 'rxjs';
 
-import {NewCognitoUserComponent} from './new-cognito-user.component';
-import {ModalService} from '../../../../../../../shared/services/modal.service';
+import {NewIamUserComponent} from './new-iam-user.component';
+import {ModalService} from '../../../../../../shared/services/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NewCognitoUserResolverService implements Resolve<NewCognitoUserComponent> {
+export class NewIamUserResolverService implements Resolve<NewIamUserComponent> {
   constructor(private modalService: ModalService,
               private router: Router,
               private route: ActivatedRoute) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NewCognitoUserComponent> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<NewIamUserComponent> | Observable<never> {
 
-    this.modalService.componentToRender = NewCognitoUserComponent;
+    this.modalService.componentToRender = NewIamUserComponent;
 
     this.modalService.previousURL = location.pathname;
     if (this.modalService.componentToRender) {

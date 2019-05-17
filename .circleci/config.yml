@@ -13,7 +13,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - dist/console-app
+            - dist/ros-fe
   deploy:
     working_directory: ~/project
     executor: aws-cli/default
@@ -24,7 +24,7 @@ jobs:
       - aws-cli/configure
       - run:
           name: Sync to S3
-          command: aws s3 sync --delete ~/project/dist/console-app s3://${S3_BUCKET}
+          command: aws s3 sync --delete ~/project/dist/ros-fe s3://${S3_BUCKET}
 workflows:
   build_and_deploy:
     jobs:

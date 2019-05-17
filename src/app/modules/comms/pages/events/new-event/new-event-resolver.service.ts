@@ -7,7 +7,7 @@ import {
 import {Observable, of, EMPTY} from 'rxjs';
 
 import {NewEventComponent} from './new-event.component';
-import {ModalService} from '../../../../../../../shared/services/modal.service';
+import {ModalService} from '../../../../../../shared/services/modal.service';
 
 @Injectable({
   providedIn: 'root',

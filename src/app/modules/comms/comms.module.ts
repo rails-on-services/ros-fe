@@ -7,7 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CommsRoutingModule } from './comms-routing.module';
 import { CommsMenuComponent } from './components/comms-menu/comms-menu.component';
 import { CommsComponent } from './comms.component';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
 import { NewTemplateComponent } from './pages/templates/new-template/new-template.component';
 import { EventsComponent } from './pages/events/events.component';

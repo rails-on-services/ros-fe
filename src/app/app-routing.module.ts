@@ -9,20 +9,20 @@ const router: Routes = [
   },
   {
     path: 'iam',
-    loadChildren: '../projects/console-app/modules/iam/iam.module#IamModule'
+    loadChildren: './modules/iam/iam.module#IamModule'
   },
   {
     path: 'cognito',
-    loadChildren: '../projects/console-app/modules/cognito/cognito.module#CognitoModule'
+    loadChildren: './modules/cognito/cognito.module#CognitoModule'
 
   },
   {
     path: 'dashboard',
-    loadChildren: '../projects/console-app/modules/dashboard/dashboard.module#DashboardModule'
+    loadChildren: './modules/dashboard/dashboard.module#DashboardModule'
   },
   {
     path: 'comms',
-    loadChildren: '../projects/console-app/modules/comms/comms.module#CommsModule'
+    loadChildren: './modules/comms/comms.module#CommsModule'
   }
 ];
 

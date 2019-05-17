@@ -17,7 +17,7 @@ import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.compo
 import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-group-users.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 
 const COMPONENTS = [
   IamUsersComponent,

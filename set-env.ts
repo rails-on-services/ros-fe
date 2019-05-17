@@ -6,7 +6,7 @@ const isModule = fs.existsSync(path.join(__dirname, '../../node_modules')) ||
   fs.existsSync(path.join(__dirname, '../../../node_modules'));
 
 // Configure Angular `environment.ts` file path
-const dirPath = path.join(__dirname, 'src/projects/console-app/environments');
+const dirPath = path.join(__dirname, 'src/environments');
 const targetPath = `${dirPath}/environment.ts`;
 
 // Load node modules
