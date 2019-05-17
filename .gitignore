@@ -49,4 +49,4 @@ Thumbs.db
 
 # Angular
 /src/environments/*.ts
-src/projects/*-app/environments/*.ts
+src/environments/*.ts

@@ -6,7 +6,7 @@ import {AuthService} from 'ngx-auth';
 import {CognitoService} from '@perx/open-services';
 import {TokenStorage} from './token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import { environment } from '../../../projects/console-app/environments/environment';
+import { environment } from '../../../environments/environment';
 
 interface AccessData {
   refreshToken: string;

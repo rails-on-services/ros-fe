@@ -3,27 +3,31 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "console-app": {
-      "root": "src/projects/console-app/",
-      "sourceRoot": "src/projects/console-app",
+    "ros-fe": {
+      "root": "",
+      "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "sass"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/console-app",
-            "index": "src/projects/console-app/index.html",
-            "main": "src/projects/console-app/main.ts",
+            "outputPath": "dist/ros-fe",
+            "index": "src/index.html",
+            "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/projects/console-app/favicon.ico",
-              "src/projects/console-app/assets"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
-              "src/projects/console-app/styles.scss"
+              "src/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -52,18 +56,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "console-app:build"
+            "browserTarget": "ros-fe:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "console-app:build:production"
+              "browserTarget": "ros-fe:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "console-app:build"
+            "browserTarget": "ros-fe:build"
           }
         },
         "test": {
@@ -74,12 +78,12 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/projects/console-app/styles.scss"
+              "src/styles.scss"
             ],
             "scripts": [],
             "assets": [
-              "src/projects/console-app/favicon.ico",
-              "src/projects/console-app/assets"
+              "src/favicon.ico",
+              "src/assets"
             ]
           }
         },
@@ -97,27 +101,27 @@
         }
       }
     },
-    "console-app-e2e": {
-      "root": "e2e/console-app/",
+    "ros-fe-e2e": {
+      "root": "e2e/",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "e2e/console-app/protractor.conf.js",
-            "devServerTarget": "console-app:serve"
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "ros-fe:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "console-app:serve:production"
+              "devServerTarget": "ros-fe:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/console-app/tsconfig.e2e.json",
+            "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -126,10 +130,5 @@
       }
     }
   },
-  "defaultProject": "console-app",
-  "schematics": {
-    "@schematics/angular:component": {
-      "styleext": "scss"
-    }
-  }
+  "defaultProject": "ros-fe"
 }

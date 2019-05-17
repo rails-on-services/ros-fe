@@ -1,26 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {routes} from './app-routing.module';
 import { ChildrenOutletContexts } from '@angular/router';
-import { CoreModule } from './core/core.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IamModule as IamServiceModule } from '@perx/open-services';
 import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
 import { CommsModule as CommsServiceModule } from '@perx/open-services';
-import { environment } from '../projects/console-app/environments/environment';
-import { SharedModule } from '../shared/shared.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// used to create fake backend
-import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
-import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from './core/core.module';
+import { environment } from '../environments/environment';
+import { SharedModule } from '../shared/shared.module';
 import { PublicModule } from './public/public.module';
 import { CORE_SERVICES_MENU, coreServicesMenuValue } from './core/core-services-menu.value';
+import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
+import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
 
 const isMock = environment.mock;
 

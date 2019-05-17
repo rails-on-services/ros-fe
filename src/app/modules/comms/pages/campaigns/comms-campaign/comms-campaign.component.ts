@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { TemplatesComponent } from './../../templates/templates.component';
+import { TemplatesComponent } from '../../templates/templates.component';
 
 @Component({
   selector: 'app-comms-campaign',
