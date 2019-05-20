@@ -1,0 +1,29 @@
+.button {
+  border-radius: 0;
+  height: 100%; width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.details-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.corner {
+  height: 4rem; width: 8rem;
+  line-height: 5.5rem;
+  position: absolute;
+  top: -1rem; right: -3.5rem;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.corner-text {
+  color: #fff;
+  font-family: "Font Awesome 5 Free";
+  font-size: 1.2rem;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

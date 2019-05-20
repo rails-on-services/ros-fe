@@ -1,0 +1,23 @@
+.dismissable-container {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: relative;
+  background-color: #e0e0b1;
+  margin-bottom: 1em;
+
+  .close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    min-width: 1em;
+    min-height: 1em;
+    z-index: 1;
+  }
+  .content-container {
+    position: relative;
+    padding: 1em 1.5em;
+    z-index: 0;
+  }
+}

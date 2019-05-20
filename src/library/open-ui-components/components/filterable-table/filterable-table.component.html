@@ -1,0 +1,86 @@
+<div *ngIf="hasContent" class="table-container mat-elevation-z8">
+  <mat-form-field *ngIf="hasFilterInput" appearance="outline">
+    <mat-icon matPrefix style="margin-right: 0.5em;">search</mat-icon>
+    <input matInput (keyup)="applyFilter($event.target.value)" [placeholder]="filterInputPlaceholder">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="select" *ngIf="selectable">
+      <th mat-header-cell *matHeaderCellDef>
+        <ng-container *ngIf="selectType==='check'">
+          <mat-checkbox
+            (change)="$event ? selectAll() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+        </ng-container>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <ng-container *ngIf="selectType==='check'">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? onSelectionChange(row) : null"
+            [checked]="selection.isSelected(row)"
+          >
+          </mat-checkbox>
+        </ng-container>
+        <ng-container *ngIf="selectType==='radio'">
+            <mat-radio-button
+              (click)="$event.stopPropagation()"
+              (change)="$event ? onSelectionChange(row) : null"
+              [checked]="selection.isSelected(row)"
+            >
+            </mat-radio-button>
+          </ng-container>
+      </td>
+    </ng-container>
+    <ng-container [matColumnDef]="key" *ngFor="let key of attributes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperties[key] || !columnProperties[key].sortable">
+        {{
+          columnProperties && columnProperties[key] && columnProperties[key].name
+          ? columnProperties[key].name
+          : key
+        }}
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <ng-container
+          *ngIf="isArray(row[key]); else notArray"
+        >
+          <ng-container *ngFor="let element of row[key]; index as i">
+            <ng-container
+              *ngIf="hasLink(element)"
+            >
+              <a [routerLink]="element.link">{{element.value}}</a><span *ngIf="i < row[key].length-1">, </span>
+            </ng-container>
+            <ng-container
+              *ngIf="!hasLink(element)"
+            >
+              {{element}}
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-template #notArray>
+          <ng-container
+            *ngIf="hasLink(row[key])"
+          >
+            <a [routerLink]="row[key].link">{{row[key].value}}</a>
+          </ng-container>
+          <ng-container
+            *ngIf="!hasLink(row[key])"
+          >
+            {{row[key]}}
+          </ng-container>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+<div *ngIf="!hasContent" class="table-container mat-elevation-z8">
+  <div class="no-data-container">
+    No data found
+  </div>
+</div>

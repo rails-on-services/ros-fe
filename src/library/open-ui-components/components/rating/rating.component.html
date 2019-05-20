@@ -1,0 +1,17 @@
+<div class="rating" fxLayout>
+  <div *ngFor="let rating of ratings; index as i" fxFlex fxLayout="column" fxLayoutAlign="start center">
+    <button
+      mat-icon-button
+      type="button"
+      (click)="onSelect(i)"
+      [ngStyle]="{'color': getTint(i)}">
+      {{icon}}
+    </button>
+    <ng-container *ngIf="showValue">
+      <div class="rating-label">{{rating}}</div>
+    </ng-container>
+    <ng-container *ngIf="!showValue">
+      <div class="rating-label">{{i === 0 ? minLabel : (i === ratings.length-1 ? maxLabel : '&nbsp;')}}</div>
+    </ng-container>
+  </div>
+</div>
