@@ -13,10 +13,6 @@
   ],
   "include": [
     "**/*.spec.ts",
-    "**/*.d.ts",
-    "../node_modules/@perx/open-ui-components/index.ts",
-    "../node_modules/@perx/open-ui-components/src/**/*",
-    "../node_modules/@perx/open-services/index.ts",
-    "../node_modules/@perx/open-services/src/**/*"
+    "**/*.d.ts"
   ]
 }

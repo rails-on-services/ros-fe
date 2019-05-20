@@ -2,6 +2,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@perx/open-services": ["./src/library/open-services"],
+      "@perx/open-ui-components": ["./src/library/open-ui-components"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -20,10 +24,6 @@
     ]
   },
   "include": [
-    "src/**/*",
-    "node_modules/@perx/open-ui-components/index.ts",
-    "node_modules/@perx/open-ui-components/src/**/*",
-    "node_modules/@perx/open-services/index.ts",
-    "node_modules/@perx/open-services/src/**/*"
+    "src/**/*"
   ]
 }

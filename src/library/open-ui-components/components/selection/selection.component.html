@@ -1,0 +1,21 @@
+<wui-selection-group-styler>
+  <button 
+    mat-stroked-button
+    type="button"
+    class="button" 
+    [ngStyle]="borderStyles"
+    (click)="onClick()"
+  >
+<!--    todo: div is not allowed here-->
+    <div [ngClass]="{'details-row': type === 'selection-list'}">
+      <ng-content></ng-content>
+    </div>
+    <ng-container *ngIf="selected">
+      <div class="corner" [ngStyle]="{backgroundColor: selectedBorderColor}">
+        <div class="corner-text">
+          &#xf00c;
+        </div>
+      </div>
+    </ng-container>
+  </button>
+</wui-selection-group-styler>
