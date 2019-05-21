@@ -11,12 +11,13 @@ export class TokenStorage {
    * Get access token
    * @returns {Observable<string>}
    */
+
   public static getAccessToken(): Observable<string> {
     // const token: string = this.accessToken;
     const token: string = localStorage.getItem('accessToken') as string;
     return of(token);
   }
-
+  
   /**
    * Get refresh token
    * @returns {Observable<string>}

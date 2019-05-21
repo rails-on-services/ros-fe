@@ -31,6 +31,9 @@ export class IamUser extends JsonApiModel {
   @Attribute({ serializedName: 'attached_actions' })
   attachedActions: {};
 
+  @Attribute({ serializedName: 'display_properties' })
+  displayProperties: {};
+
   @Column({ name: 'Groups' })
   @HasMany()
   groups: Group[];

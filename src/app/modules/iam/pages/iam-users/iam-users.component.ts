@@ -19,6 +19,7 @@ import {
   ConfirmationModal,
   ManageColumnModal
 } from '@perx/open-ui-components';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-users',
@@ -30,11 +31,11 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
-
+  userTableDisplayProperties: object;
   selection: SelectionModel<IamUser>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
-  shownColumns: (string|number|symbol)[];
+  shownColumns$: Observable<(string | number | symbol)[]>;
+  shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -43,12 +44,21 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private iamService: IamService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.userTableDisplayProperties = displayPropertiesService.getUserDisplayProperties().essentials.IAM.tables['users-table'];
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
+    this.shownColumns = Object.entries(this.userTableDisplayProperties)
+      .filter(item => {
+        if (item[1].display) {
+          return item;
+        }
+      })
+      .map(item => item[0]);
+
     this.fetchUsers(true);
   }
 
@@ -84,7 +94,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
         content,
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
