@@ -30,6 +30,7 @@
               (click)="$event.stopPropagation()"
               (change)="$event ? onSelectionChange(row) : null"
               [checked]="selection.isSelected(row)"
+              [name]="radioName"
             >
             </mat-radio-button>
           </ng-container>

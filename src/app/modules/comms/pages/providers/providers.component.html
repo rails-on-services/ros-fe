@@ -27,6 +27,7 @@
   </div>
   <ng-container class="providers-table" *ngIf="providers$ | async as providers">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find providers by provider name'"
         [columnProperties]="columnProperties"
         [contents]="providers"
         [selectable]=true

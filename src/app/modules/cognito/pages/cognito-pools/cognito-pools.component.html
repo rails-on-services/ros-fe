@@ -38,6 +38,7 @@
     </div>
     <ng-container class="pools-table" *ngIf="pools$ | async as pools">
       <app-filterable-table
+          [filterInputPlaceholder]="'Find pools by pool name'"
           [columnProperties]="columnProperties"
           [contents]="pools"
           [selectable]=true

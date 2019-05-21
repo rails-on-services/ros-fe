@@ -28,6 +28,7 @@
   </div>
   <ng-container class="events-table" *ngIf="events$ | async as events">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find events by event name'"
         [columnProperties]="columnProperties"
         [contents]="events"
         [selectable]="!tabMode"

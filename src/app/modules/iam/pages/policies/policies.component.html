@@ -42,6 +42,7 @@
   </div>
   <ng-container class="policies-table" *ngIf="policies$ | async as policies">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find policies by policy name'"
         [columnProperties]="columnProperties"
         [selectType]="'radio'"
         [contents]="policies"

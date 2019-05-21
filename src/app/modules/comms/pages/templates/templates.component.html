@@ -34,6 +34,7 @@
   </div>
   <ng-container class="templates-table" *ngIf="templates$ | async as templates">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find templates by template name'"
         [columnProperties]="columnProperties"
         [contents]="templates"
         [selectable]=true
