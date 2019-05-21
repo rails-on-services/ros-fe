@@ -87,7 +87,7 @@
       <mat-step label="Assign Campaign" formGroupName="2" [stepControl]="formArray.get([2])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
-            <app-filterable-table [columnProperties]="campaignsColumnProperties" [selectType]="'radio'"
+            <app-filterable-table [columnProperties]="campaignsColumnProperties" [selectType]="'radio'" [radioName]="'compaign-radio'"
               [contents]="campaigns" [selectable]=true (selectionChange)="onCampaignsSelectionChange($event)"
               [shownColumns]="shownColumns">
             </app-filterable-table>
@@ -113,7 +113,7 @@
       <mat-step label="Choose provider" formGroupName="3" [stepControl]="formArray.get([3])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="provider-table" *ngIf="providers$ | async as providers">
-            <app-filterable-table [columnProperties]="providerColumnProperties" [contents]="providers"
+            <app-filterable-table [columnProperties]="providerColumnProperties" [contents]="providers" [radioName]="'provider-radio'"
               [selectType]="'radio'" [selectable]=true (selectionChange)="onProviderSelectionChange($event)"
               [shownColumns]="shownColumns">
             </app-filterable-table>
@@ -139,7 +139,7 @@
       <mat-step label="Choose template" formGroupName="4" [stepControl]="formArray.get([4])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="templates-table" *ngIf="templates$ | async as templates">
-            <app-filterable-table [columnProperties]="templateColumnProperties" [contents]="templates"
+            <app-filterable-table [columnProperties]="templateColumnProperties" [contents]="templates" [radioName]="'template-radio'"
               [selectType]="'radio'" [selectable]=true (selectionChange)="onTemplateSelectionChange($event)"
               [shownColumns]="shownColumns">
             </app-filterable-table>

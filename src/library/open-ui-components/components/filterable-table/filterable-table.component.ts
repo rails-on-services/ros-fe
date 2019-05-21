@@ -13,6 +13,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   @Input() selectable = false;
   @Input() shownColumns: any[];
   @Input() selectType = 'check';
+  @Input() radioName: string;
   @Input() hasFilterInput = true;
   @Input() filterInputPlaceholder = 'Find users by username';
 
