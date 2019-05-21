@@ -19,6 +19,7 @@
   </div>
   <ng-container class="messages-table" *ngIf="messages$ | async as messages">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find messages by message name'"
         [columnProperties]="columnProperties"
         [contents]="messages"
         [selectable]=true

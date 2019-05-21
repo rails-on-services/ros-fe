@@ -39,6 +39,7 @@
   </div>
   <ng-container class="groups-table" *ngIf="groups$ | async as groups">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find groups by group name'"
         [columnProperties]="columnProperties"
         [contents]="groups"
         [selectable]=true

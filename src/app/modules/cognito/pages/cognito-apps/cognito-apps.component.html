@@ -26,8 +26,12 @@
     </div>
   </div>
   <ng-container class="apps-table" *ngIf="apps$ | async as apps">
-    <app-filterable-table [columnProperties]="columnProperties" [contents]="apps" [selectable]=true
-      (selectionChange)="onApplicationsSelectionChange($event)" [shownColumns]="shownColumns">
+    <app-filterable-table 
+      [filterInputPlaceholder]="'Find apps by app name'"
+      [columnProperties]="columnProperties" 
+      [contents]="apps" [selectable]=true
+      (selectionChange)="onApplicationsSelectionChange($event)" 
+      [shownColumns]="shownColumns">
     </app-filterable-table>
   </ng-container>
 </div>

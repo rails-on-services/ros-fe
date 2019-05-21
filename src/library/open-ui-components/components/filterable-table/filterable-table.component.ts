@@ -15,7 +15,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   @Input() selectType = 'check';
   @Input() radioName: string;
   @Input() hasFilterInput = true;
-  @Input() filterInputPlaceholder = 'Find users by username';
+  @Input() filterInputPlaceholder = 'Find users by user name';
 
   @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
   hasContent: boolean;

@@ -26,6 +26,7 @@
   </div>
   <ng-container class="campaigns-table" *ngIf="campaigns$ | async as campaigns">
     <app-filterable-table
+        [filterInputPlaceholder]="'Find campaigns by campaign name'"
         [columnProperties]="columnProperties"
         [contents]="campaigns"
         [selectable]=true
