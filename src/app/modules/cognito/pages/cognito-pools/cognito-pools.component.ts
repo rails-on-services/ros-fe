@@ -140,7 +140,7 @@ export class CognitoPoolsComponent implements OnInit {
             id: cognitoPool.id,
             name: undefined
           };
-          const keys = Object.keys(cognitoPool.getColumnProperties());
+          const keys = this.poolTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             pool[key] = cognitoPool[key];

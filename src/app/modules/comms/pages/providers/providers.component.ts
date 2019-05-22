@@ -130,7 +130,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
-          const keys = Object.keys(commsProvider.getColumnProperties());
+          const keys = this.providerTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             provider[key] = commsProvider[key];

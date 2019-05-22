@@ -117,7 +117,7 @@ export class CommsCampaignsComponent implements OnInit {
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
-          const keys = Object.keys(commsCampaign.getColumnProperties());
+          const keys = this.campaignTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];

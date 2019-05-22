@@ -30,7 +30,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   showModal: boolean;
 
   displayProperties: object;
-  updateCurrentUserDisplayProperties: TableHeaderProperties[] = [];
+  userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<CUser>;
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -47,12 +47,12 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     this.showModal = false;
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
-    this.updateCurrentUserDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['users-table'];
+    this.userTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['users-table'];
  
   }
 
   ngOnInit() {
-    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.updateCurrentUserDisplayProperties);
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
 
     this.fetchUsers();
   }
@@ -104,7 +104,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: this.updateCurrentUserDisplayProperties,
+            columnProperties: this.userTableDisplayProperties,
             selected: this.shownColumns
           }
         });
@@ -114,10 +114,10 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
           ];
         });
         columnsDialogRef.afterClosed().subscribe(() => {
-          this.updateCurrentUserDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.updateCurrentUserDisplayProperties);
+          this.userTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.userTableDisplayProperties);
           // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['cognito']['tables']['users-table'] = this.updateCurrentUserDisplayProperties;
+          this.displayProperties['essentials']['cognito']['tables']['users-table'] = this.userTableDisplayProperties;
           this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
@@ -140,7 +140,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
         const cognitoUsers = document.getModels();
         const users = cognitoUsers.map(cognitoUser => {
           const user = { id: cognitoUser.id };
-          const keys = Object.keys(cognitoUser.getColumnProperties());
+          const keys = this.userTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             user[key] = cognitoUser[key];
@@ -155,7 +155,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return this.updateCurrentUserDisplayProperties;
+    return this.userTableDisplayProperties;
   }
 
   onUsersSelectionChange(selection: SelectionModel<CUser>) {

@@ -37,7 +37,7 @@ export const DEFAULT_SETTING = {
                     ],
                     'groups-table': [
                         {
-                            key: 'groupname',
+                            key: 'name',
                             name: 'Group Name',
                             sortable: true,
                             display: true,

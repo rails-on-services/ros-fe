@@ -4,6 +4,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { CommsService, CognitoService, CognitoPool } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-new-campaign',
@@ -12,7 +14,9 @@ import { Observable, Subject } from 'rxjs';
 })
 export class NewCampaignComponent implements OnInit, AfterViewInit {
   cognitoPools$: Observable<any[]>;
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
+  displayProperties: object;
+  campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
   // todo: replace this object with a API call to retrieve list of types of campaigns
   owners = [
@@ -31,11 +35,18 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
   private campaignUnsubscribe$ = new Subject<void>();
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private commService: CommsService,
-              private cognitoService: CognitoService,
-              private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private commService: CommsService,
+    private cognitoService: CognitoService,
+    private formBuilder: FormBuilder,
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
+
   }
 
   ngOnInit() {
@@ -55,7 +66,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     this.fetchPools();
   }
 
-  get formArray(): AbstractControl|null {
+  get formArray(): AbstractControl | null {
     return this.campaignDetailsGroup.get('formArray');
   }
 
@@ -89,7 +100,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
 
   get columnProperties() {
-    return CognitoPool.prototype.getColumnProperties();
+    return this.campaignTableDisplayProperties;
   }
 
   // onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
@@ -103,7 +114,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
         const cognitoPools = document.getModels();
         const pools = cognitoPools.map(cognitoPool => {
           const pool = { id: cognitoPool.id };
-          const keys = Object.keys(cognitoPool.getColumnProperties());
+          const keys = this.campaignTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             pool[key] = cognitoPool[key];

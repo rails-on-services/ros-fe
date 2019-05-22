@@ -81,7 +81,7 @@ export class MessagesComponent implements OnInit {
       map(commsUsers => {
         const users = commsUsers.map(commsUser => {
           const user = { id: commsUser.id };
-          const keys = Object.keys(commsUser.getColumnProperties());
+          const keys = this.messageTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             user[key] = commsUser[key];

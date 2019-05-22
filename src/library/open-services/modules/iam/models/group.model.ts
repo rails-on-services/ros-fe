@@ -7,7 +7,7 @@ import { IamUser } from './user.model';
 })
 export class IamGroup extends JsonApiModel {
   @Attribute()
-  groupname: string;
+  name: string;
 
   @HasMany()
   users: IamUser[];

@@ -151,7 +151,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         const events = commEvents.map(commsEvent => {
           const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;
           const event = { id: commsEvent.id };
-          const keys = Object.keys(commsEvent.getColumnProperties());
+          const keys = this.eventTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             event[key] = commsEvent[key];

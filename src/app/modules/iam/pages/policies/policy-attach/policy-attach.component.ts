@@ -5,6 +5,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModal } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-policy-attach',
@@ -18,13 +20,21 @@ export class PolicyAttachComponent implements OnInit {
 
   selection: SelectionModel<IamUser|IamGroup>;
 
+  displayProperties: object;
+  userTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
 
   constructor(
     private iamService: IamService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
+  
+  }
 
   ngOnInit() {
     this.shownColumns = ['username', 'type'];
@@ -38,7 +48,7 @@ export class PolicyAttachComponent implements OnInit {
 
         const users = allUsers.map(singleUser => {
           const userDetails = { id: singleUser.id };
-          const keys = Object.keys(singleUser.getColumnProperties());
+          const keys = this.userTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             userDetails[key] = singleUser[key];
@@ -54,7 +64,10 @@ export class PolicyAttachComponent implements OnInit {
   }
 
   get columnProperties() {
-    return { username: {name: 'User Name', sortable: true}, type: {name: 'Type', sortable: true}};
+    return [
+      {key: 'username', name: 'User Name', sortable: true, display: true},
+      {key: 'type', name: 'Type', sortable: true, display: true}
+    ];
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {

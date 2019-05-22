@@ -5,6 +5,8 @@ import { CommsCampaign, CommsService } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
   selector: 'app-new-template',
@@ -14,18 +16,25 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaigns$: Observable<any[]>;
   campaignSelection: CommsCampaign[];
-  shownColumns: (string|number|symbol)[];
-
+  shownColumns: (string | number | symbol)[];
+  displayProperties: object;
+  templateTableDisplayProperties: TableHeaderProperties[] = [];
 
   templateDetailsGroup: FormGroup;
   isEditable = true;
 
   private templateUnsubscribe$ = new Subject<void>();
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private commsService: CommsService,
-              private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private commsService: CommsService,
+    private formBuilder: FormBuilder,
+    private displayPropertiesService: DisplayPropertiesService) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+
   }
 
   ngOnInit() {
@@ -46,7 +55,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     this.fetchCampaigns();
   }
 
-  get formArray(): AbstractControl|null {
+  get formArray(): AbstractControl | null {
     return this.templateDetailsGroup.get('formArray');
   }
 
@@ -83,7 +92,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
-          const keys = Object.keys(commsCampaign.getColumnProperties());
+          const keys = this.templateTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
@@ -101,7 +110,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   }
 
   get campaignsColumnProperties() {
-    return CommsCampaign.prototype.getColumnProperties();
+    return this.templateTableDisplayProperties;
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {

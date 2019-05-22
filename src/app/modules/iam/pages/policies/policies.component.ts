@@ -113,7 +113,7 @@ export class PoliciesComponent implements OnInit {
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policyDetails = { id: iamPolicy.id };
-          const keys = Object.keys(iamPolicy.getColumnProperties());
+          const keys = this.policyTableDisplayProperties.map(item => item.key);
           keys.forEach(key => {
             policyDetails[key] = iamPolicy[key];
           });

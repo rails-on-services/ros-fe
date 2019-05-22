@@ -4,6 +4,8 @@ import { CommsService, CommsTemplate, CommsProvider } from '@perx/open-services'
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-event',
@@ -18,22 +20,33 @@ export class EventComponent implements OnInit, OnDestroy {
   id: number;
   private isProviderEditable = false;
   private isTemplateEditable = false;
-  selectedTemplateId: number|string;
-  selectedProviderId: number|string;
-
+  selectedTemplateId: number | string;
+  selectedProviderId: number | string;
+  displayProperties: object;
+  eventTableDisplayProperties: TableHeaderProperties[] = [];
+  templateTableDisplayProperties: TableHeaderProperties[] = [];
+  providerTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     private commsService: CommsService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+  }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
     });
     this.fetchEvent();
-    this.fetchProviders();
   }
 
   ngOnDestroy() {
@@ -82,7 +95,7 @@ export class EventComponent implements OnInit, OnDestroy {
       map(commTemplates => {
         const templates = commTemplates.map(commTemplate => {
           const template = { id: commTemplate.id };
-          const keys = Object.keys(commTemplate.getColumnProperties());
+          const keys = this.templateTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             template[key] = commTemplate[key];
@@ -99,7 +112,7 @@ export class EventComponent implements OnInit, OnDestroy {
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
-          const keys = Object.keys(commsProvider.getColumnProperties());
+          const keys = this.providerTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             provider[key] = commsProvider[key];
@@ -128,8 +141,8 @@ export class EventComponent implements OnInit, OnDestroy {
   saveTemplateChange() {
     let selectedTemplate: CommsTemplate = null;
     this.commsService.fetchTemplate(this.selectedTemplateId)
-    .subscribe(template => {
-      selectedTemplate = template;
+      .subscribe(template => {
+        selectedTemplate = template;
       });
     this.commsService.fetchEvent(this.id).subscribe(event => {
       event.template = selectedTemplate;

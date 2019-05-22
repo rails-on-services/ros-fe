@@ -125,7 +125,7 @@ export class CognitoAppsComponent implements OnInit {
         const cognitoApplications = document.getModels();
         const apps = cognitoApplications.map(cognitoApplication => {
           const app = { id: cognitoApplication.id };
-          const keys = Object.keys(cognitoApplication.getColumnProperties());
+          const keys = this.appTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             app[key] = cognitoApplication[key];

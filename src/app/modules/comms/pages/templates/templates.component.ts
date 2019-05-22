@@ -170,7 +170,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         const templates = commsTemplates.map(commsTemplate => {
           const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
           const template = { id: commsTemplate.id };
-          const keys = Object.keys(commsTemplate.getColumnProperties());
+          const keys = this.templateTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             template[key] = commsTemplate[key];

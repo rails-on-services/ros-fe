@@ -173,7 +173,7 @@ export class IamGroupsComponent implements OnInit {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
           const group = { id: iamGroup.id };
-          const keys = Object.keys(iamGroup.getColumnProperties());
+          const keys = this.groupTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             group[key] = iamGroup[key];
@@ -182,6 +182,9 @@ export class IamGroupsComponent implements OnInit {
             value: iamGroup.name,
             link: groupLink
           };
+          console.log(keys);
+          console.log(iamGroup);
+          console.log(group);
           return group;
         });
 
