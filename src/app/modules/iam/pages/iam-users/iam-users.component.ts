@@ -20,6 +20,7 @@ import {
   ManageColumnModal
 } from '@perx/open-ui-components';
 import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
   selector: 'app-users',
@@ -31,10 +32,10 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
-  userTableDisplayProperties: object;
+  displayProperties: object;
+  userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
 
-  shownColumns$: Observable<(string | number | symbol)[]>;
   shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
@@ -47,18 +48,13 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.userTableDisplayProperties = displayPropertiesService.getUserDisplayProperties().essentials.IAM.tables['users-table'];
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
   }
 
   ngOnInit() {
-    this.shownColumns = Object.entries(this.userTableDisplayProperties)
-      .filter(item => {
-        if (item[1].display) {
-          return item;
-        }
-      })
-      .map(item => item[0]);
-
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
     this.fetchUsers(true);
   }
 
@@ -115,17 +111,24 @@ export class IamUsersComponent implements OnInit, OnDestroy {
         this.fetchUsers();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: IamUser.prototype.getColumnProperties(),
+            columnProperties: this.userTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.userTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.userTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['IAM']['tables']['users-table'] = this.userTableDisplayProperties;
+          this.displayPropertiesService.updateUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -175,7 +178,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return IamUser.prototype.getColumnProperties();
+    return this.userTableDisplayProperties;
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {

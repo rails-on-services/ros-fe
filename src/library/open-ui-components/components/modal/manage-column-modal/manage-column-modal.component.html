@@ -1,12 +1,12 @@
 <h1 mat-dialog-title>Manage columns</h1>
 <div mat-dialog-content>
   <mat-checkbox
-    [name]="key"
+    [name]="columnProperty.key"
     (change)="$event ? onSelectionChange($event) : null"
-    [checked]="selection.isSelected(key)"
-    *ngFor="let key of columnPropertyKeys"
+    [checked]="selection.isSelected(columnProperty.key)"
+    *ngFor="let columnProperty of data.columnProperties"
   >
-    {{data.columnProperties[key].name}}
+    {{columnProperty.name}}
   </mat-checkbox>
 </div>
 <div mat-dialog-actions>

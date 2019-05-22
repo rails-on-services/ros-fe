@@ -36,23 +36,24 @@
           </ng-container>
       </td>
     </ng-container>
-    <ng-container [matColumnDef]="key" *ngFor="let key of attributes">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperties[key] || !columnProperties[key].sortable">
+    <ng-container [matColumnDef]="columnProperty.key" *ngFor="let columnProperty of columnProperties">
+      {{columnProperty | json}}
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperty.sortable">
         {{
-          columnProperties && columnProperties[key] && columnProperties[key].name
-          ? columnProperties[key].name
-          : key
+          columnProperty.name
+          ? columnProperty.name
+          : ''
         }}
       </th>
       <td mat-cell *matCellDef="let row">
         <ng-container
-          *ngIf="isArray(row[key]); else notArray"
+          *ngIf="isArray(row[columnProperty.key]); else notArray"
         >
-          <ng-container *ngFor="let element of row[key]; index as i">
+          <ng-container *ngFor="let element of row[columnProperty.key]; index as i">
             <ng-container
               *ngIf="hasLink(element)"
             >
-              <a [routerLink]="element.link">{{element.value}}</a><span *ngIf="i < row[key].length-1">, </span>
+              <a [routerLink]="element.link">{{element.value}}</a><span *ngIf="i < row[columnProperty.key].length-1">, </span>
             </ng-container>
             <ng-container
               *ngIf="!hasLink(element)"
@@ -63,14 +64,14 @@
         </ng-container>
         <ng-template #notArray>
           <ng-container
-            *ngIf="hasLink(row[key])"
+            *ngIf="hasLink(row[columnProperty.key])"
           >
-            <a [routerLink]="row[key].link">{{row[key].value}}</a>
+            <a [routerLink]="row[columnProperty.key].link">{{row[columnProperty.key].value}}</a>
           </ng-container>
           <ng-container
-            *ngIf="!hasLink(row[key])"
+            *ngIf="!hasLink(row[columnProperty.key])"
           >
-            {{row[key]}}
+            {{row[columnProperty.key]}}
           </ng-container>
         </ng-template>
       </td>

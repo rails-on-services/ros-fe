@@ -28,7 +28,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.hasContent = !!(this.contents.length > 0);
-    if (!this.hasContent) { 
+    if (!this.hasContent) {
       return;
     }
 

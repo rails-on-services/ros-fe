@@ -1,24 +1,20 @@
-import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
+import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
 import { Column, Tablify } from '../../../shared/decorators/column.decorator';
+import { CognitoPool as Pool } from './pool.model';
 
-@Tablify()
 @JsonApiModelConfig({
   type: 'users'
 })
 export class CognitoUser extends JsonApiModel {
-  @Column({ name: 'User Name', sortable: true })
   @Attribute()
   username: string;
 
-  @Column({ name: 'URN' })
   @Attribute()
   urn: string;
 
-  @Column({ name: 'Console Access' })
   @Attribute({ serializedName: 'console' })
   consoleAccess: boolean;
 
-  @Column({ name: 'Dashboard Access' })
   @Attribute({ serializedName: 'dashboard' })
   dashboardAccess: boolean;
 
@@ -31,4 +27,7 @@ export class CognitoUser extends JsonApiModel {
 
   @Attribute({ serializedName: 'attached_actions' })
   attachedActions: {};
+
+  @HasMany()
+  pools: Pool[];
 }

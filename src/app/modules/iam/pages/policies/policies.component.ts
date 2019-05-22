@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, ManageColumnModal} from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-policies',
@@ -17,21 +19,25 @@ export class PoliciesComponent implements OnInit {
 
   showModal: boolean;
   selection: SelectionModel<IamPolicy>;
-
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  policyTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamPolicy.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.policyTableDisplayProperties);
 
     this.fetchPolicies();
   }
@@ -77,17 +83,24 @@ export class PoliciesComponent implements OnInit {
         this.fetchPolicies();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: IamPolicy.prototype.getColumnProperties(),
+            columnProperties: this.policyTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.policyTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.policyTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['IAM']['tables']['policies-table'] = this.policyTableDisplayProperties;
+          this.displayPropertiesService.updateUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -114,7 +127,7 @@ export class PoliciesComponent implements OnInit {
   }
 
   get columnProperties() {
-    return IamPolicy.prototype.getColumnProperties();
+    return this.policyTableDisplayProperties;
   }
 
   onPoliciesSelectionChange(selection: SelectionModel<IamPolicy>) {

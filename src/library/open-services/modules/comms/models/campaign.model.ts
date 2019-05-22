@@ -8,30 +8,24 @@ import { CommsTemplate } from './template.model';
   type: 'campaigns'
 })
 export class CommsCampaign extends JsonApiModel {
-  @Column({ name: 'Owner Id', sortable: true })
   @Attribute({ serializedName: 'owner_id' })
   ownerId: number;
 
-  @Column({ name: 'Owner Type' })
   @Attribute({ serializedName: 'owner_type' })
   ownerType: string;
 
-  @Column({ name: 'Name', sortable: true })
   @Attribute()
   name: string;
 
   @Attribute()
   description: string;
 
-  @Column({ name: 'Created At' })
   @Attribute({ serializedName: 'created_at' })
   createdAt: string;
 
-  @Column({ name: 'Updated At' })
   @Attribute({ serializedName: 'created_at' })
   updatedAt: string;
 
-  @Column({ name: 'Assigned Cognito Group ID' })
     // @Attribute({ serializedName: 'cognito_endpoint_id' })
   cognitoEndpointId: number;
 

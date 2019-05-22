@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { IamService } from 'src/library/open-services/modules/iam/iam.service';
-import { DEFAULT_SETTING } from './../shared/services/constents';
+import { DEFAULT_SETTING } from '../shared/constant/displayPropertiesContant';
 import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
@@ -31,19 +31,18 @@ export class AppComponent {
           username: userDetails.username,
         };
 
-        if (!Object.keys(currentUser.displayProperties).length) {
+        // if (!Object.keys(currentUser.displayProperties).length) {
           currentUser.displayProperties = DEFAULT_SETTING.display_properties;
-          userDetails.displayProperties = DEFAULT_SETTING.display_properties;
-          userDetails.save().subscribe(
-            res => {
-              this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
-              this.router.navigate(['dashboard/summary']);
-            }
-          );
-        }
+          //TODO: Update functions is not working when user edit columns
+          // userDetails.displayProperties = DEFAULT_SETTING.display_properties;
+          // userDetails.save().subscribe(
+          //   res => {
+          //     this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
+          //   }
+          // );
+        // }
 
         this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
-        this.router.navigate(['dashboard/summary']);
       }
     );
   }
