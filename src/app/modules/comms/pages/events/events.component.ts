@@ -20,6 +20,8 @@ import {
   ConfirmationModal,
   ManageColumnModal
 } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-events',
@@ -35,7 +37,8 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsEvent>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  eventTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
@@ -45,12 +48,17 @@ export class EventsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private commsService: CommsService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
+ 
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsEvent.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.eventTableDisplayProperties);
     this.fetchEvents();
   }
 
@@ -103,17 +111,24 @@ export class EventsComponent implements OnInit, OnDestroy {
         this.fetchEvents();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsEvent.prototype.getColumnProperties(),
+            columnProperties: this.eventTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.eventTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.eventTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['comms']['tables']['events-table'] = this.eventTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -154,7 +169,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return CommsEvent.prototype.getColumnProperties();
+    return this.eventTableDisplayProperties;
   }
 
   onEventsSelectionChange(selection: SelectionModel<CommsEvent>) {

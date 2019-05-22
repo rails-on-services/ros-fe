@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-cognito-pools',
@@ -18,21 +20,26 @@ export class CognitoPoolsComponent implements OnInit {
   showModal: boolean;
   selection: SelectionModel<CognitoPool>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
-  shownColumns: (string|number|symbol)[];
+  displayProperties: object;
+  poolTableDisplayProperties: TableHeaderProperties[] = [];
+  shownColumns: (string | number | symbol)[];
 
   constructor(
     private cognitoService: CognitoService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
+
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CognitoPool.prototype.getColumnProperties());
-
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
     this.fetchPools();
   }
 
@@ -99,17 +106,24 @@ export class CognitoPoolsComponent implements OnInit {
         this.fetchPools();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CognitoPool.prototype.getColumnProperties(),
+            columnProperties: this.poolTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.poolTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.poolTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['cognito']['tables']['pools-table'] = this.poolTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -133,7 +147,7 @@ export class CognitoPoolsComponent implements OnInit {
           });
           pool.name = {
             value: cognitoPool.name,
-            link: `/pools/${ cognitoPool.id }`
+            link: `/pools/${cognitoPool.id}`
           };
           return pool;
         });
@@ -144,7 +158,7 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
   get columnProperties() {
-    return CognitoPool.prototype.getColumnProperties();
+    return this.poolTableDisplayProperties;
   }
 
   onPoolsSelectionChange(selection: SelectionModel<CognitoPool>) {

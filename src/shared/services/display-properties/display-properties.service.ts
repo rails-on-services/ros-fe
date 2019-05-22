@@ -31,7 +31,7 @@ export class DisplayPropertiesService {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-  public updateUserDisplayProperties(displayProperties: object) {
+  public updateCurrentUserDisplayProperties(displayProperties: object) {
     const currentUser = JSON.parse(this.getCurrentUser());
     const force = true;
     currentUser.displayProperties = displayProperties;

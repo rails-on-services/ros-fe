@@ -128,7 +128,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
             .setTableShownColumns(this.shownColumns, this.userTableDisplayProperties);
           // tslint:disable-next-line: no-string-literal
           this.displayProperties['essentials']['IAM']['tables']['users-table'] = this.userTableDisplayProperties;
-          this.displayPropertiesService.updateUserDisplayProperties(this.displayProperties);
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':

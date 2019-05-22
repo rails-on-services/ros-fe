@@ -100,7 +100,7 @@ export class PoliciesComponent implements OnInit {
             .setTableShownColumns(this.shownColumns, this.policyTableDisplayProperties);
           // tslint:disable-next-line: no-string-literal
           this.displayProperties['essentials']['IAM']['tables']['policies-table'] = this.policyTableDisplayProperties;
-          this.displayPropertiesService.updateUserDisplayProperties(this.displayProperties);
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':

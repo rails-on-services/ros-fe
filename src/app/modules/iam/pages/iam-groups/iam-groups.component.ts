@@ -157,7 +157,7 @@ export class IamGroupsComponent implements OnInit {
             .setTableShownColumns(this.shownColumns, this.groupTableDisplayProperties);
           // tslint:disable-next-line: no-string-literal
           this.displayProperties['essentials']['IAM']['tables']['groups-table'] = this.groupTableDisplayProperties;
-          this.displayPropertiesService.updateUserDisplayProperties(this.displayProperties);
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
