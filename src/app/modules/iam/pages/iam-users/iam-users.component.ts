@@ -152,10 +152,8 @@ export class IamUsersComponent implements OnInit, OnDestroy {
           groups.splice(3);
           return {
             id: user.id,
-            username: {
-              value: user.username,
-              link: `${user.id}`
-            },
+            username: user.username,
+            username_link: `${user.id}`,
             groups: groups.length <= 0 ? 'None' : groups.map((group, index) => {
               if (index === groups.length - 1 && groups.length < user.groups.length) {
                 return {

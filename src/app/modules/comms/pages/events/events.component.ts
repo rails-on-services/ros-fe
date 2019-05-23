@@ -156,10 +156,8 @@ export class EventsComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             event[key] = commsEvent[key];
           });
-          event['name'] = {
-            value: commsEvent.name,
-            link: eventLink
-          };
+          event['name_link'] = eventLink;
+
           return event;
         });
 

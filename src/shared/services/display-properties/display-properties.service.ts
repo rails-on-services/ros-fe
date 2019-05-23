@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { TokenStorage } from 'src/shared/modules/authentication/token-storage.service';
 import { IamService } from './../../../library/open-services/modules/iam/iam.service';
 import { TableHeaderProperties } from './../../models/tableHeaderProperties';
 
@@ -9,7 +8,6 @@ import { TableHeaderProperties } from './../../models/tableHeaderProperties';
 export class DisplayPropertiesService {
 
   constructor(
-    private tokenStorage: TokenStorage,
     private iamService: IamService) { }
 
   public getCurrentUser() {

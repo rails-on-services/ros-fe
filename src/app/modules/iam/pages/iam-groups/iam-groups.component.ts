@@ -178,13 +178,8 @@ export class IamGroupsComponent implements OnInit {
           keys.forEach(key => {
             group[key] = iamGroup[key];
           });
-          group['name'] = {
-            value: iamGroup.name,
-            link: groupLink
-          };
-          console.log(keys);
-          console.log(iamGroup);
-          console.log(group);
+          group['name_link'] = groupLink;
+   
           return group;
         });
 

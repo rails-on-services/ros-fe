@@ -10,7 +10,11 @@ import { DisplayPropertiesService } from 'src/shared/services/display-properties
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private iamService: IamService, private displayPropertiesService: DisplayPropertiesService, private router: Router) {
+  constructor(
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService,
+    private router: Router
+  ) {
     // Just for test, make some fake login user data
     const currentUser = displayPropertiesService.getCurrentUser();
     if (!currentUser) {
@@ -20,7 +24,7 @@ export class AppComponent {
 
   private fetchUser() {
     const userInfo = {
-        id: 1
+      id: 1
     };
     this.iamService.fetchUser(userInfo.id).subscribe(
       userDetails => {
@@ -31,16 +35,15 @@ export class AppComponent {
           username: userDetails.username,
         };
 
-        // if (!Object.keys(currentUser.displayProperties).length) {
+        if (!Object.keys(currentUser.displayProperties).length) {
           currentUser.displayProperties = DEFAULT_SETTING.display_properties;
-          //TODO: Update functions is not working when user edit columns
-          // userDetails.displayProperties = DEFAULT_SETTING.display_properties;
-          // userDetails.save().subscribe(
-          //   res => {
-          //     this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
-          //   }
-          // );
-        // }
+          userDetails.displayProperties = DEFAULT_SETTING.display_properties;
+          userDetails.save().subscribe(
+            res => {
+              this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
+            }
+          );
+        }
 
         this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
       }

@@ -31,11 +31,11 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     if (!this.hasContent) {
       return;
     }
-
     this.dataSource = new MatTableDataSource(this.contents);
   }
 
   ngAfterViewInit() {
+    // console.log(this.sort);
     this.dataSource.sort = this.sort;
   }
 
@@ -98,6 +98,12 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     return true;
   }
 
+  hasLinkString(row: any, key: any) {
+    return !!row[`${key}_link`];
+  }
+  getLinkString(row: any, key: any) {
+    return row[`${key}_link`];
+  }
   isArray(obj: any) {
     return !!obj && obj.constructor === Array;
   }

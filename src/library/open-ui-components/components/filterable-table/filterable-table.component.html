@@ -64,12 +64,12 @@
         </ng-container>
         <ng-template #notArray>
           <ng-container
-            *ngIf="hasLink(row[columnProperty.key])"
+            *ngIf="hasLinkString(row, columnProperty.key)"
           >
-            <a [routerLink]="row[columnProperty.key].link">{{row[columnProperty.key].value}}</a>
+            <a [routerLink]="getLinkString(row, columnProperty.key)">{{row[columnProperty.key]}}</a>
           </ng-container>
           <ng-container
-            *ngIf="!hasLink(row[columnProperty.key])"
+            *ngIf="!hasLinkString(row, columnProperty.key)"
           >
             {{row[columnProperty.key]}}
           </ng-container>

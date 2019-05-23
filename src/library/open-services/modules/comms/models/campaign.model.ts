@@ -3,7 +3,6 @@ import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 import { CommsEvent } from './event.model';
 import { CommsTemplate } from './template.model';
 
-@Tablify()
 @JsonApiModelConfig({
   type: 'campaigns'
 })
