@@ -18,7 +18,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaignSelection: CommsCampaign[];
   shownColumns: (string | number | symbol)[];
   displayProperties: object;
-  templateTableDisplayProperties: TableHeaderProperties[] = [];
+  campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
   templateDetailsGroup: FormGroup;
   isEditable = true;
@@ -33,11 +33,12 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     private displayPropertiesService: DisplayPropertiesService) {
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
 
   }
 
   ngOnInit() {
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.templateDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -92,7 +93,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
-          const keys = this.templateTableDisplayProperties.map(item => item.key);
+          const keys = this.campaignTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
@@ -107,7 +108,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   }
 
   get campaignsColumnProperties() {
-    return this.templateTableDisplayProperties;
+    return this.campaignTableDisplayProperties;
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {

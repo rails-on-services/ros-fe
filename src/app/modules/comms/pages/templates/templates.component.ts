@@ -164,7 +164,9 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   }
 
   fetchTemplates(force?: boolean) {
-    force = this.campaignId ? true : false;
+    if (this.campaignId) {
+      force = true;
+    }
     this.templates$ = this.commsService.fetchTemplates(this.campaignId, force).pipe(
       map(commsTemplates => {
         const templates = commsTemplates.map(commsTemplate => {

@@ -31,12 +31,14 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   templates$: Observable<any[]>;
 
   displayProperties: object;
-  eventTableDisplayProperties: TableHeaderProperties[] = [];
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   providerTableDisplayProperties: TableHeaderProperties[] = [];
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
   poolTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string | number | symbol)[];
+  shownTemplateColumns: (string | number | symbol)[];
+  shownProviderColumns: (string | number | symbol)[];
+  shownCampaignColumns: (string | number | symbol)[];
+  shownPoolColumns: (string | number | symbol)[];
 
   eventDetailsGroup: FormGroup;
   isEditable = true;
@@ -53,8 +55,6 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   ) {
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
-    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
-    // tslint:disable-next-line: no-string-literal
     this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
     // tslint:disable-next-line: no-string-literal
     this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
@@ -66,6 +66,11 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.shownTemplateColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
+    this.shownProviderColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
+    this.shownCampaignColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
+    this.shownPoolColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
+
     this.eventDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -144,8 +149,8 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get columnProperties() {
-    return this.eventTableDisplayProperties;
+  get poolColumnProperties() {
+    return this.poolTableDisplayProperties;
   }
 
   get campaignsColumnProperties() {

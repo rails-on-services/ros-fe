@@ -46,7 +46,14 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   }
 
   getTemplateInfo(template: CommsTemplate) {
-    return { id: template.id, ...template };
+    const templateDetails = { id: template.id };
+    const keys = this.templateTableDisplayProperties.map(item => item.key);
+
+    keys.forEach(key => {
+      templateDetails[key] = template[key];
+    });
+
+    return templateDetails;
   }
 
   getCampaignInfo(campaign: CommsCampaign, templates: CommsTemplate[]){

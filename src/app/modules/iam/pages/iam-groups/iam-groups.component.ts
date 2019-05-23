@@ -167,7 +167,9 @@ export class IamGroupsComponent implements OnInit {
 
   fetchGroups(force?: boolean) {
     //API is not ready for this userId checking
-    // force = this.userId ? true : false;
+    if (this.userId) {
+      force = true;
+    }
     this.groups$ = this.iamService.fetchGroups().pipe(
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
@@ -179,7 +181,6 @@ export class IamGroupsComponent implements OnInit {
             group[key] = iamGroup[key];
           });
           group['name_link'] = groupLink;
-   
           return group;
         });
 
