@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IamComponent implements OnInit {
 
+  menus = [
+    {route: 'home', display: 'Main'},
+    {route: 'users', display: 'Users'},
+    {route: 'groups', display: 'Groups'},
+    {route: 'policies', display: 'Policies'}
+  ];
+
   constructor() { }
 
   ngOnInit() {

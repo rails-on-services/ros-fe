@@ -1,4 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { CORE_SERVICES_MENU } from '../../core-services-menu.value';
 
 @Component({
   selector: 'app-header',
@@ -6,20 +8,29 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  selectedService = null;
 
-  @Input() enableMenuButton = false;
-  expandMenu = false;
-  @Output() menuButtonClick = new EventEmitter<boolean>();
+  routerUrl: string = null;
 
-  constructor() {
-  }
+  constructor(
+    public router: Router,
+    @Inject(CORE_SERVICES_MENU) public services: any,
+  ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationEnd) {
+        this.setSelectedService();
+      }
+    });
 
+    this.setSelectedService();
   }
 
-  buttonClicked() {
-    // this.expandMenu = !this.expandMenu;
-    this.menuButtonClick.emit(this.expandMenu);
+  setSelectedService() {
+    if (this.router.url) {
+      this.routerUrl = this.router.url;
+      this.selectedService = this.services.find(s => this.router.url.indexOf(s.url) === 0);
+    }
   }
 }

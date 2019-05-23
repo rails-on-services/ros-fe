@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
-import { DashboardMenuComponent } from './components/dashboard-menu/dashboard-menu.component';
 import { SummaryComponent } from './pages/summary/summary.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { OpenUiComponentsModule } from '@perx/open-ui-components';
+import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 
 const COMPONENTS = [
   DashboardComponent,
-  DashboardMenuComponent,
   SummaryComponent
 ];
 
@@ -21,7 +20,8 @@ const COMPONENTS = [
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    OpenUiComponentsModule
+    OpenUiComponentsModule,
+    ServiceMenuModule
   ],
   exports: [
     ...COMPONENTS,
