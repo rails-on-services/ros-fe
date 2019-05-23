@@ -67,6 +67,7 @@ export * from './src/shared/modules/authentication/authentication.module';
 export * from './src/shared/modules/authentication/authentication.service';
 export * from './src/shared/modules/authentication/token-storage.service';
 export * from './src/shared/modules/material-design/material-design.module';
+export * from './src/shared/services/display-properties/display-properties.service';
 export * from './src/shared/services/feature-flags/feature-flags.service';
 export * from './src/shared/services/modal.service';
 export * from './src/shared/shared.module';

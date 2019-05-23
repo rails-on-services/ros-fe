@@ -5,6 +5,8 @@ import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-new-iam-group',
@@ -14,21 +16,29 @@ import { map } from 'rxjs/operators';
 export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
   selection: IamPolicy[];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
 
   groupDetailsGroup: FormGroup;
   isEditable = true;
 
   createGroupnamePage: boolean;
   reviewPage: boolean;
+  displayProperties: object;
+  policyTableDisplayProperties: TableHeaderProperties[] = [];
 
   group$: Observable<IamGroup>;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private iamService: IamService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
+ 
   }
 
   ngOnInit() {
@@ -67,8 +77,8 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     const policies = [];
     if (this.groupDetailsGroup.get('attachedPolicies').value) {
       this.groupDetailsGroup.get('attachedPolicies').value.forEach((policy) => {
-          policies.push(policy.id);
-        }
+        policies.push(policy.id);
+      }
       );
     }
 
@@ -85,7 +95,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   }
 
   get columnProperties() {
-    return IamPolicy.prototype.getColumnProperties();
+    return this.policyTableDisplayProperties;
   }
 
   private fetchPolicies() {
@@ -93,7 +103,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policy = { id: iamPolicy.id };
-          const keys = Object.keys(iamPolicy.getColumnProperties());
+          const keys = this.policyTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             policy[key] = iamPolicy[key];

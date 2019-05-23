@@ -5,6 +5,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ManageColumnModal } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-messages',
@@ -17,19 +19,24 @@ export class MessagesComponent implements OnInit {
   showModal: boolean;
   selection: SelectionModel<CommsMessage>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  messageTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   constructor(
     private commsService: CommsService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.messageTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['messages-table'];
+  
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsMessage.prototype.getColumnProperties());
-
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.messageTableDisplayProperties);
     this.fetchMessages();
   }
 
@@ -44,17 +51,24 @@ export class MessagesComponent implements OnInit {
         this.fetchMessages();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsMessage.prototype.getColumnProperties(),
+            columnProperties: this.messageTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.messageTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.messageTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['comms']['tables']['messages-table'] = this.messageTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -67,7 +81,7 @@ export class MessagesComponent implements OnInit {
       map(commsUsers => {
         const users = commsUsers.map(commsUser => {
           const user = { id: commsUser.id };
-          const keys = Object.keys(commsUser.getColumnProperties());
+          const keys = this.messageTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             user[key] = commsUser[key];
@@ -82,7 +96,7 @@ export class MessagesComponent implements OnInit {
   }
 
   get columnProperties() {
-    return CommsMessage.prototype.getColumnProperties();
+    return this.messageTableDisplayProperties;
   }
 
   onMessagesSelectionChange(selection: SelectionModel<CommsMessage>) {

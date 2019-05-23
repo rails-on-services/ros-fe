@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatCheckboxChange } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 export interface ManageColumnDialogData {
-  columnProperties: { [key: string]: {name: string, sortable: boolean} };
+  columnProperties: TableHeaderProperties[];
   selected: string[];
 }
 
@@ -31,7 +32,7 @@ export class ManageColumnModal implements OnInit {
   }
 
   get columnPropertyKeys() {
-    return Reflect.ownKeys(this.data.columnProperties);
+    return this.data.columnProperties.map(item => item.key);
   }
 
   get selected() {

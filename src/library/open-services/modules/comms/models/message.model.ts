@@ -2,7 +2,6 @@ import { JsonApiModel, JsonApiModelConfig, Attribute, BelongsTo } from 'angular2
 import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 // import { CommsEvent } from './event.model';
 
-@Tablify()
 @JsonApiModelConfig({
   type: 'messages'
 })
@@ -11,11 +10,9 @@ export class CommsMessage extends JsonApiModel {
     // @Attribute()
   name: string;
 
-  @Column({ name: 'Channel' })
   @Attribute()
   channel: string;
 
-  @Column({ name: 'From' })
   @Attribute()
   from: string;
 

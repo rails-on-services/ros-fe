@@ -13,6 +13,8 @@ import { Observable, Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map, takeUntil } from 'rxjs/operators';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 
 @Component({
@@ -28,18 +30,39 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   campaigns$: Observable<any[]>;
   templates$: Observable<any[]>;
 
-  shownColumns: (string|number|symbol)[];
+  displayProperties: object;
+  eventTableDisplayProperties: TableHeaderProperties[] = [];
+  templateTableDisplayProperties: TableHeaderProperties[] = [];
+  providerTableDisplayProperties: TableHeaderProperties[] = [];
+  campaignTableDisplayProperties: TableHeaderProperties[] = [];
+  poolTableDisplayProperties: TableHeaderProperties[] = [];
+  shownColumns: (string | number | symbol)[];
 
   eventDetailsGroup: FormGroup;
   isEditable = true;
 
   @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private commsService: CommsService,
-              private cognitoService: CognitoService,
-              private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private commsService: CommsService,
+    private cognitoService: CognitoService,
+    private formBuilder: FormBuilder,
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
+    // tslint:disable-next-line: no-string-literal
+    this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
+
   }
 
   ngOnInit() {
@@ -79,7 +102,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     this.fetchTemplates();
   }
 
-  get formArray(): AbstractControl|null {
+  get formArray(): AbstractControl | null {
     return this.eventDetailsGroup.get('formArray');
   }
 
@@ -122,19 +145,19 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   }
 
   get columnProperties() {
-    return CognitoPool.prototype.getColumnProperties();
+    return this.eventTableDisplayProperties;
   }
 
   get campaignsColumnProperties() {
-    return CommsCampaign.prototype.getColumnProperties();
+    return this.campaignTableDisplayProperties;
   }
 
   get providerColumnProperties() {
-    return CommsProvider.prototype.getColumnProperties();
+    return this.providerTableDisplayProperties;
   }
 
   get templateColumnProperties() {
-    return CommsTemplate.prototype.getColumnProperties();
+    return this.templateTableDisplayProperties;
   }
 
   onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
@@ -161,7 +184,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
         const cognitoPools = document.getModels();
         const pools = cognitoPools.map(cognitoPool => {
           const pool = { id: cognitoPool.id };
-          const keys = Object.keys(cognitoPool.getColumnProperties());
+          const keys = this.poolTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             pool[key] = cognitoPool[key];
@@ -180,7 +203,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
-          const keys = Object.keys(commsProvider.getColumnProperties());
+          const keys = this.providerTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             provider[key] = commsProvider[key];
@@ -199,7 +222,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
-          const keys = Object.keys(commsCampaign.getColumnProperties());
+          const keys = this.campaignTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
@@ -218,7 +241,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
       map(commsTemplates => {
         const templates = commsTemplates.map(commsCampaign => {
           const template = { id: commsCampaign.id };
-          const keys = Object.keys(commsCampaign.getColumnProperties());
+          const keys = this.templateTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             template[key] = commsCampaign[key];

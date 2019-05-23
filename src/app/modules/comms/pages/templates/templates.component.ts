@@ -20,6 +20,8 @@ import {
   ConfirmationModal,
   ManageColumnModal
 } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-templates',
@@ -39,7 +41,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsTemplate>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  templateTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   constructor(
@@ -47,12 +50,17 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private commsService: CommsService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+  
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsTemplate.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
     this.fetchTemplates();
   }
 
@@ -130,17 +138,24 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         this.fetchTemplates();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsTemplate.prototype.getColumnProperties(),
+            columnProperties: this.templateTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.templateTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.templateTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['comms']['tables']['templates-table'] = this.templateTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -155,15 +170,12 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         const templates = commsTemplates.map(commsTemplate => {
           const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;
           const template = { id: commsTemplate.id };
-          const keys = Object.keys(commsTemplate.getColumnProperties());
+          const keys = this.templateTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             template[key] = commsTemplate[key];
           });
-          template['content'] = {
-            value: commsTemplate.content,
-            link: templateLink
-          };
+          template['content_link'] = templateLink;
           return template;
         });
 
@@ -173,7 +185,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return CommsTemplate.prototype.getColumnProperties();
+    return this.templateTableDisplayProperties;
   }
 
   onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {

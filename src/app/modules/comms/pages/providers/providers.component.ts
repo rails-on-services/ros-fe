@@ -15,6 +15,8 @@ import {
   ConfirmationModal,
   ManageColumnModal
 } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-providers',
@@ -27,7 +29,8 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsProvider>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  providerTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   constructor(
@@ -35,12 +38,16 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private commsService: CommsService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsProvider.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
     this.fetchProviders();
   }
 
@@ -93,17 +100,24 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
         this.fetchProviders();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsProvider.prototype.getColumnProperties(),
+            columnProperties: this.providerTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.providerTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.providerTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['comms']['tables']['providers-table'] = this.providerTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -116,15 +130,12 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
-          const keys = Object.keys(commsProvider.getColumnProperties());
+          const keys = this.providerTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             provider[key] = commsProvider[key];
           });
-          provider['name'] = {
-            value: commsProvider.name,
-            link: `${ commsProvider.id }`
-          };
+          provider['name_link'] = `${ commsProvider.id }`;
           return provider;
         });
 
@@ -134,7 +145,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return CommsProvider.prototype.getColumnProperties();
+    return this.providerTableDisplayProperties;
   }
 
   onProvidersSelectionChange(selection: SelectionModel<CommsProvider>) {

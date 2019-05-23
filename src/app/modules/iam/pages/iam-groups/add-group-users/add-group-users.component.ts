@@ -4,6 +4,8 @@ import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-add-group-users',
@@ -17,11 +19,19 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   tableHeaders: { key: string, value: string }[];
   selection: SelectionModel<IamUser>;
   shownColumns: string[];
+  displayProperties: object;
+  userTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService) { }
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService) {
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
+
+  }
 
   ngOnInit() {
     this.shownColumns = ['username', 'urn', 'created_at'];
@@ -29,7 +39,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
       this.id = params['id'];
     });
     this.fetchUsersNotInGroup();
-    
+
   }
 
   ngOnDestroy() {
@@ -37,18 +47,11 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   }
 
   private getUserInfo(user: IamUser) {
-    const userDetails = { id: user.id };
-    const keys = Object.keys(user.getColumnProperties());
-
-    keys.forEach(key => {
-      userDetails[key] = user[key];
-    });
-
-    return userDetails;
+    return { id: user.id, ...user };
   }
 
   private getGroupInfo(group: IamGroup, users: IamUser[]) {
-    const groupInfo =  {
+    const groupInfo = {
       id: group.id,
       users: users.map(user => {
         return this.getUserInfo(user);
@@ -91,7 +94,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return IamUser.prototype.getColumnProperties();
+    return this.userTableDisplayProperties;
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {

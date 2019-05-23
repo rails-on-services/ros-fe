@@ -15,7 +15,9 @@ import { CognitoUser as CUser } from '@perx/open-services';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ConfirmationModal } from '@perx/open-ui-components';
+import { ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-users',
@@ -25,9 +27,10 @@ import { ConfirmationModal } from '@perx/open-ui-components';
 export class CognitoUsersComponent implements OnInit, OnDestroy {
   document$: Observable<JsonApiQueryData<CUser>>;
   users$: Observable<any[]>;
-  tableHeaders: { key: string, value: string }[];
   showModal: boolean;
 
+  displayProperties: object;
+  userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<CUser>;
   shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
@@ -39,12 +42,17 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cognitoService: CognitoService,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.userTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['users-table'];
+ 
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamUser.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
 
     this.fetchUsers();
   }
@@ -87,9 +95,31 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     event.source.checked = false;
     switch (event.value) {
       case 'reload':
+        if (this.selection) {
+          this.selection.clear();
+        }
         this.fetchUsers();
         break;
       case 'settings':
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
+          width: '30rem',
+          data: {
+            columnProperties: this.userTableDisplayProperties,
+            selected: this.shownColumns
+          }
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
+          this.shownColumns = [
+            ...columns
+          ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.userTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.userTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['cognito']['tables']['users-table'] = this.userTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
+        });
         break;
       case 'help':
         break;
@@ -110,7 +140,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
         const cognitoUsers = document.getModels();
         const users = cognitoUsers.map(cognitoUser => {
           const user = { id: cognitoUser.id };
-          const keys = Object.keys(cognitoUser.getColumnProperties());
+          const keys = this.userTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             user[key] = cognitoUser[key];
@@ -125,7 +155,7 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return CUser.prototype.getColumnProperties();
+    return this.userTableDisplayProperties;
   }
 
   onUsersSelectionChange(selection: SelectionModel<CUser>) {

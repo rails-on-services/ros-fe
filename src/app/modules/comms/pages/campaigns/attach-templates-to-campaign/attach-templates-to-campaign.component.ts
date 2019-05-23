@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-attach-templates-to-campaign',
@@ -16,11 +18,19 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   selection: SelectionModel<CommsTemplate>;
   shownColumns: string[];
   campaign$: Observable<any>;
+  displayProperties: object;
+  templateTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private commsService: CommsService) { }
+    private commsService: CommsService,
+    private displayPropertiesService: DisplayPropertiesService
+    ) { 
+      this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+      // tslint:disable-next-line: no-string-literal
+      this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+    }
 
   ngOnInit() {
     this.shownColumns = ['name', 'content', 'status', 'createdAt', 'updatedAt'];
@@ -36,14 +46,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   }
 
   getTemplateInfo(template: CommsTemplate) {
-    const templateDetails = { id: template.id };
-    const keys = Object.keys(template.getColumnProperties());
-
-    keys.forEach(key => {
-      templateDetails[key] = template[key];
-    });
-
-    return templateDetails;
+    return { id: template.id, ...template };
   }
 
   getCampaignInfo(campaign: CommsCampaign, templates: CommsTemplate[]){
@@ -77,7 +80,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties() {
-    return CommsTemplate.prototype.getColumnProperties();
+    return this.templateTableDisplayProperties;
   }
 
   onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {

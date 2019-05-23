@@ -7,6 +7,8 @@ import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-iam-groups',
@@ -24,22 +26,28 @@ export class IamGroupsComponent implements OnInit {
   groups$: Observable<any[]>;
 
   showModal: boolean;
+  displayProperties: object;
+  groupTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamGroup>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
   shownColumns: (string|number|symbol)[];
 
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.groupTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['groups-table'];
+
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(IamGroup.prototype.getColumnProperties());
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.groupTableDisplayProperties);
 
     this.fetchGroups();
   }
@@ -132,17 +140,24 @@ export class IamGroupsComponent implements OnInit {
         this.fetchGroups();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: IamGroup.prototype.getColumnProperties(),
+            columnProperties: this.groupTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.groupTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.groupTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['IAM']['tables']['groups-table'] = this.groupTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -158,15 +173,13 @@ export class IamGroupsComponent implements OnInit {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
           const group = { id: iamGroup.id };
-          const keys = Object.keys(iamGroup.getColumnProperties());
+          const keys = this.groupTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             group[key] = iamGroup[key];
           });
-          group['name'] = {
-            value: iamGroup.name,
-            link: groupLink
-          };
+          group['name_link'] = groupLink;
+   
           return group;
         });
 
@@ -176,7 +189,7 @@ export class IamGroupsComponent implements OnInit {
   }
 
   get columnProperties() {
-    return IamGroup.prototype.getColumnProperties();
+    return this.groupTableDisplayProperties;
   }
 
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {

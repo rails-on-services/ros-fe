@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -18,7 +20,8 @@ export class CommsCampaignsComponent implements OnInit {
   showModal: boolean;
   selection: SelectionModel<CommsCampaign>;
 
-  shownColumns$: Observable<(string|number|symbol)[]>;
+  displayProperties: object;
+  campaignTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string|number|symbol)[];
 
   constructor(
@@ -26,13 +29,17 @@ export class CommsCampaignsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
+    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
+  
   }
 
   ngOnInit() {
-    this.shownColumns = Object.keys(CommsCampaign.prototype.getColumnProperties());
-
+    this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.fetchCampaigns();
   }
 
@@ -80,17 +87,24 @@ export class CommsCampaignsComponent implements OnInit {
         this.fetchCampaigns();
         break;
       case 'settings':
-        this.shownColumns$ = this.dialog.open(ManageColumnModal, {
+        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
-            columnProperties: CommsCampaign.prototype.getColumnProperties(),
+            columnProperties: this.campaignTableDisplayProperties,
             selected: this.shownColumns
           }
-        }).componentInstance.selectionChange;
-        this.shownColumns$.subscribe(columns => {
+        });
+        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
           this.shownColumns = [
             ...columns
           ];
+        });
+        columnsDialogRef.afterClosed().subscribe(() => {
+          this.campaignTableDisplayProperties = this.displayPropertiesService
+            .setTableShownColumns(this.shownColumns, this.campaignTableDisplayProperties);
+          // tslint:disable-next-line: no-string-literal
+          this.displayProperties['essentials']['comms']['tables']['campaigns-table'] = this.campaignTableDisplayProperties;
+          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
       case 'help':
@@ -103,15 +117,13 @@ export class CommsCampaignsComponent implements OnInit {
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };
-          const keys = Object.keys(commsCampaign.getColumnProperties());
+          const keys = this.campaignTableDisplayProperties.map(item => item.key);
 
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
           });
-          campaign['ownerType'] = {
-            value: commsCampaign.ownerType,
-            link: `${commsCampaign.id}`
-          };
+          campaign['ownerType_link'] =  `${commsCampaign.id}`;
+
           return campaign;
         });
 
@@ -121,7 +133,7 @@ export class CommsCampaignsComponent implements OnInit {
   }
 
   get columnProperties() {
-    return CommsCampaign.prototype.getColumnProperties();
+    return this.campaignTableDisplayProperties;
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
