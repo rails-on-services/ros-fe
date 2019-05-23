@@ -80,7 +80,7 @@ export class PoliciesComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchPolicies();
+        this.fetchPolicies(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
@@ -108,8 +108,8 @@ export class PoliciesComponent implements OnInit {
     }
   }
 
-  private fetchPolicies() {
-    this.policies$ = this.iamService.fetchPolicies().pipe(
+  private fetchPolicies(force?: boolean) {
+    this.policies$ = this.iamService.fetchPolicies(null, force).pipe(
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policyDetails = { id: iamPolicy.id };

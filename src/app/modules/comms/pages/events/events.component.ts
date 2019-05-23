@@ -108,7 +108,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchEvents();
+        this.fetchEvents(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {

@@ -48,7 +48,7 @@ export class MessagesComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchMessages();
+        this.fetchMessages(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
@@ -76,8 +76,8 @@ export class MessagesComponent implements OnInit {
     }
   }
 
-  private fetchMessages() {
-    this.messages$ = this.commsService.fetchMessages().pipe(
+  private fetchMessages(force?: boolean) {
+    this.messages$ = this.commsService.fetchMessages(force).pipe(
       map(commsUsers => {
         const users = commsUsers.map(commsUser => {
           const user = { id: commsUser.id };

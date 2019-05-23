@@ -120,7 +120,7 @@ export class IamGroupsComponent implements OnInit {
             groupModel.name = newName;
             groupModel.save().subscribe(
               () => {
-                this.fetchGroups();
+                this.fetchGroups(true);
               }
             );
           });
@@ -137,7 +137,7 @@ export class IamGroupsComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchGroups();
+        this.fetchGroups(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {

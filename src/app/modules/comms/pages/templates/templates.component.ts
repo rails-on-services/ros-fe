@@ -135,7 +135,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchTemplates();
+        this.fetchTemplates(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {

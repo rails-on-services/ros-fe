@@ -84,7 +84,7 @@ export class CommsCampaignsComponent implements OnInit {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchCampaigns();
+        this.fetchCampaigns(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
