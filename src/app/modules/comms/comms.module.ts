@@ -5,7 +5,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
 import { HomeComponent } from './pages/home/home.component';
 import { CommsRoutingModule } from './comms-routing.module';
-import { CommsMenuComponent } from './components/comms-menu/comms-menu.component';
 import { CommsComponent } from './comms.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { NewEventComponent } from './pages/events/new-event/new-event.component';
@@ -23,13 +22,7 @@ import { AttachTemplatesToCampaignComponent } from './pages/campaigns/attach-tem
 import { EventComponent } from './pages/events/event/event.component';
 import { TemplateComponent } from './pages/templates/template/template.component';
 import { ProviderComponent } from './pages/providers/provider/provider.component';
-import {CognitoComponent} from "../cognito/cognito.component";
-import {CognitoHomeComponent} from "../cognito/pages/cognito-home/cognito-home.component";
-import {CognitoUsersComponent} from "../cognito/pages/cognito-users/cognito-users.component";
-import {CognitoPoolsComponent} from "../cognito/pages/cognito-pools/cognito-pools.component";
-import {CognitoMenuComponent} from "../cognito/components/cognito-menu/cognito-menu.component";
-import {NewCognitoUserComponent} from "../cognito/pages/cognito-users/new-cognito-user/new-cognito-user.component";
-import {CognitoAppsComponent} from "../cognito/pages/cognito-apps/cognito-apps.component";
+import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 
 const COMPONENTS = [
   EventsComponent,
@@ -42,7 +35,6 @@ const COMPONENTS = [
   NewCampaignComponent,
   NewProviderComponent,
   HomeComponent,
-  CommsMenuComponent,
   CommsComponent,
   CommsCampaignComponent,
   AttachTemplatesToCampaignComponent,
@@ -64,7 +56,8 @@ const COMPONENTS = [
     FormsModule,
     OpenUiComponentsModule,
     NgxMaterialTimepickerModule,
-    SharedModule
+    SharedModule,
+    ServiceMenuModule
   ],
   exports: [
     ...COMPONENTS,

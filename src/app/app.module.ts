@@ -11,13 +11,13 @@ import { CommsModule as CommsServiceModule } from '@perx/open-services';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { CoreModule } from './core/core.module';
 import { environment } from '../environments/environment';
 import { SharedModule } from '../shared/shared.module';
 import { PublicModule } from './public/public.module';
 import { CORE_SERVICES_MENU, coreServicesMenuValue } from './core/core-services-menu.value';
 import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
 import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
+import { HeaderModule } from './core/components/header/header.module';
 
 const isMock = environment.mock;
 
@@ -32,7 +32,7 @@ const isMock = environment.mock;
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    CoreModule,
+    HeaderModule,
     PublicModule,
     IamServiceModule,
     CommsServiceModule,

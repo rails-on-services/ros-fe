@@ -7,7 +7,6 @@ import { IamUsersComponent } from './pages/iam-users/iam-users.component';
 import { IamGroupsComponent } from './pages/iam-groups/iam-groups.component';
 import { IamHomeComponent } from './pages/iam-home/iam-home.component';
 import { IamRoutingModule } from './iam-routing.module';
-import { IamMenuComponent } from './components/iam-menu/iam-menu.component';
 import { IamComponent } from './iam.component';
 import { NewIamUserComponent } from './pages/iam-users/new-iam-user/new-iam-user.component';
 import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-group.component';
@@ -18,12 +17,12 @@ import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-g
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { SharedModule } from '../../../shared/shared.module';
+import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 
 const COMPONENTS = [
   IamUsersComponent,
   IamGroupsComponent,
   IamHomeComponent,
-  IamMenuComponent,
   IamComponent,
   NewIamUserComponent,
   NewIamGroupComponent,
@@ -47,7 +46,8 @@ const COMPONENTS = [
     ReactiveFormsModule,
     FormsModule,
     OpenUiComponentsModule,
-    SharedModule
+    SharedModule,
+    ServiceMenuModule
   ],
   exports: [
     ...COMPONENTS,

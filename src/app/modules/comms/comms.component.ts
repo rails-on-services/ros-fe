@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommsComponent implements OnInit {
 
+  menus = [
+    {route: 'home', display: 'Main'},
+    {route: 'campaigns', display: 'Campaigns'},
+    {route: 'messages', display: 'Messages'},
+    {route: 'events', display: 'Events'},
+    {route: 'templates', display: 'Templates'},
+    {route: 'providers', display: 'Providers'}
+  ];
+
   constructor() { }
 
   ngOnInit() {
