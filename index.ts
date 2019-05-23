@@ -5,7 +5,6 @@ export * from './src/app/core/components/header/header.module';
 export * from './src/app/core/components/service-menu/service-menu.component';
 export * from './src/app/core/components/service-menu/service-menu.module';
 export * from './src/app/core/core-services-menu.value';
-export * from './src/app/core/core.component';
 export * from './src/app/core/core.module';
 export * from './src/app/modules/cognito/cognito-routing.module';
 export * from './src/app/modules/cognito/cognito.component';
