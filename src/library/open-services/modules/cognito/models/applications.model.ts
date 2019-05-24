@@ -1,5 +1,4 @@
 import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
-import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 
 @JsonApiModelConfig({
   type: 'applications'

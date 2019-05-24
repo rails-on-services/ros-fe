@@ -97,7 +97,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchProviders();
+        this.fetchProviders(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {

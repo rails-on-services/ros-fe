@@ -108,7 +108,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchEvents();
+        this.fetchEvents(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
@@ -145,7 +145,9 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   fetchEvents(force?: boolean) {
-    force = this.campaignId ? true : false;
+    if (this.campaignId) {
+      force = true;
+    }
     this.events$ = this.commsService.fetchEvents(this.campaignId, force).pipe(
       map(commEvents => {
         const events = commEvents.map(commsEvent => {

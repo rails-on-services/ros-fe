@@ -135,7 +135,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
         if (this.selection) {
           this.selection.clear();
         }
-        this.fetchTemplates();
+        this.fetchTemplates(true);
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
@@ -164,7 +164,9 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   }
 
   fetchTemplates(force?: boolean) {
-    force = this.campaignId ? true : false;
+    if (this.campaignId) {
+      force = true;
+    }
     this.templates$ = this.commsService.fetchTemplates(this.campaignId, force).pipe(
       map(commsTemplates => {
         const templates = commsTemplates.map(commsTemplate => {

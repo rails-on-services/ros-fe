@@ -1,5 +1,4 @@
 import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
-import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 import { CommsCampaign } from './campaign.model';
 
 @JsonApiModelConfig({
