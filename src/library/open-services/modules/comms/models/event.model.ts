@@ -1,6 +1,5 @@
 import { CommsTemplate } from './template.model';
 import { JsonApiModel, JsonApiModelConfig, Attribute, BelongsTo } from 'angular2-jsonapi';
-import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 import { CommsCampaign } from './campaign.model';
 import { CommsProvider } from './provider.model';
 import { CommsMessage } from './message.model';

@@ -3,7 +3,6 @@ import { HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamUser } from './models/user.model';
 import { IamDatastore } from './iam-datastore.service';

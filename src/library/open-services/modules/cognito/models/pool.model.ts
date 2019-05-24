@@ -1,5 +1,4 @@
 import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
-import { Column, Tablify } from '../../../shared/decorators/column.decorator';
 import { CognitoUser } from './user.model';
 
 @JsonApiModelConfig({
