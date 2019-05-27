@@ -18,7 +18,7 @@ export class CommsService {
 
   constructor(private datastore: CommsDatastore) {
     this.datastore.headers = new HttpHeaders({
-      Authorization: 'Basic AEIHKIJRNYPRGDGKGMND:zZg5DBAVxI8nn_7nc0sfgD_RePQ1lQkNijR-ckygkJC4XKWrC9Y_JQ'
+      Authorization: 'Basic AFJZLEKIOLQKHYHHHROP:R8ksVUv681NArqe05QaJTGekX6vAHG79gt-LOC4so-PkRlT3MGiv2A'
 
     });
   }
