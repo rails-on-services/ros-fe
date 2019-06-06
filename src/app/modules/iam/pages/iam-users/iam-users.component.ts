@@ -147,32 +147,39 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   private fetchUsers(force = false) {
     this.users$ = this.iamService.fetchUsers(force).pipe(
       map((users: IamUser[]) => {
+        console.log(users);
         return users.map(user => {
-          const groups = [...(user.groups || [])];
-          groups.splice(3);
           return {
             id: user.id,
             username: user.username,
             username_link: `${user.id}`,
-            groups: groups.length <= 0 ? 'None' : groups.map((group, index) => {
-              if (index === groups.length - 1 && groups.length < user.groups.length) {
-                return {
-                  value: `${user.groups.length - groups.length + 1} more`,
-                  link: `${user.id}`
-                }
-              }
-              return {
-                value: group.name,
-                link: `../groups/${group.id}`
-              }
-            }),
+            groups: this.generateTableMultiLinksContent(user.groups, user.id),
             urn: user.urn,
             apiAccess: user.apiAccess,
             consoleAccess: user.consoleAccess
-          }
+          };
         });
       })
     );
+  }
+
+  generateTableMultiLinksContent(contents: any[], displayLink: string, displayCount = 2) {
+    if (!Array.isArray(contents) || contents.length <= 0) { return 'None'; }
+    const displayContents = contents.slice(0, displayCount);
+    let displayResult = displayContents.map(displayContent => ({
+      value: displayContent.name,
+      link: `../groups/${displayContent.id}`
+    }));
+
+    const hasMoreContent = displayCount < contents.length;
+    if (hasMoreContent) {
+      const displayMore = {
+        value: `${contents.length - displayCount} more`,
+        link: displayLink
+      };
+      displayResult.push(displayMore);
+    }
+    return displayResult;
   }
 
   get columnProperties() {
