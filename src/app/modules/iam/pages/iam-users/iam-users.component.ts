@@ -13,11 +13,10 @@ import { map } from 'rxjs/operators';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
 import { IamService, IamUser } from '@perx/open-services';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal,
-  ManageColumnModal
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';

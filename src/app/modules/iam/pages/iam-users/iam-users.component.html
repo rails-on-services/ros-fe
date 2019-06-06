@@ -12,12 +12,13 @@
       Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
     <app-table-actions-management
+      fxFlex fxLayout="row" fxLayoutAlign="end"
       [tablePlatform]="'essentials'"
       [tableModule]="'IAM'"
       [tableName]="'users-table'"
       [shownColumns]="shownColumns"
-      (reloadTable)="reloadTable()"
-      (changeTableHeaderSetting)="changeTableHeaderSetting($event)"
+      (reloadTableEmit)="reloadTable()"
+      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"
     >
     </app-table-actions-management>
   </div>

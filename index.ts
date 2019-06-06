@@ -61,7 +61,6 @@ export * from './src/app/public/public.module';
 export * from './src/helpers/http-request.interceptor';
 export * from './src/helpers/mock-request.interceptor';
 export * from './src/shared/components/modal/modal.component';
-export * from './src/shared/components/table-actions-management/table-actions-management.component';
 export * from './src/shared/modules/authentication/authentication.module';
 export * from './src/shared/modules/authentication/authentication.service';
 export * from './src/shared/modules/authentication/token-storage.service';

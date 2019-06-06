@@ -9,9 +9,9 @@ import { ManageColumnModal } from '@perx/open-ui-components';
   templateUrl: './table-actions-management.component.html',
   styleUrls: ['./table-actions-management.component.scss']
 })
-export class TableActionsManagementComponent {
-  @Output() tableReload = new EventEmitter();
-  @Output() tableHeaderSettingChange = new EventEmitter();
+export class TableActionsManagementComponent implements OnInit {
+  @Output() reloadTableEmit = new EventEmitter();
+  @Output() changeTableHeaderSettingEmit = new EventEmitter();
   @Input() tablePlatform: string;
   @Input() tableModule: string;
   @Input() tableName: string;
@@ -25,17 +25,19 @@ export class TableActionsManagementComponent {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+  }
+
+  ngOnInit() {
     // tslint:disable-next-line: no-string-literal
     this.tableDisplayProperties = this.displayProperties[this.tablePlatform][this.tableModule]['tables'][this.tableName];
-
   }
 
   reloadTable() {
-    this.tableReload.emit();
+    this.reloadTableEmit.emit();
   }
 
   changeTableHeaderSetting() {
-    this.tableHeaderSettingChange.emit(this.shownColumns);
+    this.changeTableHeaderSettingEmit.emit(this.shownColumns);
   }
 
   onOtherActionsChange(event: MatButtonToggleChange) {
@@ -43,7 +45,7 @@ export class TableActionsManagementComponent {
     event.source.checked = false;
     switch (event.value) {
       case 'reload':
-        //emitter clear selections
+        this.reloadTable();
         break;
       case 'settings':
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
@@ -57,7 +59,7 @@ export class TableActionsManagementComponent {
           this.shownColumns = [
             ...columns
           ];
-          //emitter this.shownColumns
+          this.changeTableHeaderSetting();
         });
         columnsDialogRef.afterClosed().subscribe(() => {
           this.tableDisplayProperties = this.displayPropertiesService

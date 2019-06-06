@@ -10,4 +10,5 @@ export * from './components/rating/rating.component';
 export * from './components/rating/rating.module';
 export * from './components/selection/selection.component';
 export * from './components/selection/selection.module';
+export * from './components/table-actions-management/table-actions-management.component';
 export * from './shared/material-design/material-design.module';
