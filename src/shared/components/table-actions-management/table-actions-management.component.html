@@ -1,0 +1,17 @@
+<div fxFlex fxLayout="row" fxLayoutAlign="end">
+  <mat-button-toggle-group
+      aria-label="Other Actions"
+      name="otherActions"
+      (change)="onOtherActionsChange($event)"
+  >
+    <mat-button-toggle value="reload">
+      <mat-icon>refresh</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="settings">
+      <mat-icon>settings</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle value="help">
+      <mat-icon>help</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
