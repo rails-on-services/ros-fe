@@ -6,5 +6,6 @@ export const coreServicesMenuValue =  [
   { url: '/dashboard', title: 'Dashboard' },
   { url: '/iam', title: 'IAM' },
   { url: '/cognito', title: 'Cognito' },
-  { url: '/comms', title: 'Comms' }
+  { url: '/comms', title: 'Comms' },
+  { url: '/storage', title: 'Storage' }
 ]

@@ -54,6 +54,10 @@ export * from './src/app/modules/iam/pages/iam-users/new-iam-user/new-iam-user.c
 export * from './src/app/modules/iam/pages/policies/new-policy/new-policy.component';
 export * from './src/app/modules/iam/pages/policies/policies.component';
 export * from './src/app/modules/iam/pages/policies/policy-attach/policy-attach.component';
+export * from './src/app/modules/storage/new-storage/new-storage.component';
+export * from './src/app/modules/storage/storage-routing.module';
+export * from './src/app/modules/storage/storage.component';
+export * from './src/app/modules/storage/storage.module';
 export * from './src/app/public/login/login.component';
 export * from './src/app/public/public-routing.module';
 export * from './src/app/public/public.component';

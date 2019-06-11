@@ -23,7 +23,7 @@ const isMock = environment.mock;
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

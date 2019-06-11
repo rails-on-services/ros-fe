@@ -1,0 +1,33 @@
+<div class="center">
+    <div class="drop-zone">
+        <ngx-file-drop 
+            [accept]="'.csv, .png'"
+            [multiple]="false"
+            [dropZoneLabel]="'Drop files here or '"
+            [dropZoneClassName]="'file-upload-label'"
+            [showBrowseBtn]="true" 
+            [browseBtnClassName]="'file-upload-btn'" 
+            [browseBtnLabel]="'Browse'"
+            (onFileDrop)="dropped($event)" 
+            (onFileOver)="fileOver($event)"
+            (onFileLeave)="fileLeave($event)" >
+        </ngx-file-drop>
+    </div>
+    <div>
+        <img [src]="imagePrivew" />
+    </div>
+    <div class="upload-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody class="upload-name-style">
+                <tr *ngFor="let item of files; let i=index">
+                    <td><strong>{{ item.relativePath }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
