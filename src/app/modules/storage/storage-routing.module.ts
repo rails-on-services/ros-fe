@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { FilesComponent } from './pages/files/files.component';
+import { NewStorageComponent } from './pages/new-storage/new-storage.component';
 import { StorageComponent } from './storage.component';
-import { NewStorageComponent } from './new-storage/new-storage.component';
 
 const router: Routes = [
   {
@@ -10,14 +11,19 @@ const router: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: '',
     component: StorageComponent,
-  },
-  {
-    path: 'new-storage',
-    component: NewStorageComponent
+    children: [
+      {
+        path: 'home',
+        component: FilesComponent,
+      },
+      {
+        path: 'new-storage',
+        component: NewStorageComponent
+      }
+    ]
   }
-
 ];
 
 @NgModule({

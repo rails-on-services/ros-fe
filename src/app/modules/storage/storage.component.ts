@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StorageComponent implements OnInit {
 
+  menus = [
+    {route: 'home', display: 'Files'},
+  ];
+
   constructor() { }
 
   ngOnInit() {
