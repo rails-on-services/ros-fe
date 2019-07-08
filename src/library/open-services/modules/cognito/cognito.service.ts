@@ -1,12 +1,13 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { CognitoUser } from './models/user.model';
 import { CognitoDatastore } from './cognito-datastore.service';
 import { CognitoPool } from './models/pool.model';
 import { CognitoCredential } from './models/cognito-credential.model';
 import { CognitoApplication } from './models/applications.model';
+import { map } from 'rxjs/operators';
 
 export class EnvConfig {
   // defaults
@@ -102,12 +103,23 @@ export class CognitoService {
       'Something bad happened; please try again later.');
   }
 
-  fetchUsers(): Observable<JsonApiQueryData<CognitoUser>> {
+
+  fetchUsers(force?: boolean): Observable<CognitoUser[]> {
+    if (!force) {
+      const users = this.datastore.peekAll(CognitoUser);
+      if (users && users.length > 0) {
+        return of(users);
+      }
+    }
+
     return this.datastore.findAll(
       CognitoUser,
       {
-        page: { size: 10, number: 1 }
+        page: { size: 10, number: 1 },
+        include: 'groups,credentials'
       }
+    ).pipe(
+      map(document => document.getModels())
     );
   }
 

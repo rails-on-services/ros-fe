@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CommsCampaign } from '@perx/open-services';
+import { CommsCampaign, StorageService } from '@perx/open-services';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
@@ -23,7 +23,7 @@ export class FilesComponent implements OnInit {
   shownColumns: (string | number | symbol)[];
 
   constructor(
-    private storageServices: StorageServices,
+    private storageServices: StorageService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
@@ -56,21 +56,21 @@ export class FilesComponent implements OnInit {
   }
 
   private fetchStorages(force = false) {
-    this.files$ = this.storageServices.fetchUsers(force).pipe(
-      map((users: StorageFile[]) => {
-        console.log(users);
-        return users.map(user => {
-          return {
-            id: user.id,
-            username: user.username,
-            username_link: `${user.id}`,
-            urn: user.urn,
-            apiAccess: user.apiAccess,
-            consoleAccess: user.consoleAccess
-          };
-        });
-      })
-    );
+    // this.files$ = this.storageServices.fetchUsers(force).pipe(
+    //   map((users: StorageFile[]) => {
+    //     console.log(users);
+    //     return users.map(user => {
+    //       return {
+    //         id: user.id,
+    //         username: user.username,
+    //         username_link: `${user.id}`,
+    //         urn: user.urn,
+    //         apiAccess: user.apiAccess,
+    //         consoleAccess: user.consoleAccess
+    //       };
+    //     });
+    //   })
+    // );
   }
 
 

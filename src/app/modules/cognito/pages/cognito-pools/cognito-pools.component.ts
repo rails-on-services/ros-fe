@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -95,41 +95,17 @@ export class CognitoPoolsComponent implements OnInit {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchPools();
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.poolTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.poolTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.poolTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['cognito']['tables']['pools-table'] = this.poolTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchPools();
   }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
 
   private fetchPools() {
     this.pools$ = this.cognitoService.fetchPools().pipe(
@@ -146,7 +122,7 @@ export class CognitoPoolsComponent implements OnInit {
             pool[key] = cognitoPool[key];
           });
           pool['name_link'] = `/pools/${cognitoPool.id}`;
-          
+
           return pool;
         });
 

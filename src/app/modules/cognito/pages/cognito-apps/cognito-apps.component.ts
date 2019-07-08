@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CognitoService, CognitoApplication, CognitoUser, CognitoPool } from '@perx/open-services';
-import { MatDialog, MatButtonToggleChange } from '@angular/material';
-import { ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
+import { CognitoService, CognitoApplication } from '@perx/open-services';
+import { MatDialog } from '@angular/material';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -23,7 +23,7 @@ export class CognitoAppsComponent implements OnInit {
   selection: SelectionModel<CognitoApplication>;
   displayProperties: object;
   appTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
   constructor(
@@ -37,7 +37,7 @@ export class CognitoAppsComponent implements OnInit {
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.appTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['apps-table'];
-  
+
   }
 
   ngOnInit() {
@@ -75,41 +75,17 @@ export class CognitoAppsComponent implements OnInit {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchApplications();
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.appTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.appTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.appTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['cognito']['tables']['apps-table'] = this.appTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchApplications();
   }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
 
   private removeDialogComponentFromBody() {
     this.dismissableElement.nativeElement.remove();

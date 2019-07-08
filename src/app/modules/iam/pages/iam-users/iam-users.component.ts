@@ -35,7 +35,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
-  const groupLinkUrlRoot = '../groups/';
+  groupLinkUrlRoot = '../groups/';
 
 
   shownColumns: (string | number | symbol)[] = [];

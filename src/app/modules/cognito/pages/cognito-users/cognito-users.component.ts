@@ -10,14 +10,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { CognitoService, IamUser } from '@perx/open-services';
+import { CognitoService } from '@perx/open-services';
 import { CognitoUser as CUser } from '@perx/open-services';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableContentService } from 'src/shared/services/table-content/table-content.service';
 
 @Component({
   selector: 'app-users',
@@ -32,8 +33,9 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<CUser>;
-  shownColumns$: Observable<(string|number|symbol)[]>;
-  shownColumns: (string|number|symbol)[];
+  shownColumns$: Observable<(string | number | symbol)[]>;
+  shownColumns: (string | number | symbol)[];
+  groupLinkUrlRoot = '../groups/';
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -42,13 +44,14 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private cognitoService: CognitoService,
     public dialog: MatDialog,
+    private tableContent: TableContentService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.userTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['users-table'];
- 
+
   }
 
   ngOnInit() {
@@ -90,40 +93,15 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchUsers();
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.userTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.userTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.userTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['cognito']['tables']['users-table'] = this.userTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchUsers(true);
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   private removeDialogComponentFromBody() {
@@ -134,22 +112,21 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchUsers() {
-    this.users$ = this.cognitoService.fetchUsers().pipe(
-      map(document => {
-        const cognitoUsers = document.getModels();
-        const users = cognitoUsers.map(cognitoUser => {
-          const user = { id: cognitoUser.id };
-          const keys = this.userTableDisplayProperties.map(item => item.key);
+  private fetchUsers(force = false) {
 
-          keys.forEach(key => {
-            user[key] = cognitoUser[key];
-          });
-
-          return user;
+    this.users$ = this.cognitoService.fetchUsers(force).pipe(
+      map((users: CUser[]) => {
+        return users.map(user => {
+          return {
+            id: user.id,
+            username: user.username,
+            username_link: `${user.id}`,
+            groups: this.tableContent.generateTableMultiLinksContent(user.groups, user.id, this.groupLinkUrlRoot),
+            urn: user.urn,
+            apiAccess: user.apiAccess,
+            consoleAccess: user.consoleAccess
+          };
         });
-
-        return users;
       })
     );
   }

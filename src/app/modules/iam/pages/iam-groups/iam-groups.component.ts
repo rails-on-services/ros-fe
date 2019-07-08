@@ -1,14 +1,15 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableContentService } from 'src/shared/services/table-content/table-content.service';
 
 @Component({
   selector: 'app-iam-groups',
@@ -31,12 +32,14 @@ export class IamGroupsComponent implements OnInit {
   selection: SelectionModel<IamGroup>;
 
   shownColumns: (string|number|symbol)[];
+  userLinkUrlRoot = '../users/';
 
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private tableContent: TableContentService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
@@ -149,16 +152,18 @@ export class IamGroupsComponent implements OnInit {
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
-          const group = { id: iamGroup.id };
-          const keys = this.groupTableDisplayProperties.map(item => item.key);
-
-          keys.forEach(key => {
-            group[key] = iamGroup[key];
-          });
-          group['name_link'] = groupLink;
-          return group;
+          console.log(iamGroup.users);
+          console.log(this.tableContent.generateTableMultiLinksContent(iamGroup.users, iamGroup.id, this.userLinkUrlRoot));
+          return {
+            id: iamGroup.id,
+            name: iamGroup.name,
+            name_link: groupLink,
+            users: this.tableContent.generateTableMultiLinksContent(iamGroup.users, iamGroup.id, this.userLinkUrlRoot, 'username'),
+            urn: iamGroup.urn,
+            creationTime: iamGroup.creationTime,
+            attachedPolicies: iamGroup.attachedPolicies
+          };
         });
-
         return groups;
       })
     );

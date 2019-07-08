@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IamService, IamPolicy } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal, ManageColumnModal} from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -21,7 +21,7 @@ export class PoliciesComponent implements OnInit {
   selection: SelectionModel<IamPolicy>;
   displayProperties: object;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
 
   constructor(
     private iamService: IamService,
@@ -62,7 +62,7 @@ export class PoliciesComponent implements OnInit {
         content: 'Are you sure you want to delete the policy',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
@@ -72,40 +72,15 @@ export class PoliciesComponent implements OnInit {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchPolicies(true);
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.policyTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.policyTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.policyTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['IAM']['tables']['policies-table'] = this.policyTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchPolicies(true);
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   private fetchPolicies(force?: boolean) {
@@ -135,6 +110,6 @@ export class PoliciesComponent implements OnInit {
   }
 
   attachPolicy() {
-    this.router.navigate(['policy-attach', this.selection.selected[0].id],  {relativeTo: this.route});
+    this.router.navigate(['policy-attach', this.selection.selected[0].id], { relativeTo: this.route });
   }
 }
