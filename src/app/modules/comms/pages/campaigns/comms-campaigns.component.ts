@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-campaigns',

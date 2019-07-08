@@ -7,7 +7,7 @@ import { AuthenticationModule } from './modules/authentication';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 const COMPONENTS = [
-  ModalComponent
+  ModalComponent,
 ];
 
 @NgModule({

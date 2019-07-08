@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-modal.component';
 

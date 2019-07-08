@@ -12,7 +12,9 @@
       Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
     <app-table-actions-management
-      fxFlex fxLayout="row" fxLayoutAlign="end"
+      fxFlex 
+      fxLayout="row" 
+      fxLayoutAlign="end"
       [tablePlatform]="'essentials'"
       [tableModule]="'IAM'"
       [tableName]="'users-table'"

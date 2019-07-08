@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IamService } from './../../../library/open-services/modules/iam/iam.service';
-import { TableHeaderProperties } from './../../models/tableHeaderProperties';
+import { IamService } from '../../../library/open-services/modules/iam/iam.service';
+import { TableHeaderProperties } from '../../models/tableHeaderProperties';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class DisplayPropertiesService {
       }
     );
   }
-  public getTableShownColumns(tableDisplayProperties: TableHeaderProperties[]) {
+  public getTableShownColumns(tableDisplayProperties: TableHeaderProperties[] = []) {
     return tableDisplayProperties.filter(item => item.display).map(item => item.key);
   }
   public setTableShownColumns(shownColumns: (string | number | symbol)[], tableDisplayProperties: TableHeaderProperties[]) {

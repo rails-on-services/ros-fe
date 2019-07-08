@@ -18,7 +18,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {
   ConfirmationModal
 } from '@perx/open-ui-components';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableContentService } from 'src/shared/services/table-content/table-content.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
@@ -34,6 +35,8 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
+  const groupLinkUrlRoot = '../groups/';
+
 
   shownColumns: (string | number | symbol)[] = [];
 
@@ -44,6 +47,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private iamService: IamService,
     public dialog: MatDialog,
+    private tableContent: TableContentService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
@@ -119,15 +123,15 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsers(force = false) {
+
     this.users$ = this.iamService.fetchUsers(force).pipe(
       map((users: IamUser[]) => {
-        console.log(users);
         return users.map(user => {
           return {
             id: user.id,
             username: user.username,
             username_link: `${user.id}`,
-            groups: this.generateTableMultiLinksContent(user.groups, user.id),
+            groups: this.tableContent.generateTableMultiLinksContent(user.groups, user.id, this.groupLinkUrlRoot),
             urn: user.urn,
             apiAccess: user.apiAccess,
             consoleAccess: user.consoleAccess
@@ -135,25 +139,6 @@ export class IamUsersComponent implements OnInit, OnDestroy {
         });
       })
     );
-  }
-
-  generateTableMultiLinksContent(contents: any[], displayLink: string, displayCount = 2) {
-    if (!Array.isArray(contents) || contents.length <= 0) { return 'None'; }
-    const displayContents = contents.slice(0, displayCount);
-    let displayResult = displayContents.map(displayContent => ({
-      value: displayContent.name,
-      link: `../groups/${displayContent.id}`
-    }));
-
-    const hasMoreContent = displayCount < contents.length;
-    if (hasMoreContent) {
-      const displayMore = {
-        value: `${contents.length - displayCount} more`,
-        link: displayLink
-      };
-      displayResult.push(displayMore);
-    }
-    return displayResult;
   }
 
   get columnProperties() {

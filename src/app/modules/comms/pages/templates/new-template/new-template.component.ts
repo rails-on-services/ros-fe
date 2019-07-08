@@ -5,7 +5,7 @@ import { CommsCampaign, CommsService } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
