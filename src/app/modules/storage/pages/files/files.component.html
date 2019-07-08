@@ -3,23 +3,18 @@
     <button mat-raised-button color="primary">
       Upload File
     </button>
-    <div fxFlex fxLayout="row" fxLayoutAlign="end">
-      <mat-button-toggle-group
-          aria-label="Other Actions"
-          name="otherActions"
-          (change)="onOtherActionsChange($event)">
-        <mat-button-toggle value="reload">
-          <mat-icon>refresh</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="settings">
-          <mat-icon>settings</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="help">
-          <mat-icon>help</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
-  </div>
+    <app-table-actions-management
+      fxFlex 
+      fxLayout="row" 
+      fxLayoutAlign="end"
+      [tablePlatform]="'essentials'"
+      [tableModule]="'storage'"
+      [tableName]="'files-table'"
+      [shownColumns]="shownColumns"
+      (reloadTableEmit)="reloadTable()"
+      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"
+    >
+    </app-table-actions-management>
   <ng-container class="files-table" *ngIf="files$ | async as files">
     <app-filterable-table
         [filterInputPlaceholder]="'Find files by campaign name'"

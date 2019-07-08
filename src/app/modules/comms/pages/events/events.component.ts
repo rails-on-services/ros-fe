@@ -4,8 +4,6 @@ import {
   OnInit,
   ViewChild,
   OnDestroy,
-  EventEmitter,
-  Output,
   Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,11 +12,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CommsService, CommsEvent } from '@perx/open-services';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal,
-  ManageColumnModal
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -39,7 +36,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   displayProperties: object;
   eventTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
 
@@ -54,7 +51,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.displayProperties = displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
- 
+
   }
 
   ngOnInit() {
@@ -90,7 +87,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         content: 'Are you sure you want to delete the events',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {
@@ -100,41 +97,17 @@ export class EventsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchEvents(true);
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.eventTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.eventTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.eventTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['comms']['tables']['events-table'] = this.eventTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchEvents(true);
   }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
 
   private removeDialogComponentFromBody() {
     this.dismissableElement.nativeElement.remove();

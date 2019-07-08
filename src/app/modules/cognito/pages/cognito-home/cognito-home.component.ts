@@ -30,18 +30,13 @@ export class CognitoHomeComponent implements OnInit {
   }
 
   fetchUsers() {
-    this.cognitoService.fetchUsers().pipe(
-      map(data => {
-        const cognitoUsers = data.getModels();
-
-        return cognitoUsers;
-      })
-    ).subscribe(
+    this.cognitoService.fetchUsers().subscribe(
       response => {
         this.usersCount = response.length;
       }
     );
   }
+
 
   fetchGroups() {
     // this.cognitoService.fetchGroups().pipe(
