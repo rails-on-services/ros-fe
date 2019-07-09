@@ -35,7 +35,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     private displayPropertiesService: DisplayPropertiesService) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
  

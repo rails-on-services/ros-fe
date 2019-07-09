@@ -1,33 +1,65 @@
-<div class="center">
-    <div class="drop-zone">
-        <ngx-file-drop 
-            [accept]="'.csv, .png'"
-            [multiple]="false"
-            [dropZoneLabel]="'Drop files here or '"
-            [dropZoneClassName]="'file-upload-label'"
-            [showBrowseBtn]="true" 
-            [browseBtnClassName]="'file-upload-btn'" 
-            [browseBtnLabel]="'Browse'"
-            (onFileDrop)="dropped($event)" 
-            (onFileOver)="fileOver($event)"
-            (onFileLeave)="fileLeave($event)" >
-        </ngx-file-drop>
-    </div>
-    <div>
-        <img [src]="imagePrivew" />
-    </div>
-    <div class="upload-table">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                    <td><strong>{{ item.relativePath }}</strong></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<mat-card>
+    <mat-card-title>Upload New File</mat-card-title>
+    <mat-horizontal-stepper linear #stepper>
+        <mat-step label="Target Type" [stepControl]="fileDetailsGroup" [editable]="isEditable">
+            <form [formGroup]="fileDetailsGroup">
+                <ng-template matStepLabel>Fill out your name</ng-template>
+                <mat-form-field>
+                    <input matInput placeholder="Target name" formControlName="targetName" required>
+                </mat-form-field>
+            </form>
+            <mat-divider></mat-divider>
+            <mat-card-actions>
+                <div class="button-container text-right">
+                    <span>
+                        <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+                        <button mat-stroked-button matStepperNext type="button">Next</button>
+                    </span>
+                </div>
+            </mat-card-actions>
+        </mat-step>
+        <mat-step label="Review" [editable]="false">
+            <!-- <div class="center">
+                <div class="drop-zone">
+                    <ngx-file-drop [accept]="'.csv, .png'" [multiple]="false" [dropZoneLabel]="'Drop files here or '"
+                        [dropZoneClassName]="'file-upload-label'" [showBrowseBtn]="true"
+                        [browseBtnClassName]="'file-upload-btn'" [browseBtnLabel]="'Browse'"
+                        (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                        (onFileLeave)="fileLeave($event)">
+                    </ngx-file-drop>
+                </div>
+                <div>
+                    <img [src]="imagePrivew" />
+                </div>
+                <div class="upload-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody class="upload-name-style">
+                            <tr *ngFor="let item of files; let i=index">
+                                <td><strong>{{ item.relativePath }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+            <mat-card-actions>
+                <div class="button-container">
+                    <span class="align-left">
+                        <button mat-stroked-button matStepperPrevious>
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            <span>Back</span>
+                        </button>
+                    </span>
+                    <span class="align-right">
+                        <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+                        <button mat-raised-button color="primary" type="submit">Finish</button>
+                    </span>
+                </div>
+            </mat-card-actions>
+        </mat-step>
+    </mat-horizontal-stepper>
+</mat-card>

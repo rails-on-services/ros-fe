@@ -1,4 +1,4 @@
-import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
+import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 
 @JsonApiModelConfig({
   type: 'storage'

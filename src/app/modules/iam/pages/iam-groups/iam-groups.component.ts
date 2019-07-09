@@ -5,7 +5,6 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -37,13 +36,11 @@ export class IamGroupsComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
     private tableContent: TableContentService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.groupTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['groups-table'];
 
@@ -148,7 +145,7 @@ export class IamGroupsComponent implements OnInit {
     if (this.userId) {
       force = true;
     }
-    this.groups$ = this.iamService.fetchGroups().pipe(
+    this.groups$ = this.iamService.fetchGroups(undefined, force).pipe(
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;

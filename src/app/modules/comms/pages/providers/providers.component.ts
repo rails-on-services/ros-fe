@@ -40,7 +40,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
   }

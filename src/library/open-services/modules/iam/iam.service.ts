@@ -116,7 +116,8 @@ export class IamService {
     return this.datastore.findAll(
       IamGroup,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())
@@ -168,7 +169,8 @@ export class IamService {
     return this.datastore.findAll(
       IamPolicy,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())

@@ -31,7 +31,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     private commsService: CommsService,
     private formBuilder: FormBuilder,
     private displayPropertiesService: DisplayPropertiesService) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
 

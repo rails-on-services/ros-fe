@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
 import { CommsService } from '@perx/open-services';
 
 @Component({
@@ -16,8 +14,6 @@ export class HomeComponent implements OnInit {
   messagesCount: number;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private commsService: CommsService
   ) {
     this.campaignsCount = 0;

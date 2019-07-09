@@ -24,7 +24,7 @@ export class TableActionsManagementComponent implements OnInit {
     public dialog: MatDialog,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
   }
 
   ngOnInit() {

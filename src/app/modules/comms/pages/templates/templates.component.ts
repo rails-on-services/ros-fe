@@ -52,7 +52,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
 

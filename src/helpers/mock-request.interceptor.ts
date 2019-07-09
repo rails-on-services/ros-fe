@@ -4,8 +4,7 @@ import {
   HttpResponse,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,
-  HTTP_INTERCEPTORS
+  HttpInterceptor
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
@@ -129,56 +128,56 @@ export class MockRequestInterceptor implements HttpInterceptor {
       }
     ]
   };
-  private commsCampaigns: any = {
-    data: [
-      {
-        id: '1',
-        type: 'campaigns',
-        links: {
-          self: 'http://api.ros.rails-on-services.org/campaigns/1'
-        },
-        attributes: {
-          urn: 'urn:ros:comm::222222222:campaign/1',
-          created_at: '2019-04-28T17:04:36.165Z',
-          updated_at: '2019-04-28T17:04:36.165Z',
-          owner_type: 'Perx::Survey::Campaign',
-          owner_id: 1
-        }
-      },
-      {
-        id: '2',
-        type: 'campaigns',
-        links: {
-          self: 'http://api.ros.rails-on-services.org/campaigns/2'
-        },
-        attributes: {
-          urn: 'urn:ros:comm::222222222:campaign/2',
-          created_at: '2019-05-03T13:23:37.939Z',
-          updated_at: '2019-05-03T13:23:37.939Z',
-          owner_type: '',
-          owner_id: null
-        }
-      },
-      {
-        id: '3',
-        type: 'campaigns',
-        links: {
-          self: 'http://api.ros.rails-on-services.org/campaigns/3'
-        },
-        attributes: {
-          urn: 'urn:ros:comm::222222222:campaign/3',
-          created_at: '2019-05-06T07:41:02.429Z',
-          updated_at: '2019-05-06T07:41:02.429Z',
-          owner_type: '<string>',
-          owner_id: 0
-        }
-      }
-    ],
-    links: {
-      first: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10',
-      last: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10'
-    }
-  };
+  // private commsCampaigns: any = {
+  //   data: [
+  //     {
+  //       id: '1',
+  //       type: 'campaigns',
+  //       links: {
+  //         self: 'http://api.ros.rails-on-services.org/campaigns/1'
+  //       },
+  //       attributes: {
+  //         urn: 'urn:ros:comm::222222222:campaign/1',
+  //         created_at: '2019-04-28T17:04:36.165Z',
+  //         updated_at: '2019-04-28T17:04:36.165Z',
+  //         owner_type: 'Perx::Survey::Campaign',
+  //         owner_id: 1
+  //       }
+  //     },
+  //     {
+  //       id: '2',
+  //       type: 'campaigns',
+  //       links: {
+  //         self: 'http://api.ros.rails-on-services.org/campaigns/2'
+  //       },
+  //       attributes: {
+  //         urn: 'urn:ros:comm::222222222:campaign/2',
+  //         created_at: '2019-05-03T13:23:37.939Z',
+  //         updated_at: '2019-05-03T13:23:37.939Z',
+  //         owner_type: '',
+  //         owner_id: null
+  //       }
+  //     },
+  //     {
+  //       id: '3',
+  //       type: 'campaigns',
+  //       links: {
+  //         self: 'http://api.ros.rails-on-services.org/campaigns/3'
+  //       },
+  //       attributes: {
+  //         urn: 'urn:ros:comm::222222222:campaign/3',
+  //         created_at: '2019-05-06T07:41:02.429Z',
+  //         updated_at: '2019-05-06T07:41:02.429Z',
+  //         owner_type: '<string>',
+  //         owner_id: 0
+  //       }
+  //     }
+  //   ],
+  //   links: {
+  //     first: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10',
+  //     last: 'http://api.ros.rails-on-services.org/campaigns?page%5Bnumber%5D=1&page%5Bsize%5D=10'
+  //   }
+  // };
 
   constructor(private featureFlagService: FeatureFlagsService) {
   }

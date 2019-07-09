@@ -89,7 +89,8 @@ export class CommsService {
     return this.datastore.findAll(
       CommsTemplate,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())
@@ -159,7 +160,8 @@ export class CommsService {
     return this.datastore.findAll(
       CommsEvent,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())
@@ -289,7 +291,8 @@ export class CommsService {
     return this.datastore.findAll(
       CommsProvider,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())

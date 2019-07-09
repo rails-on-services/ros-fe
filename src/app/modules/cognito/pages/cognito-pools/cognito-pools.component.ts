@@ -4,7 +4,6 @@ import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -27,12 +26,10 @@ export class CognitoPoolsComponent implements OnInit {
   constructor(
     private cognitoService: CognitoService,
     public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
 

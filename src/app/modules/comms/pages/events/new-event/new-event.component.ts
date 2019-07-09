@@ -53,7 +53,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
     // tslint:disable-next-line: no-string-literal

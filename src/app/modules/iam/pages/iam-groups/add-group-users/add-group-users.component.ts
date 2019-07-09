@@ -27,7 +27,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private iamService: IamService,
     private displayPropertiesService: DisplayPropertiesService) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
 
@@ -82,16 +82,16 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   }
 
   //Later can move this to group detail page to fetch group users
-  private fetchUsersInGroup() {
-    this.group$ = this.iamService.fetchGroup(this.id).pipe(
-      map(group => {
-        const users = group.users || [];
-        const groupDetails = this.getGroupInfo(group, users);
+  // private fetchUsersInGroup() {
+  //   this.group$ = this.iamService.fetchGroup(this.id).pipe(
+  //     map(group => {
+  //       const users = group.users || [];
+  //       const groupDetails = this.getGroupInfo(group, users);
 
-        return groupDetails;
-      })
-    );
-  }
+  //       return groupDetails;
+  //     })
+  //   );
+  // }
 
   get columnProperties() {
     return this.userTableDisplayProperties;

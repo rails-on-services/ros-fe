@@ -1,7 +1,5 @@
 import { CognitoService } from '@perx/open-services';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cognito-home',
@@ -14,8 +12,6 @@ export class CognitoHomeComponent implements OnInit {
   appsCount: number;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private cognitoService: CognitoService
   ) {
     this.usersCount = 0;

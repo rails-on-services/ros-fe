@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommsService, CommsTemplate } from '@perx/open-services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SelectionModel } from '@angular/cdk/collections';
+import { CommsService } from '@perx/open-services';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,7 +16,6 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   constructor(
     private commsService: CommsService,
-    private router: Router,
     private route: ActivatedRoute,
   ) { }
 

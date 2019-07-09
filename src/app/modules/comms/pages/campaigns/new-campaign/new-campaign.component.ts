@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CognitoService, CognitoPool } from '@perx/open-services';
+import { CommsService, CognitoService } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
@@ -43,7 +43,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
 

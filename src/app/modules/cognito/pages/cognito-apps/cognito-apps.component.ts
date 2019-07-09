@@ -34,7 +34,7 @@ export class CognitoAppsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.appTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['apps-table'];
 

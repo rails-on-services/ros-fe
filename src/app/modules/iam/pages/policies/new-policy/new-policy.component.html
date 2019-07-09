@@ -32,8 +32,8 @@
                   </mat-expansion-panel-header>
                   <fieldset>
                     <legend>Service</legend>
-                    <mat-radio-group [class.md-input-invalid]="hasPermissionError(permission, 'service', 'required')" aria-label="Select an option" formControlName="service" required>
-                      <mat-error *ngIf="hasPermissionError(permission, 'service', 'required')">Service is required</mat-error>
+                    <mat-radio-group [class.md-input-invalid]="hasPermissionError(permission, 'service')" aria-label="Select an option" formControlName="service" required>
+                      <mat-error *ngIf="hasPermissionError(permission, 'service')">Service is required</mat-error>
                         <mat-radio-button value="IAM">IAM</mat-radio-button>
                         <mat-radio-button value="Cognito">Cognito</mat-radio-button>
                         <mat-radio-button value="Comm">Comm</mat-radio-button>
