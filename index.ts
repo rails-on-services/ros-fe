@@ -55,7 +55,7 @@ export * from './src/app/modules/iam/pages/policies/new-policy/new-policy.compon
 export * from './src/app/modules/iam/pages/policies/policies.component';
 export * from './src/app/modules/iam/pages/policies/policy-attach/policy-attach.component';
 export * from './src/app/modules/storage/pages/files/files.component';
-export * from './src/app/modules/storage/pages/new-storage/new-storage.component';
+export * from './src/app/modules/storage/pages/new-file/new-file.component';
 export * from './src/app/modules/storage/storage-routing.module';
 export * from './src/app/modules/storage/storage.component';
 export * from './src/app/modules/storage/storage.module';

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class StorageComponent implements OnInit {
 
   menus = [
-    {route: 'home', display: 'Files'},
+    {route: 'files', display: 'Files'}
   ];
 
   constructor() { }

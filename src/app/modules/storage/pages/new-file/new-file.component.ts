@@ -4,15 +4,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-new-storage',
-  templateUrl: './new-storage.component.html',
-  styleUrls: ['./new-storage.component.scss']
+  selector: 'app-new-file',
+  templateUrl: './new-file.component.html',
+  styleUrls: ['./new-file.component.scss']
 })
-export class NewStorageComponent implements OnInit{
+export class NewFileComponent implements OnInit {
   public files: NgxFileDropEntry[] = [];
-  imagePrivew: string | ArrayBuffer;
+  filePreview: string | ArrayBuffer;
   fileDetailsGroup: FormGroup;
   isEditable = true;
+
+  textType = /text.*/;
+  imgType = /imag.*/;
 
   constructor(
     private router: Router,
@@ -28,7 +31,7 @@ export class NewStorageComponent implements OnInit{
 
 
   public dropped(files: NgxFileDropEntry[]) {
-    this.files = [...this.files, ...files];
+    this.files = files;
     for (const droppedFile of files) {
 
       // Is it a file?
@@ -37,9 +40,25 @@ export class NewStorageComponent implements OnInit{
         const reader = new FileReader();
 
         fileEntry.file((file: File) => {
-          reader.readAsDataURL(file);
+          console.log(file);
+          if (file.type.match(this.textType)) {
+            reader.readAsText(file);
+          } else if (file.type.match(this.imgType)) {
+            reader.readAsDataURL(file);
+          }
+
           reader.onload = () => {
-            this.imagePrivew = reader.result;
+            this.filePreview = reader.result;
+            const newFileResult = this.filePreview.toString().replace(/(\r|\n)/gm, '\n');
+            const resultByLines = newFileResult.split('\n');
+
+            const resultByCell = resultByLines.map(lineContent => {
+              const newLineContent = lineContent.replace(/(;|,|\s)/gm, ',');
+              const newCellContentArr = newLineContent.split(',');
+              return newCellContentArr;
+            });
+
+            console.log(resultByCell);
           };
         });
         // fileEntry.file((file: File) => {
