@@ -5,7 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-attach-templates-to-campaign',
@@ -26,11 +26,11 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private commsService: CommsService,
     private displayPropertiesService: DisplayPropertiesService
-    ) { 
-      this.displayProperties = displayPropertiesService.getUserDisplayProperties();
-      // tslint:disable-next-line: no-string-literal
-      this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
-    }
+  ) {
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+  }
 
   ngOnInit() {
     this.shownColumns = ['name', 'content', 'status', 'createdAt', 'updatedAt'];
@@ -56,8 +56,8 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     return templateDetails;
   }
 
-  getCampaignInfo(campaign: CommsCampaign, templates: CommsTemplate[]){
-    const campaignInfo =  {
+  getCampaignInfo(campaign: CommsCampaign, templates: CommsTemplate[]) {
+    const campaignInfo = {
       id: campaign.id,
       templates: templates.map(template => {
         return this.getTemplateInfo(template);
@@ -106,20 +106,20 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     let selectedTemplates = [];
     const selectedTemplateIds = this.selection.selected.map(item => item.id);
     this.commsService.fetchTemplates()
-    .subscribe(templates => {
-      templates.forEach(template => {
-        if (selectedTemplateIds.includes(template.id)) {
-          selectedTemplates.push(template);
-        }
+      .subscribe(templates => {
+        templates.forEach(template => {
+          if (selectedTemplateIds.includes(template.id)) {
+            selectedTemplates.push(template);
+          }
+        });
       });
-    });
     if (selectedTemplates.length > 0) {
       this.commsService.fetchCampaign(this.campaignId).subscribe(campaign => {
-          campaign.templates = [ ...campaign.templates || [], ...selectedTemplates];
-          campaign.save().subscribe(
-            () => this.router.navigate(['../'], { relativeTo: this.route })
-          );
-        }
+        campaign.templates = [...campaign.templates || [], ...selectedTemplates];
+        campaign.save().subscribe(
+          () => this.router.navigate(['../'], { relativeTo: this.route })
+        );
+      }
       );
     }
   }

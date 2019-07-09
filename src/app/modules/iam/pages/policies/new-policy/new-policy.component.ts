@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
-import { IamService, IamPolicy } from '@perx/open-services';
+import { IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -20,7 +20,6 @@ export class NewPolicyComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService,
     private fb: FormBuilder
   ) {
     this.createPolicynamePage = true;
@@ -55,7 +54,7 @@ export class NewPolicyComponent {
     return this.policyDetailsForm.controls[controlName].hasError(errorName);
   }
 
-  hasPermissionError(permission: FormGroup, controlName: string, errorName: string) {
+  hasPermissionError(permission: FormGroup, controlName: string) {
     const result = this.goNextStepTriggered && permission.controls[controlName].invalid;
     return result;
   }

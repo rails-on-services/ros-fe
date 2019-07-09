@@ -28,6 +28,7 @@ export class IamUser extends JsonApiModel {
   @Attribute({ serializedName: 'display_properties' })
   displayProperties: {};
 
+  @Attribute({ serializedName: 'groups' })
   @HasMany()
   groups: Group[];
 }

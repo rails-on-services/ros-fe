@@ -1,4 +1,4 @@
-import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany, BelongsTo } from 'angular2-jsonapi';
+import { JsonApiModel, JsonApiModelConfig, Attribute, HasMany } from 'angular2-jsonapi';
 import { CommsEvent } from './event.model';
 import { CommsTemplate } from './template.model';
 

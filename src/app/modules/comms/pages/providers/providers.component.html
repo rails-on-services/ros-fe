@@ -7,23 +7,18 @@
             [disabled]="!(selection && selection.selected.length)">
       Remove Provider<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
-    <div fxFlex fxLayout="row" fxLayoutAlign="end">
-      <mat-button-toggle-group
-          aria-label="Other Actions"
-          name="otherActions"
-          (change)="onOtherActionsChange($event)"
-      >
-        <mat-button-toggle value="reload">
-          <mat-icon>refresh</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="settings">
-          <mat-icon>settings</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="help">
-          <mat-icon>help</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-    </div>
+    <app-table-actions-management
+      fxFlex 
+      fxLayout="row" 
+      fxLayoutAlign="end"
+      [tablePlatform]="'essentials'"
+      [tableModule]="'comms'"
+      [tableName]="'providers-table'"
+      [shownColumns]="shownColumns"
+      (reloadTableEmit)="reloadTable()"
+      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"
+    >
+    </app-table-actions-management>
   </div>
   <ng-container class="providers-table" *ngIf="providers$ | async as providers">
     <app-filterable-table

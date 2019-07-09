@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-new-iam-group',
@@ -35,7 +35,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     private displayPropertiesService: DisplayPropertiesService) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
  

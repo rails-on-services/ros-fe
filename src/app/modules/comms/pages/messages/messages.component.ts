@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { CommsService, CommsMessage } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ManageColumnModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-messages',
@@ -21,7 +20,7 @@ export class MessagesComponent implements OnInit {
 
   displayProperties: object;
   messageTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
 
   constructor(
     private commsService: CommsService,
@@ -29,10 +28,10 @@ export class MessagesComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.messageTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['messages-table'];
-  
+
   }
 
   ngOnInit() {
@@ -40,41 +39,17 @@ export class MessagesComponent implements OnInit {
     this.fetchMessages();
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchMessages(true);
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.messageTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.messageTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.messageTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['comms']['tables']['messages-table'] = this.messageTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchMessages(true);
   }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
 
   private fetchMessages(force?: boolean) {
     this.messages$ = this.commsService.fetchMessages(force).pipe(

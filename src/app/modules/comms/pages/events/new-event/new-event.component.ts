@@ -14,7 +14,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { map, takeUntil } from 'rxjs/operators';
 import { NgxMaterialTimepickerComponent } from 'ngx-material-timepicker';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 
 @Component({
@@ -53,7 +53,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
     // tslint:disable-next-line: no-string-literal

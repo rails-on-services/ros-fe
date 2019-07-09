@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IamService } from '@perx/open-services';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-iam-home',
@@ -14,8 +12,6 @@ export class IamHomeComponent implements OnInit {
   policiesCount: number;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private iamService: IamService
   ) {
     this.usersCount = 0;

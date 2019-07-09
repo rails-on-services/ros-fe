@@ -30,3 +30,21 @@ html {
     padding: 3px 0;
   }
 }
+.file-upload-btn {
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-color: transparent;
+  color: #0782d0;
+  padding: 0 5px;
+  cursor: pointer;
+}
+.file-upload-btn:focus {
+  outline: none;
+}
+.file-upload-label {
+  font-size: 1.6rem;
+  height: 100px;
+  margin: auto;
+  border: 2px dotted #0782d0;
+  border-radius: 30px;
+}

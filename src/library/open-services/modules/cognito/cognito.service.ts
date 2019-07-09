@@ -1,12 +1,13 @@
 import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { CognitoUser } from './models/user.model';
 import { CognitoDatastore } from './cognito-datastore.service';
 import { CognitoPool } from './models/pool.model';
 import { CognitoCredential } from './models/cognito-credential.model';
 import { CognitoApplication } from './models/applications.model';
+import { map } from 'rxjs/operators';
 
 export class EnvConfig {
   // defaults
@@ -44,7 +45,7 @@ export class CognitoService {
     }
 
     this.datastore.headers = new HttpHeaders({
-      Authorization: 'Basic AFJZLEKIOLQKHYHHHROP:R8ksVUv681NArqe05QaJTGekX6vAHG79gt-LOC4so-PkRlT3MGiv2A'
+      Authorization: 'Basic ADHMJOIIMTOLFCFHFGMN:pEkCcZwX7aYD5_APSqNv3u4XfuSJoi8UhwTKsnzFzBry9HlRG9Zedw'
     });
   }
 
@@ -86,28 +87,39 @@ export class CognitoService {
 
   // }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.error instanceof ErrorEvent) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error.message);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      console.error(
-        `Backend returned code ${ error.status }, ` +
-        `body was: ${ error.error }`);
-    }
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
-  }
+  // private handleError(error: HttpErrorResponse) {
+  //   if (error.error instanceof ErrorEvent) {
+  //     // A client-side or network error occurred. Handle it accordingly.
+  //     console.error('An error occurred:', error.error.message);
+  //   } else {
+  //     // The backend returned an unsuccessful response code.
+  //     // The response body may contain clues as to what went wrong,
+  //     console.error(
+  //       `Backend returned code ${ error.status }, ` +
+  //       `body was: ${ error.error }`);
+  //   }
+  //   // return an observable with a user-facing error message
+  //   return throwError(
+  //     'Something bad happened; please try again later.');
+  // }
 
-  fetchUsers(): Observable<JsonApiQueryData<CognitoUser>> {
+
+  fetchUsers(force?: boolean): Observable<CognitoUser[]> {
+    if (!force) {
+      const users = this.datastore.peekAll(CognitoUser);
+      if (users && users.length > 0) {
+        return of(users);
+      }
+    }
+
     return this.datastore.findAll(
       CognitoUser,
       {
-        page: { size: 10, number: 1 }
+        page: { size: 10, number: 1 },
+        include: 'groups,credentials'
       }
+    ).pipe(
+      map(document => document.getModels())
     );
   }
 

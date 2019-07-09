@@ -1,17 +1,16 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {tap, map} from 'rxjs/operators';
-import {AuthService} from 'ngx-auth';
-import {CognitoService} from '@perx/open-services';
-import {TokenStorage} from './token-storage.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+import { AuthService } from 'ngx-auth';
+import { CognitoService } from '@perx/open-services';
+import { TokenStorage } from './token-storage.service';
 import { environment } from '../../../environments/environment';
 
-interface AccessData {
-  refreshToken: string;
-  preAuthToken: string;
-}
+// interface AccessData {
+//   refreshToken: string;
+//   preAuthToken: string;
+// }
 
 @Injectable()
 export class AuthenticationService implements AuthService {
@@ -22,11 +21,8 @@ export class AuthenticationService implements AuthService {
   preAuthJWT: string;
 
   constructor(
-    private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private cognitoService: CognitoService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private cognitoService: CognitoService
   ) {
   }
 
@@ -69,15 +65,14 @@ export class AuthenticationService implements AuthService {
           this.retries++;
           if (resp) {
             this.userAuth(this.preAuthJWT).toPromise().then(
-              (res) => {
+              () => {
                 const userBearer = resp.headers.get('Authorization');
                 if (userBearer) {
                   this.tokenStorage.setAccessToken(userBearer.split(' ')[1]);
 
                 }
               },
-              (err) => {
-
+              () => {
                 return of(this.logout());
               }
             );
@@ -213,9 +208,9 @@ export class AuthenticationService implements AuthService {
    * @private
    * @param {String} accessToken
    */
-  private saveAccessData(accessToken: string) {
-    this.tokenStorage.setAccessToken(accessToken);
-  }
+  // private saveAccessData(accessToken: string) {
+  //   this.tokenStorage.setAccessToken(accessToken);
+  // }
 
 
   private getUrlParameter(name) {

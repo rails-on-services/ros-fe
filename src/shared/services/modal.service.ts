@@ -32,7 +32,7 @@ export class ModalService {
         width: '50vw',
         data: {}
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(() => {
         this.modalOpen = false;
         this.router.navigate([this.previousURL], {relativeTo: this.route});
 

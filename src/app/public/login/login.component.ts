@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl(this.authService.getInterruptedUrl());
                   }
                 },
-                (err) => {
+                () => {
                   this.failedAuth = true;
                   this.authed = false;
                 }

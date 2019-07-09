@@ -1,14 +1,14 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { MatButtonToggleChange, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal, RenameModal, ManageColumnModal } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableContentService } from 'src/shared/services/table-content/table-content.service';
 
 @Component({
   selector: 'app-iam-groups',
@@ -31,16 +31,16 @@ export class IamGroupsComponent implements OnInit {
   selection: SelectionModel<IamGroup>;
 
   shownColumns: (string|number|symbol)[];
+  userLinkUrlRoot = '../users/';
 
   constructor(
     private iamService: IamService,
     public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
+    private tableContent: TableContentService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.groupTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['groups-table'];
 
@@ -129,40 +129,15 @@ export class IamGroupsComponent implements OnInit {
     });
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
-    // Toggle off as we only want the look and feel.
-    event.source.checked = false;
-    switch (event.value) {
-      case 'reload':
-        if (this.selection) {
-          this.selection.clear();
-        }
-        this.fetchGroups(true);
-        break;
-      case 'settings':
-        const columnsDialogRef = this.dialog.open(ManageColumnModal, {
-          width: '30rem',
-          data: {
-            columnProperties: this.groupTableDisplayProperties,
-            selected: this.shownColumns
-          }
-        });
-        columnsDialogRef.componentInstance.selectionChange.subscribe(columns => {
-          this.shownColumns = [
-            ...columns
-          ];
-        });
-        columnsDialogRef.afterClosed().subscribe(() => {
-          this.groupTableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.groupTableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties['essentials']['IAM']['tables']['groups-table'] = this.groupTableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
-        });
-        break;
-      case 'help':
-        break;
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
     }
+    this.fetchGroups(true);
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   fetchGroups(force?: boolean) {
@@ -170,20 +145,22 @@ export class IamGroupsComponent implements OnInit {
     if (this.userId) {
       force = true;
     }
-    this.groups$ = this.iamService.fetchGroups().pipe(
+    this.groups$ = this.iamService.fetchGroups(undefined, force).pipe(
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
-          const group = { id: iamGroup.id };
-          const keys = this.groupTableDisplayProperties.map(item => item.key);
-
-          keys.forEach(key => {
-            group[key] = iamGroup[key];
-          });
-          group['name_link'] = groupLink;
-          return group;
+          console.log(iamGroup.users);
+          console.log(this.tableContent.generateTableMultiLinksContent(iamGroup.users, iamGroup.id, this.userLinkUrlRoot));
+          return {
+            id: iamGroup.id,
+            name: iamGroup.name,
+            name_link: groupLink,
+            users: this.tableContent.generateTableMultiLinksContent(iamGroup.users, iamGroup.id, this.userLinkUrlRoot, 'username'),
+            urn: iamGroup.urn,
+            creationTime: iamGroup.creationTime,
+            attachedPolicies: iamGroup.attachedPolicies
+          };
         });
-
         return groups;
       })
     );

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
@@ -7,6 +7,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './filterable-table.component.html',
   styleUrls: ['./filterable-table.component.scss']
 })
+
 export class FilterableTableComponent implements OnInit, AfterViewInit {
   @Input() columnProperties: {};
   @Input() contents: any[];
@@ -18,6 +19,8 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   @Input() filterInputPlaceholder = 'Find users by user name';
 
   @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
+
+
   hasContent: boolean;
 
   selection = new SelectionModel<any>(true, []);
@@ -25,6 +28,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<any[]>;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
     this.hasContent = !!(this.contents.length > 0);
@@ -38,6 +42,9 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   get attributes() {
@@ -49,7 +56,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
 
   get displayedColumns() {
     const columns = this.shownColumns ?
-      this.attributes.filter(column => (this.shownColumns.indexOf(column) !== -1 )) :
+      this.attributes.filter(column => (this.shownColumns.indexOf(column) !== -1)) :
       this.attributes;
     if (this.selectable) {
       return [
@@ -90,7 +97,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   }
 
   hasLink(element: any) {
-    const obj = element as {value: string, link: string};
+    const obj = element as { value: string, link: string };
 
     if (!obj || !!!obj.link || typeof obj.link === 'function') {
       return false;

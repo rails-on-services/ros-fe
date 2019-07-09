@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { IamService } from 'src/library/open-services/modules/iam/iam.service';
 import { DEFAULT_SETTING } from '../shared/constant/displayPropertiesContant';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +11,7 @@ import { DisplayPropertiesService } from 'src/shared/services/display-properties
 export class AppComponent {
   constructor(
     private iamService: IamService,
-    private displayPropertiesService: DisplayPropertiesService,
-    private router: Router
+    private displayPropertiesService: DisplayPropertiesService
   ) {
     // Just for test, make some fake login user data
     const currentUser = displayPropertiesService.getCurrentUser();
@@ -39,7 +37,7 @@ export class AppComponent {
           currentUser.displayProperties = DEFAULT_SETTING.display_properties;
           userDetails.displayProperties = DEFAULT_SETTING.display_properties;
           userDetails.save().subscribe(
-            res => {
+            () => {
               this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
             }
           );

@@ -6,7 +6,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-policy-attach',
@@ -30,7 +30,7 @@ export class PolicyAttachComponent implements OnInit {
     public dialog: MatDialog,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
   

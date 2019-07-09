@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommsService, CommsTemplate, CommsProvider } from '@perx/open-services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { SelectionModel } from '@angular/cdk/collections';
+import { CommsService, CommsTemplate } from '@perx/open-services';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/display-properties/display-properties.service';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-event',
@@ -18,22 +17,21 @@ export class EventComponent implements OnInit, OnDestroy {
   templates$: Observable<any>;
   providers$: Observable<any>;
   id: number;
-  private isProviderEditable = false;
-  private isTemplateEditable = false;
   selectedTemplateId: number | string;
   selectedProviderId: number | string;
   displayProperties: object;
   eventTableDisplayProperties: TableHeaderProperties[] = [];
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   providerTableDisplayProperties: TableHeaderProperties[] = [];
+  isProviderEditable = false;
+  isTemplateEditable = false;
 
   constructor(
     private commsService: CommsService,
-    private router: Router,
     private route: ActivatedRoute,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = displayPropertiesService.getUserDisplayProperties();
+    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
     // tslint:disable-next-line: no-string-literal
@@ -91,7 +89,7 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   fetchTemplatesUnderCampaign(campaignId: number) {
-    this.templates$ = this.commsService.fetchTemplates().pipe(
+    this.templates$ = this.commsService.fetchTemplates(campaignId).pipe(
       map(commTemplates => {
         const templates = commTemplates.map(commTemplate => {
           const template = { id: commTemplate.id };

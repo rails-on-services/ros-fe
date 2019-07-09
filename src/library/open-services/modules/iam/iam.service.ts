@@ -17,7 +17,7 @@ export class IamService {
 
   constructor(private datastore: IamDatastore) {
     this.datastore.headers = new HttpHeaders({
-      Authorization: 'Basic AFJZLEKIOLQKHYHHHROP:R8ksVUv681NArqe05QaJTGekX6vAHG79gt-LOC4so-PkRlT3MGiv2A'
+      Authorization: 'Basic ADHMJOIIMTOLFCFHFGMN:pEkCcZwX7aYD5_APSqNv3u4XfuSJoi8UhwTKsnzFzBry9HlRG9Zedw'
 
     });
   }
@@ -116,7 +116,8 @@ export class IamService {
     return this.datastore.findAll(
       IamGroup,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())
@@ -168,7 +169,8 @@ export class IamService {
     return this.datastore.findAll(
       IamPolicy,
       {
-        ...params
+        ...params,
+        filter
       }
     ).pipe(
       map(document => document.getModels())

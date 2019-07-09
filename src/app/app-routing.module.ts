@@ -23,6 +23,10 @@ const router: Routes = [
   {
     path: 'comms',
     loadChildren: './modules/comms/comms.module#CommsModule'
+  },
+  {
+    path: 'storage',
+    loadChildren: './modules/storage/storage.module#StorageModule'
   }
 ];
 
