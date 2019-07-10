@@ -140,16 +140,21 @@ export class NewFileComponent implements OnInit {
 
           const formData = new FormData();
           formData.append('file', file, droppedFile.relativePath);
+          const payload = {
+            'form-data': {
+              file
+            }
+          };
 
           const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
           });
           const options = { headers, responseType: 'blob' as 'json' };
 
 
 
-          this.http.post('http://7339f4c0.ngrok.io/storage/uploads', formData, options)
+          this.http.post('http://7339f4c0.ngrok.io/storage/uploads', payload, options)
             .subscribe(data => {
               console.log(data);
             });

@@ -1,7 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-export class EnvConfig {
+class EnvConfig {
   // defaults
   env = {
     apiHost: 'localhost:3000',
