@@ -1,0 +1,120 @@
+<mat-card>
+    <mat-card-title>Upload New File</mat-card-title>
+    <form [formGroup]="fileDetailsForm" class="file-details-form">
+        <mat-horizontal-stepper linear #stepper>
+            <mat-step label="Target Type" [stepControl]="fileDetailsForm.get('services') && fileDetailsForm.get('fileType')" [editable]="isEditable">
+                <ng-template matStepLabel>Fill out your name</ng-template>
+                <mat-form-field class="full-width_input">
+                    <mat-label>Services:</mat-label>
+                    <mat-select (selectionChange)="toggleSelectedServices($event.value)" formControlName="services">
+                        <mat-option *ngFor="let service of SignaturesMapping | keyvalue" [value]="service.key">
+                            {{service.key}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="fileDetailsForm.get('services').hasError('required')">Please select an option
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="full-width_input">
+                    <mat-label>File Type:</mat-label>
+                    <mat-select (selectionChange)="toggleSelectedSignatures($event.value)" formControlName="fileType">
+                        <mat-option *ngFor="let fileType of selectedServices | keyvalue" value="{{fileType.key}}">
+                            {{fileType.key}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="fileDetailsForm.get('fileType').hasError('required')">Please select an option
+                    </mat-error>
+                </mat-form-field>
+                <fieldset *ngIf="(selectedSignature | keyvalue)?.length">
+                    <legend>Signature Mapping</legend>
+                    <mat-form-field *ngFor="let fieldValue of selectedSignature | keyvalue">
+                        <mat-label>{{fieldValue.key}}:</mat-label>
+                        <input matInput [id]="fieldValue.key" (change)="updateSignatureMappingField($event)"
+                            [value]="fieldValue.value">
+                    </mat-form-field>
+                </fieldset>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                    <div class="button-container text-right">
+                        <span>
+                            <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+                            <button mat-stroked-button matStepperNext type="button"
+                                (click)="updateSignatureMapping()">Next</button>
+                        </span>
+                    </div>
+                </mat-card-actions>
+            </mat-step>
+            <mat-step label="Preview" [stepControl]="fileDetailsForm.get('agreeTNC')" [editable]="true">
+                <div class="center">
+                    <div class="drop-zone">
+                        <ngx-file-drop [accept]="'.csv, image/*'" [multiple]="multiple"
+                            [dropZoneLabel]="'Drop files here or '" [dropZoneClassName]="'file-upload-label'"
+                            [showBrowseBtn]="true" [browseBtnClassName]="'file-upload-btn'" [browseBtnLabel]="'Browse'"
+                            (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+                            (onFileLeave)="fileLeave($event)">
+                        </ngx-file-drop>
+                    </div>
+                    <mat-error *ngIf="checkTNCStatus && files.length <= 0">Please upload a file</mat-error>
+                    <div *ngIf="!multiple">
+                        <div *ngIf="isImgFile" class="img-preview">
+                            <img [src]="filePreview" />
+                        </div>
+                        <div *ngIf="isTextFile && fileContents.length > 0">
+                            <app-filterable-table [columnProperties]="columnProperties" [contents]="fileContents"
+                                [selectable]=false [shownColumns]="tableHeader" filterInputPlaceholder="Search">
+                            </app-filterable-table>
+                        </div>
+                    </div>
+                    <div class="agree-tnc">
+                        <mat-checkbox class="full-width_input" formControlName="agreeTNC" #agreeTNC>I take responsibility on the
+                            accuracy of data upload.</mat-checkbox>
+                            <mat-error *ngIf="checkTNCStatus && !agreeTNC.checked">Please agree the TNC before upload the file</mat-error>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                    <div class="button-container text-right">
+                        <span class="align-left">
+                            <button mat-stroked-button matStepperPrevious>
+                                <mat-icon>keyboard_arrow_left</mat-icon>
+                                <span>Back</span>
+                            </button>
+                        </span>
+                        <span class="align-right">
+                            <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+                            <button mat-stroked-button matStepperNext type="button" (click)="setCheckTNCStatus()">Next</button>
+                        </span>
+                    </div>
+                </mat-card-actions>
+            </mat-step>
+            <mat-step label="Review" [editable]="false">
+                <div class="upload-table">
+                    <table class="table">
+                        <thead *ngIf="files.length > 0">
+                            <tr>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody class="upload-name-style">
+                            <tr *ngFor="let item of files; let i=index">
+                                <td><strong>{{ item.relativePath }}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                    <div class="button-container text-right">
+                        <span class="align-left">
+                            <button mat-stroked-button matStepperPrevious>
+                                <mat-icon>keyboard_arrow_left</mat-icon>
+                                <span>Back</span>
+                            </button>
+                        </span>
+                        <span class="align-right">
+                            <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+                            <button mat-raised-button color="primary" type="submit">Finish</button>
+                        </span>
+                    </div>
+                </mat-card-actions>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </form>
+</mat-card>

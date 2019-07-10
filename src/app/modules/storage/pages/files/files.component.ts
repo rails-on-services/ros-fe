@@ -39,7 +39,7 @@ export class FilesComponent implements OnInit {
   }
 
   addFile() {
-    this.router.navigate(['new-storage'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['new-file'], { relativeTo: this.activatedRoute });
   }
 
   reloadTable() {

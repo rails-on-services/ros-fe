@@ -8,13 +8,13 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { StorageComponent } from './storage.component';
 import { FilesComponent } from './pages/files/files.component';
 import { StorageRoutingModule } from './storage-routing.module';
-import { NewStorageComponent } from './pages/new-storage/new-storage.component';
+import { NewFileComponent } from './pages/new-file/new-file.component';
 import { SharedModule } from '../../../shared/shared.module';
 
 const COMPONENTS = [
   StorageComponent,
   FilesComponent,
-  NewStorageComponent
+  NewFileComponent
 ];
 
 @NgModule({
@@ -39,7 +39,7 @@ const COMPONENTS = [
   entryComponents: [
     ManageColumnModal,
     ConfirmationModal,
-    NewStorageComponent
+    NewFileComponent
     ]
 })
 export class StorageModule {
