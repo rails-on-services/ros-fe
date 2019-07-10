@@ -1,0 +1,21 @@
+fieldset {
+  display: flex;
+  max-width: 30rem;
+  padding: 3rem;
+  margin: 1rem 0;
+}
+
+.full-width_input {
+    width: 100%;
+    max-width: 50rem;
+    min-width: 15rem;
+}
+
+.drop-zone {
+  max-width: 60rem;
+  margin: 1rem 0;
+}
+
+.img-preview img {
+  max-width: 10rem;
+}
