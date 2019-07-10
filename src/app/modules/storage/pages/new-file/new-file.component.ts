@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-file',
@@ -70,6 +71,7 @@ export class NewFileComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http: HttpClient
   ) {
   }
 
@@ -134,27 +136,24 @@ export class NewFileComponent implements OnInit {
             }
           };
         });
-        // fileEntry.file((file: File) => {
+        fileEntry.file((file: File) => {
 
-        // Here you can access the real file
-        // console.log(droppedFile.relativePath, file);
-        /**
-        // You could upload it like this:
-        const formData = new FormData()
-        formData.append('logo', file, relativePath)
+          const formData = new FormData();
+          formData.append('file', file, droppedFile.relativePath);
 
-        // Headers
-        const headers = new HttpHeaders({
-          'security-token': 'mytoken'
-        })
+          const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
+          });
+          const options = { headers, responseType: 'blob' as 'json' };
 
-        this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-        .subscribe(data => {
-          // Sanitized logo returned from backend
-        })
-        **/
 
-        // });
+
+          this.http.post('http://7339f4c0.ngrok.io/storage/uploads', formData, options)
+            .subscribe(data => {
+              console.log(data);
+            });
+        });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;

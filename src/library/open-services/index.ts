@@ -24,4 +24,5 @@ export * from './modules/iam/models/iam-credential.model';
 export * from './modules/iam/models/policy.model';
 export * from './modules/iam/models/user.model';
 export * from './modules/storage/models/storage.model';
+export * from './modules/storage/storage.module';
 export * from './modules/storage/storage.service';
