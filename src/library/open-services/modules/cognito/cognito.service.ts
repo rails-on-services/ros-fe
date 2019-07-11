@@ -20,38 +20,6 @@ export class CognitoService {
     });
   }
 
-  authenticateAppWithPreAuth(referrer: string) {
-
-    return this.http.get(this.cognitoEndpoint, {
-      params: {
-        url: referrer
-      },
-      observe: 'response'
-    });
-  }
-
-  authenticateUser(bearer: string, user: string) {
-    const payload = {
-      data: {
-        type: 'login',
-        attributes: {
-          primary_identifier: user,
-        }
-      }
-    };
-    const httpOptions = {
-      headers: new HttpHeaders(
-        {
-          'Content-Type': 'application/vnd.api+json',
-          Authorization: bearer
-        })
-    };
-    return this.http.post(this.apiHost + '/cognito/login', payload, {
-      headers: httpOptions.headers,
-      observe: 'response'
-    });
-  }
-
   fetchUsers(force?: boolean): Observable<CognitoUser[]> {
     if (!force) {
       const users = this.datastore.peekAll(CognitoUser);
