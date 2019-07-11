@@ -1,39 +1,28 @@
-// import { CommonModule } from '@angular/common';
-// import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule } from '@angular/core';
 
-// import { StorageService, EnvConfig } from './storage.service';
-// import { HttpClientModule } from '@angular/common/http';
-// import { JsonApiModule } from 'angular2-jsonapi';
+import { OpenUiComponentsModule } from '@perx/open-ui-components';
+import { HttpClientModule } from '@angular/common/http'
+import { JsonApiModule } from 'angular2-jsonapi';
+import { CommonModule } from '@angular/common';
 
+const COMPONENTS = [
+];
 
-// @NgModule({
-//   imports: [
-//     CommonModule,
-//     HttpClientModule,
-//     JsonApiModule
-//   ],
-//   providers: [],
-//   bootstrap: []
-// })
-
-// export class StorageModule {
-//   constructor(@Optional() @SkipSelf() parentModule: StorageModule) {
-//     if (parentModule) {
-//       throw new Error(
-//         'StorageModule is already loaded. Import it in the AppModule only');
-//     }
-//   }
-
-//   public static forRoot(config: EnvConfig): ModuleWithProviders {
-//     return {
-//       ngModule: StorageModule,
-//       providers: [
-//         StorageService,
-//         {
-//           provide: EnvConfig,
-//           useValue: config
-//         }
-//       ],
-//     };
-//   }
-// }
+@NgModule({
+  declarations: [
+    ...COMPONENTS
+  ],
+  imports: [
+    CommonModule,
+    OpenUiComponentsModule,
+    HttpClientModule,
+    JsonApiModule
+  ],
+  exports: [
+    ...COMPONENTS,
+    JsonApiModule
+  ],
+  providers: [],
+  bootstrap: []
+})
+export class StorageModule { }

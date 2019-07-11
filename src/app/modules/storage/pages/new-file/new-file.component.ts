@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-
+import { StorageService } from '@perx/open-services';
 @Component({
   selector: 'app-new-file',
   templateUrl: './new-file.component.html',
@@ -71,7 +70,7 @@ export class NewFileComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private storageService: StorageService
   ) {
   }
 
@@ -94,6 +93,7 @@ export class NewFileComponent implements OnInit {
   public splitRowContent(content: string) {
     return content.replace(/(;|,|\t)/gm, ',').split(',');
   }
+
   public dropped(files: NgxFileDropEntry[]) {
     this.files = this.multiple ? [...this.files, ...files] : files;
 
@@ -116,49 +116,15 @@ export class NewFileComponent implements OnInit {
             reader.readAsDataURL(file);
           }
 
-          reader.onload = () => {
-            this.filePreview = reader.result;
-            if (this.isTextFile) {
-              const newFileResult = this.filePreview.toString().replace(/(\r|\n)/gm, '\n');
-              const resultByLines = newFileResult.split('\n');
-              this.tableHeader = this.splitRowContent(resultByLines.shift());
-              this.columnProperties = this.tableHeader.map(header => ({
-                key: header,
-                name: header,
-                sortable: true,
-                display: true
-              }));
-
-              const resultByCell = resultByLines.map(lineContent => {
-                return this.splitRowContent(lineContent);
-              });
-              this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
-            }
-          };
+          this.transformFileDataWhenReaderOnload(reader);
         });
+
         fileEntry.file((file: File) => {
-
-          const formData = new FormData();
-          formData.append('file', file, droppedFile.relativePath);
-          const payload = {
-            'form-data': {
-              file
-            }
-          };
-
-          const headers = new HttpHeaders({
-            'Content-Type': 'multipart/form-data',
-            Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
+          this.storageService.uploadFile(file).subscribe(data => {
+            console.log(data);
           });
-          const options = { headers, responseType: 'blob' as 'json' };
-
-
-
-          this.http.post('http://7339f4c0.ngrok.io/storage/uploads', payload, options)
-            .subscribe(data => {
-              console.log(data);
-            });
         });
+
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -169,6 +135,34 @@ export class NewFileComponent implements OnInit {
     console.timeEnd('dropped');
   }
 
+  public transformFileDataWhenReaderOnload(reader: FileReader) {
+    reader.onload = () => {
+      this.filePreview = reader.result;
+      this.updateFileContentsForCSVFile();
+    };
+  }
+
+  public updateFileContentsForCSVFile() {
+    if (!this.isTextFile) {
+      return null;
+    }
+
+    const resultByLines = this.filePreview.toString().replace(/(\r|\n)/gm, '\n').split('\n');
+
+    this.tableHeader = this.splitRowContent(resultByLines.shift());
+    this.columnProperties = this.tableHeader.map(header => ({
+      key: header,
+      name: header,
+      sortable: true,
+      display: true
+    }));
+
+    const resultByCell = resultByLines.map(lineContent => {
+      return this.splitRowContent(lineContent);
+    });
+    this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
+  }
+
   public toggleSelectedServices(value) {
     this.selectedServices = this.SignaturesMapping[value];
     this.selectedSignature = {};
@@ -176,13 +170,6 @@ export class NewFileComponent implements OnInit {
 
   public toggleSelectedSignatures(value) {
     this.selectedSignature = Object.assign({}, this.selectedServices[value]);
-    // this.fileDetailsForm = new FormGroup({
-    //   targetType: new FormControl('', [Validators.required]),
-    // });
-    // this.fileDetailsForm.get('targetType').setValue(value);
-    // this.selectedSignature.forEach(field => {
-    //   this.fileDetailsForm.addControl(field, new FormControl(''));
-    // });
   }
 
   public onChange(event) {

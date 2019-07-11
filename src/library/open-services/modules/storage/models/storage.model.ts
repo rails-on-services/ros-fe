@@ -1,7 +1,7 @@
 import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 
 @JsonApiModelConfig({
-  type: 'storage'
+  type: 'storages'
 })
 export class StorageFile extends JsonApiModel {
   @Attribute()
