@@ -20,9 +20,9 @@ export class StorageService {
     this.storageEndpoint = 'http://7339f4c0.ngrok.io/storage/';
   }
 
-  uploadFile(file: File): Observable<any> {
+  uploadFile(file: File, filePath?: string): Observable<any> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, filePath);
 
     const headers = new HttpHeaders({
       'Content-Type': 'multipart/form-data',
@@ -33,6 +33,7 @@ export class StorageService {
     return this.http.post(this.storageEndpoint, formData, options);
   }
 
+  // TODO, didn't find a good way for using json api for file upload
   // createFile(file: File): Observable<any> {
   //   const newFile = this.datastore.createRecord(
   //     File,
@@ -44,4 +45,5 @@ export class StorageService {
   //   return newFile.save();
   // }
 
+  // TODO, need to figure out the format for getting all signatures from API
 }

@@ -120,7 +120,7 @@ export class NewFileComponent implements OnInit {
         });
 
         fileEntry.file((file: File) => {
-          this.storageService.uploadFile(file).subscribe(data => {
+          this.storageService.uploadFile(file, droppedFile.relativePath).subscribe(data => {
             console.log(data);
           });
         });
