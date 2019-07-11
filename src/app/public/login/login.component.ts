@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit {
   }
 
   handleSubmit() {
-    console.log(this.loginFormGroup.value); // outputs values in object format
     if (this.loginFormGroup.valid) {
       // call login api
       this.router.navigate(['/dashboard/summary'], { relativeTo: this.route });

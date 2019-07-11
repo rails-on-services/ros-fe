@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageDatastore } from './storage-datastore.service';
-import { StorageFile } from './models/storage.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

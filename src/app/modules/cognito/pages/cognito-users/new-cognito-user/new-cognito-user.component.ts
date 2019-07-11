@@ -48,9 +48,6 @@ export class NewCognitoUserComponent implements OnInit, AfterViewInit {
   }
 
   submitForm() {
-    console.log(this.userDetailsGroup.value); // outputs values in object format
-
-
     // save to api
     const user = {
       username: this.userDetailsGroup.get('userName').value,

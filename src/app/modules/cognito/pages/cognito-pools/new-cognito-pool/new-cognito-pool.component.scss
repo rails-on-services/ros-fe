@@ -1,0 +1,20 @@
+.button-container {
+    overflow: auto;
+    height: 4em;
+  
+    .align-left {
+      position: relative;
+      float: left;
+      left: 0;
+    }
+  
+    .align-right {
+      position: relative;
+      float: right;
+      right: 0;
+      min-height: 1em;
+  
+    }
+  }
+  
+  

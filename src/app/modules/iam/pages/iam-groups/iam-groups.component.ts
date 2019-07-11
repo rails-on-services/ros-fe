@@ -149,8 +149,6 @@ export class IamGroupsComponent implements OnInit {
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
-          console.log(iamGroup.users);
-          console.log(this.tableContent.generateTableMultiLinksContent(iamGroup.users, iamGroup.id, this.userLinkUrlRoot));
           return {
             id: iamGroup.id,
             name: iamGroup.name,
