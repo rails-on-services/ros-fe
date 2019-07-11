@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { StorageService } from '@perx/open-services';
 @Component({
   selector: 'app-new-file',
   templateUrl: './new-file.component.html',
@@ -70,6 +70,7 @@ export class NewFileComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private storageService: StorageService
   ) {
   }
 
@@ -92,6 +93,7 @@ export class NewFileComponent implements OnInit {
   public splitRowContent(content: string) {
     return content.replace(/(;|,|\t)/gm, ',').split(',');
   }
+
   public dropped(files: NgxFileDropEntry[]) {
     this.files = this.multiple ? [...this.files, ...files] : files;
 
@@ -114,47 +116,15 @@ export class NewFileComponent implements OnInit {
             reader.readAsDataURL(file);
           }
 
-          reader.onload = () => {
-            this.filePreview = reader.result;
-            if (this.isTextFile) {
-              const newFileResult = this.filePreview.toString().replace(/(\r|\n)/gm, '\n');
-              const resultByLines = newFileResult.split('\n');
-              this.tableHeader = this.splitRowContent(resultByLines.shift());
-              this.columnProperties = this.tableHeader.map(header => ({
-                key: header,
-                name: header,
-                sortable: true,
-                display: true
-              }));
-
-              const resultByCell = resultByLines.map(lineContent => {
-                return this.splitRowContent(lineContent);
-              });
-              this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
-            }
-          };
+          this.transformFileDataWhenReaderOnload(reader);
         });
-        // fileEntry.file((file: File) => {
 
-        // Here you can access the real file
-        // console.log(droppedFile.relativePath, file);
-        /**
-        // You could upload it like this:
-        const formData = new FormData()
-        formData.append('logo', file, relativePath)
+        fileEntry.file((file: File) => {
+          this.storageService.uploadFile(file, droppedFile.relativePath).subscribe(data => {
+            console.log(data);
+          });
+        });
 
-        // Headers
-        const headers = new HttpHeaders({
-          'security-token': 'mytoken'
-        })
-
-        this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-        .subscribe(data => {
-          // Sanitized logo returned from backend
-        })
-        **/
-
-        // });
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -165,6 +135,34 @@ export class NewFileComponent implements OnInit {
     console.timeEnd('dropped');
   }
 
+  public transformFileDataWhenReaderOnload(reader: FileReader) {
+    reader.onload = () => {
+      this.filePreview = reader.result;
+      this.updateFileContentsForCSVFile();
+    };
+  }
+
+  public updateFileContentsForCSVFile() {
+    if (!this.isTextFile) {
+      return null;
+    }
+
+    const resultByLines = this.filePreview.toString().replace(/(\r|\n)/gm, '\n').split('\n');
+
+    this.tableHeader = this.splitRowContent(resultByLines.shift());
+    this.columnProperties = this.tableHeader.map(header => ({
+      key: header,
+      name: header,
+      sortable: true,
+      display: true
+    }));
+
+    const resultByCell = resultByLines.map(lineContent => {
+      return this.splitRowContent(lineContent);
+    });
+    this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
+  }
+
   public toggleSelectedServices(value) {
     this.selectedServices = this.SignaturesMapping[value];
     this.selectedSignature = {};
@@ -172,13 +170,6 @@ export class NewFileComponent implements OnInit {
 
   public toggleSelectedSignatures(value) {
     this.selectedSignature = Object.assign({}, this.selectedServices[value]);
-    // this.fileDetailsForm = new FormGroup({
-    //   targetType: new FormControl('', [Validators.required]),
-    // });
-    // this.fileDetailsForm.get('targetType').setValue(value);
-    // this.selectedSignature.forEach(field => {
-    //   this.fileDetailsForm.addControl(field, new FormControl(''));
-    // });
   }
 
   public onChange(event) {
