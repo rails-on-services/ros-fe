@@ -398,26 +398,28 @@ export const DEFAULT_SETTING = {
                 }
             },
             storage: {
-                'files-table': [
-                    {
-                        key: 'name',
-                        name: 'Name',
-                        sortable: true,
-                        display: true,
-                    },
-                    {
-                        key: 'createdAt',
-                        name: 'Created At',
-                        sortable: false,
-                        display: true,
-                    },
-                    {
-                        key: 'updatedAt',
-                        name: 'Updated At',
-                        sortable: false,
-                        display: true,
-                    }
-                ]
+                tables: {
+                    'files-table': [
+                        {
+                            key: 'name',
+                            name: 'Name',
+                            sortable: true,
+                            display: true,
+                        },
+                        {
+                            key: 'createdAt',
+                            name: 'Created At',
+                            sortable: false,
+                            display: true,
+                        },
+                        {
+                            key: 'updatedAt',
+                            name: 'Updated At',
+                            sortable: false,
+                            display: true,
+                        }
+                    ]
+                }
             }
         }
     }

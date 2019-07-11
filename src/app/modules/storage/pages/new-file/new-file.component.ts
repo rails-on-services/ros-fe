@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -109,6 +110,9 @@ export class NewFileComponent implements OnInit {
         const reader = new FileReader();
 
         fileEntry.file((file: File) => {
+          this.storageService.uploadFile(file).subscribe(data => {
+            console.log(data);
+          });
           if (file.type.match(this.textType) || file.name.match(this.textType)) {
             this.isImgFile = false;
             this.isTextFile = true;
@@ -121,16 +125,10 @@ export class NewFileComponent implements OnInit {
 
           this.transformFileDataWhenReaderOnload(reader);
         });
-
-        fileEntry.file((file: File) => {
-          this.storageService.uploadFile(file, droppedFile.relativePath).subscribe(data => {
-            console.log(data);
-          });
-        });
-
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(fileEntry);
       }
     }
     // tslint:disable-next-line: no-console

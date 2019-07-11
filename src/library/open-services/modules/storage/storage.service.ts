@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageDatastore } from './storage-datastore.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { StorageFile } from './models/storage.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
   storageEndpoint: string;
+  httpHeaders: HttpHeaders;
 
   constructor(
     private http: HttpClient,
@@ -16,20 +19,56 @@ export class StorageService {
     this.datastore.headers = new HttpHeaders({
       Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
     });
-    this.storageEndpoint = 'http://7339f4c0.ngrok.io/storage/';
-  }
-
-  uploadFile(file: File, filePath?: string): Observable<any> {
-    const formData = new FormData();
-    formData.append('file', file, filePath);
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'multipart/form-data',
+    this.httpHeaders = new HttpHeaders({
+      // 'Content-Type': 'multipart/form-data',
       Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
     });
-    const options = { headers, responseType: 'blob' as 'json'  };
+    this.storageEndpoint = 'https://7339f4c0.ngrok.io/storage/files';
+  }
+
+  uploadFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // const options = { headers, responseType: 'blob' as 'json'  };
+    const options = { headers: this.httpHeaders };
 
     return this.http.post(this.storageEndpoint, formData, options);
+  }
+
+  getUploadFileList(): Observable<any> {
+    const options = { headers: this.httpHeaders };
+    return this.http.get(this.storageEndpoint, options);
+  }
+
+  fetchFiles(force?: boolean): Observable<StorageFile[]> {
+    if (!force) {
+      const files = this.datastore.peekAll(StorageFile);
+      if (files && files.length > 0) {
+        return of(files);
+      }
+    }
+    const params = {
+      page: { size: 10, number: 1 }
+    };
+    return this.datastore.findAll(
+      StorageFile,
+      {
+        ...params,
+      }
+    ).pipe(
+      map(document => document.getModels())
+    );
+  }
+
+  fetchFile(id: number|string, force?: boolean): Observable<StorageFile> {
+    if (!force) {
+      const file = this.datastore.peekRecord(StorageFile, `${ id }`);
+      if (file) {
+        return of(file);
+      }
+    }
+    return this.datastore.findRecord(StorageFile, `${ id }`);
   }
 
   // TODO, didn't find a good way for using json api for file upload

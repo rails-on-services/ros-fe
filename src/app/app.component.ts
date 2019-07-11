@@ -33,6 +33,7 @@ export class AppComponent {
           username: userDetails.username,
         };
 
+        // Used to update display properties
         if (!Object.keys(currentUser.displayProperties).length) {
           currentUser.displayProperties = DEFAULT_SETTING.display_properties;
           userDetails.displayProperties = DEFAULT_SETTING.display_properties;
