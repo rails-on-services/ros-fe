@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
-import { CognitoService } from '@perx/open-services';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TokenStorage } from './token-storage.service';
 import { environment } from '../../../environments/environment';
 
@@ -22,7 +22,7 @@ export class AuthenticationService implements AuthService {
 
   constructor(
     private tokenStorage: TokenStorage,
-    private cognitoService: CognitoService
+    private http: HttpClient
   ) {
   }
 
@@ -143,48 +143,57 @@ export class AuthenticationService implements AuthService {
 
       success = true;
     }
-    // this.preAuth().toPromise().then(
-    //   (resp) => {
-    //     /* check if valid auth  */
-    //     const appAuthBearer = resp.headers.get('Authorization');
-    //     if (appAuthBearer) {
-    //       this.userAuth(appAuthBearer).toPromise().then(
-    //         (res) => {
-    //           const userBearer = resp.headers.get('Authorization');
-    //           if (userBearer) {
-    //             this.tokenStorage.setAccessToken(userBearer.split(' ')[1]);
-    //
-    //             // @ts-ignore
-    //             const configURL = res.body.data[0].links.self;
-    //
-    //             success = true;
-    //           }
-    //         },
-    //         (err) => {
-    //           return err;
-    //         }
-    //       );
-    //     }
-    //   },
-    //   err => console.log('HTTP error', err)
-    // );
+
     this.authing = false;
     return success;
   }
 
   public userAuth(bearer: string) {
     const userId = this.getUrlParameter('primary_identifier');
-    return this.cognitoService.authenticateUser(bearer, userId);
+    return this.authenticateUser(bearer, userId);
   }
 
   public preAuth() {
-    return this.cognitoService.authenticateAppWithPreAuth(location.host).pipe(
+    return this.authenticateAppWithPreAuth(location.host).pipe(
       tap((resp) => {
         // @ts-ignore
         this.preAuthJWT = resp.headers.get('Authorization');
         return resp;
       })
     );
+  }
+
+  authenticateAppWithPreAuth(referrer: string) {
+    const endPointUrl = environment.production ? environment.preAuthPath : 'http://localhost:4000' + environment.preAuthPath;
+
+    return this.http.get(endPointUrl, {
+      params: {
+        url: referrer
+      },
+      observe: 'response'
+    });
+  }
+
+  authenticateUser(bearer: string, user: string) {
+    const payload = {
+      data: {
+        type: 'login',
+        attributes: {
+          primary_identifier: user,
+        }
+      }
+    };
+    const httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/vnd.api+json',
+          Authorization: bearer
+        })
+    };
+    return this.http.post(environment.apiHost + '/cognito/login', payload, {
+      headers: httpOptions.headers,
+      observe: 'response'
+    });
   }
 
   public setInterruptedUrl(url: string): void {

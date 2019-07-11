@@ -36,7 +36,7 @@ const isMock = environment.mock;
     PublicModule,
     IamServiceModule,
     CommsServiceModule,
-    CognitoServiceModule.forRoot({ env: environment })
+    CognitoServiceModule
   ],
   providers: [
     ChildrenOutletContexts,

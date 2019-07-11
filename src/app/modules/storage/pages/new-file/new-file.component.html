@@ -41,7 +41,7 @@
                     </div>
                 </mat-card-actions>
             </mat-step>
-            <mat-step label="Preview" [stepControl]="fileDetailsForm.get('agreeTNC')" [editable]="true">
+            <mat-step label="Preview" [editable]="true">
                 <div class="center">
                     <div class="drop-zone">
                         <ngx-file-drop [accept]="'.csv, image/*'" [multiple]="multiple"
@@ -79,7 +79,7 @@
                         </span>
                         <span class="align-right">
                             <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-                            <button mat-stroked-button matStepperNext type="button" (click)="setCheckTNCStatus()">Next</button>
+                            <button mat-stroked-button type="button" (click)="setCheckTNCStatus()">Next</button>
                         </span>
                     </div>
                 </mat-card-actions>

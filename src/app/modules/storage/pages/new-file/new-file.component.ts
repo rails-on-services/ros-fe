@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StorageService } from '@perx/open-services';
+import { MatHorizontalStepper } from '@angular/material';
 @Component({
   selector: 'app-new-file',
   templateUrl: './new-file.component.html',
   styleUrls: ['./new-file.component.scss']
 })
 export class NewFileComponent implements OnInit {
+  @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
+
   public files: NgxFileDropEntry[] = [];
   filePreview: string | ArrayBuffer;
   fileContents: object[] = [];
@@ -197,5 +200,8 @@ export class NewFileComponent implements OnInit {
 
   setCheckTNCStatus() {
     this.checkTNCStatus = true;
+    if (this.fileDetailsForm.get('agreeTNC').valid && this.files.length > 0) {
+      this.stepper.next();
+    }
   }
 }
