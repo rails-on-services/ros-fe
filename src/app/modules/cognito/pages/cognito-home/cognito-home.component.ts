@@ -8,14 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CognitoHomeComponent implements OnInit {
   usersCount: number;
-  groupsCount: number;
+  poolsCount: number;
   appsCount: number;
 
   constructor(
     private cognitoService: CognitoService
   ) {
     this.usersCount = 0;
-    this.groupsCount = 0;
+    this.poolsCount = 0;
     this.appsCount = 0;
   }
 
@@ -43,7 +43,7 @@ export class CognitoHomeComponent implements OnInit {
     //   })
     // ).subscribe(
     //   response => {
-    //     this.groupsCount = response.length;
+    //     this.poolsCount = response.length;
     //   }
     // );
   }

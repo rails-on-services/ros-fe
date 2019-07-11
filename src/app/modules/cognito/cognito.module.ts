@@ -12,6 +12,8 @@ import { SharedModule } from '../../../shared/shared.module';
 import { OpenUiComponentsModule, ConfirmationModal, ManageColumnModal } from '@perx/open-ui-components';
 import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.component';
 import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
+import { NewCognitoPoolComponent } from './pages/cognito-pools/new-cognito-pool/new-cognito-pool.component';
+import { NewCognitoAppComponent } from './pages/cognito-apps/new-cognito-app/new-cognito-app.component';
 
 const COMPONENTS = [
   CognitoComponent,
@@ -24,7 +26,9 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    NewCognitoPoolComponent,
+    NewCognitoAppComponent
   ],
   imports: [
     CommonModule,

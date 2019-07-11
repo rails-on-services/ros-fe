@@ -4,10 +4,10 @@ import { CognitoHomeComponent } from './pages/cognito-home/cognito-home.componen
 import { CognitoUsersComponent } from './pages/cognito-users/cognito-users.component';
 import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.component';
 import { CognitoPoolsComponent } from './pages/cognito-pools/cognito-pools.component';
-// import {ModalComponent} from '../../shared/components/modal/modal.component';
 import { CognitoComponent } from './cognito.component';
 import { NewCognitoUserComponent } from './pages/cognito-users/new-cognito-user/new-cognito-user.component';
-// import {NewCognitoUserResolverService} from './pages/users/new-user/new-user-resolver.service';
+import { NewCognitoPoolComponent } from './pages/cognito-pools/new-cognito-pool/new-cognito-pool.component';
+import { NewCognitoAppComponent } from './pages/cognito-apps/new-cognito-app/new-cognito-app.component';
 
 const router: Routes = [
   {
@@ -26,15 +26,6 @@ const router: Routes = [
       {
         path: 'users',
         component: CognitoUsersComponent,
-        children: [
-          // {
-          //   path: 'new-user',
-          //   component: ModalComponent,
-          //   resolve: {
-          //     modal: NewCognitoUserResolverService
-          //   }
-          // },
-        ],
       },
       {
         path: 'users/new-user',
@@ -45,8 +36,16 @@ const router: Routes = [
         component: CognitoPoolsComponent,
       },
       {
+        path: 'pools/new-pool',
+        component: NewCognitoPoolComponent
+      },
+      {
         path: 'apps',
         component: CognitoAppsComponent,
+      },
+      {
+        path: 'apps/new-app',
+        component: NewCognitoAppComponent
       }
     ]
   },
