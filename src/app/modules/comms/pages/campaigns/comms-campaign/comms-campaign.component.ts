@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommsService, CommsTemplate } from '@perx/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TemplatesComponent } from '../../templates/templates.component';
 
@@ -12,7 +12,7 @@ import { TemplatesComponent } from '../../templates/templates.component';
   styleUrls: ['./comms-campaign.component.scss'],
 })
 export class CommsCampaignComponent implements OnInit, OnDestroy {
-  @ViewChild(TemplatesComponent) templatesComponnet: TemplatesComponent;
+  @ViewChild(TemplatesComponent) templatesComponent: TemplatesComponent;
   private sub: any;
   campaign$: Observable<any>;
   id: number;
@@ -36,15 +36,28 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
 
   detachTemplatesFromCampaign(selection: SelectionModel<CommsTemplate>) {
     const selectedTemplates = selection.selected.map(item => item.id);
-    this.commsService.fetchCampaign(this.id).subscribe(campaign => {
-      campaign.templates = campaign.templates.filter(item => !selectedTemplates.includes(item.id));
-      campaign.save().subscribe(
+    // this.commsService.fetchCampaign(this.id).subscribe(campaign => {
+    //   campaign.templates = campaign.templates.filter(item => !selectedTemplates.includes(item.id));
+    //   campaign.save().subscribe(
+    //     () => {
+    //       this.templatesComponent.clearSelection();
+    //       this.templatesComponent.fetchTemplates();
+    //     }
+    //   );
+    // });
+    this.commsService.fetchCampaign(this.id)
+      .pipe(
+        map(campaign => {
+          campaign.templates = campaign.templates.filter(item => !selectedTemplates.includes(item.id));
+          return campaign;
+        }),
+        switchMap(campaign => campaign.save())
+      ).subscribe(
         () => {
-          this.templatesComponnet.clearSelection();
-          this.templatesComponnet.fetchTemplates();
+          this.templatesComponent.clearSelection();
+          this.templatesComponent.fetchTemplates();
         }
       );
-    });
   }
 
   attachTemplatesToCampaign() {

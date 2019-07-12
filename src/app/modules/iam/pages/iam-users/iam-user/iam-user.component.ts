@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IamGroupsComponent } from '../../iam-groups/iam-groups.component';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-iam-user',
@@ -37,15 +38,18 @@ export class IamUserComponent implements OnInit, OnDestroy {
 
   detachGroupsFromUser(selection: SelectionModel<IamGroup>) {
     const selectedGroups = selection.selected.map(item => item.id);
-    this.iamService.fetchUser(this.userId).subscribe(user => {
-      user.groups = user.groups.filter(item => !selectedGroups.includes(item.id));
-      user.save().subscribe(
-        () => {
-          this.iamGroupsComponent.clearSelection();
-          this.iamGroupsComponent.fetchGroups();
-        }
-      );
-    });
+    this.iamService.fetchUser(this.userId).pipe(
+      map(user => {
+        user.groups = user.groups.filter(item => !selectedGroups.includes(item.id));
+        return user;
+      }),
+      switchMap(user => user.save())
+    ).subscribe(
+      () => {
+        this.iamGroupsComponent.clearSelection();
+        this.iamGroupsComponent.fetchGroups();
+      }
+    );
   }
 
   attachGroupsToCampaign() {

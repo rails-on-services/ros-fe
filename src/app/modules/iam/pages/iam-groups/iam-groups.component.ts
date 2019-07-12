@@ -2,9 +2,9 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
-import { map } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
 import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -108,25 +108,30 @@ export class IamGroupsComponent implements OnInit {
   }
 
   editGroupNamePopup() {
+    let newName = '';
     const confirmPopup = this.dialog.open(RenameModal, {
       minWidth: '300px',
       data: { type: 'group' }
     });
 
-    confirmPopup.afterClosed().subscribe(newName => {
-      if (newName) {
-        this.selection.selected.forEach(group => {
-          this.iamService.fetchGroup(group.id).subscribe(groupModel => {
-            groupModel.name = newName;
-            groupModel.save().subscribe(
-              () => {
-                this.fetchGroups(true);
-              }
-            );
-          });
-        });
+    confirmPopup.afterClosed().pipe(
+      tap(nameTemp => newName = nameTemp),
+      switchMap(nameTemp => {
+        if (nameTemp) {
+          return from(this.selection.selected);
+        } else {
+          return from([]);
+        }
+      }),
+      switchMap(group => this.iamService.fetchGroup(group.id)),
+      map(groupModel => { groupModel.name = newName; return groupModel; }),
+      switchMap(groupModel => groupModel.save())
+    ).subscribe(
+      () => {
+        this.fetchGroups(true);
       }
-    });
+    );
+
   }
 
   reloadTable() {

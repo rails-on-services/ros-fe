@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -114,13 +114,16 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
         });
       });
     if (selectedTemplates.length > 0) {
-      this.commsService.fetchCampaign(this.campaignId).subscribe(campaign => {
-        campaign.templates = [...campaign.templates || [], ...selectedTemplates];
-        campaign.save().subscribe(
+      this.commsService.fetchCampaign(this.campaignId)
+        .pipe(
+          map(campaign => {
+            campaign.templates = [...campaign.templates || [], ...selectedTemplates];
+            return campaign;
+          }),
+          switchMap(campaign => campaign.save())
+        ).subscribe(
           () => this.router.navigate(['../'], { relativeTo: this.route })
         );
-      }
-      );
     }
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { CommsService, CommsTemplate } from '@perx/open-services';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -137,20 +137,20 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   saveTemplateChange() {
-    let selectedTemplate: CommsTemplate = null;
-    this.commsService.fetchTemplate(this.selectedTemplateId)
-      .subscribe(template => {
-        selectedTemplate = template;
-      });
-    this.commsService.fetchEvent(this.id).subscribe(event => {
-      event.template = selectedTemplate;
-      event.save().subscribe(
-        () => {
-          this.isTemplateEditable = false;
-          this.fetchEvent(true);
-        }
-      );
-    });
+    const templateTemp$ = this.commsService.fetchTemplate(this.selectedTemplateId);
+    const eventTemp$ = this.commsService.fetchEvent(this.id);
+    forkJoin(templateTemp$, eventTemp$).pipe(
+      map(([template, event]) => {
+        event.template = template;
+        return event;
+      }),
+      switchMap(event => event.save())
+    ).subscribe(
+      () => {
+        this.isTemplateEditable = false;
+        this.fetchEvent(true);
+      }
+    );
   }
   cancelEdit() {
     this.isTemplateEditable = false;

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamCredential, IamService, IamUser } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { MatStepper } from '@angular/material';
 
 @Component({
@@ -24,9 +24,11 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
   private userUnsubscribe$ = new Subject<void>();
   private credentialUnsubscribe$ = new Subject<void>();
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private iamService: IamService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private iamService: IamService
+  ) {
     this.createUsernamePage = true;
     this.reviewPage = false;
   }
@@ -50,7 +52,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
 
 
   cancelClicked() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   submitForm(stepper: MatStepper) {
@@ -60,16 +62,16 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
       console: this.userDetailsGroup.get('hasConsoleAccess').value,
     };
 
-    this.iamService.createUser(u).pipe(takeUntil(this.userUnsubscribe$))
-      .subscribe((user: IamUser) => {
-        this.iamService.createCredentialFor(user).pipe(takeUntil(this.credentialUnsubscribe$))
-          .subscribe(() => {
-            stepper.next();
-          });
-      });
+    this.iamService.createUser(u).pipe(
+      takeUntil(this.userUnsubscribe$),
+      switchMap(user => this.iamService.createCredentialFor(user)),
+      takeUntil(this.credentialUnsubscribe$)
+    ).subscribe(() => {
+      stepper.next();
+    });
   }
 
   goBack() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }
