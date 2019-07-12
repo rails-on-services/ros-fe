@@ -1,5 +1,5 @@
-import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { CognitoUser } from './models/user.model';

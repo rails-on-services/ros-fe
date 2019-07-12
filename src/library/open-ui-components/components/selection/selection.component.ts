@@ -23,7 +23,6 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   exportAs: 'wuiSelectionGroup',
 })
 export class SelectionGroupDirective implements ControlValueAccessor, AfterContentInit {
-  @HostBinding('class.wui-selection-group') private __ = true;
   @HostBinding('style.margin') hostMargin: string;
 
   @Input() type: 'selection-list' | 'selection-collection' = 'selection-list';
@@ -41,8 +40,8 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
     }
   }
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => any = () => {};
+  onChange: (value: any) => void = () => { };
+  onTouched: () => any = () => { };
 
   get selectedSelections() {
     if (!this.selections) {
@@ -60,6 +59,8 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
   }
 
   writeValue(obj: any): void {
+    console.log(obj);
+    // TODO: Here got some logic issue, and this file is not been used, keep it first, may modify or remove this file later once confirmed. Now can't trace back
     this.onChange(this.value);
   }
 
