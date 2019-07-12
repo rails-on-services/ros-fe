@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -71,25 +71,29 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
   editPoolNamePopup() {
+    let newName = '';
     const confirmPopup = this.dialog.open(RenameModal, {
       minWidth: '300px',
       data: { type: 'pool' }
     });
 
-    confirmPopup.afterClosed().subscribe(newName => {
-      if (newName) {
-        this.selection.selected.forEach(pool => {
-          this.cognitoService.fetchPool(pool.id).subscribe(poolModel => {
-            poolModel.name = newName;
-            poolModel.save().subscribe(
-              () => {
-                this.fetchPools();
-              }
-            );
-          });
-        });
+    confirmPopup.afterClosed().pipe(
+      tap(nameTemp => newName = nameTemp),
+      switchMap(nameTemp => {
+        if (nameTemp) {
+          return from(this.selection.selected);
+        } else {
+          return from([]);
+        }
+      }),
+      switchMap(pool => this.cognitoService.fetchPool(pool.id)),
+      map(poolModel => { poolModel.name = newName; return poolModel; }),
+      switchMap(poolModel => poolModel.save())
+    ).subscribe(
+      () => {
+        this.fetchPools();
       }
-    });
+    );
   }
 
   reloadTable() {
@@ -118,7 +122,7 @@ export class CognitoPoolsComponent implements OnInit {
           keys.forEach(key => {
             pool[key] = cognitoPool[key];
           });
-          pool['name_link'] = `/pools/${cognitoPool.id}`;
+          pool[`name_link`] = `/pools/${cognitoPool.id}`;
 
           return pool;
         });

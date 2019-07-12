@@ -97,7 +97,7 @@ export class CommsCampaignsComponent implements OnInit {
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
           });
-          campaign['ownerType_link'] = `${commsCampaign.id}`;
+          campaign[`ownerType_link`] = `${commsCampaign.id}`;
 
           return campaign;
         });

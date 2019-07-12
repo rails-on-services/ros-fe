@@ -28,8 +28,8 @@ export class AuthenticationService implements AuthService {
 
   /**
    * Check, if user already authorized.
-   * @description Should return Observable with true or false values
-   * @returns {Observable<boolean>}
+   * description Should return Observable with true or false values
+   * returns {Observable<boolean>}
    * @memberOf AuthService
    */
   public isAuthorized(): Observable<boolean> {
@@ -42,9 +42,9 @@ export class AuthenticationService implements AuthService {
 
   /**
    * Get access token
-   * @description Should return access token in Observable from e.g.
+   * description Should return access token in Observable from e.g.
    * localStorage
-   * @returns {Observable<string>}
+   * returns {Observable<string>}
    */
   public getAccessToken(): Observable<string> {
     return TokenStorage.getAccessToken();
@@ -52,9 +52,9 @@ export class AuthenticationService implements AuthService {
 
   /**
    * Function, that should perform refresh token verifyTokenRequest
-   * @description Should be successfully completed so interceptor
+   * description Should be successfully completed so interceptor
    * can execute pending requests or retry original one
-   * @returns {Observable<any>}
+   * returns {Observable<any>}
    */
   public refreshToken(): Observable<any> {
 
@@ -102,9 +102,9 @@ export class AuthenticationService implements AuthService {
   /**
    * Function, checks response of failed request to determine,
    * whether token be refreshed or not.
-   * @description Essentialy checks status
-   * @param {Response} response
-   * @returns {boolean}
+   * description Essentialy checks status
+   * param {Response} response
+   * returns {boolean}
    */
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
     return this.retries < 3 && response.status === 401;
@@ -113,8 +113,8 @@ export class AuthenticationService implements AuthService {
   /**
    * Verify that outgoing request is refresh-token,
    * so interceptor won't intercept this request
-   * @param {string} url
-   * @returns {boolean}
+   * param {string} url
+   * returns {boolean}
    */
   public verifyTokenRequest(url: string): boolean {
     return url.endsWith('/preauth');
@@ -214,8 +214,8 @@ export class AuthenticationService implements AuthService {
   /**
    * Save access data in the storage
    *
-   * @private
-   * @param {String} accessToken
+   * private
+   * param {String} accessToken
    */
   // private saveAccessData(accessToken: string) {
   //   this.tokenStorage.setAccessToken(accessToken);

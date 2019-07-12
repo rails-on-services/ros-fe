@@ -15,7 +15,6 @@ export * from './src/app/modules/cognito/pages/cognito-home/cognito-home.compone
 export * from './src/app/modules/cognito/pages/cognito-pools/cognito-pools.component';
 export * from './src/app/modules/cognito/pages/cognito-pools/new-cognito-pool/new-cognito-pool.component';
 export * from './src/app/modules/cognito/pages/cognito-users/cognito-users.component';
-export * from './src/app/modules/cognito/pages/cognito-users/new-cognito-user/new-cognito-user-resolver.service';
 export * from './src/app/modules/cognito/pages/cognito-users/new-cognito-user/new-cognito-user.component';
 export * from './src/app/modules/comms/comms-routing.module';
 export * from './src/app/modules/comms/comms.component';
@@ -26,14 +25,12 @@ export * from './src/app/modules/comms/pages/campaigns/comms-campaigns.component
 export * from './src/app/modules/comms/pages/campaigns/new-campaign/new-campaign.component';
 export * from './src/app/modules/comms/pages/events/event/event.component';
 export * from './src/app/modules/comms/pages/events/events.component';
-export * from './src/app/modules/comms/pages/events/new-event/new-event-resolver.service';
 export * from './src/app/modules/comms/pages/events/new-event/new-event.component';
 export * from './src/app/modules/comms/pages/home/home.component';
 export * from './src/app/modules/comms/pages/messages/messages.component';
 export * from './src/app/modules/comms/pages/providers/new-provider/new-provider.component';
 export * from './src/app/modules/comms/pages/providers/provider/provider.component';
 export * from './src/app/modules/comms/pages/providers/providers.component';
-export * from './src/app/modules/comms/pages/templates/new-template/new-template-resolver.service';
 export * from './src/app/modules/comms/pages/templates/new-template/new-template.component';
 export * from './src/app/modules/comms/pages/templates/template/template.component';
 export * from './src/app/modules/comms/pages/templates/templates.component';
@@ -51,7 +48,6 @@ export * from './src/app/modules/iam/pages/iam-groups/new-iam-group/new-iam-grou
 export * from './src/app/modules/iam/pages/iam-home/iam-home.component';
 export * from './src/app/modules/iam/pages/iam-users/iam-user/iam-user.component';
 export * from './src/app/modules/iam/pages/iam-users/iam-users.component';
-export * from './src/app/modules/iam/pages/iam-users/new-iam-user/new-iam-user-resolver.service';
 export * from './src/app/modules/iam/pages/iam-users/new-iam-user/new-iam-user.component';
 export * from './src/app/modules/iam/pages/policies/new-policy/new-policy.component';
 export * from './src/app/modules/iam/pages/policies/policies.component';

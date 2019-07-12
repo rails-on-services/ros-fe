@@ -18,12 +18,12 @@ export class PolicyAttachComponent implements OnInit {
   groups$: Observable<any[]>;
   content$: Observable<any[]>;
 
-  selection: SelectionModel<IamUser|IamGroup>;
+  selection: SelectionModel<IamUser | IamGroup>;
 
   displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns$: Observable<(string|number|symbol)[]>;
-  shownColumns: (string|number|symbol)[];
+  shownColumns$: Observable<(string | number | symbol)[]>;
+  shownColumns: (string | number | symbol)[];
 
   constructor(
     private iamService: IamService,
@@ -33,7 +33,6 @@ export class PolicyAttachComponent implements OnInit {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
     // tslint:disable-next-line: no-string-literal
     this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
-  
   }
 
   ngOnInit() {
@@ -53,8 +52,8 @@ export class PolicyAttachComponent implements OnInit {
           keys.forEach(key => {
             userDetails[key] = singleUser[key];
           });
-          userDetails['username'] = singleUser.username || singleUser.name;
-          userDetails['type'] = singleUser.type;
+          userDetails[`username`] = singleUser.username || singleUser.name;
+          userDetails[`type`] = singleUser.type;
           return userDetails;
         });
 
@@ -65,8 +64,8 @@ export class PolicyAttachComponent implements OnInit {
 
   get columnProperties() {
     return [
-      {key: 'username', name: 'User Name', sortable: true, display: true},
-      {key: 'type', name: 'Type', sortable: true, display: true}
+      { key: 'username', name: 'User Name', sortable: true, display: true },
+      { key: 'type', name: 'Type', sortable: true, display: true }
     ];
   }
 
@@ -81,7 +80,7 @@ export class PolicyAttachComponent implements OnInit {
         content: 'Are you sure you want to attach the policy to the users',
         btnColor: 'primary',
         action: 'Confirm'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(confirm => {

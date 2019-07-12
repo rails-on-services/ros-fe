@@ -4,7 +4,7 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'wui-rating',
+  selector: 'app-wui-rating',
   templateUrl: './rating.component.html',
   styleUrls: ['./rating.component.scss'],
   providers: [
@@ -20,7 +20,7 @@ export class RatingComponent implements ControlValueAccessor {
   @Input() icon = String.fromCharCode(0xf005);
   @Input() disabled = false;
 
-  @Output() change = new EventEmitter<{ source: RatingComponent, value: number }>();
+  @Output() changeEmit = new EventEmitter<{ source: RatingComponent, value: number }>();
 
   unSelectedTint = '#959595';
 
@@ -64,7 +64,7 @@ export class RatingComponent implements ControlValueAccessor {
       if (rating === parseInt(`${newValue}`, 10)) {
         this.selectedIndex = index;
         this.onChange(this.value);
-        this.change.emit({ source: this, value: this.value });
+        this.changeEmit.emit({ source: this, value: this.value });
         return;
       }
     });

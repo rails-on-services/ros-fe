@@ -37,11 +37,7 @@ export class AppComponent {
         if (!Object.keys(currentUser.displayProperties).length) {
           currentUser.displayProperties = DEFAULT_SETTING.display_properties;
           userDetails.displayProperties = DEFAULT_SETTING.display_properties;
-          userDetails.save().subscribe(
-            () => {
-              this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));
-            }
-          );
+          userDetails.save();
         }
 
         this.displayPropertiesService.setCurrentUser(JSON.stringify(currentUser));

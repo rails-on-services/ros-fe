@@ -2,7 +2,8 @@ import { Directive, Input } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  selector: '[wuiMinSelection]',
+  // tslint:disable-next-line: directive-selector
+  selector: 'wuiMinSelection',
   providers: [{provide: NG_VALIDATORS, useExisting: SelectionValidatorDirective, multi: true}]
 })
 export class SelectionValidatorDirective implements Validator {

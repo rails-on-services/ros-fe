@@ -36,7 +36,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.shownColumns = ['username', 'urn', 'created_at'];
     this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params[`id`];
     });
     this.fetchUsersNotInGroup();
 
@@ -81,7 +81,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     );
   }
 
-  //Later can move this to group detail page to fetch group users
+  // Later can move this to group detail page to fetch group users
   // private fetchUsersInGroup() {
   //   this.group$ = this.iamService.fetchGroup(this.id).pipe(
   //     map(group => {

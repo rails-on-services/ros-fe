@@ -98,7 +98,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
           keys.forEach(key => {
             campaign[key] = commsCampaign[key];
           });
-          campaign['ownerType_link'] = `${commsCampaign.id}`;
+          campaign[`ownerType_link`] = `${commsCampaign.id}`;
           return campaign;
         });
 

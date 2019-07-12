@@ -42,15 +42,15 @@ export class CommsService {
     );
   }
 
-  fetchMessage(id: number|string, force?: boolean): Observable<CommsMessage> {
+  fetchMessage(id: number | string, force?: boolean): Observable<CommsMessage> {
     if (!force) {
-      const message = this.datastore.peekRecord(CommsMessage, `${ id }`);
+      const message = this.datastore.peekRecord(CommsMessage, `${id}`);
       if (message) {
         return of(message);
       }
     }
 
-    return this.datastore.findRecord(CommsMessage, `${ id }`);
+    return this.datastore.findRecord(CommsMessage, `${id}`);
   }
 
   createMessage(message: {
@@ -67,14 +67,14 @@ export class CommsService {
     return newMessage.save();
   }
 
-  removeMessage(id: number|string): Observable<Response> {
+  removeMessage(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsMessage,
-      `${ id }`
+      `${id}`
     );
   }
 
-  fetchTemplates(campaignId?: number|string, force?: boolean): Observable<CommsTemplate[]> {
+  fetchTemplates(campaignId?: number | string, force?: boolean): Observable<CommsTemplate[]> {
     if (!force) {
       const templates = this.datastore.peekAll(CommsTemplate);
       if (templates && templates.length > 0) {
@@ -85,7 +85,7 @@ export class CommsService {
       page: { size: 10, number: 1 },
       include: 'campaign',
     };
-    const filter = campaignId ? params['filter'] = { campaign_id: campaignId } : '';
+    const filter = campaignId ? params[`filter`] = { campaign_id: campaignId } : '';
     return this.datastore.findAll(
       CommsTemplate,
       {
@@ -97,15 +97,15 @@ export class CommsService {
     );
   }
 
-  fetchTemplate(id: number|string, force?: boolean): Observable<CommsTemplate> {
+  fetchTemplate(id: number | string, force?: boolean): Observable<CommsTemplate> {
     if (!force) {
-      const template = this.datastore.peekRecord(CommsTemplate, `${ id }`);
+      const template = this.datastore.peekRecord(CommsTemplate, `${id}`);
       if (template) {
         return of(template);
       }
     }
 
-    return this.datastore.findRecord(CommsTemplate, `${ id }`, { include: 'campaign' });
+    return this.datastore.findRecord(CommsTemplate, `${id}`, { include: 'campaign' });
   }
 
   createTemplate(template: {
@@ -115,16 +115,16 @@ export class CommsService {
     status: string,
     campaigns: string[]
   }): Observable<any> {
-    //TODO: currently API only accept to attach to one campaign each time
-    let selectedCampaigns: CommsCampaign[] = [];
+    // TODO: currently API only accept to attach to one campaign each time
+    const selectedCampaigns: CommsCampaign[] = [];
     this.fetchCampaigns()
-    .subscribe(campaigns => {
-      campaigns.forEach(campaign => {
-        if (template.campaigns.includes(campaign.id)) {
-          selectedCampaigns.push(campaign);
-        }
+      .subscribe(campaignsResult => {
+        campaignsResult.forEach(campaign => {
+          if (template.campaigns.includes(campaign.id)) {
+            selectedCampaigns.push(campaign);
+          }
+        });
       });
-    });
     const { campaigns, ...params } = template;
     const newTemplate = this.datastore.createRecord(
       CommsTemplate,
@@ -136,14 +136,14 @@ export class CommsService {
     return newTemplate.save();
   }
 
-  removeTemplate(id: number|string): Observable<Response> {
+  removeTemplate(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsTemplate,
-      `${ id }`
+      `${id}`
     );
   }
 
-  fetchEvents(campaignId?: number|string, force?: boolean): Observable<CommsEvent[]> {
+  fetchEvents(campaignId?: number | string, force?: boolean): Observable<CommsEvent[]> {
     if (!force) {
       const events = this.datastore.peekAll(CommsEvent);
       if (events && events.length > 0) {
@@ -155,7 +155,7 @@ export class CommsService {
       include: 'campaign,template'
     };
 
-    const filter = campaignId ? params['filter'] = { campaign_id: campaignId } : '';
+    const filter = campaignId ? params[`filter`] = { campaign_id: campaignId } : '';
     // Provider and message are not ready
     return this.datastore.findAll(
       CommsEvent,
@@ -168,15 +168,15 @@ export class CommsService {
     );
   }
 
-  fetchEvent(id: number|string, force?: boolean): Observable<CommsEvent> {
+  fetchEvent(id: number | string, force?: boolean): Observable<CommsEvent> {
     if (!force) {
-      const event = this.datastore.peekRecord(CommsEvent, `${ id }`);
+      const event = this.datastore.peekRecord(CommsEvent, `${id}`);
       if (event) {
         return of(event);
       }
     }
     // Provider and message are not ready
-    return this.datastore.findRecord(CommsEvent, `${ id }`, { include: 'campaign,template' });
+    return this.datastore.findRecord(CommsEvent, `${id}`, { include: 'campaign,template' });
   }
 
   createEvent(event: {
@@ -195,12 +195,12 @@ export class CommsService {
     // let selectedProvider: CommsProvider = null;
 
     this.fetchCampaign(event.campaignId)
-    .subscribe(campaign => {
-      selectedCampaign = campaign;
+      .subscribe(campaign => {
+        selectedCampaign = campaign;
       });
     this.fetchTemplate(event.templateId)
-    .subscribe(template => {
-      selectedTemplate = template;
+      .subscribe(template => {
+        selectedTemplate = template;
       });
     // this.fetchProvider(event.providerId)
     // .subscribe(provider => {
@@ -220,10 +220,10 @@ export class CommsService {
     return newEvent.save();
   }
 
-  removeEvent(id: number|string): Observable<Response> {
+  removeEvent(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsEvent,
-      `${ id }`
+      `${id}`
     );
   }
 
@@ -245,15 +245,15 @@ export class CommsService {
     );
   }
 
-  fetchCampaign(id: number|string, force?: boolean): Observable<CommsCampaign> {
+  fetchCampaign(id: number | string, force?: boolean): Observable<CommsCampaign> {
     if (!force) {
-      const campaign = this.datastore.peekRecord(CommsCampaign, `${ id }`);
+      const campaign = this.datastore.peekRecord(CommsCampaign, `${id}`);
       if (campaign) {
         return of(campaign);
       }
     }
 
-    return this.datastore.findRecord(CommsCampaign, `${ id }`, { include: 'events,templates' });
+    return this.datastore.findRecord(CommsCampaign, `${id}`, { include: 'events,templates' });
   }
 
   createCampaign(campaign: {
@@ -269,14 +269,14 @@ export class CommsService {
     return newCampaign.save();
   }
 
-  removeCampaign(id: number|string): Observable<Response> {
+  removeCampaign(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsCampaign,
-      `${ id }`
+      `${id}`
     );
   }
 
-  fetchProviders(eventId?: number|string, force?: boolean): Observable<CommsProvider[]> {
+  fetchProviders(eventId?: number | string, force?: boolean): Observable<CommsProvider[]> {
     if (!force) {
       const providers = this.datastore.peekAll(CommsProvider);
       if (providers && providers.length > 0) {
@@ -286,7 +286,7 @@ export class CommsService {
     const params = {
       page: { size: 10, number: 1 }
     };
-    const filter = eventId ? params['filter'] = { campaign_id: eventId } : '';
+    const filter = eventId ? params[`filter`] = { campaign_id: eventId } : '';
 
     return this.datastore.findAll(
       CommsProvider,
@@ -299,15 +299,15 @@ export class CommsService {
     );
   }
 
-  fetchProvider(id: number|string, force?: boolean): Observable<CommsProvider> {
+  fetchProvider(id: number | string, force?: boolean): Observable<CommsProvider> {
     if (!force) {
-      const provider = this.datastore.peekRecord(CommsProvider, `${ id }`);
+      const provider = this.datastore.peekRecord(CommsProvider, `${id}`);
       if (provider) {
         return of(provider);
       }
     }
 
-    return this.datastore.findRecord(CommsProvider, `${ id }`);
+    return this.datastore.findRecord(CommsProvider, `${id}`);
   }
 
 
@@ -324,10 +324,10 @@ export class CommsService {
     return newProvider.save();
   }
 
-  removeProvider(id: number|string): Observable<Response> {
+  removeProvider(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsProvider,
-      `${ id }`
+      `${id}`
     );
   }
 
