@@ -118,7 +118,7 @@ export class CognitoPoolsComponent implements OnInit {
           keys.forEach(key => {
             pool[key] = cognitoPool[key];
           });
-          pool['name_link'] = `/pools/${cognitoPool.id}`;
+          pool[`name_link`] = `/pools/${cognitoPool.id}`;
 
           return pool;
         });

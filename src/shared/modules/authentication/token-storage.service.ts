@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class TokenStorage {
@@ -9,7 +9,7 @@ export class TokenStorage {
 
   /**
    * Get access token
-   * @returns {Observable<string>}
+   * returns {Observable<string>}
    */
 
   public static getAccessToken(): Observable<string> {
@@ -17,10 +17,10 @@ export class TokenStorage {
     const token: string = localStorage.getItem('accessToken') as string;
     return of(token);
   }
-  
+
   /**
    * Get refresh token
-   * @returns {Observable<string>}
+   * returns {Observable<string>}
    */
   public static getRefreshToken(): Observable<string> {
     // const token: string = this.refreshToken;
@@ -40,7 +40,7 @@ export class TokenStorage {
 
   /**
    * Set access token
-   * @returns {TokenStorage}
+   * returns {TokenStorage}
    */
   public setAccessToken(token: string): TokenStorage {
     // this.accessToken = token;
@@ -51,7 +51,7 @@ export class TokenStorage {
 
   /**
    * Set refresh token
-   * @returns {TokenStorage}
+   * returns {TokenStorage}
    */
   public setRefreshToken(token: string): TokenStorage {
     // this.refreshToken = token;

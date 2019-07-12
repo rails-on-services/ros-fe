@@ -41,7 +41,7 @@ export class IamService {
     );
   }
 
-  fetchUser(id: number|string, force?: boolean): Observable<IamUser> {
+  fetchUser(id: number | string, force?: boolean): Observable<IamUser> {
     if (!force) {
       const user = this.datastore.peekRecord(IamUser, `${id}`);
       if (user) {
@@ -63,7 +63,7 @@ export class IamService {
     return newUser.save();
   }
 
-  removeUser(id: number|string): Observable<Response> {
+  removeUser(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamUser,
       `${id}`
@@ -101,7 +101,7 @@ export class IamService {
     return credential.save();
   }
 
-  fetchGroups(userId?: number|string, force?: boolean): Observable<IamGroup[]> {
+  fetchGroups(userId?: number | string, force?: boolean): Observable<IamGroup[]> {
     if (!force) {
       const groups = this.datastore.peekAll(IamGroup);
       if (groups && groups.length > 0) {
@@ -112,7 +112,7 @@ export class IamService {
       page: { size: 10, number: 1 },
       include: 'users'
     };
-    const filter = userId ? params['filter'] = { user_id: userId } : '';
+    const filter = userId ? params[`filter`] = { user_id: userId } : '';
     return this.datastore.findAll(
       IamGroup,
       {
@@ -124,15 +124,15 @@ export class IamService {
     );
   }
 
-  fetchGroup(id: number|string, force?: boolean): Observable<IamGroup> {
+  fetchGroup(id: number | string, force?: boolean): Observable<IamGroup> {
     if (!force) {
-      const group = this.datastore.peekRecord(IamGroup, `${ id }`);
+      const group = this.datastore.peekRecord(IamGroup, `${id}`);
       if (group) {
         return of(group);
       }
     }
 
-    return this.datastore.findRecord(IamGroup, `${ id }`, { include: 'users' });
+    return this.datastore.findRecord(IamGroup, `${id}`, { include: 'users' });
   }
 
   createGroup(group: { name: string, attachedPolicies: any[], users: IamUser[]; }): Observable<IamGroup> {
@@ -146,16 +146,16 @@ export class IamService {
     return newGroup.save();
   }
 
-  removeGroup(id: number|string): Observable<Response> {
+  removeGroup(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamGroup,
       `${id}`
     );
   }
 
-//TODO: this need to check with Rob with relationship
+  // TODO: this need to check with Rob with relationship
 
-  fetchPolicies(userId?: number|string, force?: boolean): Observable<IamPolicy[]> {
+  fetchPolicies(userId?: number | string, force?: boolean): Observable<IamPolicy[]> {
     if (!force) {
       const policies = this.datastore.peekAll(IamPolicy);
       if (policies && policies.length > 0) {
@@ -165,7 +165,7 @@ export class IamService {
     const params = {
       page: { size: 10, number: 1 }
     };
-    const filter = userId ? params['filter'] = { user_id: userId } : '';
+    const filter = userId ? params[`filter`] = { user_id: userId } : '';
     return this.datastore.findAll(
       IamPolicy,
       {
@@ -177,15 +177,15 @@ export class IamService {
     );
   }
 
-  fetchPolicy(id: number|string, force?: boolean): Observable<IamPolicy> {
+  fetchPolicy(id: number | string, force?: boolean): Observable<IamPolicy> {
     if (!force) {
-      const policy = this.datastore.peekRecord(IamPolicy, `${ id }`);
+      const policy = this.datastore.peekRecord(IamPolicy, `${id}`);
       if (policy) {
         return of(policy);
       }
     }
 
-    return this.datastore.findRecord(IamPolicy, `${ id }`);
+    return this.datastore.findRecord(IamPolicy, `${id}`);
   }
 
   createPolicy(policy: { policyname: string; }): Observable<IamPolicy> {
@@ -199,7 +199,7 @@ export class IamService {
     return newPolicy.save();
   }
 
-  removePolicy(id: number|string): Observable<Response> {
+  removePolicy(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       IamPolicy,
       `${id}`

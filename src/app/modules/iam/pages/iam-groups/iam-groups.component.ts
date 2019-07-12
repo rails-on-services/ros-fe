@@ -141,7 +141,7 @@ export class IamGroupsComponent implements OnInit {
   }
 
   fetchGroups(force?: boolean) {
-    //API is not ready for this userId checking
+    // API is not ready for this userId checking
     if (this.userId) {
       force = true;
     }

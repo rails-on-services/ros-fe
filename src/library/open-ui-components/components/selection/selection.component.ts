@@ -15,7 +15,8 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Directive({
-  selector: 'wui-selection-group',
+  // tslint:disable-next-line: directive-selector
+  selector: '[wui-selection-group]',
   providers: [
     SelectionGroupDirective,
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectionGroupDirective), multi: true }
@@ -60,7 +61,10 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
 
   writeValue(obj: any): void {
     console.log(obj);
-    // TODO: Here got some logic issue, and this file is not been used, keep it first, may modify or remove this file later once confirmed. Now can't trace back
+    /**
+     * TODO: Here got some logic issue, and this file is not been used,
+     * keep it first, may modify or remove this file later once confirmed. Now can't trace back
+     */
     this.onChange(this.value);
   }
 
@@ -76,12 +80,12 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
 }
 
 @Component({
-  selector: 'wui-selection-group-styler',
+  selector: 'app-app-wui-selection-group-styler',
   template: `
     <ng-content></ng-content>
   `,
   styles: [`
-    .wui-selection-group {
+    .app-wui-selection-group {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -94,7 +98,7 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
 export class SelectionWrapperComponent { }
 
 @Component({
-  selector: 'wui-selection',
+  selector: 'app-wui-selection',
   templateUrl: './selection.component.html',
   styleUrls: ['./selection.component.scss'],
 })

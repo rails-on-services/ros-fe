@@ -25,7 +25,7 @@ export class CommsCampaignComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.id = params['id'];
+      this.id = params[`id`];
     });
     this.fetchCampaign();
   }

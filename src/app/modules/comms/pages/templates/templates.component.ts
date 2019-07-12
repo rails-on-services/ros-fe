@@ -152,7 +152,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             template[key] = commsTemplate[key];
           });
-          template['content_link'] = templateLink;
+          template[`content_link`] = templateLink;
           return template;
         });
 

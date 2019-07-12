@@ -26,7 +26,7 @@ export class IamUserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.userId = params['id'];
+      this.userId = params[`id`];
     });
     this.fetchUser();
   }

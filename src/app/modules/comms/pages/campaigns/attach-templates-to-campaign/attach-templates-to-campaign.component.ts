@@ -35,7 +35,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.shownColumns = ['name', 'content', 'status', 'createdAt', 'updatedAt'];
     this.sub = this.route.params.subscribe(params => {
-      this.campaignId = params['id'];
+      this.campaignId = params[`id`];
     });
     this.fetchTemplatesNotInCampaign();
 
@@ -103,7 +103,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   }
 
   attachTemplatesToCampaign() {
-    let selectedTemplates = [];
+    const selectedTemplates = [];
     const selectedTemplateIds = this.selection.selected.map(item => item.id);
     this.commsService.fetchTemplates()
       .subscribe(templates => {

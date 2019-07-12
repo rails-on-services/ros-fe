@@ -30,7 +30,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   displayProperties: object;
   providerTableDisplayProperties: TableHeaderProperties[] = [];
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
 
   constructor(
     private router: Router,
@@ -110,7 +110,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
           keys.forEach(key => {
             provider[key] = commsProvider[key];
           });
-          provider['name_link'] = `${ commsProvider.id }`;
+          provider[`name_link`] = `${commsProvider.id}`;
           return provider;
         });
 
