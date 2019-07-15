@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
-import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-modal.component';
 
 @Component({
@@ -9,7 +8,7 @@ import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-mo
   templateUrl: './table-actions-management.component.html',
   styleUrls: ['./table-actions-management.component.scss']
 })
-export class TableActionsManagementComponent implements OnInit {
+export class TableActionsManagementComponent {
   @Output() reloadTableEmit = new EventEmitter();
   @Output() changeTableHeaderSettingEmit = new EventEmitter();
   @Input() tablePlatform: string;
@@ -18,18 +17,12 @@ export class TableActionsManagementComponent implements OnInit {
   @Input() shownColumns: (string | number | symbol)[] = [];
 
   displayProperties: object;
-  tableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     public dialog: MatDialog,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-  }
-
-  ngOnInit() {
-    // tslint:disable-next-line: no-string-literal
-    this.tableDisplayProperties = this.displayProperties[this.tablePlatform][this.tableModule]['tables'][this.tableName];
   }
 
   reloadTable() {
@@ -64,8 +57,6 @@ export class TableActionsManagementComponent implements OnInit {
         columnsDialogRef.afterClosed().subscribe(() => {
           this.tableDisplayProperties = this.displayPropertiesService
             .setTableShownColumns(this.shownColumns, this.tableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties[this.tablePlatform][this.tableModule]['tables'][this.tableName] = this.tableDisplayProperties;
           this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
         });
         break;
@@ -74,4 +65,17 @@ export class TableActionsManagementComponent implements OnInit {
     }
   }
 
+  get tableDisplayProperties() {
+    // tslint:disable-next-line: no-string-literal
+    return this.displayProperties &&
+      this.displayProperties[this.tablePlatform] &&
+      this.displayProperties[this.tablePlatform][this.tableModule] &&
+      this.displayProperties[this.tablePlatform][this.tableModule][`tables`] &&
+      this.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName];
+  }
+
+  set tableDisplayProperties(value) {
+    // tslint:disable-next-line: no-string-literal
+    this.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName] = value;
+  }
 }

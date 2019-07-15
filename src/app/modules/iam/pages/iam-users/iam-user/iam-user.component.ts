@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IamService, IamGroup } from '@perx/open-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { IamGroupsComponent } from '../../iam-groups/iam-groups.component';
-import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-iam-user',
