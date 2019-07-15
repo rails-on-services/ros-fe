@@ -5,7 +5,7 @@ import { DismissableContentComponent, TableActionsManagementComponent, Filterabl
 import { CognitoAppsComponent } from './cognito-apps.component';
 import { SharedModule } from 'src/shared/shared.module';
 
-fdescribe('CognitoAppsComponent', () => {
+describe('CognitoAppsComponent', () => {
   let component: CognitoAppsComponent;
   let fixture: ComponentFixture<CognitoAppsComponent>;
 

@@ -1,11 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { IamService, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, from } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { map, tap, switchMap } from 'rxjs/operators';
-import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal, TableActionsManagementComponent } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableContentService } from 'src/shared/services/table-content/table-content.service';
@@ -26,11 +26,11 @@ export class IamGroupsComponent implements OnInit {
   groups$: Observable<any[]>;
 
   showModal: boolean;
-  displayProperties: object;
   groupTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamGroup>;
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
   userLinkUrlRoot = '../users/';
 
   constructor(
@@ -40,15 +40,11 @@ export class IamGroupsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.groupTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['groups-table'];
-
   }
 
   ngOnInit() {
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.groupTableDisplayProperties);
-
+    this.groupTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchGroups();
   }
 
@@ -79,7 +75,7 @@ export class IamGroupsComponent implements OnInit {
         content: 'Are you sure you want to detach the groups from user',
         btnColor: 'warn',
         action: 'Detach'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDetach => {
@@ -97,7 +93,7 @@ export class IamGroupsComponent implements OnInit {
         content: 'Are you sure you want to delete the group',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {

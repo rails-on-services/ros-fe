@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-new-iam-group',
@@ -17,13 +17,13 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
   selection: IamPolicy[];
   shownColumns: (string | number | symbol)[];
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   groupDetailsGroup: FormGroup;
   isEditable = true;
 
   createGroupnamePage: boolean;
   reviewPage: boolean;
-  displayProperties: object;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
 
   group$: Observable<IamGroup>;
@@ -31,13 +31,9 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService,
-    private displayPropertiesService: DisplayPropertiesService) {
+    private iamService: IamService) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
 
   }
 
@@ -47,7 +43,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
       attachedPolicies: new FormControl([]),
       users: new FormControl({}),
     });
-
+    this.policyTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchPolicies();
   }
 

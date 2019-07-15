@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, from } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
-import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal, TableActionsManagementComponent } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -14,12 +14,13 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./cognito-pools.component.scss']
 })
 export class CognitoPoolsComponent implements OnInit {
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
+
   pools$: Observable<any[]>;
 
   showModal: boolean;
   selection: SelectionModel<CognitoPool>;
 
-  displayProperties: object;
   poolTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -29,13 +30,10 @@ export class CognitoPoolsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
-
   }
 
   ngOnInit() {
+    this.poolTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
     this.fetchPools();
   }

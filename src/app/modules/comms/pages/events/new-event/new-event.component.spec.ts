@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewEventComponent } from './new-event.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
 describe('NewUserComponent', () => {
   let component: NewEventComponent;
@@ -8,9 +12,17 @@ describe('NewUserComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewEventComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        NewEventComponent,
+        FilterableTableComponent,
+        TableActionsManagementComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

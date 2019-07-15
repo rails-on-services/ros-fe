@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Output,
   Input,
+  ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -17,7 +18,7 @@ import { CommsService, CommsTemplate } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal
+  ConfirmationModal, TableActionsManagementComponent
 } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -40,9 +41,9 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsTemplate>;
 
-  displayProperties: object;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -52,14 +53,12 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
 
   }
 
   ngOnInit() {
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
+    this.templateTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchTemplates();
   }
 

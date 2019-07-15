@@ -1,11 +1,11 @@
 import { CommsService, CommsTemplate, CommsCampaign } from '@perx/open-services';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-attach-templates-to-campaign',
@@ -18,18 +18,14 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   selection: SelectionModel<CommsTemplate>;
   shownColumns: string[];
   campaign$: Observable<any>;
-  displayProperties: object;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private commsService: CommsService,
-    private displayPropertiesService: DisplayPropertiesService
+    private commsService: CommsService
   ) {
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
   }
 
   ngOnInit() {
@@ -37,6 +33,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       this.campaignId = params[`id`];
     });
+    this.templateTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchTemplatesNotInCampaign();
 
   }

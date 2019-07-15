@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsService, CognitoService } from '@perx/open-services';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-new-campaign',
@@ -15,8 +15,8 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
 export class NewCampaignComponent implements OnInit, AfterViewInit {
   cognitoPools$: Observable<any[]>;
   shownColumns: (string | number | symbol)[];
-  displayProperties: object;
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   // todo: replace this object with a API call to retrieve list of types of campaigns
   owners = [
@@ -40,14 +40,8 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private commService: CommsService,
     private cognitoService: CognitoService,
-    private formBuilder: FormBuilder,
-    private displayPropertiesService: DisplayPropertiesService
-  ) {
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
-
-  }
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.campaignDetailsGroup = this.formBuilder.group({
@@ -62,7 +56,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
         }),
       ])
     });
-
+    this.campaignTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchPools();
   }
 

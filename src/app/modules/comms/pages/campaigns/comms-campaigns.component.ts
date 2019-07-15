@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CommsService, CommsCampaign } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmationModal } from '@perx/open-ui-components';
+import { ConfirmationModal, TableActionsManagementComponent } from '@perx/open-ui-components';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -20,9 +20,9 @@ export class CommsCampaignsComponent implements OnInit {
   showModal: boolean;
   selection: SelectionModel<CommsCampaign>;
 
-  displayProperties: object;
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private commsService: CommsService,
@@ -32,14 +32,11 @@ export class CommsCampaignsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
-
   }
 
   ngOnInit() {
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
+    this.campaignTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchCampaigns();
   }
 

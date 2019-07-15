@@ -16,7 +16,7 @@ import { IamService, IamUser } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal
+  ConfirmationModal, TableActionsManagementComponent
 } from '@perx/open-ui-components';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableContentService } from 'src/shared/services/table-content/table-content.service';
@@ -32,7 +32,6 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
-  displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
   groupLinkUrlRoot = '../groups/';
@@ -41,6 +40,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -51,13 +51,11 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
   }
 
   ngOnInit() {
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
+    this.userTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchUsers(true);
   }
 

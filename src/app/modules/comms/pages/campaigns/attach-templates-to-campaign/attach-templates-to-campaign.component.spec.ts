@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AttachTemplatesToCampaignComponent } from './attach-templates-to-campaign.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
 describe('AttachTemplatesToCampaignComponent', () => {
   let component: AttachTemplatesToCampaignComponent;
@@ -8,7 +12,15 @@ describe('AttachTemplatesToCampaignComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttachTemplatesToCampaignComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        AttachTemplatesToCampaignComponent,
+        FilterableTableComponent,
+        TableActionsManagementComponent]
     })
     .compileComponents();
   }));
