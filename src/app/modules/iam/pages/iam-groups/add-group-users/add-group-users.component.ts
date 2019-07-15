@@ -18,7 +18,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   group$: Observable<any>;
   tableHeaders: { key: string, value: string }[];
   selection: SelectionModel<IamUser>;
-  shownColumns: string[];
+  shownColumns: (string | number | symbol)[];
   userTableDisplayProperties: TableHeaderProperties[] = [];
   @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
@@ -76,6 +76,15 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     );
   }
 
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
   // Later can move this to group detail page to fetch group users
   // private fetchUsersInGroup() {
   //   this.group$ = this.iamService.fetchGroup(this.id).pipe(

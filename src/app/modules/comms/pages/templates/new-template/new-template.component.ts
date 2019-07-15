@@ -16,7 +16,7 @@ import { TableActionsManagementComponent } from '@perx/open-ui-components';
 })
 export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaigns$: Observable<any[]>;
-  campaignSelection: CommsCampaign[];
+  campaignSelection: SelectionModel<CommsCampaign>;
   shownColumns: (string | number | symbol)[];
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
@@ -86,6 +86,16 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  reloadTable() {
+    if (this.campaignSelection) {
+      this.campaignSelection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
   private fetchCampaigns(force?: boolean) {
     this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
       map(commsCampaigns => {
@@ -110,7 +120,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
-    this.campaignSelection = selection.selected;
+    this.campaignSelection = selection;
     this.formArray.get([1]).get('campaigns').setValue([...selection.selected]);
   }
 }

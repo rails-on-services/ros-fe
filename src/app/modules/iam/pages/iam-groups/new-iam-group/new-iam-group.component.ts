@@ -15,7 +15,7 @@ import { TableActionsManagementComponent } from '@perx/open-ui-components';
 })
 export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
-  selection: IamPolicy[];
+  selection: SelectionModel<IamPolicy>;
   shownColumns: (string | number | symbol)[];
   @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
@@ -62,6 +62,15 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     return this.groupDetailsGroup.controls[controlName].hasError(errorName);
   }
 
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
 
   cancelClicked() {
     this.router.navigate(['../'], { relativeTo: this.route });

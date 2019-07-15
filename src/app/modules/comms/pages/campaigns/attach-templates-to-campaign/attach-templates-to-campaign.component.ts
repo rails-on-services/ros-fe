@@ -16,7 +16,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   private sub: any;
   campaignId: number;
   selection: SelectionModel<CommsTemplate>;
-  shownColumns: string[];
+  shownColumns: (string | number | symbol)[];
   campaign$: Observable<any>;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
@@ -61,6 +61,16 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
       link: `campaigns/${campaign.id}`
     };
     return campaignInfo;
+  }
+
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   fetchTemplatesNotInCampaign() {

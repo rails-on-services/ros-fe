@@ -27,7 +27,7 @@ export class PolicyAttachComponent implements OnInit {
   constructor(
     private iamService: IamService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.shownColumns = ['username', 'type'];
@@ -62,6 +62,16 @@ export class PolicyAttachComponent implements OnInit {
       { key: 'username', name: 'User Name', sortable: true, display: true },
       { key: 'type', name: 'Type', sortable: true, display: true }
     ];
+  }
+
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {
