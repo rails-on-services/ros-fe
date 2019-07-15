@@ -5,6 +5,8 @@ import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -15,7 +17,10 @@ describe('NewCampaignComponent', () => {
       imports: [
         SharedModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        NoopAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule
       ],
       declarations: [
         NewCampaignComponent,

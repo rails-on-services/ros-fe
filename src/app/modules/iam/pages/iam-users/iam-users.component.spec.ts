@@ -4,7 +4,7 @@ import { IamUsersComponent } from './iam-users.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { FilterableTableComponent, TableActionsManagementComponent, DismissableContentComponent } from '@perx/open-ui-components';
 
 describe('IamUsersComponent', () => {
   let component: IamUsersComponent;
@@ -20,7 +20,9 @@ describe('IamUsersComponent', () => {
       declarations: [
         IamUsersComponent,
         FilterableTableComponent,
-        TableActionsManagementComponent]
+        TableActionsManagementComponent,
+        DismissableContentComponent
+      ]
     })
     .compileComponents();
   }));

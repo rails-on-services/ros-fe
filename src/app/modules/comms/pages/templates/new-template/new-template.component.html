@@ -42,14 +42,15 @@
       </mat-step>
       <mat-step label="Assign Campaign" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
+          <div class="action" fxLayout="row" fxLayoutGap="1rem">
+            <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
+              [tableModule]="'comms'" [tableName]="'templates-table'" [shownColumns]="shownColumns"
+              (reloadTableEmit)="reloadTable()" (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
+            </app-table-actions-management>
+          </div>
           <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
-            <app-filterable-table 
-              [columnProperties]="campaignsColumnProperties" 
-              [contents]="campaigns"
-              [selectable]=true 
-              (selectionChange)="onCampaignsSelectionChange($event)" 
-              [shownColumns]="shownColumns"
-              >
+            <app-filterable-table [columnProperties]="campaignsColumnProperties" [contents]="campaigns"
+              [selectable]=true (selectionChange)="onCampaignsSelectionChange($event)" [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>

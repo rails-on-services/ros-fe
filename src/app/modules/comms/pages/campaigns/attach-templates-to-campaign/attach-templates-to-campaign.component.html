@@ -1,25 +1,27 @@
 <mat-card-content>
-    <div class="container">
-      <ng-container class="templates-table" *ngIf="campaign$ | async as campaign">
-        <app-filterable-table 
-          [columnProperties]="columnProperties" 
-          [contents]="campaign.templates"
-          [selectable]=true
-          (selectionChange)="onEventsSelectionChange($event)" 
-          [shownColumns]="shownColumns">
-        </app-filterable-table>
-      </ng-container>
+  <div class="container">
+    <div class="action" fxLayout="row" fxLayoutGap="1rem">
+      <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
+        [tableModule]="'comms'" [tableName]="'templates-table'" [shownColumns]="shownColumns"
+        (reloadTableEmit)="reloadTable()" (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
+      </app-table-actions-management>
     </div>
-    <router-outlet></router-outlet>
-  </mat-card-content>
-  <mat-divider></mat-divider>
-  <mat-card-actions>
-    <div class="button-container text-right">
-      <span>
-        <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-        <button mat-raised-button color="primary" (click)="attachTemplatesToCampaign()">
-          Attach Templates to Campaign
-        </button>
-      </span>
-    </div>
-  </mat-card-actions>
+    <ng-container class="templates-table" *ngIf="campaign$ | async as campaign">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="campaign.templates" [selectable]=true
+        (selectionChange)="onEventsSelectionChange($event)" [shownColumns]="shownColumns">
+      </app-filterable-table>
+    </ng-container>
+  </div>
+  <router-outlet></router-outlet>
+</mat-card-content>
+<mat-divider></mat-divider>
+<mat-card-actions>
+  <div class="button-container text-right">
+    <span>
+      <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+      <button mat-raised-button color="primary" (click)="attachTemplatesToCampaign()">
+        Attach Templates to Campaign
+      </button>
+    </span>
+  </div>
+</mat-card-actions>

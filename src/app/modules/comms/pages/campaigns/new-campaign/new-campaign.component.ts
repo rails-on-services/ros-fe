@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsService, CognitoService } from '@perx/open-services';
-import { map, takeUntil } from 'rxjs/operators';
+import { CommsService } from '@perx/open-services';
+import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { TableActionsManagementComponent } from '@perx/open-ui-components';
@@ -39,7 +39,6 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private commService: CommsService,
-    private cognitoService: CognitoService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -56,8 +55,6 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
         }),
       ])
     });
-    this.campaignTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
-    this.fetchPools();
   }
 
   get formArray(): AbstractControl | null {
@@ -101,25 +98,5 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   //   this.selection = selection.selected;
   //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
   // }
-
-  private fetchPools() {
-    this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
-      map(document => {
-        const cognitoPools = document.getModels();
-        const pools = cognitoPools.map(cognitoPool => {
-          const pool = { id: cognitoPool.id };
-          const keys = this.campaignTableDisplayProperties.map(item => item.key);
-
-          keys.forEach(key => {
-            pool[key] = cognitoPool[key];
-          });
-
-          return pool;
-        });
-
-        return pools;
-      })
-    );
-  }
 
 }

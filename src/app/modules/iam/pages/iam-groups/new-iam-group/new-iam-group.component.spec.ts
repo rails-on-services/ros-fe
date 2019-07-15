@@ -5,6 +5,8 @@ import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('NewGroupComponent', () => {
   let component: NewIamGroupComponent;
@@ -15,7 +17,10 @@ describe('NewGroupComponent', () => {
       imports: [
         SharedModule,
         HttpClientModule,
-        RouterTestingModule
+        RouterTestingModule,
+        NoopAnimationsModule,
+        ReactiveFormsModule,
+        FormsModule
       ],
       declarations: [
         NewIamGroupComponent,

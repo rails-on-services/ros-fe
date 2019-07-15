@@ -1,16 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmationModal } from './confirmation-modal.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 describe('ConfirmationModalComponent', () => {
   let component: ConfirmationModal;
   let fixture: ComponentFixture<ConfirmationModal>;
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmationModal ]
+      imports: [
+        SharedModule
+      ],
+      declarations: [ConfirmationModal],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

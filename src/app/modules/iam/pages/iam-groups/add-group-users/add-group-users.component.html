@@ -1,5 +1,11 @@
 <mat-card-content>
   <div class="container">
+      <div class="action" fxLayout="row" fxLayoutGap="1rem">
+          <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
+            [tableModule]="'IAM'" [tableName]="'groups-table'" [shownColumns]="shownColumns" (reloadTableEmit)="reloadTable()"
+            (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
+          </app-table-actions-management>
+        </div>
     <ng-container class="users-table" *ngIf="group$ | async as group">
       <app-filterable-table [columnProperties]="columnProperties" [contents]="group.users" [selectable]=true
         (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">

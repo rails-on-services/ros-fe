@@ -3,11 +3,15 @@
       <h1>Attach the policy to users, groups, or roles in your account</h1>
     </div>
     <div class="action" fxLayout="row" fxLayoutGap="1rem">
-      <button mat-raised-button (click)="showAttachConfirmationPopup()"
+        <button mat-raised-button (click)="showAttachConfirmationPopup()"
             [disabled]="!selection">
         Attach Policy
       </button>
-    </div>
+        <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
+          [tableModule]="'IAM'" [tableName]="'users-table'" [shownColumns]="shownColumns" (reloadTableEmit)="reloadTable()"
+          (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
+        </app-table-actions-management>
+      </div>
     <ng-container class="policy-attach-table" *ngIf="content$ | async as users">
       <app-filterable-table
           [columnProperties]="columnProperties"

@@ -26,13 +26,16 @@ export class ManageColumnModal implements OnInit {
 
   ngOnInit() {
     const columnKeys = this.selected ? this.selected : this.columnPropertyKeys;
-    columnKeys.forEach(key => {
-      this.selection.select(key);
-    });
+    if (columnKeys && columnKeys.length > 0) {
+      columnKeys.forEach(key => {
+        this.selection.select(key);
+      });
+    }
   }
 
   get columnPropertyKeys() {
-    return this.data.columnProperties.map(item => item.key);
+
+    return this.data.columnProperties && this.data.columnProperties.map(item => item.key);
   }
 
   get selected() {

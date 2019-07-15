@@ -35,7 +35,6 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     });
     this.templateTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchTemplatesNotInCampaign();
-
   }
 
   ngOnDestroy() {
