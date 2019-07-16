@@ -31,18 +31,14 @@ export class EventComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.providerTableDisplayProperties = this.displayProperties &&
+    const tablesAreReady = this.displayProperties &&
       this.displayProperties[`essentials`] &&
       this.displayProperties[`essentials`][`comms`] &&
-      this.displayProperties[`essentials`][`comms`][`tables`] &&
-      this.displayProperties[`essentials`][`comms`][`tables`][`providers-table`];
+      this.displayProperties[`essentials`][`comms`][`tables`];
     // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties &&
-      this.displayProperties[`essentials`] &&
-      this.displayProperties[`essentials`][`comms`] &&
-      this.displayProperties[`essentials`][`comms`][`tables`] &&
-      this.displayProperties[`essentials`][`comms`][`tables`][`templates-table`];
+    this.providerTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`providers-table`];
+    // tslint:disable-next-line: no-string-literal
+    this.templateTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`templates-table`];
   }
 
   ngOnInit() {
