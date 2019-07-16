@@ -27,7 +27,6 @@
       </td>
     </ng-container>
     <ng-container [matColumnDef]="columnProperty.key" *ngFor="let columnProperty of columnProperties">
-      {{columnProperty | json}}
       <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperty.sortable">
         {{
           columnProperty.name

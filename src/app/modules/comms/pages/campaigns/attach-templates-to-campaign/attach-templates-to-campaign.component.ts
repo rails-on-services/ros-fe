@@ -16,9 +16,8 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   private sub: any;
   campaignId: number;
   selection: SelectionModel<CommsTemplate>;
-  shownColumns: string[];
+  shownColumns: (string | number | symbol)[];
   campaign$: Observable<any>;
-  displayProperties: object;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
@@ -27,9 +26,6 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     private commsService: CommsService,
     private displayPropertiesService: DisplayPropertiesService
   ) {
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
   }
 
   ngOnInit() {
@@ -37,8 +33,9 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       this.campaignId = params[`id`];
     });
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.fetchTemplatesNotInCampaign();
-
   }
 
   ngOnDestroy() {
@@ -65,6 +62,16 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
       link: `campaigns/${campaign.id}`
     };
     return campaignInfo;
+  }
+
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   fetchTemplatesNotInCampaign() {

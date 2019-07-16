@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IamUsersComponent } from './iam-users.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FilterableTableComponent, TableActionsManagementComponent, DismissableContentComponent } from '@perx/open-ui-components';
 
 describe('IamUsersComponent', () => {
   let component: IamUsersComponent;
@@ -8,7 +12,17 @@ describe('IamUsersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IamUsersComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        IamUsersComponent,
+        FilterableTableComponent,
+        TableActionsManagementComponent,
+        DismissableContentComponent
+      ]
     })
     .compileComponents();
   }));

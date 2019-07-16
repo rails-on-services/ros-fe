@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RenameModal } from './rename-modal.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/shared/shared.module';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RenameModalComponent', () => {
   let component: RenameModal;
@@ -8,7 +12,17 @@ describe('RenameModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RenameModal ]
+      imports: [
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NoopAnimationsModule
+      ],
+      declarations: [ RenameModal ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
     })
     .compileComponents();
   }));

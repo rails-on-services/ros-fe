@@ -18,7 +18,6 @@ export class FilesComponent implements OnInit {
   showModal: boolean;
   selection: SelectionModel<CommsCampaign>;
 
-  displayProperties: object;
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -30,12 +29,11 @@ export class FilesComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'storage', 'files-table');
+    this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.fetchFiles();
   }
@@ -59,7 +57,6 @@ export class FilesComponent implements OnInit {
     this.files$ = this.storageServices.getUploadFileList().pipe(
       map(res => res.data),
       map((files: StorageFile[]) => {
-        console.log(files);
         return files.map(file => {
           return {
             id: file.id,

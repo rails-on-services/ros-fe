@@ -4,7 +4,7 @@ import {
   OnDestroy,
   EventEmitter,
   Output,
-  Input,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -40,7 +40,6 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsTemplate>;
 
-  displayProperties: object;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -52,13 +51,12 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
 
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
     this.fetchTemplates();
   }

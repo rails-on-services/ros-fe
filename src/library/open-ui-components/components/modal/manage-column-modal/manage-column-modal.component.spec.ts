@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManageColumnModal } from './manage-column-modal.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 describe('TableColumnManagementModalComponent', () => {
   let component: ManageColumnModal;
@@ -8,7 +10,14 @@ describe('TableColumnManagementModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageColumnModal ]
+      imports: [
+        SharedModule
+      ],
+      declarations: [ ManageColumnModal ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] }
+      ]
     })
     .compileComponents();
   }));

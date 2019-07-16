@@ -19,13 +19,13 @@
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        </span>
+            <span class="align-left">
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
 
-        </span>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
@@ -33,16 +33,10 @@
         <mat-card-content>
           <ng-template matStepLabel>Set group policies</ng-template>
           <div class="group-policies">
-
             <mat-label>Attach Policies</mat-label>
             <ng-container class="policies-table" *ngIf="policies$ | async as policies">
-              <app-filterable-table
-                  [columnProperties]="columnProperties"
-                  [contents]="policies"
-                  [selectable]=true
-                  (selectionChange)="onPolicySelectionChange($event)"
-                  [shownColumns]="shownColumns"
-              >
+              <app-filterable-table [columnProperties]="columnProperties" [contents]="policies" [selectable]=true
+                (selectionChange)="onPolicySelectionChange($event)" [shownColumns]="shownColumns">
               </app-filterable-table>
 
             </ng-container>
@@ -50,15 +44,16 @@
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-stroked-button matStepperNext type="button">Next</button>
-        </span>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>
@@ -84,15 +79,16 @@
         </mat-card-content>
         <mat-card-actions>
           <div class="button-container">
-        <span class="align-left">
-        <button mat-stroked-button matStepperPrevious>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-          <span>Back</span></button>
-        </span>
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
             <span class="align-right">
-          <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-          <button mat-raised-button color="primary" type="submit">Finish</button>
-        </span>
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-raised-button color="primary" type="submit">Finish</button>
+            </span>
           </div>
         </mat-card-actions>
       </mat-step>

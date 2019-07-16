@@ -5,8 +5,8 @@ import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
-import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
   selector: 'app-new-iam-group',
@@ -15,7 +15,7 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
 })
 export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
-  selection: IamPolicy[];
+  selection: SelectionModel<IamPolicy>;
   shownColumns: (string | number | symbol)[];
 
   groupDetailsGroup: FormGroup;
@@ -23,7 +23,6 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
 
   createGroupnamePage: boolean;
   reviewPage: boolean;
-  displayProperties: object;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
 
   group$: Observable<IamGroup>;
@@ -32,22 +31,20 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     private router: Router,
     private route: ActivatedRoute,
     private iamService: IamService,
-    private displayPropertiesService: DisplayPropertiesService) {
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
+    this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.groupDetailsGroup = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       attachedPolicies: new FormControl([]),
       users: new FormControl({}),
     });
-
     this.fetchPolicies();
   }
 
@@ -58,7 +55,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
 
 
   onPolicySelectionChange(selection: SelectionModel<IamPolicy>) {
-    this.selection = selection.selected;
+    this.selection = selection;
     this.groupDetailsGroup.controls.attachedPolicies.setValue(selection.selected);
   }
 
@@ -66,6 +63,15 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     return this.groupDetailsGroup.controls[controlName].hasError(errorName);
   }
 
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
 
   cancelClicked() {
     this.router.navigate(['../'], { relativeTo: this.route });

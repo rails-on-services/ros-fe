@@ -14,12 +14,12 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./cognito-pools.component.scss']
 })
 export class CognitoPoolsComponent implements OnInit {
+
   pools$: Observable<any[]>;
 
   showModal: boolean;
   selection: SelectionModel<CognitoPool>;
 
-  displayProperties: object;
   poolTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -29,13 +29,11 @@ export class CognitoPoolsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'pools-table');
+    this.poolTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
     this.fetchPools();
   }

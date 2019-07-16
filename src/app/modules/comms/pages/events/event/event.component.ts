@@ -20,7 +20,6 @@ export class EventComponent implements OnInit, OnDestroy {
   selectedTemplateId: number | string;
   selectedProviderId: number | string;
   displayProperties: object;
-  eventTableDisplayProperties: TableHeaderProperties[] = [];
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   providerTableDisplayProperties: TableHeaderProperties[] = [];
   isProviderEditable = false;
@@ -32,12 +31,14 @@ export class EventComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
+    const tablesAreReady = this.displayProperties &&
+      this.displayProperties[`essentials`] &&
+      this.displayProperties[`essentials`][`comms`] &&
+      this.displayProperties[`essentials`][`comms`][`tables`];
     // tslint:disable-next-line: no-string-literal
-    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
+    this.providerTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`providers-table`];
     // tslint:disable-next-line: no-string-literal
-    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
-    // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+    this.templateTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`templates-table`];
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
+  OnDestroy
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -28,7 +28,6 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsProvider>;
 
-  displayProperties: object;
   providerTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -40,12 +39,11 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'providers-table');
+    this.providerTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
     this.fetchProviders();
   }

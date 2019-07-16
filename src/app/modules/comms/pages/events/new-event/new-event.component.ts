@@ -54,14 +54,18 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
+    const tablesAreReady = this.displayProperties &&
+      this.displayProperties[`essentials`] &&
+      this.displayProperties[`essentials`][`comms`] &&
+      this.displayProperties[`essentials`][`comms`][`tables`];
     // tslint:disable-next-line: no-string-literal
-    this.providerTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['providers-table'];
+    this.providerTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`providers-table`];
     // tslint:disable-next-line: no-string-literal
-    this.templateTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['templates-table'];
+    this.templateTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`templates-table`];
     // tslint:disable-next-line: no-string-literal
-    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
+    this.campaignTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`campaigns-table`];
     // tslint:disable-next-line: no-string-literal
-    this.poolTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['pools-table'];
+    this.poolTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`pools-table`];
 
   }
 

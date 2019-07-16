@@ -112,12 +112,13 @@ export class IamService {
       page: { size: 10, number: 1 },
       include: 'users'
     };
-    const filter = userId ? params[`filter`] = { user_id: userId } : '';
+    if (userId) {
+      params[`filter`] = { user_id: userId };
+    }
     return this.datastore.findAll(
       IamGroup,
       {
-        ...params,
-        filter
+        ...params
       }
     ).pipe(
       map(document => document.getModels())
@@ -165,12 +166,13 @@ export class IamService {
     const params = {
       page: { size: 10, number: 1 }
     };
-    const filter = userId ? params[`filter`] = { user_id: userId } : '';
+    if (userId) {
+      params[`filter`] = { user_id: userId };
+    }
     return this.datastore.findAll(
       IamPolicy,
       {
-        ...params,
-        filter
+        ...params
       }
     ).pipe(
       map(document => document.getModels())

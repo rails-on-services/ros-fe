@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommsCampaignsComponent } from './comms-campaigns.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
 describe('GroupsComponent', () => {
   let component: CommsCampaignsComponent;
@@ -8,7 +12,15 @@ describe('GroupsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommsCampaignsComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        CommsCampaignsComponent,
+        FilterableTableComponent,
+        TableActionsManagementComponent]
     })
     .compileComponents();
   }));

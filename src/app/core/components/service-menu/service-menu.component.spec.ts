@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ServiceMenuComponent } from './service-menu.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ServiceMenuComponent', () => {
   let component: ServiceMenuComponent;
@@ -8,9 +11,10 @@ describe('ServiceMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServiceMenuComponent ]
+      imports: [SharedModule, RouterTestingModule, NoopAnimationsModule],
+      declarations: [ServiceMenuComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -15,9 +15,8 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 })
 export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaigns$: Observable<any[]>;
-  campaignSelection: CommsCampaign[];
+  campaignSelection: SelectionModel<CommsCampaign>;
   shownColumns: (string | number | symbol)[];
-  displayProperties: object;
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
   templateDetailsGroup: FormGroup;
@@ -30,14 +29,11 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private commsService: CommsService,
     private formBuilder: FormBuilder,
-    private displayPropertiesService: DisplayPropertiesService) {
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.campaignTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['campaigns-table'];
-
-  }
+    private displayPropertiesService: DisplayPropertiesService) {}
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.templateDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -52,7 +48,6 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
         }),
       ])
     });
-
     this.fetchCampaigns();
   }
 
@@ -88,6 +83,16 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     });
   }
 
+  reloadTable() {
+    if (this.campaignSelection) {
+      this.campaignSelection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
+  }
+
   private fetchCampaigns(force?: boolean) {
     this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
       map(commsCampaigns => {
@@ -112,7 +117,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   }
 
   onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
-    this.campaignSelection = selection.selected;
+    this.campaignSelection = selection;
     this.formArray.get([1]).get('campaigns').setValue([...selection.selected]);
   }
 }

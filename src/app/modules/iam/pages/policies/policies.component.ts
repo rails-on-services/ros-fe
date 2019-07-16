@@ -19,7 +19,6 @@ export class PoliciesComponent implements OnInit {
 
   showModal: boolean;
   selection: SelectionModel<IamPolicy>;
-  displayProperties: object;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -31,14 +30,12 @@ export class PoliciesComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.policyTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['policies-table'];
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
+    this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.policyTableDisplayProperties);
-
     this.fetchPolicies();
   }
 

@@ -20,7 +20,6 @@ export class PolicyAttachComponent implements OnInit {
 
   selection: SelectionModel<IamUser | IamGroup>;
 
-  displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns$: Observable<(string | number | symbol)[]>;
   shownColumns: (string | number | symbol)[];
@@ -29,14 +28,12 @@ export class PolicyAttachComponent implements OnInit {
     private iamService: IamService,
     public dialog: MatDialog,
     private displayPropertiesService: DisplayPropertiesService
-  ) {
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
-  }
+  ) { }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
     this.shownColumns = ['username', 'type'];
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.fetchUsers();
   }
 
@@ -67,6 +64,16 @@ export class PolicyAttachComponent implements OnInit {
       { key: 'username', name: 'User Name', sortable: true, display: true },
       { key: 'type', name: 'Type', sortable: true, display: true }
     ];
+  }
+
+  reloadTable() {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+    this.shownColumns = shownColumns;
   }
 
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {

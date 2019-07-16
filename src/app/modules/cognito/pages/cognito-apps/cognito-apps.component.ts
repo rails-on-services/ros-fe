@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
-
 @Component({
   selector: 'app-cognito-apps',
   templateUrl: './cognito-apps.component.html',
@@ -21,7 +20,6 @@ export class CognitoAppsComponent implements OnInit {
   showModal: boolean;
 
   selection: SelectionModel<CognitoApplication>;
-  displayProperties: object;
   appTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
   @ViewChild('dismissable') private dismissableElement: ElementRef;
@@ -34,13 +32,11 @@ export class CognitoAppsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.appTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['apps-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'apps-table');
+    this.appTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.appTableDisplayProperties);
     this.fetchApplications();
   }

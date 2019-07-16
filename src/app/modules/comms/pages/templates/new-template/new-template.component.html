@@ -43,13 +43,8 @@
       <mat-step label="Assign Campaign" formGroupName="1" [stepControl]="formArray.get([1])" [editable]="isEditable">
         <mat-card-content>
           <ng-container class="campaign-table" *ngIf="campaigns$ | async as campaigns">
-            <app-filterable-table 
-              [columnProperties]="campaignsColumnProperties" 
-              [contents]="campaigns"
-              [selectable]=true 
-              (selectionChange)="onCampaignsSelectionChange($event)" 
-              [shownColumns]="shownColumns"
-              >
+            <app-filterable-table [columnProperties]="campaignsColumnProperties" [contents]="campaigns"
+              [selectable]=true (selectionChange)="onCampaignsSelectionChange($event)" [shownColumns]="shownColumns">
             </app-filterable-table>
 
           </ng-container>

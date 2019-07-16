@@ -31,7 +31,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    this.hasContent = !!(this.contents.length > 0);
+    this.hasContent = !!(this.contents && this.contents.length > 0);
     if (!this.hasContent) {
       return;
     }

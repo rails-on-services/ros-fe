@@ -1,35 +1,27 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
-import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-modal.component';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
   selector: 'app-table-actions-management',
   templateUrl: './table-actions-management.component.html',
   styleUrls: ['./table-actions-management.component.scss']
 })
-export class TableActionsManagementComponent implements OnInit {
+export class TableActionsManagementComponent {
   @Output() reloadTableEmit = new EventEmitter();
   @Output() changeTableHeaderSettingEmit = new EventEmitter();
-  @Input() tablePlatform: string;
-  @Input() tableModule: string;
-  @Input() tableName: string;
   @Input() shownColumns: (string | number | symbol)[] = [];
+  tableDisplayProperties: TableHeaderProperties[] = [];
 
   displayProperties: object;
-  tableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     public dialog: MatDialog,
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-  }
-
-  ngOnInit() {
-    // tslint:disable-next-line: no-string-literal
-    this.tableDisplayProperties = this.displayProperties[this.tablePlatform][this.tableModule]['tables'][this.tableName];
   }
 
   reloadTable() {
@@ -48,6 +40,7 @@ export class TableActionsManagementComponent implements OnInit {
         this.reloadTable();
         break;
       case 'settings':
+        this.tableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
@@ -62,16 +55,12 @@ export class TableActionsManagementComponent implements OnInit {
           this.changeTableHeaderSetting();
         });
         columnsDialogRef.afterClosed().subscribe(() => {
-          this.tableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.tableDisplayProperties);
-          // tslint:disable-next-line: no-string-literal
-          this.displayProperties[this.tablePlatform][this.tableModule]['tables'][this.tableName] = this.tableDisplayProperties;
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
+          this.displayPropertiesService.setTableShownColumns(this.shownColumns);
+          this.displayPropertiesService.updateCurrentUserDisplayProperties();
         });
         break;
       case 'help':
         break;
     }
   }
-
 }

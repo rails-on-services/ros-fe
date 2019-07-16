@@ -2,8 +2,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
-  OnDestroy,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -27,12 +26,11 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   templateUrl: './iam-users.component.html',
   styleUrls: ['./iam-users.component.scss']
 })
-export class IamUsersComponent implements OnInit, OnDestroy {
+export class IamUsersComponent implements OnInit {
   document$: Observable<JsonApiQueryData<IamUser>>;
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
   showModal: boolean;
-  displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
   groupLinkUrlRoot = '../groups/';
@@ -41,6 +39,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
+  // @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -51,18 +50,13 @@ export class IamUsersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.userTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['users-table'];
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
     this.fetchUsers(true);
-  }
-
-  ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
   }
 
   addUser() {

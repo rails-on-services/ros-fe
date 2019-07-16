@@ -26,11 +26,10 @@ export class IamGroupsComponent implements OnInit {
   groups$: Observable<any[]>;
 
   showModal: boolean;
-  displayProperties: object;
   groupTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamGroup>;
 
-  shownColumns: (string|number|symbol)[];
+  shownColumns: (string | number | symbol)[];
   userLinkUrlRoot = '../users/';
 
   constructor(
@@ -40,15 +39,12 @@ export class IamGroupsComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.groupTableDisplayProperties = this.displayProperties['essentials']['IAM']['tables']['groups-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
+    this.groupTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.groupTableDisplayProperties);
-
     this.fetchGroups();
   }
 
@@ -79,7 +75,7 @@ export class IamGroupsComponent implements OnInit {
         content: 'Are you sure you want to detach the groups from user',
         btnColor: 'warn',
         action: 'Detach'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDetach => {
@@ -97,7 +93,7 @@ export class IamGroupsComponent implements OnInit {
         content: 'Are you sure you want to delete the group',
         btnColor: 'warn',
         action: 'Delete'
-       }
+      }
     });
 
     confirmPopup.afterClosed().subscribe(shouldDelete => {

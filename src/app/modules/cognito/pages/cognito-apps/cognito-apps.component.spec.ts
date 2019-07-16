@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { DismissableContentComponent, TableActionsManagementComponent, FilterableTableComponent } from '@perx/open-ui-components';
 import { CognitoAppsComponent } from './cognito-apps.component';
+import { SharedModule } from 'src/shared/shared.module';
 
 describe('CognitoAppsComponent', () => {
   let component: CognitoAppsComponent;
@@ -8,9 +11,18 @@ describe('CognitoAppsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CognitoAppsComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        DismissableContentComponent,
+        CognitoAppsComponent,
+        FilterableTableComponent,
+        TableActionsManagementComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

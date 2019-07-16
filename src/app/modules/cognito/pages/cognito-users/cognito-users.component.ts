@@ -2,8 +2,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
-  OnDestroy,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,12 +24,11 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   templateUrl: './cognito-users.component.html',
   styleUrls: ['./cognito-users.component.scss']
 })
-export class CognitoUsersComponent implements OnInit, OnDestroy {
+export class CognitoUsersComponent implements OnInit {
   document$: Observable<JsonApiQueryData<CUser>>;
   users$: Observable<any[]>;
   showModal: boolean;
 
-  displayProperties: object;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<CUser>;
   shownColumns$: Observable<(string | number | symbol)[]>;
@@ -48,20 +46,13 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.userTableDisplayProperties = this.displayProperties['essentials']['cognito']['tables']['users-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'users-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
-
     this.fetchUsers();
-  }
-
-  ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
   }
 
   addUser() {

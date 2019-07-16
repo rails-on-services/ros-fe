@@ -34,7 +34,6 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   selection: SelectionModel<CommsEvent>;
 
-  displayProperties: object;
   eventTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
@@ -48,13 +47,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService
   ) {
     this.showModal = false;
-    this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
-    // tslint:disable-next-line: no-string-literal
-    this.eventTableDisplayProperties = this.displayProperties['essentials']['comms']['tables']['events-table'];
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'events-table');
+    this.eventTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.eventTableDisplayProperties);
     this.fetchEvents();
   }
