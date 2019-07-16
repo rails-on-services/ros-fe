@@ -85,12 +85,13 @@ export class CommsService {
       page: { size: 10, number: 1 },
       include: 'campaign',
     };
-    const filter = campaignId ? params[`filter`] = { campaign_id: campaignId } : '';
+    if (campaignId) {
+      params[`filter`] = { campaign_id: campaignId };
+    }
     return this.datastore.findAll(
       CommsTemplate,
       {
-        ...params,
-        filter
+        ...params
       }
     ).pipe(
       map(document => document.getModels())
@@ -154,14 +155,14 @@ export class CommsService {
       page: { size: 10, number: 1 },
       include: 'campaign,template'
     };
-
-    const filter = campaignId ? params[`filter`] = { campaign_id: campaignId } : '';
+    if (campaignId) {
+      params[`filter`] = { campaign_id: campaignId };
+    }
     // Provider and message are not ready
     return this.datastore.findAll(
       CommsEvent,
       {
-        ...params,
-        filter
+        ...params
       }
     ).pipe(
       map(document => document.getModels())
@@ -286,13 +287,14 @@ export class CommsService {
     const params = {
       page: { size: 10, number: 1 }
     };
-    const filter = eventId ? params[`filter`] = { campaign_id: eventId } : '';
+    if (eventId) {
+      params[`filter`] = { campaign_id: eventId };
+    }
 
     return this.datastore.findAll(
       CommsProvider,
       {
-        ...params,
-        filter
+        ...params
       }
     ).pipe(
       map(document => document.getModels())

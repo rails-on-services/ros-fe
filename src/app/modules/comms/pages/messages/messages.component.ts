@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CommsService, CommsMessage } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-messages',
@@ -21,7 +20,6 @@ export class MessagesComponent implements OnInit {
 
   messageTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
 
   constructor(
@@ -33,8 +31,9 @@ export class MessagesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'messages-table');
+    this.messageTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.messageTableDisplayProperties);
-    this.messageTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchMessages();
   }
 

@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfirmationModal, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-policy-attach',
@@ -22,16 +23,17 @@ export class PolicyAttachComponent implements OnInit {
   userTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns$: Observable<(string | number | symbol)[]>;
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private iamService: IamService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private displayPropertiesService: DisplayPropertiesService
   ) { }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
     this.shownColumns = ['username', 'type'];
-    this.userTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.fetchUsers();
   }
 

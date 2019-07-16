@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsCampaign, CommsService } from '@perx/open-services';
@@ -7,7 +7,6 @@ import { map, takeUntil } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-new-template',
@@ -22,7 +21,6 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   templateDetailsGroup: FormGroup;
   isEditable = true;
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   private templateUnsubscribe$ = new Subject<void>();
 
@@ -31,11 +29,11 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private commsService: CommsService,
     private formBuilder: FormBuilder,
-    private displayPropertiesService: DisplayPropertiesService) {
-
-  }
+    private displayPropertiesService: DisplayPropertiesService) {}
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.templateDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
@@ -50,7 +48,6 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
         }),
       ])
     });
-    this.campaignTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchCampaigns();
   }
 

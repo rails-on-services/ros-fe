@@ -4,7 +4,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CognitoService, CognitoApplication } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
-import { ConfirmationModal, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { map } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -23,7 +23,6 @@ export class CognitoAppsComponent implements OnInit {
   appTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -36,7 +35,8 @@ export class CognitoAppsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'apps-table');
+    this.appTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.appTableDisplayProperties);
     this.fetchApplications();
   }

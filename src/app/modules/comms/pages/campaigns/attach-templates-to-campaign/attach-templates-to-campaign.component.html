@@ -1,8 +1,7 @@
 <mat-card-content>
   <div class="container">
     <div class="action" fxLayout="row" fxLayoutGap="1rem">
-      <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
-        [tableModule]="'comms'" [tableName]="'templates-table'" [shownColumns]="shownColumns"
+      <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [shownColumns]="shownColumns"
         (reloadTableEmit)="reloadTable()" (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
       </app-table-actions-management>
     </div>

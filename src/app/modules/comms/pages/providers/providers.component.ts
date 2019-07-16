@@ -1,8 +1,7 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
-  ViewChild,
+  OnDestroy
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,7 +12,7 @@ import { CommsService, CommsProvider } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal, TableActionsManagementComponent
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -31,7 +30,6 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
 
   providerTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -44,8 +42,9 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'providers-table');
+    this.providerTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
-    this.providerTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchProviders();
   }
 

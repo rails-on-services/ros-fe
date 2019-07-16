@@ -24,9 +24,6 @@
     </mat-menu>
     <app-table-actions-management
       fxFlex fxLayout="row" fxLayoutAlign="end"
-      [tablePlatform]="'essentials'"
-      [tableModule]="'IAM'"
-      [tableName]="'policies-table'"
       [shownColumns]="shownColumns"
       (reloadTableEmit)="reloadTable()"
       (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"

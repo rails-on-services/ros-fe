@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, from } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
-import { ConfirmationModal, RenameModal, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ConfirmationModal, RenameModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -14,7 +14,6 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./cognito-pools.component.scss']
 })
 export class CognitoPoolsComponent implements OnInit {
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   pools$: Observable<any[]>;
 
@@ -33,7 +32,8 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.poolTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'pools-table');
+    this.poolTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
     this.fetchPools();
   }

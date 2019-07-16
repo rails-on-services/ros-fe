@@ -6,6 +6,7 @@ import { TableHeaderProperties } from '../../models/tableHeaderProperties';
   providedIn: 'root'
 })
 export class DisplayPropertiesService {
+  currentTableDisplayProperties: TableHeaderProperties[];
 
   constructor(
     private iamService: IamService) { }
@@ -55,5 +56,14 @@ export class DisplayPropertiesService {
       return item;
     });
     return tableDisplayProperties;
+  }
+
+  getTableDisplayProperties() {
+    return this.currentTableDisplayProperties;
+  }
+
+  setTableDisplayProperties(tablePlatform: string, tableModule: string, tableName: string) {
+    // tslint:disable-next-line: no-string-literal
+    this.currentTableDisplayProperties = this.getUserDisplayProperties()[tablePlatform][tableModule][`tables`][tableName];
   }
 }

@@ -2,8 +2,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
-  OnDestroy,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,7 +14,7 @@ import { CognitoUser as CUser } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ConfirmationModal, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableContentService } from 'src/shared/services/table-content/table-content.service';
@@ -25,7 +24,7 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   templateUrl: './cognito-users.component.html',
   styleUrls: ['./cognito-users.component.scss']
 })
-export class CognitoUsersComponent implements OnInit, OnDestroy {
+export class CognitoUsersComponent implements OnInit {
   document$: Observable<JsonApiQueryData<CUser>>;
   users$: Observable<any[]>;
   showModal: boolean;
@@ -37,7 +36,6 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   groupLinkUrlRoot = '../groups/';
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -51,13 +49,10 @@ export class CognitoUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'users-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
-    this.userTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchUsers();
-  }
-
-  ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
   }
 
   addUser() {

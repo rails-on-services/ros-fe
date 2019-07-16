@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-new-iam-group',
@@ -17,7 +17,6 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   policies$: Observable<any[]>;
   selection: SelectionModel<IamPolicy>;
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   groupDetailsGroup: FormGroup;
   isEditable = true;
@@ -31,19 +30,21 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService) {
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
     this.createGroupnamePage = true;
     this.reviewPage = false;
-
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
+    this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.groupDetailsGroup = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       attachedPolicies: new FormControl([]),
       users: new FormControl({}),
     });
-    this.policyTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchPolicies();
   }
 
@@ -54,7 +55,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
 
 
   onPolicySelectionChange(selection: SelectionModel<IamPolicy>) {
-    this.selection = selection.selected;
+    this.selection = selection;
     this.groupDetailsGroup.controls.attachedPolicies.setValue(selection.selected);
   }
 

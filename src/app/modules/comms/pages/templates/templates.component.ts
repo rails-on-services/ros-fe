@@ -4,8 +4,7 @@ import {
   OnDestroy,
   EventEmitter,
   Output,
-  Input,
-  ViewChild,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,7 +17,7 @@ import { CommsService, CommsTemplate } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal, TableActionsManagementComponent
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -43,7 +42,6 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -57,8 +55,9 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
-    this.templateTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchTemplates();
   }
 

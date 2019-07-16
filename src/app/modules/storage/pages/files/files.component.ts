@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CommsCampaign, StorageService, StorageFile } from '@perx/open-services';
@@ -7,7 +7,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { map } from 'rxjs/operators';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +20,6 @@ export class FilesComponent implements OnInit {
 
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -34,8 +32,9 @@ export class FilesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'storage', 'files-table');
+    this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
-    this.campaignTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchFiles();
   }
 

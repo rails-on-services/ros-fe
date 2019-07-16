@@ -15,7 +15,7 @@ import { CommsService, CommsEvent } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal, TableActionsManagementComponent
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
@@ -38,7 +38,6 @@ export class EventsComponent implements OnInit, OnDestroy {
   shownColumns: (string | number | symbol)[];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -51,8 +50,9 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'events-table');
+    this.eventTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.eventTableDisplayProperties);
-    this.eventTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchEvents();
   }
 

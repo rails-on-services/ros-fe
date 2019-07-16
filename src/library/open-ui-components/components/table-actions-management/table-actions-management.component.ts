@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatButtonToggleChange, MatDialog } from '@angular/material';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-modal.component';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
   selector: 'app-table-actions-management',
@@ -11,10 +12,8 @@ import { ManageColumnModal } from '../modal/manage-column-modal/manage-column-mo
 export class TableActionsManagementComponent {
   @Output() reloadTableEmit = new EventEmitter();
   @Output() changeTableHeaderSettingEmit = new EventEmitter();
-  @Input() tablePlatform: string;
-  @Input() tableModule: string;
-  @Input() tableName: string;
   @Input() shownColumns: (string | number | symbol)[] = [];
+  tableDisplayProperties: TableHeaderProperties[] = [];
 
   displayProperties: object;
 
@@ -41,6 +40,7 @@ export class TableActionsManagementComponent {
         this.reloadTable();
         break;
       case 'settings':
+        this.tableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
         const columnsDialogRef = this.dialog.open(ManageColumnModal, {
           width: '30rem',
           data: {
@@ -63,19 +63,5 @@ export class TableActionsManagementComponent {
       case 'help':
         break;
     }
-  }
-
-  get tableDisplayProperties() {
-    // tslint:disable-next-line: no-string-literal
-    return this.displayProperties &&
-      this.displayProperties[this.tablePlatform] &&
-      this.displayProperties[this.tablePlatform][this.tableModule] &&
-      this.displayProperties[this.tablePlatform][this.tableModule][`tables`] &&
-      this.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName];
-  }
-
-  set tableDisplayProperties(value) {
-    // tslint:disable-next-line: no-string-literal
-    this.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName] = value;
   }
 }

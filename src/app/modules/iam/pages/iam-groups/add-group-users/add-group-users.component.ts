@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
 
 @Component({
   selector: 'app-add-group-users',
@@ -20,19 +20,20 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   selection: SelectionModel<IamUser>;
   shownColumns: (string | number | symbol)[];
   userTableDisplayProperties: TableHeaderProperties[] = [];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private iamService: IamService) { }
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService) { }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = ['username', 'urn', 'created_at'];
     this.sub = this.route.params.subscribe(params => {
       this.id = params[`id`];
     });
-    this.userTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchUsersNotInGroup();
 
   }

@@ -1,3 +1,4 @@
+{{columnProperties | json}}
 <div *ngIf="hasContent" class="table-container mat-elevation-z8">
   <mat-form-field *ngIf="hasFilterInput" appearance="outline">
     <mat-icon matPrefix style="margin-right: 0.5em;">search</mat-icon>
@@ -27,7 +28,6 @@
       </td>
     </ng-container>
     <ng-container [matColumnDef]="columnProperty.key" *ngFor="let columnProperty of columnProperties">
-      {{columnProperty | json}}
       <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!columnProperty.sortable">
         {{
           columnProperty.name

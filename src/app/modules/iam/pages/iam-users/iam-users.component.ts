@@ -2,8 +2,7 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild,
-  OnDestroy,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,7 +15,7 @@ import { IamService, IamUser } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
-  ConfirmationModal, TableActionsManagementComponent
+  ConfirmationModal
 } from '@perx/open-ui-components';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { TableContentService } from 'src/shared/services/table-content/table-content.service';
@@ -27,7 +26,7 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   templateUrl: './iam-users.component.html',
   styleUrls: ['./iam-users.component.scss']
 })
-export class IamUsersComponent implements OnInit, OnDestroy {
+export class IamUsersComponent implements OnInit {
   document$: Observable<JsonApiQueryData<IamUser>>;
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
@@ -40,7 +39,7 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
+  // @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -54,13 +53,10 @@ export class IamUsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
-    this.userTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchUsers(true);
-  }
-
-  ngOnDestroy(): void {
-    // this.usersSubsription.unsubscribe();
   }
 
   addUser() {

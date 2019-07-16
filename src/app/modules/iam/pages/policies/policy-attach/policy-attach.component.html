@@ -1,27 +1,19 @@
 <div class="container">
-    <div>
-      <h1>Attach the policy to users, groups, or roles in your account</h1>
-    </div>
-    <div class="action" fxLayout="row" fxLayoutGap="1rem">
-        <button mat-raised-button (click)="showAttachConfirmationPopup()"
-            [disabled]="!selection">
-        Attach Policy
-      </button>
-        <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [tablePlatform]="'essentials'"
-          [tableModule]="'IAM'" [tableName]="'users-table'" [shownColumns]="shownColumns" (reloadTableEmit)="reloadTable()"
-          (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
-        </app-table-actions-management>
-      </div>
-    <ng-container class="policy-attach-table" *ngIf="content$ | async as users">
-      <app-filterable-table
-          [columnProperties]="columnProperties"
-          [selectType]="'check'"
-          [contents]="users"
-          [selectable]=true
-          (selectionChange)="onUsersSelectionChange($event)"
-          [shownColumns]="shownColumns">
-      </app-filterable-table>
-    </ng-container>
+  <div>
+    <h1>Attach the policy to users, groups, or roles in your account</h1>
   </div>
-  <router-outlet></router-outlet>
-  
+  <div class="action" fxLayout="row" fxLayoutGap="1rem">
+    <button mat-raised-button (click)="showAttachConfirmationPopup()" [disabled]="!selection">
+      Attach Policy
+    </button>
+    <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [shownColumns]="shownColumns" (reloadTableEmit)="reloadTable()"
+      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
+    </app-table-actions-management>
+  </div>
+  <ng-container class="policy-attach-table" *ngIf="content$ | async as users">
+    <app-filterable-table [columnProperties]="columnProperties" [selectType]="'check'" [contents]="users"
+      [selectable]=true (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
+    </app-filterable-table>
+  </ng-container>
+</div>
+<router-outlet></router-outlet>

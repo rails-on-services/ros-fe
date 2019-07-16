@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { IamService, IamPolicy } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationModal, TableActionsManagementComponent } from '@perx/open-ui-components';
+import { ConfirmationModal } from '@perx/open-ui-components';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
@@ -21,7 +21,6 @@ export class PoliciesComponent implements OnInit {
   selection: SelectionModel<IamPolicy>;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private iamService: IamService,
@@ -34,8 +33,9 @@ export class PoliciesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
+    this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.policyTableDisplayProperties);
-    this.policyTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
     this.fetchPolicies();
   }
 

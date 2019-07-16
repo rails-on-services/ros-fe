@@ -1,11 +1,11 @@
 import { CommsService, CommsTemplate, CommsCampaign } from '@perx/open-services';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { TableActionsManagementComponent } from '@perx/open-ui-components';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 
 @Component({
   selector: 'app-attach-templates-to-campaign',
@@ -19,12 +19,12 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   shownColumns: (string | number | symbol)[];
   campaign$: Observable<any>;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
-  @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private commsService: CommsService
+    private commsService: CommsService,
+    private displayPropertiesService: DisplayPropertiesService
   ) {
   }
 
@@ -33,7 +33,8 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.sub = this.route.params.subscribe(params => {
       this.campaignId = params[`id`];
     });
-    this.templateTableDisplayProperties = this.tableActionsManagementComponent.tableDisplayProperties;
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
+    this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.fetchTemplatesNotInCampaign();
   }
 
