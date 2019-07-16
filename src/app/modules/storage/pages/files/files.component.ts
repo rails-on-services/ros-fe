@@ -57,7 +57,6 @@ export class FilesComponent implements OnInit {
     this.files$ = this.storageServices.getUploadFileList().pipe(
       map(res => res.data),
       map((files: StorageFile[]) => {
-        console.log(files);
         return files.map(file => {
           return {
             id: file.id,
