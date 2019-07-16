@@ -9,7 +9,7 @@
     "build": "PRODUCTION=false npm run config && ng build",
     "build:prod": "PRODUCTION=true npm run config && ng build --aot --prod",
     "config": "ts-node set-env.ts",
-    "test": "ng test",
+    "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "precommit": "node ./scripts/precommit.js && git add index.ts src/library/open-ui-components/index.ts src/library/open-services/index.ts ",
