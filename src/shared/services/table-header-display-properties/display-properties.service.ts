@@ -68,6 +68,7 @@ export class DisplayPropertiesService {
     this.tablePlatform = tablePlatform;
     this.tableModule = tableModule;
     this.tableName = tableName;
-    this.currentTableDisplayProperties = this.getUserDisplayProperties()[tablePlatform][tableModule][`tables`][tableName];
+    const displayProperties = this.getUserDisplayProperties();
+    this.currentTableDisplayProperties = displayProperties && displayProperties[tablePlatform][tableModule][`tables`][tableName];
   }
 }
