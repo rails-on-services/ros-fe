@@ -36,11 +36,6 @@ export class StorageService {
     return this.http.post(this.storageEndpoint, formData, options);
   }
 
-  getUploadFileList(): Observable<any> {
-    const options = { headers: this.httpHeaders };
-    return this.http.get(this.storageEndpoint, options);
-  }
-
   fetchFiles(force?: boolean): Observable<StorageFile[]> {
     if (!force) {
       const files = this.datastore.peekAll(StorageFile);
