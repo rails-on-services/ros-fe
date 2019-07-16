@@ -5,7 +5,7 @@ jobs:
   build:
     working_directory: ~/project
     docker:
-      - image: circleci/node:12.4.0
+      - image: circleci/node:12.4.0-browsers
     steps:
       - checkout
       - run: yarn install
