@@ -55,9 +55,8 @@ export class TableActionsManagementComponent {
           this.changeTableHeaderSetting();
         });
         columnsDialogRef.afterClosed().subscribe(() => {
-          this.tableDisplayProperties = this.displayPropertiesService
-            .setTableShownColumns(this.shownColumns, this.tableDisplayProperties);
-          this.displayPropertiesService.updateCurrentUserDisplayProperties(this.displayProperties);
+          this.displayPropertiesService.setTableShownColumns(this.shownColumns);
+          this.displayPropertiesService.updateCurrentUserDisplayProperties();
         });
         break;
       case 'help':
