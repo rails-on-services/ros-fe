@@ -23,7 +23,7 @@ export class StorageService {
       // 'Content-Type': 'multipart/form-data',
       Authorization: 'Basic AGJRMHJCIQLEQDRZJGJE:9TLqz-KM47M-ySPLDCmrxuv7l1VYj-y81zqkT_at8AvgaMNXf2wJ9g'
     });
-    this.storageEndpoint = 'https://7339f4c0.ngrok.io/storage/files';
+    this.storageEndpoint = 'http://d853ad1a.ngrok.io/storage/files';
   }
 
   uploadFile(file: File): Observable<any> {
@@ -34,11 +34,6 @@ export class StorageService {
     const options = { headers: this.httpHeaders };
 
     return this.http.post(this.storageEndpoint, formData, options);
-  }
-
-  getUploadFileList(): Observable<any> {
-    const options = { headers: this.httpHeaders };
-    return this.http.get(this.storageEndpoint, options);
   }
 
   fetchFiles(force?: boolean): Observable<StorageFile[]> {

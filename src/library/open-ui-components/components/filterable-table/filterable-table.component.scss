@@ -13,6 +13,22 @@ mat-form-field {
   width: 50%;
 }
 
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
+  padding: 1rem;
+}
+
+td.mat-cell a {
+  word-break: break-all;
+}
+
+tr:nth-child(even) {background: rgba(232, 232, 232, 0.3)}
+tr:nth-child(odd) {background: #FFF}
+
+tr.mat-header-row {
+  background: lightgray;
+}
 .mat-header-row {
   background: lightgray;
 }

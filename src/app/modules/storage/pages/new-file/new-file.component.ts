@@ -200,4 +200,8 @@ export class NewFileComponent implements OnInit {
       this.stepper.next();
     }
   }
+
+  goToFilesList() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 }

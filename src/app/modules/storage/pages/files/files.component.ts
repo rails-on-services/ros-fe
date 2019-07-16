@@ -53,18 +53,21 @@ export class FilesComponent implements OnInit {
     this.shownColumns = shownColumns;
   }
 
+  get columnProperties() {
+    return this.campaignTableDisplayProperties;
+  }
+
   private fetchFiles() {
-    this.files$ = this.storageServices.getUploadFileList().pipe(
-      map(res => res.data),
+    this.files$ = this.storageServices.fetchFiles().pipe(
       map((files: StorageFile[]) => {
         return files.map(file => {
           return {
             id: file.id,
-            name: file.attributes.filename,
-            urn: file.attributes.urn,
+            name: file.name,
+            urn: file.urn,
             name_link: `${file.id}`,
-            extension: file.attributes.extension,
-            creationTime: file.attributes.created_at
+            extension: file.extension,
+            createdAt: file.createdAt
           };
         });
       })

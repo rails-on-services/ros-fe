@@ -3,23 +3,14 @@
     <button mat-raised-button color="primary" routerLink="new-file">
       Upload File
     </button>
-    <app-table-actions-management
-      fxFlex 
-      fxLayout="row" 
-      fxLayoutAlign="end"
-      [shownColumns]="shownColumns"
-      (reloadTableEmit)="reloadTable()"
-      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"
-    >
+    <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [shownColumns]="shownColumns"
+      (reloadTableEmit)="reloadTable()" (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
     </app-table-actions-management>
+  </div>
   <ng-container class="files-table" *ngIf="files$ | async as files">
-    <app-filterable-table
-        [filterInputPlaceholder]="'Find files by campaign name'"
-        [columnProperties]="columnProperties"
-        [contents]="files"
-        [selectable]=true
-        (selectionChange)="onFilesSelectionChange($event)"
-        [shownColumns]="shownColumns">
+    <app-filterable-table [filterInputPlaceholder]="'Find files by campaign name'" [columnProperties]="columnProperties"
+      [contents]="files" [selectable]=true (selectionChange)="onFilesSelectionChange($event)"
+      [shownColumns]="shownColumns">
     </app-filterable-table>
   </ng-container>
 </div>

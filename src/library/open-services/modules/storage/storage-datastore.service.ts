@@ -8,7 +8,7 @@ import { StorageFile } from './models/storage.model';
 
 const config: DatastoreConfig = {
   // baseUrl: 'https://api.ros.rails-on-services.org/storage',
-  baseUrl: 'https://7339f4c0.ngrok.io/storage',
+  baseUrl: 'https://d853ad1a.ngrok.io/storage',
   models: {
     files: StorageFile
   }
