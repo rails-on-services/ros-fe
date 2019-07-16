@@ -110,6 +110,7 @@ export class NewFileComponent implements OnInit {
 
         fileEntry.file((file: File) => {
           this.storageService.uploadFile(file).subscribe(data => {
+            console.log(data);
           });
           if (file.type.match(this.textType) || file.name.match(this.textType)) {
             this.isImgFile = false;
@@ -126,6 +127,7 @@ export class NewFileComponent implements OnInit {
       } else {
         // It was a directory (empty directories are added, otherwise only files)
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+        console.log(fileEntry);
       }
     }
     // tslint:disable-next-line: no-console
