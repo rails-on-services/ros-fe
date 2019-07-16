@@ -14,9 +14,6 @@ export class StorageFile extends JsonApiModel {
   extension: string;
 
   @Attribute({ serializedName: 'created_at' })
-  creationTime: Date;
-
-  @Attribute({ serializedName: 'updated_at' })
-  updatedTime: Date;
+  createdAt: Date;
 
 }

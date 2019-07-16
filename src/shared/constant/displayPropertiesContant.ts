@@ -407,14 +407,20 @@ export const DEFAULT_SETTING = {
                             display: true,
                         },
                         {
-                            key: 'createdAt',
-                            name: 'Created At',
+                            key: 'extension',
+                            name: 'Extension',
                             sortable: false,
                             display: true,
                         },
                         {
-                            key: 'updatedAt',
-                            name: 'Updated At',
+                            key: 'urn',
+                            name: 'URN',
+                            sortable: false,
+                            display: true,
+                        },
+                        {
+                            key: 'createdAt',
+                            name: 'Created At',
                             sortable: false,
                             display: true,
                         }
