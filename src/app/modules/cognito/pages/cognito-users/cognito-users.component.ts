@@ -31,7 +31,7 @@ export class CognitoUsersComponent implements OnInit {
   @Output() attachUsersToPool = new EventEmitter();
   @Output() detachUsersFromPool = new EventEmitter();
   @Input() tabMode: string;
-  @Input() userId: number;
+  @Input() poolId: number;
   document$: Observable<JsonApiQueryData<CUser>>;
   users$: Observable<any[]>;
   showModal: boolean;

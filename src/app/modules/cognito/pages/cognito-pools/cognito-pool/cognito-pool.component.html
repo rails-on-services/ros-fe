@@ -13,8 +13,8 @@
         <div class="detail-list">{{pool.created_at}}</div>
       </div>
     </div>
-    <app-cognito-pools [tabMode]="true" [poolId]="poolId" (detachUsersFromPool)="detachUsersFromPool($event)"
+    <app-cognito-users [tabMode]="true" [poolId]="poolId" (detachUsersFromPool)="detachUsersFromPool($event)"
       (attachUsersToPool)="attachUsersToPool($event)">
-    </app-cognito-pools>
+    </app-cognito-users>
   </ng-container>
 </div>
