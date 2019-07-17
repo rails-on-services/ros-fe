@@ -22,7 +22,7 @@ export class CognitoAppsComponent implements OnInit {
   selection: SelectionModel<CognitoApplication>;
   appTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -84,7 +84,7 @@ export class CognitoAppsComponent implements OnInit {
 
 
   private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
+    this.dismissibleElement.nativeElement.remove();
   }
 
   closeButtonClick() {
@@ -93,8 +93,7 @@ export class CognitoAppsComponent implements OnInit {
 
   private fetchApplications() {
     this.apps$ = this.cognitoService.fetchApplications().pipe(
-      map(document => {
-        const cognitoApplications = document.getModels();
+      map(cognitoApplications => {
         const apps = cognitoApplications.map(cognitoApplication => {
           const app = { id: cognitoApplication.id };
           const keys = this.appTableDisplayProperties.map(item => item.key);

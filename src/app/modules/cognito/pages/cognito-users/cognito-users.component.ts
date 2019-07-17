@@ -35,7 +35,7 @@ export class CognitoUsersComponent implements OnInit {
   shownColumns: (string | number | symbol)[];
   groupLinkUrlRoot = '../groups/';
 
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -96,7 +96,7 @@ export class CognitoUsersComponent implements OnInit {
   }
 
   private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
+    this.dismissibleElement.nativeElement.remove();
   }
 
   closeButtonClick() {
@@ -128,5 +128,9 @@ export class CognitoUsersComponent implements OnInit {
 
   onUsersSelectionChange(selection: SelectionModel<CUser>) {
     this.selection = selection;
+  }
+
+  clearSelection() {
+    this.selection.clear();
   }
 }

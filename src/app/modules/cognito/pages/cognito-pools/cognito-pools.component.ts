@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -14,6 +14,10 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./cognito-pools.component.scss']
 })
 export class CognitoPoolsComponent implements OnInit {
+  @Output() attachPoolsToUser = new EventEmitter();
+  @Output() detachPoolsFromUser = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() userId: number;
 
   pools$: Observable<any[]>;
 
@@ -106,10 +110,12 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
 
-  private fetchPools() {
-    this.pools$ = this.cognitoService.fetchPools().pipe(
-      map(data => {
-        const cognitoPools = data.getModels();
+  fetchPools(force?: boolean) {
+    if (this.userId) {
+      force = true;
+    }
+    this.pools$ = this.cognitoService.fetchPools(this.userId, force).pipe(
+      map(cognitoPools => {
         const pools = cognitoPools.map(cognitoPool => {
           const pool = {
             id: cognitoPool.id,
@@ -137,4 +143,9 @@ export class CognitoPoolsComponent implements OnInit {
   onPoolsSelectionChange(selection: SelectionModel<CognitoPool>) {
     this.selection = selection;
   }
+
+  clearSelection() {
+    this.selection.clear();
+  }
+
 }

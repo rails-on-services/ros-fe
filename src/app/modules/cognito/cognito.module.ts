@@ -14,6 +14,9 @@ import { CognitoAppsComponent } from './pages/cognito-apps/cognito-apps.componen
 import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 import { NewCognitoPoolComponent } from './pages/cognito-pools/new-cognito-pool/new-cognito-pool.component';
 import { NewCognitoAppComponent } from './pages/cognito-apps/new-cognito-app/new-cognito-app.component';
+import { CognitoUserComponent } from './pages/cognito-users/cognito-user/cognito-user.component';
+import { CognitoAppComponent } from './pages/cognito-apps/cognito-app/cognito-app.component';
+import { CognitoPoolComponent } from './pages/cognito-pools/cognito-pool/cognito-pool.component';
 
 const COMPONENTS = [
   CognitoComponent,
@@ -28,7 +31,10 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
     NewCognitoPoolComponent,
-    NewCognitoAppComponent
+    NewCognitoAppComponent,
+    CognitoUserComponent,
+    CognitoAppComponent,
+    CognitoPoolComponent
   ],
   imports: [
     CommonModule,

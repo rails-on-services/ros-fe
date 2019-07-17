@@ -42,7 +42,7 @@ export class IamUsersComponent implements OnInit {
 
   shownColumns: (string | number | symbol)[] = [];
 
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -112,7 +112,7 @@ export class IamUsersComponent implements OnInit {
   }
 
   private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
+    this.dismissibleElement.nativeElement.remove();
   }
 
   closeButtonClick() {

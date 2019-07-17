@@ -37,7 +37,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   eventTableDisplayProperties: TableHeaderProperties[] = [];
   shownColumns: (string | number | symbol)[];
 
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -107,7 +107,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
 
   private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
+    this.dismissibleElement.nativeElement.remove();
   }
 
   closeButtonClick() {

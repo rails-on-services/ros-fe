@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DismissableContentComponent } from './dismissable-content.component';
+import { CognitoUserComponent } from './cognito-user.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CognitoPoolsComponent } from '../../cognito-pools/cognito-pools.component';
+import { TableActionsManagementComponent, FilterableTableComponent } from '@perx/open-ui-components';
 
-describe('DismissableContentComponent', () => {
-  let component: DismissableContentComponent;
-  let fixture: ComponentFixture<DismissableContentComponent>;
+describe('CognitoUserComponent', () => {
+  let component: CognitoUserComponent;
+  let fixture: ComponentFixture<CognitoUserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,13 +20,17 @@ describe('DismissableContentComponent', () => {
         RouterTestingModule,
         NoopAnimationsModule
       ],
-      declarations: [ DismissableContentComponent ]
+      declarations: [
+        CognitoUserComponent,
+        CognitoPoolsComponent,
+        TableActionsManagementComponent,
+        FilterableTableComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DismissableContentComponent);
+    fixture = TestBed.createComponent(CognitoUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

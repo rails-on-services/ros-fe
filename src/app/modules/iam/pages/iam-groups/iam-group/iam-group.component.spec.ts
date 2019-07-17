@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IamUsersComponent } from '../../iam-users/iam-users.component';
-import { TableActionsManagementComponent, FilterableTableComponent, DismissableContentComponent } from '@perx/open-ui-components';
+import { TableActionsManagementComponent, FilterableTableComponent, DismissibleContentComponent } from '@perx/open-ui-components';
 
 describe('IamGroupComponent', () => {
   let component: IamGroupComponent;
@@ -25,7 +25,7 @@ describe('IamGroupComponent', () => {
         IamUsersComponent,
         TableActionsManagementComponent,
         FilterableTableComponent,
-        DismissableContentComponent]
+        DismissibleContentComponent]
     })
     .compileComponents();
   }));
