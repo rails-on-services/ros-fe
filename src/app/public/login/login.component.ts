@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   failedAuth: boolean;
 
   loginFormGroup: FormGroup;
-  hidePw = true;
+  hidePw: boolean = true;
   currentYear: number;
 
   constructor(private router: Router,

@@ -30,8 +30,8 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   styleUrls: ['./iam-users.component.scss']
 })
 export class IamUsersComponent implements OnInit {
-  @Output() attachUsersToGroup = new EventEmitter();
-  @Output() detachUsersFromGroup = new EventEmitter();
+  @Output() attachUsersToGroup: EventEmitter<any> = new EventEmitter();
+  @Output() detachUsersFromGroup: EventEmitter<any> = new EventEmitter();
   @Input() groupId: number;
   @Input() tabMode: string;
 
@@ -41,7 +41,7 @@ export class IamUsersComponent implements OnInit {
   showModal: boolean;
   userTableDisplayProperties: TableHeaderProperties[] = [];
   selection: SelectionModel<IamUser>;
-  groupLinkUrlRoot = '../groups/';
+  groupLinkUrlRoot: string = '../groups/';
 
 
   shownColumns: (string | number | symbol)[] = [];
@@ -149,7 +149,7 @@ export class IamUsersComponent implements OnInit {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force = false) {
+  fetchUsers(force: boolean = false) {
     if (this.groupId) {
       force = true;
     }

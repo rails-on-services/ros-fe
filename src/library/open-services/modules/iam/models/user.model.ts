@@ -11,7 +11,7 @@ export class IamUser extends JsonApiModel {
   @Attribute()
   urn: string;
 
-  type = 'user';
+  type: string = 'user';
 
   @Attribute({ serializedName: 'console' })
   consoleAccess: boolean;

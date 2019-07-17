@@ -19,7 +19,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
   shownColumns: (string | number | symbol)[];
 
   groupDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   createGroupnamePage: boolean;
   reviewPage: boolean;

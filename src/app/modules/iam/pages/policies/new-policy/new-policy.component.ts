@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./new-policy.component.scss']
 })
 export class NewPolicyComponent {
-  isEditable = true;
-  goNextStepTriggered = false;
+  isEditable: boolean = true;
+  goNextStepTriggered: boolean = false;
   createPolicynamePage: boolean;
   reviewPage: boolean;
   policy$: Observable<IamPolicy>;

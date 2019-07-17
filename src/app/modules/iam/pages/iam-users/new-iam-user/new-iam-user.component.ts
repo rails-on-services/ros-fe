@@ -13,7 +13,7 @@ import { MatStepper } from '@angular/material';
 })
 export class NewIamUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   createUsernamePage: boolean;
   reviewPage: boolean;
@@ -21,8 +21,8 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
   user$: Observable<IamUser>;
   credential$: Observable<IamCredential>;
 
-  private userUnsubscribe$ = new Subject<void>();
-  private credentialUnsubscribe$ = new Subject<void>();
+  private userUnsubscribe$: Subject<void> = new Subject<void>();
+  private credentialUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,

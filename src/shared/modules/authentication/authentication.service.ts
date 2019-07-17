@@ -17,7 +17,7 @@ export class AuthenticationService implements AuthService {
 
   lastURL: string;
   authing: boolean;
-  retries = 0;
+  retries: number = 0;
   preAuthJWT: string;
 
   constructor(
@@ -222,7 +222,7 @@ export class AuthenticationService implements AuthService {
   // }
 
 
-  private getUrlParameter(name) {
+  private getUrlParameter(name: string) {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     const results = regex.exec(this.getInterruptedUrl());

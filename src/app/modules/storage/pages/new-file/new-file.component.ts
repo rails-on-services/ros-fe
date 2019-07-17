@@ -16,14 +16,15 @@ export class NewFileComponent implements OnInit {
   filePreview: string | ArrayBuffer;
   fileContents: object[] = [];
   fileDetailsForm: FormGroup;
-  isEditable = true;
-  multiple = false;
-  isImgFile = false;
-  isTextFile = false;
-  checkTNCStatus = false;
-  textType = '^.+\.(xlsx|xls|csv)$';
-  imgType = /imag.*/;
+  isEditable: boolean = true;
+  multiple: boolean = false;
+  isImgFile: boolean = false;
+  isTextFile: boolean = false;
+  checkTNCStatus: boolean = false;
+  textType: string = '^.+\.(xlsx|xls|csv)$';
+  imgType: RegExp = /imag.*/;
 
+  // tslint:disable-next-line: typedef
   SignaturesMapping = {
     cognito: {
       user: {
@@ -162,24 +163,24 @@ export class NewFileComponent implements OnInit {
     this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
   }
 
-  public toggleSelectedServices(value) {
+  public toggleSelectedServices(value: string) {
     this.selectedServices = this.SignaturesMapping[value];
     this.selectedSignature = {};
   }
 
-  public toggleSelectedSignatures(value) {
+  public toggleSelectedSignatures(value: string) {
     this.selectedSignature = Object.assign({}, this.selectedServices[value]);
   }
 
-  public onChange(event) {
+  public onChange(event: any) {
     this.dropped(event.file);
   }
 
-  public fileOver(event) {
+  public fileOver(event: any) {
     console.log(event);
   }
 
-  public fileLeave(event) {
+  public fileLeave(event: any) {
     console.log(event);
   }
   cancelClicked() {
@@ -190,7 +191,7 @@ export class NewFileComponent implements OnInit {
     console.log(this.selectedSignature);
   }
 
-  updateSignatureMappingField($event) {
+  updateSignatureMappingField($event: any) {
     this.selectedSignature[$event.target.id] = $event.target.value;
   }
 

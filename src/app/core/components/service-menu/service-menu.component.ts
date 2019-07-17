@@ -25,7 +25,7 @@ export class ServiceMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  debugLog(log) {
+  debugLog(log: any) {
     console.log(log);
   }
 }

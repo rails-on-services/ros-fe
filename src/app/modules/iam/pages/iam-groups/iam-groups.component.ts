@@ -16,8 +16,8 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   styleUrls: ['./iam-groups.component.scss']
 })
 export class IamGroupsComponent implements OnInit {
-  @Output() attachGroupsToUser = new EventEmitter();
-  @Output() detachGroupsFromUser = new EventEmitter();
+  @Output() attachGroupsToUser: EventEmitter<any> = new EventEmitter();
+  @Output() detachGroupsFromUser: EventEmitter<any> = new EventEmitter();
   @Input() tabMode: string;
   @Input() userId: number;
 
@@ -30,7 +30,7 @@ export class IamGroupsComponent implements OnInit {
   selection: SelectionModel<IamGroup>;
 
   shownColumns: (string | number | symbol)[];
-  userLinkUrlRoot = '../users/';
+  userLinkUrlRoot: string = '../users/';
 
   constructor(
     private iamService: IamService,
@@ -176,12 +176,4 @@ export class IamGroupsComponent implements OnInit {
   clearSelection() {
     this.selection.clear();
   }
-
-  // addUsersToGroup() {
-  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Add'}], {relativeTo: this.route});
-  // }
-
-  // removeUsersFromGroup() {
-  //   this.router.navigate(['user-management', {id: this.selection.selected[0].id, action: 'Remove'}],  {relativeTo: this.route});
-  // }
 }

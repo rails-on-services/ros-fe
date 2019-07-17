@@ -22,8 +22,8 @@ export class EventComponent implements OnInit, OnDestroy {
   displayProperties: object;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
   providerTableDisplayProperties: TableHeaderProperties[] = [];
-  isProviderEditable = false;
-  isTemplateEditable = false;
+  isProviderEditable: boolean = false;
+  isTemplateEditable: boolean = false;
 
   constructor(
     private commsService: CommsService,

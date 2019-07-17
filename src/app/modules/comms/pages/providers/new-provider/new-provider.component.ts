@@ -12,9 +12,9 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class NewProviderComponent implements OnInit, AfterViewInit {
   providerDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
-  private providerUnsubscribe$ = new Subject<void>();
+  private providerUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private router: Router,
               private route: ActivatedRoute,

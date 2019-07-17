@@ -10,8 +10,8 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   styleUrls: ['./table-actions-management.component.scss']
 })
 export class TableActionsManagementComponent {
-  @Output() reloadTableEmit = new EventEmitter();
-  @Output() changeTableHeaderSettingEmit = new EventEmitter();
+  @Output() reloadTableEmit: EventEmitter<any> = new EventEmitter();
+  @Output() changeTableHeaderSettingEmit: EventEmitter<any> = new EventEmitter();
   @Input() shownColumns: (string | number | symbol)[] = [];
   tableDisplayProperties: TableHeaderProperties[] = [];
 

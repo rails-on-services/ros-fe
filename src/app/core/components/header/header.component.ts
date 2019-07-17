@@ -8,7 +8,7 @@ import { CORE_SERVICES_MENU } from '../../core-services-menu.value';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  selectedService = null;
+  selectedService: any = null;
 
   routerUrl: string = null;
 

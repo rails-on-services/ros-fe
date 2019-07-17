@@ -23,7 +23,7 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, AfterViewInit {
-  private eventUnsubscribe$ = new Subject<void>();
+  private eventUnsubscribe$: Subject<void> = new Subject<void>();
 
   cognitoPools$: Observable<any[]>;
   providers$: Observable<any[]>;
@@ -41,7 +41,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   shownPoolColumns: (string | number | symbol)[];
 
   eventDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 

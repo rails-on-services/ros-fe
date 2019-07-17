@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class NewCognitoUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   createUsernamePage: boolean;
   reviewPage: boolean;

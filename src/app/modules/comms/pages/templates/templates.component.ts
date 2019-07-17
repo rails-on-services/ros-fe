@@ -28,8 +28,8 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./templates.component.scss']
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
-  @Output() attachTemplatesToCampaign = new EventEmitter();
-  @Output() detachTemplatesFromCampaign = new EventEmitter();
+  @Output() attachTemplatesToCampaign: EventEmitter<any> = new EventEmitter();
+  @Output() detachTemplatesFromCampaign: EventEmitter<any> = new EventEmitter();
   @Input() tabMode: string;
   @Input() campaignId: number;
 

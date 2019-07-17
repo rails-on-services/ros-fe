@@ -14,7 +14,7 @@ export class IamGroup extends JsonApiModel {
   @Attribute()
   urn: string;
 
-  type = 'group';
+  type: string = 'group';
 
   // @Attribute({ serializedName: 'attached_policies' })
   attachedPolicies: {};

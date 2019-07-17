@@ -14,7 +14,7 @@ export class CognitoPool extends JsonApiModel {
   @Attribute()
   urn: string;
 
-  type = 'pool';
+  type: string = 'pool';
 
   // @Attribute({ serializedName: 'attached_policies' })
   attachedPolicies: {};

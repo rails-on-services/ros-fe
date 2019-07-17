@@ -20,9 +20,9 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
   templateDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
-  private templateUnsubscribe$ = new Subject<void>();
+  private templateUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,

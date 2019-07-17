@@ -16,8 +16,8 @@ export interface ManageColumnDialogData {
 // tslint:disable-next-line: component-class-suffix
 export class ManageColumnModal implements OnInit {
 
-  selection = new SelectionModel<string | number | symbol>(true, []);
-  selectionChange = new EventEmitter<(string | number | symbol)[]>();
+  selection: SelectionModel<string | number | symbol> = new SelectionModel<string | number | symbol>(true, []);
+  selectionChange: EventEmitter<(string | number | symbol)[]> = new EventEmitter<(string | number | symbol)[]>();
 
   constructor(
     public dialogRef: MatDialogRef<ManageColumnModal>,

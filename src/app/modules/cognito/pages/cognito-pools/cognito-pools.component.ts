@@ -14,8 +14,8 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./cognito-pools.component.scss']
 })
 export class CognitoPoolsComponent implements OnInit {
-  @Output() attachPoolsToUser = new EventEmitter();
-  @Output() detachPoolsFromUser = new EventEmitter();
+  @Output() attachPoolsToUser: EventEmitter<any> = new EventEmitter();
+  @Output() detachPoolsFromUser: EventEmitter<any> = new EventEmitter();
   @Input() tabMode: string;
   @Input() userId: number;
 

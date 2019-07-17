@@ -46,8 +46,7 @@
     ],
     "no-empty": false,
     "no-inferrable-types": [
-      true,
-      "ignore-params"
+      false
     ],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
@@ -81,6 +80,13 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
+    "typedef": [
+      true,
+      "parameter",
+      "member-variable-declaration",
+      "property-declaration"
+    ],
+    "unnecessary-constructor": true,
     "rxjs-collapse-imports": true,
     "rxjs-pipeable-operators-only": true,
     "rxjs-no-static-observable-methods": true,

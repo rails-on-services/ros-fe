@@ -19,7 +19,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   // todo: replace this object with a API call to retrieve list of types of campaigns
-  owners = [
+  owners: {type: string, id: string}[] = [
     {
       type: 'Survey',
       id: '1'
@@ -31,9 +31,9 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   ];
 
   campaignDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
-  private campaignUnsubscribe$ = new Subject<void>();
+  private campaignUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -93,10 +93,5 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   get columnProperties() {
     return this.campaignTableDisplayProperties;
   }
-
-  // onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
-  //   this.selection = selection.selected;
-  //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
-  // }
 
 }

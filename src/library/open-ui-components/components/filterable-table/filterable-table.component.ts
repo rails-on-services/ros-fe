@@ -11,19 +11,19 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class FilterableTableComponent implements OnInit, AfterViewInit {
   @Input() columnProperties: {};
   @Input() contents: any[];
-  @Input() selectable = false;
+  @Input() selectable: boolean = false;
   @Input() shownColumns: any[];
-  @Input() selectType = 'check';
+  @Input() selectType: string = 'check';
   @Input() radioName: string;
-  @Input() hasFilterInput = true;
-  @Input() filterInputPlaceholder = 'Find users by user name';
+  @Input() hasFilterInput: boolean = true;
+  @Input() filterInputPlaceholder: string = 'Find users by user name';
 
-  @Output() selectionChange = new EventEmitter<SelectionModel<any>>();
+  @Output() selectionChange: EventEmitter<SelectionModel<any>> = new EventEmitter<SelectionModel<any>>();
 
 
   hasContent: boolean;
 
-  selection = new SelectionModel<any>(true, []);
+  selection: SelectionModel<any> = new SelectionModel<any>(true, []);
 
   dataSource: MatTableDataSource<any[]>;
 

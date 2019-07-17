@@ -27,7 +27,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     private iamService: IamService,
     private displayPropertiesService: DisplayPropertiesService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
     this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = ['username', 'urn', 'created_at'];
@@ -38,7 +38,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
@@ -86,17 +86,6 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
     this.shownColumns = shownColumns;
   }
-  // Later can move this to group detail page to fetch group users
-  // private fetchUsersInGroup() {
-  //   this.group$ = this.iamService.fetchGroup(this.id).pipe(
-  //     map(group => {
-  //       const users = group.users || [];
-  //       const groupDetails = this.getGroupInfo(group, users);
-
-  //       return groupDetails;
-  //     })
-  //   );
-  // }
 
   get columnProperties() {
     return this.userTableDisplayProperties;

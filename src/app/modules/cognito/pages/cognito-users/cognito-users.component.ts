@@ -28,8 +28,8 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   styleUrls: ['./cognito-users.component.scss']
 })
 export class CognitoUsersComponent implements OnInit {
-  @Output() attachUsersToPool = new EventEmitter();
-  @Output() detachUsersFromPool = new EventEmitter();
+  @Output() attachUsersToPool: EventEmitter<any> = new EventEmitter();
+  @Output() detachUsersFromPool: EventEmitter<any> = new EventEmitter();
   @Input() tabMode: string;
   @Input() poolId: number;
   document$: Observable<JsonApiQueryData<CUser>>;
@@ -40,7 +40,7 @@ export class CognitoUsersComponent implements OnInit {
   selection: SelectionModel<CUser>;
   shownColumns$: Observable<(string | number | symbol)[]>;
   shownColumns: (string | number | symbol)[];
-  groupLinkUrlRoot = '../groups/';
+  groupLinkUrlRoot: string = '../groups/';
 
   @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
@@ -135,7 +135,7 @@ export class CognitoUsersComponent implements OnInit {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force = false) {
+  fetchUsers(force: boolean = false) {
 
     this.users$ = this.cognitoService.fetchUsers(force).pipe(
       map((users: CUser[]) => {
