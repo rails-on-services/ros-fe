@@ -37,12 +37,10 @@ export class IamService {
     if (groupId) {
       params[`filter`] = { group_id: groupId };
     }
-
     return this.datastore.findAll(
       IamUser,
       {
-        page: { size: 10, number: 1 },
-        include: 'groups,credentials'
+        ...params
       }
     ).pipe(
       map(document => document.getModels())

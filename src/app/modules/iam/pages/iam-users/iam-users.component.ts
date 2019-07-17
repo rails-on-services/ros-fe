@@ -59,7 +59,7 @@ export class IamUsersComponent implements OnInit {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
     this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
-    this.fetchUsers(true);
+    this.fetchUsers();
   }
 
   addUser() {

@@ -62,7 +62,7 @@ export class IamGroupsComponent implements OnInit {
     }
     this.selection.selected.forEach(group => {
       this.iamService.removeGroup(group.id).subscribe(() => {
-        this.fetchGroups();
+        this.fetchGroups(true);
       });
     });
   }
