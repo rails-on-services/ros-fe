@@ -2,7 +2,8 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild
+  ViewChild,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -22,11 +23,14 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-iam-users',
   templateUrl: './iam-users.component.html',
   styleUrls: ['./iam-users.component.scss']
 })
 export class IamUsersComponent implements OnInit {
+  @Input() groupId: number;
+  @Input() tabMode: string;
+
   document$: Observable<JsonApiQueryData<IamUser>>;
   users$: Observable<any[]>;
   tableHeaders: { key: string, value: string }[];
@@ -39,7 +43,6 @@ export class IamUsersComponent implements OnInit {
   shownColumns: (string | number | symbol)[] = [];
 
   @ViewChild('dismissable') private dismissableElement: ElementRef;
-  // @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   constructor(
     private router: Router,
@@ -116,9 +119,11 @@ export class IamUsersComponent implements OnInit {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchUsers(force = false) {
-
-    this.users$ = this.iamService.fetchUsers(force).pipe(
+  fetchUsers(force = false) {
+    if (this.groupId) {
+      force = true;
+    }
+    this.users$ = this.iamService.fetchUsers(this.groupId, force).pipe(
       map((users: IamUser[]) => {
         return users.map(user => {
           return {
@@ -142,4 +147,9 @@ export class IamUsersComponent implements OnInit {
   onUsersSelectionChange(selection: SelectionModel<IamUser>) {
     this.selection = selection;
   }
+
+  clearSelection() {
+    this.selection.clear();
+  }
+
 }

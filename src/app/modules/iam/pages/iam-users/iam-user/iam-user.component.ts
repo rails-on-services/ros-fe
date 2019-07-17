@@ -52,7 +52,7 @@ export class IamUserComponent implements OnInit, OnDestroy {
     );
   }
 
-  attachGroupsToCampaign() {
+  attachGroupsToUser() {
     this.router.navigate(['attach-groups'], { relativeTo: this.route });
   }
 
