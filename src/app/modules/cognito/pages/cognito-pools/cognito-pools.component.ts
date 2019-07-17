@@ -54,6 +54,14 @@ export class CognitoPoolsComponent implements OnInit {
     });
   }
 
+  attachPools() {
+    this.attachPoolsToUser.emit();
+  }
+
+  detachPools() {
+    this.detachPoolsFromUser.emit(this.selection);
+  }
+
   showDeleteConfirmationPopup() {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
@@ -68,6 +76,24 @@ export class CognitoPoolsComponent implements OnInit {
     confirmPopup.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
         this.removePools();
+      }
+    });
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Pools',
+        content: 'Are you sure you want to detach the pools from user',
+        btnColor: 'warn',
+        action: 'Detach'
+      }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachPools();
       }
     });
   }

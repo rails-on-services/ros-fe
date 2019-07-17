@@ -1,7 +1,7 @@
 <div class="container">
   <ng-container *ngIf="group$ | async as group">
-    <div fxLayout="row"><a [routerLink]="'..'"
-        routerLinkActive="active-service">groups</a>&nbsp;>&nbsp;{{group.name}}</div>
+    <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">groups</a>&nbsp;>&nbsp;{{group.name}}
+    </div>
     <h2>Details</h2>
     <div fxLayout="column" fxLayoutGap="1rem">
       <div fxFlex fxLayout="row" fxLayoutGap="1rem">
@@ -13,7 +13,8 @@
         <div class="detail-list">{{group.created_at}}</div>
       </div>
     </div>
-    <app-iam-users [tabMode]="true" [groupId]="groupId">
+    <app-iam-users [tabMode]="true" [groupId]="groupId" (detachUsersFromGroup)="detachUsersFromGroup($event)"
+      (attachUsersToGroup)="attachUsersToGroup($event)">>
     </app-iam-users>
   </ng-container>
 </div>

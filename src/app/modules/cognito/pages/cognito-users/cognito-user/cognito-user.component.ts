@@ -47,7 +47,7 @@ export class CognitoUserComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.cognitoPoolsComponent.clearSelection();
-        this.cognitoPoolsComponent.fetchPools();
+        this.cognitoPoolsComponent.fetchPools(true);
       }
     );
   }

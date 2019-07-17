@@ -19,8 +19,8 @@
     <mat-tab-group>
       <mat-tab label="Groups">
         <app-cognito-pools [tabMode]="true" [userId]="userId"
-          (detachGroupsFromUser)="detachGroupsFromUser($event)"
-          (attachGroupsToUser)="attachGroupsToUser($event)">
+          (detachPoolsFromUser)="detachPoolsFromUser($event)"
+          (attachPoolsToUser)="attachPoolsToUser($event)">
         </app-cognito-pools>
       </mat-tab>
       <mat-tab label="Credentials"></mat-tab>

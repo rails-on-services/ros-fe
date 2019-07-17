@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CognitoPoolComponent } from './cognito-pool.component';
+import { SharedModule } from 'src/shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CognitoUsersComponent } from '../../cognito-users/cognito-users.component';
+import { TableActionsManagementComponent, FilterableTableComponent, DismissibleContentComponent } from '@perx/open-ui-components';
 
 describe('CognitoPoolComponent', () => {
   let component: CognitoPoolComponent;
@@ -8,7 +14,18 @@ describe('CognitoPoolComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CognitoPoolComponent ]
+      imports: [
+        SharedModule,
+        HttpClientModule,
+        RouterTestingModule,
+        NoopAnimationsModule
+      ],
+      declarations: [
+        CognitoPoolComponent,
+        CognitoUsersComponent,
+        TableActionsManagementComponent,
+        FilterableTableComponent,
+        DismissibleContentComponent]
     })
     .compileComponents();
   }));

@@ -3,7 +3,9 @@ import {
   ElementRef,
   OnInit,
   ViewChild,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -28,6 +30,8 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   styleUrls: ['./iam-users.component.scss']
 })
 export class IamUsersComponent implements OnInit {
+  @Output() attachUsersToGroup = new EventEmitter();
+  @Output() detachUsersFromGroup = new EventEmitter();
   @Input() groupId: number;
   @Input() tabMode: string;
 
@@ -75,6 +79,32 @@ export class IamUsersComponent implements OnInit {
         this.selection.deselect(user);
         this.fetchUsers(true);
       });
+    });
+  }
+
+  attachUsers() {
+    this.attachUsersToGroup.emit();
+  }
+
+  detachUsers() {
+    this.detachUsersFromGroup.emit(this.selection);
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Users',
+        content: 'Are you sure you want to detach the users from group',
+        btnColor: 'warn',
+        action: 'Detach'
+      }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachUsers();
+      }
     });
   }
 
