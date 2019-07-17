@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { SelectionModel } from '@angular/cdk/collections';
+import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
+import { CognitoPool, CognitoService, IamService, IamPolicy } from '@perx/open-services';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-new-cognito-pool',
@@ -6,10 +14,114 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-cognito-pool.component.scss']
 })
 export class NewCognitoPoolComponent implements OnInit {
+  policies$: Observable<any[]>;
+  selection: SelectionModel<IamPolicy>;
+  shownColumns: (string | number | symbol)[];
 
-  constructor() { }
+  poolDetails: FormGroup;
+  isEditable: boolean = true;
+
+  createPoolnamePage: boolean;
+  reviewPage: boolean;
+  policyTableDisplayProperties: TableHeaderProperties[] = [];
+
+  pool$: Observable<CognitoPool>;
+
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private cognitoService: CognitoService,
+    private iamService: IamService,
+    private displayPropertiesService: DisplayPropertiesService
+  ) {
+    this.createPoolnamePage = true;
+    this.reviewPage = false;
+  }
 
   ngOnInit(): void {
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
+    this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
+    this.poolDetails = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
+      attachedPolicies: new FormControl([]),
+      users: new FormControl({}),
+    });
+    this.fetchPolicies();
+  }
+
+  ngAfterViewInit(): void {
+    // fix ExpressionChangedAfterItHasBeenCheckedError
+    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
+  }
+
+
+  onPolicySelectionChange(selection: SelectionModel<IamPolicy>): void {
+    this.selection = selection;
+    this.poolDetails.controls.attachedPolicies.setValue(selection.selected);
+  }
+
+  hasError(controlName: string, errorName: string): boolean {
+    return this.poolDetails.controls[controlName].hasError(errorName);
+  }
+
+  reloadTable(): void {
+    if (this.selection) {
+      this.selection.clear();
+    }
+  }
+
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
+    this.shownColumns = shownColumns;
+  }
+
+  cancelClicked(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  submitForm(): void {
+
+    // should only need ids of attached policies and let the backend do the heavy lifiting
+    const policies = [];
+    if (this.poolDetails.get('attachedPolicies').value) {
+      this.poolDetails.get('attachedPolicies').value.forEach((policy) => {
+        policies.push(policy.id);
+      }
+      );
+    }
+
+    const pool = {
+      name: this.poolDetails.get('name').value,
+      attachedPolicies: policies,
+      users: this.poolDetails.get('users').value
+    };
+    this.pool$ = this.cognitoService.createPool(pool);
+  }
+
+  goBack(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  get columnProperties(): TableHeaderProperties[] {
+    return this.policyTableDisplayProperties;
+  }
+
+  private fetchPolicies(): void {
+    this.policies$ = this.iamService.fetchPolicies().pipe(
+      map(iamPolicies => {
+        const policies = iamPolicies.map(iamPolicy => {
+          const policy = { id: iamPolicy.id };
+          const keys = this.policyTableDisplayProperties.map(item => item.key);
+
+          keys.forEach(key => {
+            policy[key] = iamPolicy[key];
+          });
+
+          return policy;
+        });
+
+        return policies;
+      })
+    );
   }
 
 }
