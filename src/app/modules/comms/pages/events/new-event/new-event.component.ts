@@ -189,8 +189,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   private fetchCognitoPools() {
     this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
-      map(document => {
-        const cognitoPools = document.getModels();
+      map(cognitoPools => {
         const pools = cognitoPools.map(cognitoPool => {
           const pool = { id: cognitoPool.id };
           const keys = this.poolTableDisplayProperties.map(item => item.key);

@@ -1,0 +1,20 @@
+<div class="container">
+  <ng-container *ngIf="pool$ | async as pool">
+    <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">Pools</a>&nbsp;>&nbsp;{{pool.name}}
+    </div>
+    <h2>Details</h2>
+    <div fxLayout="column" fxLayoutGap="1rem">
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">pool URN:</div>
+        <div class="detail-list">{{pool.urn}}</div>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">Create At:</div>
+        <div class="detail-list">{{pool.created_at}}</div>
+      </div>
+    </div>
+    <app-cognito-users [tabMode]="true" [poolId]="poolId" (detachUsersFromPool)="detachUsersFromPool($event)"
+      (attachUsersToPool)="attachUsersToPool($event)">
+    </app-cognito-users>
+  </ng-container>
+</div>

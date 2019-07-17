@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { DismissableContentComponent } from './dismissable-content/dismissable-content.component';
+import { DismissibleContentComponent } from './dismissible-content/dismissible-content.component';
 import { FilterableTableComponent } from './filterable-table/filterable-table.component';
 import { TableActionsManagementComponent } from './table-actions-management/table-actions-management.component';
 import { ManageColumnModal } from './modal/manage-column-modal/manage-column-modal.component';
@@ -12,7 +12,7 @@ import { MaterialDesignModule } from '../shared/material-design/material-design.
 import { RouterModule } from '@angular/router';
 
 const COMPONENTS = [
-  DismissableContentComponent,
+  DismissibleContentComponent,
   FilterableTableComponent,
   TableActionsManagementComponent,
   ManageColumnModal,

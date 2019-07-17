@@ -1,34 +1,31 @@
-<div #dismissable>
-  <app-dismissable-content (closeButtonClick)="closeButtonClick()">
-  </app-dismissable-content>
+<div #dismissible>
+  <app-dismissible-content (closeButtonClick)="closeButtonClick()">
+  </app-dismissible-content>
 </div>
 <div class="container">
   <div class="action" fxLayout="row" fxLayoutGap="1rem">
-    <button mat-raised-button color="primary" (click)="addUser()">
+    <button *ngIf="!tabMode" mat-raised-button color="primary" (click)="addUser()">
       Add User
     </button>
-    <button mat-raised-button color="warn" (click)="showDeleteConfirmationPopup()"
-            [disabled]="!(selection && selection.selected.length)">
+    <button *ngIf="!tabMode" mat-raised-button color="warn" (click)="showDeleteConfirmationPopup()"
+      [disabled]="!(selection && selection.selected.length)">
       Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
-    <app-table-actions-management
-      fxFlex 
-      fxLayout="row" 
-      fxLayoutAlign="end"
-      [shownColumns]="shownColumns"
-      (reloadTableEmit)="reloadTable()"
-      (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)"
-    >
+    <button *ngIf="tabMode" mat-raised-button color="primary" (click)="attachUsers()">
+      Attach Users to Pool
+    </button>
+    <button *ngIf="tabMode" mat-raised-button color="warn" (click)="showDetachConfirmationPopup()"
+      [disabled]="!(selection && selection.selected.length)">
+      Detach User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> from
+      Pool
+    </button>
+    <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [shownColumns]="shownColumns"
+      (reloadTableEmit)="reloadTable()" (changeTableHeaderSettingEmit)="changeTableHeaderSetting($event)">
     </app-table-actions-management>
   </div>
   <ng-container class="users-table" *ngIf="users$ | async as users">
-    <app-filterable-table
-        [columnProperties]="columnProperties"
-        [contents]="users"
-        [selectable]=true
-        (selectionChange)="onUsersSelectionChange($event)"
-        [shownColumns]="shownColumns"
-    >
+    <app-filterable-table [columnProperties]="columnProperties" [contents]="users" [selectable]=true
+      (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
     </app-filterable-table>
   </ng-container>
 </div>

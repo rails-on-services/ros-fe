@@ -14,7 +14,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class IamGroupComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['groupName', 'remove'];
 
-  @ViewChild(IamUsersComponent) iamGroupsComponent: IamUsersComponent;
+  @ViewChild(IamUsersComponent) iamUsersComponent: IamUsersComponent;
   private sub: any;
   group$: Observable<any>;
   groupId: number;
@@ -36,7 +36,7 @@ export class IamGroupComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  detachGroupsFromUser(selection: SelectionModel<IamGroup>) {
+  detachUsersFromGroup(selection: SelectionModel<IamGroup>) {
     const selectedUsers = selection.selected.map(item => item.id);
     this.iamService.fetchGroup(this.groupId).pipe(
       map(group => {
@@ -46,8 +46,8 @@ export class IamGroupComponent implements OnInit, OnDestroy {
       switchMap(group => group.save())
     ).subscribe(
       () => {
-        this.iamGroupsComponent.clearSelection();
-        this.iamGroupsComponent.fetchUsers();
+        this.iamUsersComponent.clearSelection();
+        this.iamUsersComponent.fetchUsers(true);
       }
     );
   }

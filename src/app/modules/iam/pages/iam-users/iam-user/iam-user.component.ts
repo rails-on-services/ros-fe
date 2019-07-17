@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { IamService, IamGroup } from '@perx/open-services';
+import { IamService, IamUser } from '@perx/open-services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class IamUserComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  detachGroupsFromUser(selection: SelectionModel<IamGroup>) {
+  detachGroupsFromUser(selection: SelectionModel<IamUser>) {
     const selectedGroups = selection.selected.map(item => item.id);
     this.iamService.fetchUser(this.userId).pipe(
       map(user => {
@@ -47,7 +47,7 @@ export class IamUserComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.iamGroupsComponent.clearSelection();
-        this.iamGroupsComponent.fetchGroups();
+        this.iamGroupsComponent.fetchGroups(true);
       }
     );
   }

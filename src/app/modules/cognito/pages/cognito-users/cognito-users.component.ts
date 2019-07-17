@@ -2,7 +2,10 @@ import {
   Component,
   ElementRef,
   OnInit,
-  ViewChild
+  ViewChild,
+  Output,
+  EventEmitter,
+  Input
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -25,6 +28,10 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   styleUrls: ['./cognito-users.component.scss']
 })
 export class CognitoUsersComponent implements OnInit {
+  @Output() attachUsersToPool = new EventEmitter();
+  @Output() detachUsersFromPool = new EventEmitter();
+  @Input() tabMode: string;
+  @Input() poolId: number;
   document$: Observable<JsonApiQueryData<CUser>>;
   users$: Observable<any[]>;
   showModal: boolean;
@@ -35,7 +42,7 @@ export class CognitoUsersComponent implements OnInit {
   shownColumns: (string | number | symbol)[];
   groupLinkUrlRoot = '../groups/';
 
-  @ViewChild('dismissable') private dismissableElement: ElementRef;
+  @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
   constructor(
     private router: Router,
@@ -70,6 +77,31 @@ export class CognitoUsersComponent implements OnInit {
     });
   }
 
+  attachUsers() {
+    this.attachUsersToPool.emit();
+  }
+
+  detachUsers() {
+    this.detachUsersFromPool.emit(this.selection);
+  }
+
+  showDetachConfirmationPopup() {
+    const confirmPopup = this.dialog.open(ConfirmationModal, {
+      minWidth: '300px',
+      data: {
+        header: 'Detach Users',
+        content: 'Are you sure you want to detach the users from group',
+        btnColor: 'warn',
+        action: 'Detach'
+      }
+    });
+
+    confirmPopup.afterClosed().subscribe(shouldDetach => {
+      if (shouldDetach) {
+        this.detachUsers();
+      }
+    });
+  }
 
   showDeleteConfirmationPopup() {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
@@ -96,14 +128,14 @@ export class CognitoUsersComponent implements OnInit {
   }
 
   private removeDialogComponentFromBody() {
-    this.dismissableElement.nativeElement.remove();
+    this.dismissibleElement.nativeElement.remove();
   }
 
   closeButtonClick() {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchUsers(force = false) {
+  fetchUsers(force = false) {
 
     this.users$ = this.cognitoService.fetchUsers(force).pipe(
       map((users: CUser[]) => {
@@ -128,5 +160,9 @@ export class CognitoUsersComponent implements OnInit {
 
   onUsersSelectionChange(selection: SelectionModel<CUser>) {
     this.selection = selection;
+  }
+
+  clearSelection() {
+    this.selection.clear();
   }
 }

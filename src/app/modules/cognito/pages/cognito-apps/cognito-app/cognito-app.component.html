@@ -1,0 +1,13 @@
+<div class="container">
+  <ng-container *ngIf="app$ | async as app">
+    <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">Apps</a>&nbsp;>&nbsp;{{app.name}}
+    </div>
+    <h2>Details</h2>
+    <div fxLayout="column" fxLayoutGap="1rem">
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">App URN:</div>
+        <div class="detail-list">{{app.urn}}</div>
+      </div>
+    </div>
+  </ng-container>
+</div>

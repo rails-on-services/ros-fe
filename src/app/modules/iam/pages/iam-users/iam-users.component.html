@@ -1,6 +1,6 @@
-<div #dismissable style="display: none">
-  <app-dismissable-content (closeButtonClick)="closeButtonClick()">
-  </app-dismissable-content>
+<div #dismissible style="display: none">
+  <app-dismissible-content (closeButtonClick)="closeButtonClick()">
+  </app-dismissible-content>
 </div>
 <div class="container">
   <div class="action" fxLayout="row" fxLayoutGap="1rem">
@@ -12,11 +12,11 @@
       Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
     <button *ngIf="tabMode" mat-raised-button color="primary" (click)="attachGroups()">
-      Attach Users<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> to Group
+      Attach Users to Group
     </button>
     <button *ngIf="tabMode" mat-raised-button color="warn" (click)="showDetachConfirmationPopup()"
       [disabled]="!(selection && selection.selected.length)">
-      Remove Users<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> from
+      Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span> from
       Group
     </button>
     <app-table-actions-management fxFlex fxLayout="row" fxLayoutAlign="end" [shownColumns]="shownColumns"

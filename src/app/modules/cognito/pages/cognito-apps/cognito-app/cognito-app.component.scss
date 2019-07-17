@@ -1,0 +1,43 @@
+.container {
+    font-size: 1.4rem;
+    padding: 2rem 1rem;
+  }
+  
+  .detail-list-title {
+    font-weight: bold;
+    width: 15rem;
+    text-align: right;
+  }
+  
+  h2 {
+    border-bottom-color: rgb(204, 204, 204);
+    border-bottom-style: solid;
+    border-bottom-width: 0.1rem;
+  }
+  
+  .tab-container {
+    padding: 1rem;
+  }
+  
+  .table-container {
+    margin: 1rem 0;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  .mat-header-row {
+    background: lightgray;
+  }
+  
+  td.mat-column-remove {
+    padding: 0rem !important;
+    width: 2.0rem;
+  }
+  
+  a {
+    color: blue;
+  }
+  

@@ -1,0 +1,29 @@
+<div class="container">
+  <ng-container *ngIf="user$ | async as user">
+    <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">Users</a>&nbsp;>&nbsp;{{user.username}}</div>
+    <h2>Details</h2>
+    <div fxLayout="column" fxLayoutGap="1rem">
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">User URN:</div>
+        <div class="detail-list">{{user.urn}}</div>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">API Access:</div>
+        <div class="detail-list">{{user.apiAccess}}</div>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">Console Access:</div>
+        <div class="detail-list">{{user.consoleAccess}}</div>
+      </div>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="Groups">
+        <app-cognito-pools [tabMode]="true" [userId]="userId"
+          (detachPoolsFromUser)="detachPoolsFromUser($event)"
+          (attachPoolsToUser)="attachPoolsToUser($event)">
+        </app-cognito-pools>
+      </mat-tab>
+      <mat-tab label="Credentials"></mat-tab>
+    </mat-tab-group>
+  </ng-container>
+</div>

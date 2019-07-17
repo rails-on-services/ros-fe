@@ -1,11 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: 'app-dismissable-content',
-  templateUrl: './dismissable-content.component.html',
-  styleUrls: ['./dismissable-content.component.scss']
+  selector: 'app-dismissible-content',
+  templateUrl: './dismissible-content.component.html',
+  styleUrls: ['./dismissible-content.component.scss']
 })
-export class DismissableContentComponent implements OnInit {
+export class DismissibleContentComponent implements OnInit {
 
   @Output() closeButtonClick = new EventEmitter();
   constructor() { }
