@@ -7,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  menus = [
+  menus: {route: string, display: string}[] = [
     {route: 'summary', display: 'Summary'}
   ];
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

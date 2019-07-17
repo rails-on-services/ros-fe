@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommsComponent implements OnInit {
 
-  menus = [
+  menus: {route: string, display: string}[] = [
     {route: 'home', display: 'Main'},
     {route: 'campaigns', display: 'Campaigns'},
     {route: 'messages', display: 'Messages'},
@@ -18,7 +18,7 @@ export class CommsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

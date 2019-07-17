@@ -23,21 +23,21 @@ export class RenameModal implements OnInit {
               @Inject(MAT_DIALOG_DATA) public injectedData: DialogData) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formGroup = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(60)])
     });
   }
 
-  onCancel() {
+  onCancel(): void {
     this.dialogRef.close();
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.formGroup.controls[controlName].hasError(errorName);
   }
 
-  onConfirm() {
+  onConfirm(): any {
     return this.formGroup.controls.name.value;
   }
 }

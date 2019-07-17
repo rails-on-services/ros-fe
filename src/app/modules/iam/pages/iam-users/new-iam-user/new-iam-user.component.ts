@@ -13,7 +13,7 @@ import { MatStepper } from '@angular/material';
 })
 export class NewIamUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   createUsernamePage: boolean;
   reviewPage: boolean;
@@ -21,8 +21,8 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
   user$: Observable<IamUser>;
   credential$: Observable<IamCredential>;
 
-  private userUnsubscribe$ = new Subject<void>();
-  private credentialUnsubscribe$ = new Subject<void>();
+  private userUnsubscribe$: Subject<void> = new Subject<void>();
+  private credentialUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -33,7 +33,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
     this.reviewPage = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userDetailsGroup = new FormGroup({
       userName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       hasProgrammaticAccess: new FormControl(false),
@@ -41,21 +41,21 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.userDetailsGroup.controls[controlName].hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm(stepper: MatStepper) {
+  submitForm(stepper: MatStepper): void {
     const u = {
       username: this.userDetailsGroup.get('userName').value,
       api: this.userDetailsGroup.get('hasProgrammaticAccess').value,
@@ -71,7 +71,7 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-service-menu',
   templateUrl: './service-menu.component.html',
   styleUrls: ['./service-menu.component.scss']
 })
-export class ServiceMenuComponent implements OnInit {
+export class ServiceMenuComponent {
 
   @Input() menus: {route: string, display: string}[] = [];
 
@@ -22,10 +22,7 @@ export class ServiceMenuComponent implements OnInit {
     this.opened = true;
   }
 
-  ngOnInit() {
-  }
-
-  debugLog(log) {
+  debugLog(log: any): void {
     console.log(log);
   }
 }

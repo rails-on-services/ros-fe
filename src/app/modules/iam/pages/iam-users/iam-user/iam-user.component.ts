@@ -25,18 +25,18 @@ export class IamUserComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.userId = params[`id`];
     });
     this.fetchUser();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  detachGroupsFromUser(selection: SelectionModel<IamUser>) {
+  detachGroupsFromUser(selection: SelectionModel<IamUser>): void {
     const selectedGroups = selection.selected.map(item => item.id);
     this.iamService.fetchUser(this.userId).pipe(
       map(user => {
@@ -52,11 +52,11 @@ export class IamUserComponent implements OnInit, OnDestroy {
     );
   }
 
-  attachGroupsToUser() {
+  attachGroupsToUser(): void {
     this.router.navigate(['attach-groups'], { relativeTo: this.route });
   }
 
-  private fetchUser() {
+  private fetchUser(): void {
     this.user$ = this.iamService.fetchUser(this.userId);
   }
 

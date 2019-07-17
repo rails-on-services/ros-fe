@@ -20,7 +20,7 @@ export class AppComponent {
     }
   }
 
-  private fetchUser() {
+  private fetchUser(): void {
     const userInfo = {
       id: 1
     };

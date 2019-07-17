@@ -6,9 +6,9 @@ import { environment } from '../../../environments/environment';
 })
 export class FeatureFlagsService {
 
-  mockIamUsersDb = false;
-  mockIamGroupsDb = false;
-  mockIamPoliciesDb = false;
+  mockIamUsersDb: boolean = false;
+  mockIamGroupsDb: boolean = false;
+  mockIamPoliciesDb: boolean = false;
 
   constructor() {
     if (environment.mock) {

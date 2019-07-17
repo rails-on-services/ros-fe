@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CognitoComponent implements OnInit {
 
-  menus = [
+  menus: {route: string, display: string}[] = [
     {route: 'home', display: 'Dashboard'},
     {route: 'users', display: 'Users'},
     {route: 'pools', display: 'Pools'},
@@ -16,7 +16,7 @@ export class CognitoComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

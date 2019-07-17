@@ -27,15 +27,15 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
   @HostBinding('style.margin') hostMargin: string;
 
   @Input() type: 'selection-list' | 'selection-collection' = 'selection-list';
-  @Input() columns = 2;
+  @Input() columns: number = 2;
   @Input() maxSelection: any = 1;
   @Input() selectedBorderColor: string;
-  @Input() disabled = false;
+  @Input() disabled: boolean = false;
 
   // tslint:disable-next-line: no-use-before-declare
   @ContentChildren(forwardRef(() => SelectionComponent)) selections: QueryList<SelectionComponent>;
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     if (this.maxSelection === 'all') {
       this.maxSelection = this.selections.length;
     }
@@ -44,7 +44,7 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
   onChange: (value: any) => void = () => { };
   onTouched: () => any = () => { };
 
-  get selectedSelections() {
+  get selectedSelections(): SelectionComponent[] {
     if (!this.selections) {
       return [];
     }
@@ -103,9 +103,9 @@ export class SelectionWrapperComponent { }
   styleUrls: ['./selection.component.scss'],
 })
 export class SelectionComponent implements OnInit {
-  private pad = 0.5;
+  private pad: number = 0.5;
 
-  @HostBinding('style.padding') hostPadding = `${this.pad}rem`;
+  @HostBinding('style.padding') hostPadding: string = `${this.pad}rem`;
   @HostBinding('style.height') hostHeight: string;
   @HostBinding('style.width') hostWidth: string;
 
@@ -114,13 +114,13 @@ export class SelectionComponent implements OnInit {
   selectedBorderColor: string;
 
   // Default to Perx color palette
-  private defaultSelectedBorderColor = '#1996d3';
-  private isSelected = false;
+  private defaultSelectedBorderColor: string = '#1996d3';
+  private isSelected: boolean = false;
 
   constructor(@Optional() private selectionGroup: SelectionGroupDirective) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const type = this.selectionGroup && this.selectionGroup.type || 'selection-list';
     this.hostWidth = type === 'selection-list' ?
       `calc(100% - ${2 * this.pad}rem)` :
@@ -140,7 +140,7 @@ export class SelectionComponent implements OnInit {
     }
   }
 
-  onClick() {
+  onClick(): void {
     if (this.selectionGroup) {
       this.selectionGroup.onTouched();
     }
@@ -160,7 +160,7 @@ export class SelectionComponent implements OnInit {
     }
   }
 
-  get selected() {
+  get selected(): boolean {
     return this.isSelected;
   }
 
@@ -168,14 +168,17 @@ export class SelectionComponent implements OnInit {
     this.isSelected = selected;
   }
 
-  get borderStyles() {
+  get borderStyles(): {
+    'border-color': string;
+    'border-width': string;
+  } {
     return this.isSelected ? {
       'border-color': this.selectedBorderColor,
       'border-width': '0.2rem'
     } : undefined;
   }
 
-  get type() {
+  get type(): string {
     return (this.selectionGroup && this.selectionGroup.type) || 'selection-list';
   }
 }

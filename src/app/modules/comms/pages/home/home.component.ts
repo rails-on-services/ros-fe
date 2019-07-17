@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     this.messagesCount = 0;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchCampaigns();
     this.fetchEvents();
     this.fetchTemplates();
@@ -31,35 +31,35 @@ export class HomeComponent implements OnInit {
     this.fetchMessages();
   }
 
-  fetchCampaigns() {
+  fetchCampaigns(): void {
     this.commsService.fetchCampaigns().subscribe(
       response => {
         this.campaignsCount = response.length;
       }
     );
   }
-  fetchEvents() {
+  fetchEvents(): void {
     this.commsService.fetchEvents().subscribe(
       response => {
         this.eventsCount = response.length;
       }
     );
   }
-  fetchTemplates() {
+  fetchTemplates(): void {
     this.commsService.fetchTemplates().subscribe(
       response => {
         this.templatesCount = response.length;
       }
     );
   }
-  fetchProviders() {
+  fetchProviders(): void {
     this.commsService.fetchProviders().subscribe(
       response => {
         this.providersCount = response.length;
       }
     );
   }
-  fetchMessages() {
+  fetchMessages(): void {
     this.commsService.fetchMessages().subscribe(
       response => {
         this.messagesCount = response.length;

@@ -28,7 +28,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.shownColumns = ['name', 'content', 'status', 'createdAt', 'updatedAt'];
     this.sub = this.route.params.subscribe(params => {
       this.campaignId = params[`id`];
@@ -38,10 +38,11 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     this.fetchTemplatesNotInCampaign();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
+  // tslint:disable-next-line: typedef
   getTemplateInfo(template: CommsTemplate) {
     const templateDetails = { id: template.id };
     const keys = this.templateTableDisplayProperties.map(item => item.key);
@@ -53,6 +54,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     return templateDetails;
   }
 
+  // tslint:disable-next-line: typedef
   getCampaignInfo(campaign: CommsCampaign, templates: CommsTemplate[]) {
     const campaignInfo = {
       id: campaign.id,
@@ -64,17 +66,17 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     return campaignInfo;
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  fetchTemplatesNotInCampaign() {
+  fetchTemplatesNotInCampaign(): void {
     this.campaign$ = forkJoin(this.commsService.fetchTemplates(), this.commsService.fetchCampaign(this.campaignId)).pipe(
       map(([templatesData, campaignData]) => {
         const templatesInCampaign = campaignData.templates || [];
@@ -93,23 +95,23 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.templateTableDisplayProperties;
   }
 
-  onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {
+  onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>): void {
     this.selection = selection;
   }
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  onEventsSelectionChange(selection: SelectionModel<CommsTemplate>) {
+  onEventsSelectionChange(selection: SelectionModel<CommsTemplate>): void {
     this.selection = selection;
   }
 
-  attachTemplatesToCampaign() {
+  attachTemplatesToCampaign(): void {
     const selectedTemplates = [];
     const selectedTemplateIds = this.selection.selected.map(item => item.id);
     this.commsService.fetchTemplates()

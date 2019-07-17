@@ -30,26 +30,26 @@ export class MessagesComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'messages-table');
     this.messageTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.messageTableDisplayProperties);
     this.fetchMessages();
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchMessages(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  private fetchMessages(force?: boolean) {
+  private fetchMessages(force?: boolean): void {
     this.messages$ = this.commsService.fetchMessages(force).pipe(
       map(commsUsers => {
         const users = commsUsers.map(commsUser => {
@@ -68,11 +68,11 @@ export class MessagesComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.messageTableDisplayProperties;
   }
 
-  onMessagesSelectionChange(selection: SelectionModel<CommsMessage>) {
+  onMessagesSelectionChange(selection: SelectionModel<CommsMessage>): void {
     this.selection = selection;
   }
 }

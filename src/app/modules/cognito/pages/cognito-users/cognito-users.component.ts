@@ -28,8 +28,8 @@ import { TableContentService } from 'src/shared/services/table-content/table-con
   styleUrls: ['./cognito-users.component.scss']
 })
 export class CognitoUsersComponent implements OnInit {
-  @Output() attachUsersToPool = new EventEmitter();
-  @Output() detachUsersFromPool = new EventEmitter();
+  @Output() attachUsersToPool: EventEmitter<any> = new EventEmitter();
+  @Output() detachUsersFromPool: EventEmitter<any> = new EventEmitter();
   @Input() tabMode: string;
   @Input() poolId: number;
   document$: Observable<JsonApiQueryData<CUser>>;
@@ -40,7 +40,7 @@ export class CognitoUsersComponent implements OnInit {
   selection: SelectionModel<CUser>;
   shownColumns$: Observable<(string | number | symbol)[]>;
   shownColumns: (string | number | symbol)[];
-  groupLinkUrlRoot = '../groups/';
+  groupLinkUrlRoot: string = '../groups/';
 
   @ViewChild('dismissible') private dismissibleElement: ElementRef;
 
@@ -55,18 +55,18 @@ export class CognitoUsersComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'users-table');
     this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
     this.fetchUsers();
   }
 
-  addUser() {
+  addUser(): void {
     this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
   }
 
-  removeUsers() {
+  removeUsers(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -77,15 +77,15 @@ export class CognitoUsersComponent implements OnInit {
     });
   }
 
-  attachUsers() {
+  attachUsers(): void {
     this.attachUsersToPool.emit();
   }
 
-  detachUsers() {
+  detachUsers(): void {
     this.detachUsersFromPool.emit(this.selection);
   }
 
-  showDetachConfirmationPopup() {
+  showDetachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -103,7 +103,7 @@ export class CognitoUsersComponent implements OnInit {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       width: '30vw',
       data: { type: 'user' }
@@ -116,26 +116,26 @@ export class CognitoUsersComponent implements OnInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchUsers(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private removeDialogComponentFromBody() {
+  private removeDialogComponentFromBody(): void {
     this.dismissibleElement.nativeElement.remove();
   }
 
-  closeButtonClick() {
+  closeButtonClick(): void {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force = false) {
+  fetchUsers(force: boolean = false): void {
 
     this.users$ = this.cognitoService.fetchUsers(force).pipe(
       map((users: CUser[]) => {
@@ -154,15 +154,15 @@ export class CognitoUsersComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.userTableDisplayProperties;
   }
 
-  onUsersSelectionChange(selection: SelectionModel<CUser>) {
+  onUsersSelectionChange(selection: SelectionModel<CUser>): void {
     this.selection = selection;
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selection.clear();
   }
 }

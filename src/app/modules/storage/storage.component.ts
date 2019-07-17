@@ -7,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StorageComponent implements OnInit {
 
-  menus = [
+  menus: {route: string, display: string}[] = [
     {route: 'files', display: 'Files'}
   ];
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

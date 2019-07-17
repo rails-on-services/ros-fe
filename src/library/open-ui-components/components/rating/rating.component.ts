@@ -12,41 +12,42 @@ import {
   ],
 })
 export class RatingComponent implements ControlValueAccessor {
-  @Input() maxRating = 5;
+  @Input() maxRating: number = 5;
   @Input() maxLabel: string;
   @Input() minLabel: string;
-  @Input() selectedTint = '#f2bd42';
-  @Input() showValue = false;
-  @Input() icon = String.fromCharCode(0xf005);
-  @Input() disabled = false;
+  @Input() selectedTint: string = '#f2bd42';
+  @Input() showValue: boolean = false;
+  @Input() icon: string = String.fromCharCode(0xf005);
+  @Input() disabled: boolean = false;
 
-  @Output() changeEmit = new EventEmitter<{ source: RatingComponent, value: number }>();
+  @Output() changeEmit: EventEmitter<{ source: RatingComponent, value: number }> =
+    new EventEmitter<{ source: RatingComponent, value: number }>();
 
-  unSelectedTint = '#959595';
+  unSelectedTint: string = '#959595';
 
   ratings: Array<number> = [];
 
-  private selectedIndex = -1;
+  private selectedIndex: number = -1;
 
   constructor() {
     this.ratings = Array.from(Array(this.maxRating), (_, i) => i + 1);
   }
 
-  getTint(index: number) {
+  getTint(index: number): string {
     if (index <= this.selectedIndex) {
       return this.selectedTint;
     }
     return this.unSelectedTint;
   }
 
-  onSelect(index: number) {
+  onSelect(index: number): void {
     this.onTouched();
     this.value = index + 1;
   }
 
-  onChange: (value: any) => void = () => {};
+  onChange: (value: any) => void = () => { };
 
-  onTouched: () => any = () => {};
+  onTouched: () => any = () => { };
 
   @Input()
   get value(): number {

@@ -9,7 +9,7 @@ export class NewCognitoPoolComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

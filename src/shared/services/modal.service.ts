@@ -9,7 +9,7 @@ export class ModalService {
 
   componentToRender: any;
   previousURL: string;
-  modalOpen = false;
+  modalOpen: boolean = false;
 
   constructor(public dialog: MatDialog,
               private router: Router,
@@ -40,7 +40,7 @@ export class ModalService {
     }
   }
 
-  removeLastDirectoryPartOf(url) {
+  removeLastDirectoryPartOf(url: string): string {
     let arr: string[];
     if (url !== '/') {
       arr = url.split('/');

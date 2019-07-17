@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class NewCognitoUserComponent implements OnInit, AfterViewInit {
   userDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   createUsernamePage: boolean;
   reviewPage: boolean;
@@ -25,7 +25,7 @@ export class NewCognitoUserComponent implements OnInit, AfterViewInit {
     this.reviewPage = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userDetailsGroup = new FormGroup({
       userName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
       hasProgrammaticAccess: new FormControl(false),
@@ -33,21 +33,21 @@ export class NewCognitoUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.userDetailsGroup.controls[controlName].hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  submitForm() {
+  submitForm(): void {
     // save to api
     const user = {
       username: this.userDetailsGroup.get('userName').value,
@@ -59,7 +59,7 @@ export class NewCognitoUserComponent implements OnInit, AfterViewInit {
     // this.router.navigate(['../'], {relativeTo: this.route});
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

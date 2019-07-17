@@ -10,8 +10,8 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   styleUrls: ['./table-actions-management.component.scss']
 })
 export class TableActionsManagementComponent {
-  @Output() reloadTableEmit = new EventEmitter();
-  @Output() changeTableHeaderSettingEmit = new EventEmitter();
+  @Output() reloadTableEmit: EventEmitter<any> = new EventEmitter();
+  @Output() changeTableHeaderSettingEmit: EventEmitter<any> = new EventEmitter();
   @Input() shownColumns: (string | number | symbol)[] = [];
   tableDisplayProperties: TableHeaderProperties[] = [];
 
@@ -24,15 +24,15 @@ export class TableActionsManagementComponent {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
   }
 
-  reloadTable() {
+  reloadTable(): void {
     this.reloadTableEmit.emit();
   }
 
-  changeTableHeaderSetting() {
+  changeTableHeaderSetting(): void {
     this.changeTableHeaderSettingEmit.emit(this.shownColumns);
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
+  onOtherActionsChange(event: MatButtonToggleChange): void {
     // Toggle off as we only want the look and feel.
     event.source.checked = false;
     switch (event.value) {

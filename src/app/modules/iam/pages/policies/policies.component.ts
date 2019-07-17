@@ -32,7 +32,7 @@ export class PoliciesComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
     this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.policyTableDisplayProperties);
@@ -40,7 +40,7 @@ export class PoliciesComponent implements OnInit {
   }
 
 
-  removePolicies() {
+  removePolicies(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -51,7 +51,7 @@ export class PoliciesComponent implements OnInit {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -69,18 +69,18 @@ export class PoliciesComponent implements OnInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchPolicies(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private fetchPolicies(force?: boolean) {
+  private fetchPolicies(force?: boolean): void {
     this.policies$ = this.iamService.fetchPolicies(null, force).pipe(
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
@@ -98,15 +98,15 @@ export class PoliciesComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.policyTableDisplayProperties;
   }
 
-  onPoliciesSelectionChange(selection: SelectionModel<IamPolicy>) {
+  onPoliciesSelectionChange(selection: SelectionModel<IamPolicy>): void {
     this.selection = selection;
   }
 
-  attachPolicy() {
+  attachPolicy(): void {
     this.router.navigate(['policy-attach', this.selection.selected[0].id], { relativeTo: this.route });
   }
 }

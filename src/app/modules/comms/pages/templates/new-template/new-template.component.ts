@@ -20,9 +20,9 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
 
   templateDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
-  private templateUnsubscribe$ = new Subject<void>();
+  private templateUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder,
     private displayPropertiesService: DisplayPropertiesService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
     this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
@@ -55,21 +55,21 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     return this.templateDetailsGroup.get('formArray');
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(section: number, controlName: string, errorName: string) {
+  hasError(section: number, controlName: string, errorName: string): boolean {
     return this.formArray.get([section]).get(controlName).hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm() {
+  submitForm(): void {
     const template = {
       name: this.formArray.get([0]).get('templateName').value,
       description: this.formArray.get([0]).get('description').value,
@@ -83,17 +83,17 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.campaignSelection) {
       this.campaignSelection.clear();
     }
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private fetchCampaigns(force?: boolean) {
+  private fetchCampaigns(force?: boolean): void {
     this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
@@ -112,11 +112,11 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
     );
   }
 
-  get campaignsColumnProperties() {
+  get campaignsColumnProperties(): TableHeaderProperties[] {
     return this.campaignTableDisplayProperties;
   }
 
-  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>): void {
     this.campaignSelection = selection;
     this.formArray.get([1]).get('campaigns').setValue([...selection.selected]);
   }

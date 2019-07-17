@@ -19,18 +19,18 @@ export class ProviderComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.id = params[`id`];
     });
     this.fetchProvider();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  private fetchProvider() {
+  private fetchProvider(): void {
     this.provider$ = this.commsService.fetchProvider(this.id).pipe(
       map(providerDetails => {
         const provider = {

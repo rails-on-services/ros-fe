@@ -9,7 +9,7 @@ export class NewCognitoAppComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }

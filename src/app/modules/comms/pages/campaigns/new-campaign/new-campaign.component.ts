@@ -19,7 +19,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   @ViewChild(TableActionsManagementComponent) tableActionsManagementComponent: TableActionsManagementComponent;
 
   // todo: replace this object with a API call to retrieve list of types of campaigns
-  owners = [
+  owners: {type: string, id: string}[] = [
     {
       type: 'Survey',
       id: '1'
@@ -31,9 +31,9 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   ];
 
   campaignDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
-  private campaignUnsubscribe$ = new Subject<void>();
+  private campaignUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -42,7 +42,7 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.campaignDetailsGroup = this.formBuilder.group({
       formArray: this.formBuilder.array([
         this.formBuilder.group({
@@ -61,21 +61,21 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
     return this.campaignDetailsGroup.get('formArray');
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(section: number, controlName: string, errorName: string) {
+  hasError(section: number, controlName: string, errorName: string): boolean {
     return this.formArray.get([section]).get(controlName).hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm() {
+  submitForm(): void {
 
     const campaign = {
       name: this.formArray.get([0]).get('name').value,
@@ -90,13 +90,8 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
   }
 
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.campaignTableDisplayProperties;
   }
-
-  // onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
-  //   this.selection = selection.selected;
-  //   this.formArray.get([1]).get('cognitoEndpointId').setValue(selection.selected[0].id);
-  // }
 
 }

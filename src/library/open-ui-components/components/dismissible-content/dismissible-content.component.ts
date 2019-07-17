@@ -7,13 +7,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class DismissibleContentComponent implements OnInit {
 
-  @Output() closeButtonClick = new EventEmitter();
+  @Output() closeButtonClick: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  close() {
+  close(): void {
     this.closeButtonClick.emit();
   }
 }

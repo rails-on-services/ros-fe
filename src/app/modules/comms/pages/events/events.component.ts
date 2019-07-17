@@ -49,7 +49,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'events-table');
     this.eventTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.eventTableDisplayProperties);
@@ -60,11 +60,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     // this.eventsSubsription.unsubscribe();
   }
 
-  addEvent() {
+  addEvent(): void {
     this.router.navigate(['new-event'], { relativeTo: this.activatedRoute });
   }
 
-  removeEvents() {
+  removeEvents(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -76,7 +76,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -94,27 +94,27 @@ export class EventsComponent implements OnInit, OnDestroy {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchEvents(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  private removeDialogComponentFromBody() {
+  private removeDialogComponentFromBody(): void {
     this.dismissibleElement.nativeElement.remove();
   }
 
-  closeButtonClick() {
+  closeButtonClick(): void {
     this.removeDialogComponentFromBody();
   }
 
-  fetchEvents(force?: boolean) {
+  fetchEvents(force?: boolean): void {
     if (this.campaignId) {
       force = true;
     }
@@ -138,11 +138,11 @@ export class EventsComponent implements OnInit, OnDestroy {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.eventTableDisplayProperties;
   }
 
-  onEventsSelectionChange(selection: SelectionModel<CommsEvent>) {
+  onEventsSelectionChange(selection: SelectionModel<CommsEvent>): void {
     this.selection = selection;
   }
 }

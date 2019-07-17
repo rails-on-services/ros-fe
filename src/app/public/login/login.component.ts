@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   failedAuth: boolean;
 
   loginFormGroup: FormGroup;
-  hidePw = true;
+  hidePw: boolean = true;
   currentYear: number;
 
   constructor(private router: Router,
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.currentYear = new Date().getFullYear();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.preAuth) {
       if (isPlatformBrowser(this.platformId) && !this.authService.authing) {
         this.authService.isAuthorized().subscribe(
@@ -63,11 +63,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.loginFormGroup.controls[controlName].hasError(errorName);
   }
 
-  handleSubmit() {
+  handleSubmit(): void {
     if (this.loginFormGroup.valid) {
       // call login api
       this.router.navigate(['/dashboard/summary'], { relativeTo: this.route });

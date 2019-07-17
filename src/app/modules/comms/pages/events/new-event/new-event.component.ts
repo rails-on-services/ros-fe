@@ -23,7 +23,7 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
   styleUrls: ['./new-event.component.scss']
 })
 export class NewEventComponent implements OnInit, AfterViewInit {
-  private eventUnsubscribe$ = new Subject<void>();
+  private eventUnsubscribe$: Subject<void> = new Subject<void>();
 
   cognitoPools$: Observable<any[]>;
   providers$: Observable<any[]>;
@@ -41,7 +41,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
   shownPoolColumns: (string | number | symbol)[];
 
   eventDetailsGroup: FormGroup;
-  isEditable = true;
+  isEditable: boolean = true;
 
   @ViewChild('sendAtTimepicker') sendAtTimepicker: NgxMaterialTimepickerComponent;
 
@@ -69,7 +69,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.shownTemplateColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
     this.shownProviderColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
     this.shownCampaignColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
@@ -115,21 +115,21 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     return this.eventDetailsGroup.get('formArray');
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(section: number, controlName: string, errorName: string) {
+  hasError(section: number, controlName: string, errorName: string): boolean {
     return this.formArray.get([section]).get(controlName).hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm() {
+  submitForm(): void {
 
     const dateTime = new Date(this.formArray.get([0]).get('sendDate').value);
     dateTime.setMinutes(this.sendAtTimepicker.selectedMinute.time);
@@ -153,41 +153,41 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     });
   }
 
-  get poolColumnProperties() {
+  get poolColumnProperties(): TableHeaderProperties[] {
     return this.poolTableDisplayProperties;
   }
 
-  get campaignsColumnProperties() {
+  get campaignsColumnProperties(): TableHeaderProperties[]  {
     return this.campaignTableDisplayProperties;
   }
 
-  get providerColumnProperties() {
+  get providerColumnProperties(): TableHeaderProperties[]  {
     return this.providerTableDisplayProperties;
   }
 
-  get templateColumnProperties() {
+  get templateColumnProperties(): TableHeaderProperties[]  {
     return this.templateTableDisplayProperties;
   }
 
-  onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>) {
+  onCognitoPoolSelectionChange(selection: SelectionModel<CognitoPool>): void {
     this.formArray.get([1]).get('targetId').setValue(selection.selected[0] ? selection.selected[0].id : '');
     this.formArray.get([1]).get('targetType').setValue('CognitoPool');
   }
 
-  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>): void {
     this.formArray.get([2]).get('campaign').setValue(selection.selected[0]);
   }
 
-  onProviderSelectionChange(selection: SelectionModel<CommsProvider>) {
+  onProviderSelectionChange(selection: SelectionModel<CommsProvider>): void {
     this.formArray.get([3]).get('provider').setValue(selection.selected[0]);
   }
 
 
-  onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>) {
+  onTemplateSelectionChange(selection: SelectionModel<CommsTemplate>): void {
     this.formArray.get([4]).get('template').setValue(selection.selected[0]);
   }
 
-  private fetchCognitoPools() {
+  private fetchCognitoPools(): void {
     this.cognitoPools$ = this.cognitoService.fetchPools().pipe(
       map(cognitoPools => {
         const pools = cognitoPools.map(cognitoPool => {
@@ -206,7 +206,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private fetchProviders() {
+  private fetchProviders(): void {
     this.providers$ = this.commsService.fetchProviders().pipe(
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
@@ -225,7 +225,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private fetchCampaigns() {
+  private fetchCampaigns(): void {
     this.campaigns$ = this.commsService.fetchCampaigns().pipe(
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
@@ -244,7 +244,7 @@ export class NewEventComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private fetchTemplates() {
+  private fetchTemplates(): void {
     this.templates$ = this.commsService.fetchTemplates().pipe(
       map(commsTemplates => {
         const templates = commsTemplates.map(commsCampaign => {

@@ -30,14 +30,14 @@ export class PolicyAttachComponent implements OnInit {
     private displayPropertiesService: DisplayPropertiesService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
     this.shownColumns = ['username', 'type'];
     this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.fetchUsers();
   }
 
-  private fetchUsers() {
+  private fetchUsers(): void {
     this.content$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroups()).pipe(
       map(([usersData, groupsData]) => {
         const allUsers = [...usersData, ...groupsData];
@@ -59,27 +59,27 @@ export class PolicyAttachComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return [
       { key: 'username', name: 'User Name', sortable: true, display: true },
       { key: 'type', name: 'Type', sortable: true, display: true }
     ];
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+  onUsersSelectionChange(selection: SelectionModel<IamUser>): void {
     this.selection = selection;
   }
-  showAttachConfirmationPopup() {
+  showAttachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
