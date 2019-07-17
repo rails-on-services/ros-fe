@@ -33,18 +33,18 @@ export class CommsCampaignsComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'campaigns-table');
     this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.fetchCampaigns();
   }
 
-  addMessage() {
+  addMessage(): void {
     this.router.navigate(['new-campaign'], { relativeTo: this.activatedRoute });
   }
 
-  removeCampaigns() {
+  removeCampaigns(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -55,7 +55,7 @@ export class CommsCampaignsComponent implements OnInit {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -73,18 +73,18 @@ export class CommsCampaignsComponent implements OnInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchCampaigns(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private fetchCampaigns(force?: boolean) {
+  private fetchCampaigns(force?: boolean): void {
     this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
@@ -104,11 +104,11 @@ export class CommsCampaignsComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.campaignTableDisplayProperties;
   }
 
-  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>) {
+  onCampaignsSelectionChange(selection: SelectionModel<CommsCampaign>): void {
     this.selection = selection;
   }
 }

@@ -33,14 +33,14 @@ export class RatingComponent implements ControlValueAccessor {
     this.ratings = Array.from(Array(this.maxRating), (_, i) => i + 1);
   }
 
-  getTint(index: number) {
+  getTint(index: number): string {
     if (index <= this.selectedIndex) {
       return this.selectedTint;
     }
     return this.unSelectedTint;
   }
 
-  onSelect(index: number) {
+  onSelect(index: number): void {
     this.onTouched();
     this.value = index + 1;
   }

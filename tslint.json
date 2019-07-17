@@ -82,6 +82,7 @@
     "use-pipe-transform-interface": true,
     "typedef": [
       true,
+      "call-signature",
       "parameter",
       "member-variable-declaration",
       "property-declaration"

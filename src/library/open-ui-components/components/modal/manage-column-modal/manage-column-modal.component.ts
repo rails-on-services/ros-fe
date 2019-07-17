@@ -24,7 +24,7 @@ export class ManageColumnModal implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ManageColumnDialogData
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const columnKeys = this.selected ? this.selected : this.columnPropertyKeys;
     if (columnKeys && columnKeys.length > 0) {
       columnKeys.forEach(key => {
@@ -33,16 +33,16 @@ export class ManageColumnModal implements OnInit {
     }
   }
 
-  get columnPropertyKeys() {
+  get columnPropertyKeys(): string[] {
 
     return this.data.columnProperties && this.data.columnProperties.map(item => item.key);
   }
 
-  get selected() {
+  get selected(): string[] {
     return this.data.selected;
   }
 
-  onSelectionChange(event: MatCheckboxChange) {
+  onSelectionChange(event: MatCheckboxChange): void {
     this.selection.toggle(event.source.name);
 
     this.selectionChange.emit(this.selection.selected);

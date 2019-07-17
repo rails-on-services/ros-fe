@@ -35,7 +35,7 @@ export class CognitoPoolsComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'pools-table');
     this.poolTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.poolTableDisplayProperties);
@@ -43,7 +43,7 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
 
-  removePools() {
+  removePools(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -54,15 +54,15 @@ export class CognitoPoolsComponent implements OnInit {
     });
   }
 
-  attachPools() {
+  attachPools(): void {
     this.attachPoolsToUser.emit();
   }
 
-  detachPools() {
+  detachPools(): void {
     this.detachPoolsFromUser.emit(this.selection);
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -80,7 +80,7 @@ export class CognitoPoolsComponent implements OnInit {
     });
   }
 
-  showDetachConfirmationPopup() {
+  showDetachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -98,7 +98,7 @@ export class CognitoPoolsComponent implements OnInit {
     });
   }
 
-  editPoolNamePopup() {
+  editPoolNamePopup(): void {
     let newName = '';
     const confirmPopup = this.dialog.open(RenameModal, {
       minWidth: '300px',
@@ -124,19 +124,19 @@ export class CognitoPoolsComponent implements OnInit {
     );
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchPools();
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  fetchPools(force?: boolean) {
+  fetchPools(force?: boolean): void {
     if (this.userId) {
       force = true;
     }
@@ -162,15 +162,15 @@ export class CognitoPoolsComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.poolTableDisplayProperties;
   }
 
-  onPoolsSelectionChange(selection: SelectionModel<CognitoPool>) {
+  onPoolsSelectionChange(selection: SelectionModel<CognitoPool>): void {
     this.selection = selection;
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selection.clear();
   }
 

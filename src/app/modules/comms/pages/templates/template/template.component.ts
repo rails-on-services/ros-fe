@@ -19,18 +19,18 @@ export class TemplateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.id = params[`id`];
     });
     this.fetchTemplate();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  private fetchTemplate() {
+  private fetchTemplate(): void {
     this.template$ = this.commsService.fetchTemplate(this.id).pipe(
       map(templateDetails => {
         const campaigns = templateDetails.lastSyncModels.filter(item => item.type === 'campaigns').map(item => ({...item.attributes}));

@@ -21,10 +21,10 @@ export class ConfirmationModal implements OnInit {
               @Inject(MAT_DIALOG_DATA) public injectedData: ConfirmationDialogData) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  onCancel() {
+  onCancel(): void {
     this.dialogRef.close();
   }
 }

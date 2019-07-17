@@ -19,13 +19,13 @@ export class IamHomeComponent implements OnInit {
     this.policiesCount = 0;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchUsers();
     this.fetchGroups();
     this.fetchPolicies();
   }
 
-  fetchUsers() {
+  fetchUsers(): void {
     this.iamService.fetchUsers().subscribe(
       response => {
         this.usersCount = response.length;
@@ -33,7 +33,7 @@ export class IamHomeComponent implements OnInit {
     );
   }
 
-  fetchGroups() {
+  fetchGroups(): void {
     this.iamService.fetchGroups().subscribe(
       response => {
         this.groupsCount = response.length;
@@ -41,7 +41,7 @@ export class IamHomeComponent implements OnInit {
     );
   }
 
-  fetchPolicies() {
+  fetchPolicies(): void {
     this.iamService.fetchPolicies().subscribe(
       response => {
         this.policiesCount = response.length;

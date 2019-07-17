@@ -24,15 +24,15 @@ export class TableActionsManagementComponent {
     this.displayProperties = this.displayPropertiesService.getUserDisplayProperties();
   }
 
-  reloadTable() {
+  reloadTable(): void {
     this.reloadTableEmit.emit();
   }
 
-  changeTableHeaderSetting() {
+  changeTableHeaderSetting(): void {
     this.changeTableHeaderSettingEmit.emit(this.shownColumns);
   }
 
-  onOtherActionsChange(event: MatButtonToggleChange) {
+  onOtherActionsChange(event: MatButtonToggleChange): void {
     // Toggle off as we only want the look and feel.
     event.source.checked = false;
     switch (event.value) {

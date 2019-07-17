@@ -19,13 +19,13 @@ export class CognitoHomeComponent implements OnInit {
     this.appsCount = 0;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchUsers();
     // this.fetchGroups();
     // this.fetchApps();
   }
 
-  fetchUsers() {
+  fetchUsers(): void {
     this.cognitoService.fetchUsers().subscribe(
       response => {
         this.usersCount = response.length;
@@ -34,7 +34,7 @@ export class CognitoHomeComponent implements OnInit {
   }
 
 
-  fetchGroups() {
+  fetchGroups(): void {
     // this.cognitoService.fetchGroups().pipe(
     //   map(data => {
     //     const cognitoPools = data.getModels();
@@ -48,7 +48,7 @@ export class CognitoHomeComponent implements OnInit {
     // );
   }
 
-  fetchApps() {
+  fetchApps(): void {
     // this.cognitoService.fetchApps().pipe(
     //   map(data => {
     //     const cognitoApps = data.getModels();

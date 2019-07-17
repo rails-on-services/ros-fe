@@ -42,10 +42,12 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  // tslint:disable-next-line: typedef
   private getUserInfo(user: IamUser) {
     return { id: user.id, ...user };
   }
 
+  // tslint:disable-next-line: typedef
   private getGroupInfo(group: IamGroup, users: IamUser[]) {
     const groupInfo = {
       id: group.id,
@@ -57,7 +59,7 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     return groupInfo;
   }
 
-  private fetchUsersNotInGroup() {
+  private fetchUsersNotInGroup(): void {
     this.group$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroup(this.id)).pipe(
       map(([usersData, groupData]) => {
         const usersInGroup = groupData.users || [];
@@ -77,29 +79,29 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     );
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.userTableDisplayProperties;
   }
 
-  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+  onUsersSelectionChange(selection: SelectionModel<IamUser>): void {
     this.selection = selection;
   }
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  addUsersToGroup() {
+  addUsersToGroup(): void {
     console.log(this.selection);
   }
 }

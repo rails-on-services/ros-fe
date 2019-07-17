@@ -14,26 +14,26 @@ export class DisplayPropertiesService {
   constructor(
     private iamService: IamService) { }
 
-  public getCurrentUser() {
+  public getCurrentUser(): string {
     return localStorage.getItem('currentUser') as string;
   }
 
-  public setCurrentUser(currentUser: string) {
+  public setCurrentUser(currentUser: string): void {
     localStorage.setItem('currentUser', currentUser);
   }
 
-  public getUserDisplayProperties() {
+  public getUserDisplayProperties(): any {
     const currentUser = JSON.parse(this.getCurrentUser());
     return (currentUser || []).displayProperties;
   }
 
-  public setUserDisplayProperties(displayProperties: object) {
+  public setUserDisplayProperties(displayProperties: object): void {
     const currentUser = JSON.parse(this.getCurrentUser());
     currentUser.displayProperties = displayProperties;
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-  public updateCurrentUserDisplayProperties() {
+  public updateCurrentUserDisplayProperties(): void {
     const currentUser = JSON.parse(this.getCurrentUser());
     const force = true;
     currentUser.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName] = this.currentTableDisplayProperties;
@@ -46,10 +46,10 @@ export class DisplayPropertiesService {
       }
     );
   }
-  public getTableShownColumns(tableDisplayProperties: TableHeaderProperties[] = []) {
+  public getTableShownColumns(tableDisplayProperties: TableHeaderProperties[] = []): string[] {
     return tableDisplayProperties.filter(item => item.display).map(item => item.key);
   }
-  public setTableShownColumns(shownColumns: (string | number | symbol)[]) {
+  public setTableShownColumns(shownColumns: (string | number | symbol)[]): void {
     this.currentTableDisplayProperties = this.currentTableDisplayProperties.map(item => {
       if (shownColumns.includes(item.key)) {
         item.display = true;
@@ -60,11 +60,11 @@ export class DisplayPropertiesService {
     });
   }
 
-  getTableDisplayProperties() {
+  getTableDisplayProperties(): TableHeaderProperties[] {
     return this.currentTableDisplayProperties;
   }
 
-  setTableDisplayProperties(tablePlatform: string, tableModule: string, tableName: string) {
+  setTableDisplayProperties(tablePlatform: string, tableModule: string, tableName: string): void {
     this.tablePlatform = tablePlatform;
     this.tableModule = tableModule;
     this.tableName = tableName;

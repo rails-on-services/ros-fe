@@ -78,14 +78,14 @@ export class NewFileComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fileDetailsForm = new FormGroup({
       services: new FormControl('', [Validators.required]),
       fileType: new FormControl('', [Validators.required]),
       agreeTNC: new FormControl('', [Validators.required]),
     });
   }
-  public mergeArrayIntoObject(header: string[], rows: string[][]) {
+  public mergeArrayIntoObject(header: string[], rows: string[][]): {}[] {
     return rows.map(row =>
       row.reduce((res, field, index) => {
         res[header[index]] = field;
@@ -94,11 +94,11 @@ export class NewFileComponent implements OnInit {
     );
   }
 
-  public splitRowContent(content: string) {
+  public splitRowContent(content: string): string[] {
     return content.replace(/(;|,|\t)/gm, ',').split(',');
   }
 
-  public dropped(files: NgxFileDropEntry[]) {
+  public dropped(files: NgxFileDropEntry[]): void {
     this.files = this.multiple ? [...this.files, ...files] : files;
 
     // tslint:disable-next-line: no-console
@@ -135,14 +135,14 @@ export class NewFileComponent implements OnInit {
     console.timeEnd('dropped');
   }
 
-  public transformFileDataWhenReaderOnload(reader: FileReader) {
+  public transformFileDataWhenReaderOnload(reader: FileReader): void {
     reader.onload = () => {
       this.filePreview = reader.result;
       this.updateFileContentsForCSVFile();
     };
   }
 
-  public updateFileContentsForCSVFile() {
+  public updateFileContentsForCSVFile(): any {
     if (!this.isTextFile) {
       return null;
     }
@@ -163,46 +163,46 @@ export class NewFileComponent implements OnInit {
     this.fileContents = this.mergeArrayIntoObject(this.tableHeader, resultByCell);
   }
 
-  public toggleSelectedServices(value: string) {
+  public toggleSelectedServices(value: string): void {
     this.selectedServices = this.SignaturesMapping[value];
     this.selectedSignature = {};
   }
 
-  public toggleSelectedSignatures(value: string) {
+  public toggleSelectedSignatures(value: string): void {
     this.selectedSignature = Object.assign({}, this.selectedServices[value]);
   }
 
-  public onChange(event: any) {
+  public onChange(event: any): void {
     this.dropped(event.file);
   }
 
-  public fileOver(event: any) {
+  public fileOver(event: any): void {
     console.log(event);
   }
 
-  public fileLeave(event: any) {
+  public fileLeave(event: any): void {
     console.log(event);
   }
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  updateSignatureMapping() {
+  updateSignatureMapping(): void {
     console.log(this.selectedSignature);
   }
 
-  updateSignatureMappingField($event: any) {
+  updateSignatureMappingField($event: any): void {
     this.selectedSignature[$event.target.id] = $event.target.value;
   }
 
-  setCheckTNCStatus() {
+  setCheckTNCStatus(): void {
     this.checkTNCStatus = true;
     if (this.fileDetailsForm.get('agreeTNC').valid && this.files.length > 0) {
       this.stepper.next();
     }
   }
 
-  goToFilesList() {
+  goToFilesList(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

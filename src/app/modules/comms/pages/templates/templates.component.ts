@@ -54,7 +54,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'templates-table');
     this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.templateTableDisplayProperties);
@@ -65,15 +65,15 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     // this.templatesSubsription.unsubscribe();
   }
 
-  attachTemplates() {
+  attachTemplates(): void {
     this.attachTemplatesToCampaign.emit();
   }
 
-  detachTemplates() {
+  detachTemplates(): void {
     this.detachTemplatesFromCampaign.emit(this.selection);
   }
 
-  showDetachConfirmationPopup() {
+  showDetachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -90,11 +90,11 @@ export class TemplatesComponent implements OnInit, OnDestroy {
       }
     });
   }
-  addTemplate() {
+  addTemplate(): void {
     this.router.navigate(['new-template'], { relativeTo: this.activatedRoute });
   }
 
-  removeTemplates() {
+  removeTemplates(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -106,7 +106,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -124,19 +124,19 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchTemplates(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  fetchTemplates(force?: boolean) {
+  fetchTemplates(force?: boolean): void {
     if (this.campaignId) {
       force = true;
     }
@@ -159,15 +159,15 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.templateTableDisplayProperties;
   }
 
-  onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>) {
+  onTemplatesSelectionChange(selection: SelectionModel<CommsTemplate>): void {
     this.selection = selection;
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selection.clear();
   }
 }

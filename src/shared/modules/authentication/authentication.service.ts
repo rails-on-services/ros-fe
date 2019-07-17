@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AuthService } from 'ngx-auth';
@@ -124,7 +124,7 @@ export class AuthenticationService implements AuthService {
    * EXTRA AUTH METHODS
    */
 
-  public async autoLogin() {
+  public async autoLogin(): Promise<boolean> {
     this.authing = true;
     let success = false;
 
@@ -148,12 +148,12 @@ export class AuthenticationService implements AuthService {
     return success;
   }
 
-  public userAuth(bearer: string) {
+  public userAuth(bearer: string): Observable<HttpResponse<any>> {
     const userId = this.getUrlParameter('primary_identifier');
     return this.authenticateUser(bearer, userId);
   }
 
-  public preAuth() {
+  public preAuth(): Observable<HttpResponse<any>> {
     return this.authenticateAppWithPreAuth(location.host).pipe(
       tap((resp) => {
         // @ts-ignore
@@ -163,7 +163,7 @@ export class AuthenticationService implements AuthService {
     );
   }
 
-  authenticateAppWithPreAuth(referrer: string) {
+  authenticateAppWithPreAuth(referrer: string): Observable<HttpResponse<any>> {
     const endPointUrl = environment.production ? environment.preAuthPath : 'http://localhost:4000' + environment.preAuthPath;
 
     return this.http.get(endPointUrl, {
@@ -174,7 +174,7 @@ export class AuthenticationService implements AuthService {
     });
   }
 
-  authenticateUser(bearer: string, user: string) {
+  authenticateUser(bearer: string, user: string): Observable<HttpResponse<any>> {
     const payload = {
       data: {
         type: 'login',
@@ -222,7 +222,7 @@ export class AuthenticationService implements AuthService {
   // }
 
 
-  private getUrlParameter(name: string) {
+  private getUrlParameter(name: string): string {
     name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
     const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     const results = regex.exec(this.getInterruptedUrl());

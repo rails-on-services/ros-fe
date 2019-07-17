@@ -25,18 +25,18 @@ export class CognitoUserComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.userId = params[`id`];
     });
     this.fetchUser();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  detachPoolsFromUser(selection: SelectionModel<CognitoPool>) {
+  detachPoolsFromUser(selection: SelectionModel<CognitoPool>): void {
     const selectedPools = selection.selected.map(item => item.id);
     this.cognitoService.fetchUser(this.userId).pipe(
       map(user => {
@@ -52,11 +52,11 @@ export class CognitoUserComponent implements OnInit, OnDestroy {
     );
   }
 
-  attachPoolsToUser() {
+  attachPoolsToUser(): void {
     this.router.navigate(['attach-groups'], { relativeTo: this.route });
   }
 
-  private fetchUser() {
+  private fetchUser(): void {
     this.user$ = this.cognitoService.fetchUser(this.userId);
   }
 }

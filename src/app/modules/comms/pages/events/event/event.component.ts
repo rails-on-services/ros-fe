@@ -41,18 +41,18 @@ export class EventComponent implements OnInit, OnDestroy {
     this.templateTableDisplayProperties = tablesAreReady && this.displayProperties[`essentials`][`comms`][`tables`][`templates-table`];
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.id = params[`id`];
     });
     this.fetchEvent();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  private fetchEvent(force?: boolean) {
+  private fetchEvent(force?: boolean): void {
     this.event$ = this.commsService.fetchEvent(this.id, force).pipe(
       map(eventDetails => {
         const campaign = eventDetails.lastSyncModels.filter(item => item.type === 'campaigns')[0];
@@ -89,7 +89,7 @@ export class EventComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchTemplatesUnderCampaign(campaignId: number) {
+  fetchTemplatesUnderCampaign(campaignId: number): void {
     this.templates$ = this.commsService.fetchTemplates(campaignId).pipe(
       map(commTemplates => {
         const templates = commTemplates.map(commTemplate => {
@@ -106,7 +106,7 @@ export class EventComponent implements OnInit, OnDestroy {
     );
   }
 
-  fetchProviders() {
+  fetchProviders(): void {
     this.providers$ = this.commsService.fetchProviders().pipe(
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
@@ -125,19 +125,19 @@ export class EventComponent implements OnInit, OnDestroy {
     );
   }
 
-  switchProvider() {
+  switchProvider(): void {
     this.isProviderEditable = true;
   }
 
-  saveProviderChange() {
+  saveProviderChange(): void {
     this.isProviderEditable = false;
   }
 
-  switchTemplate() {
+  switchTemplate(): void {
     this.isTemplateEditable = true;
   }
 
-  saveTemplateChange() {
+  saveTemplateChange(): void {
     const templateTemp$ = this.commsService.fetchTemplate(this.selectedTemplateId);
     const eventTemp$ = this.commsService.fetchEvent(this.id);
     forkJoin(templateTemp$, eventTemp$).pipe(
@@ -153,7 +153,7 @@ export class EventComponent implements OnInit, OnDestroy {
       }
     );
   }
-  cancelEdit() {
+  cancelEdit(): void {
     this.isTemplateEditable = false;
     this.isProviderEditable = false;
   }

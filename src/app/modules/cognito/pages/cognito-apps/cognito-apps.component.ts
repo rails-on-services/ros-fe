@@ -34,7 +34,7 @@ export class CognitoAppsComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'cognito', 'apps-table');
     this.appTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.appTableDisplayProperties);
@@ -42,11 +42,11 @@ export class CognitoAppsComponent implements OnInit {
   }
 
 
-  addApplication() {
+  addApplication(): void {
     this.router.navigate(['new-app'], { relativeTo: this.activatedRoute });
   }
 
-  removeApplications() {
+  removeApplications(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -58,7 +58,7 @@ export class CognitoAppsComponent implements OnInit {
   }
 
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       width: '30vw',
       data: { type: 'app' }
@@ -71,27 +71,27 @@ export class CognitoAppsComponent implements OnInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchApplications();
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  private removeDialogComponentFromBody() {
+  private removeDialogComponentFromBody(): void {
     this.dismissibleElement.nativeElement.remove();
   }
 
-  closeButtonClick() {
+  closeButtonClick(): void {
     this.removeDialogComponentFromBody();
   }
 
-  private fetchApplications() {
+  private fetchApplications(): void {
     this.apps$ = this.cognitoService.fetchApplications().pipe(
       map(cognitoApplications => {
         const apps = cognitoApplications.map(cognitoApplication => {
@@ -110,11 +110,11 @@ export class CognitoAppsComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.appTableDisplayProperties;
   }
 
-  onApplicationsSelectionChange(selection: SelectionModel<CognitoApplication>) {
+  onApplicationsSelectionChange(selection: SelectionModel<CognitoApplication>): void {
     this.selection = selection;
   }
 

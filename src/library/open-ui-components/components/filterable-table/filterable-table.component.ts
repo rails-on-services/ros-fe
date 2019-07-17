@@ -30,7 +30,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.hasContent = !!(this.contents && this.contents.length > 0);
     if (!this.hasContent) {
       return;
@@ -38,7 +38,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource(this.contents);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }
@@ -47,14 +47,14 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  get attributes() {
+  get attributes(): string[] {
     if (this.contents && this.contents.length > 0) {
       return Object.keys(this.contents[0]);
     }
     return [];
   }
 
-  get displayedColumns() {
+  get displayedColumns(): string[] {
     const columns = this.shownColumns ?
       this.attributes.filter(column => (this.shownColumns.indexOf(column) !== -1)) :
       this.attributes;
@@ -69,7 +69,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  onSelectionChange(row: any) {
+  onSelectionChange(row: any): void {
     if (this.selectType === 'radio') {
       this.selection.clear();
     }
@@ -78,7 +78,7 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     this.selectionChange.emit(this.selection);
   }
 
-  selectAll() {
+  selectAll(): void {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
@@ -86,17 +86,17 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     this.selectionChange.emit(this.selection);
   }
 
-  isAllSelected() {
+  isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  hasLink(element: any) {
+  hasLink(element: any): boolean {
     const obj = element as { value: string, link: string };
 
     if (!obj || !!!obj.link || typeof obj.link === 'function') {
@@ -106,13 +106,13 @@ export class FilterableTableComponent implements OnInit, AfterViewInit {
     return true;
   }
 
-  hasLinkString(row: any, key: any) {
+  hasLinkString(row: any, key: any): boolean {
     return !!row[`${key}_link`];
   }
-  getLinkString(row: any, key: any) {
+  getLinkString(row: any, key: any): any {
     return row[`${key}_link`];
   }
-  isArray(obj: any) {
+  isArray(obj: any): boolean {
     return !!obj && obj.constructor === Array;
   }
 }

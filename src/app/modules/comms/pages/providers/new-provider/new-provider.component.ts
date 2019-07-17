@@ -21,7 +21,7 @@ export class NewProviderComponent implements OnInit, AfterViewInit {
               private commsService: CommsService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.providerDetailsGroup = new FormGroup({
       providerName: new FormControl('', [Validators.required, Validators.maxLength(140)]),
       encryptedSecret: new FormControl(''),
@@ -30,21 +30,21 @@ export class NewProviderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.providerDetailsGroup.controls[controlName].hasError(errorName);
   }
 
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm() {
+  submitForm(): void {
     const provider = {
       name: this.providerDetailsGroup.get('providerName').value,
       encryptedSecret: this.providerDetailsGroup.get('encryptedSecret').value,

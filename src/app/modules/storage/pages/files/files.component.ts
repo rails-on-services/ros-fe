@@ -31,33 +31,33 @@ export class FilesComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'storage', 'files-table');
     this.campaignTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.campaignTableDisplayProperties);
     this.fetchFiles();
   }
 
-  addFile() {
+  addFile(): void {
     this.router.navigate(['new-file'], { relativeTo: this.activatedRoute });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     // this.fetchStorages(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.campaignTableDisplayProperties;
   }
 
-  private fetchFiles() {
+  private fetchFiles(): void {
     this.files$ = this.storageServices.fetchFiles().pipe(
       map((files: StorageFile[]) => {
         return files.map(file => {

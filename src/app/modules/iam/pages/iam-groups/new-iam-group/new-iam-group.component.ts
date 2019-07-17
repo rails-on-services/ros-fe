@@ -37,7 +37,7 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     this.reviewPage = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'policies-table');
     this.policyTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.groupDetailsGroup = new FormGroup({
@@ -48,36 +48,36 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     this.fetchPolicies();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     // fix ExpressionChangedAfterItHasBeenCheckedError
     // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
 
-  onPolicySelectionChange(selection: SelectionModel<IamPolicy>) {
+  onPolicySelectionChange(selection: SelectionModel<IamPolicy>): void {
     this.selection = selection;
     this.groupDetailsGroup.controls.attachedPolicies.setValue(selection.selected);
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.groupDetailsGroup.controls[controlName].hasError(errorName);
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  submitForm() {
+  submitForm(): void {
 
     // should only need ids of attached policies and let the backend do the heavy lifiting
     const policies = [];
@@ -96,15 +96,15 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     this.group$ = this.iamService.createGroup(group);
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.policyTableDisplayProperties;
   }
 
-  private fetchPolicies() {
+  private fetchPolicies(): void {
     this.policies$ = this.iamService.fetchPolicies().pipe(
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {

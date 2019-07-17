@@ -10,10 +10,10 @@ export class DismissibleContentComponent implements OnInit {
   @Output() closeButtonClick: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  close() {
+  close(): void {
     this.closeButtonClick.emit();
   }
 }

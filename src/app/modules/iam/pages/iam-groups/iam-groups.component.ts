@@ -41,22 +41,22 @@ export class IamGroupsComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
     this.groupTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.groupTableDisplayProperties);
     this.fetchGroups();
   }
 
-  attachGroups() {
+  attachGroups(): void {
     this.attachGroupsToUser.emit();
   }
 
-  detachGroups() {
+  detachGroups(): void {
     this.detachGroupsFromUser.emit(this.selection);
   }
 
-  removeGroups() {
+  removeGroups(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -67,7 +67,7 @@ export class IamGroupsComponent implements OnInit {
     });
   }
 
-  showDetachConfirmationPopup() {
+  showDetachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -85,7 +85,7 @@ export class IamGroupsComponent implements OnInit {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -103,7 +103,7 @@ export class IamGroupsComponent implements OnInit {
     });
   }
 
-  editGroupNamePopup() {
+  editGroupNamePopup(): void {
     let newName = '';
     const confirmPopup = this.dialog.open(RenameModal, {
       minWidth: '300px',
@@ -130,18 +130,18 @@ export class IamGroupsComponent implements OnInit {
 
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchGroups(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  fetchGroups(force?: boolean) {
+  fetchGroups(force?: boolean): void {
     // API is not ready for this userId checking
     if (this.userId) {
       force = true;
@@ -165,15 +165,15 @@ export class IamGroupsComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.groupTableDisplayProperties;
   }
 
-  onGroupsSelectionChange(selection: SelectionModel<IamGroup>) {
+  onGroupsSelectionChange(selection: SelectionModel<IamGroup>): void {
     this.selection = selection;
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selection.clear();
   }
 }

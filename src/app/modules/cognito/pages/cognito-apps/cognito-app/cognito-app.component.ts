@@ -17,17 +17,17 @@ export class CognitoAppComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.appId = params[`id`];
     });
     this.fetchUser();
   }
-  private fetchUser() {
+  private fetchUser(): void {
     this.app$ = this.cognitoService.fetchUser(this.appId);
   }
 }

@@ -35,7 +35,7 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
   // tslint:disable-next-line: no-use-before-declare
   @ContentChildren(forwardRef(() => SelectionComponent)) selections: QueryList<SelectionComponent>;
 
-  ngAfterContentInit() {
+  ngAfterContentInit(): void {
     if (this.maxSelection === 'all') {
       this.maxSelection = this.selections.length;
     }
@@ -44,7 +44,7 @@ export class SelectionGroupDirective implements ControlValueAccessor, AfterConte
   onChange: (value: any) => void = () => { };
   onTouched: () => any = () => { };
 
-  get selectedSelections() {
+  get selectedSelections(): SelectionComponent[] {
     if (!this.selections) {
       return [];
     }
@@ -120,7 +120,7 @@ export class SelectionComponent implements OnInit {
   constructor(@Optional() private selectionGroup: SelectionGroupDirective) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const type = this.selectionGroup && this.selectionGroup.type || 'selection-list';
     this.hostWidth = type === 'selection-list' ?
       `calc(100% - ${2 * this.pad}rem)` :
@@ -140,7 +140,7 @@ export class SelectionComponent implements OnInit {
     }
   }
 
-  onClick() {
+  onClick(): void {
     if (this.selectionGroup) {
       this.selectionGroup.onTouched();
     }
@@ -160,7 +160,7 @@ export class SelectionComponent implements OnInit {
     }
   }
 
-  get selected() {
+  get selected(): boolean {
     return this.isSelected;
   }
 
@@ -168,14 +168,17 @@ export class SelectionComponent implements OnInit {
     this.isSelected = selected;
   }
 
-  get borderStyles() {
+  get borderStyles(): {
+    'border-color': string;
+    'border-width': string;
+  } {
     return this.isSelected ? {
       'border-color': this.selectedBorderColor,
       'border-width': '0.2rem'
     } : undefined;
   }
 
-  get type() {
+  get type(): string {
     return (this.selectionGroup && this.selectionGroup.type) || 'selection-list';
   }
 }

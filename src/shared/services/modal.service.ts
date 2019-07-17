@@ -40,7 +40,7 @@ export class ModalService {
     }
   }
 
-  removeLastDirectoryPartOf(url: string) {
+  removeLastDirectoryPartOf(url: string): string {
     let arr: string[];
     if (url !== '/') {
       arr = url.split('/');

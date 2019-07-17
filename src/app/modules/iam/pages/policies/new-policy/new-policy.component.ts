@@ -46,20 +46,20 @@ export class NewPolicyComponent {
     });
   }
 
-  get permissionLists() {
+  get permissionLists(): FormArray {
     return this.policyDetailsForm.get('permissions') as FormArray;
   }
 
-  hasError(controlName: string, errorName: string) {
+  hasError(controlName: string, errorName: string): boolean {
     return this.policyDetailsForm.controls[controlName].hasError(errorName);
   }
 
-  hasPermissionError(permission: FormGroup, controlName: string) {
+  hasPermissionError(permission: FormGroup, controlName: string): boolean {
     const result = this.goNextStepTriggered && permission.controls[controlName].invalid;
     return result;
   }
 
-  addAdditionalPermission() {
+  addAdditionalPermission(): void {
     this.permissionLists.push(
       this.fb.group({
         service: ['', [Validators.required]],
@@ -77,22 +77,22 @@ export class NewPolicyComponent {
       }));
   }
 
-  deletePermission(index: number) {
+  deletePermission(index: number): void {
     this.permissionLists.removeAt(index);
   }
-  cancelClicked() {
+  cancelClicked(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  trackByFn(index: number, item: FormGroup) {
+  trackByFn(index: number, item: FormGroup): void {
     return index + item.get('service').value;
   }
 
-  goNextStep() {
+  goNextStep(): void {
     this.goNextStepTriggered = true;
   }
 
-  submitForm() {
+  submitForm(): void {
     console.warn(this.policyDetailsForm.value);
     // const policy = {
     //   policyname: this.policyDetailsForm.get('policyName').value,
@@ -104,7 +104,7 @@ export class NewPolicyComponent {
     // this.policy$ = this.iamService.createPolicy(policy);
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

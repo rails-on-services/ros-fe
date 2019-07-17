@@ -59,18 +59,18 @@ export class IamUsersComponent implements OnInit {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
     this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.userTableDisplayProperties);
     this.fetchUsers();
   }
 
-  addUser() {
+  addUser(): void {
     this.router.navigate(['new-user'], { relativeTo: this.activatedRoute });
   }
 
-  removeUsers() {
+  removeUsers(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -82,15 +82,15 @@ export class IamUsersComponent implements OnInit {
     });
   }
 
-  attachUsers() {
+  attachUsers(): void {
     this.attachUsersToGroup.emit();
   }
 
-  detachUsers() {
+  detachUsers(): void {
     this.detachUsersFromGroup.emit(this.selection);
   }
 
-  showDetachConfirmationPopup() {
+  showDetachConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -108,7 +108,7 @@ export class IamUsersComponent implements OnInit {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const header = this.selection.selected.length > 1 ? 'Deleting Users' : 'Deleting User';
     const content = this.selection.selected.length > 1 ?
       'Are you sure you want to delete the users' :
@@ -130,26 +130,26 @@ export class IamUsersComponent implements OnInit {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchUsers(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private removeDialogComponentFromBody() {
+  private removeDialogComponentFromBody(): void {
     this.dismissibleElement.nativeElement.remove();
   }
 
-  closeButtonClick() {
+  closeButtonClick(): void {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force: boolean = false) {
+  fetchUsers(force: boolean = false): void {
     if (this.groupId) {
       force = true;
     }
@@ -170,15 +170,15 @@ export class IamUsersComponent implements OnInit {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.userTableDisplayProperties;
   }
 
-  onUsersSelectionChange(selection: SelectionModel<IamUser>) {
+  onUsersSelectionChange(selection: SelectionModel<IamUser>): void {
     this.selection = selection;
   }
 
-  clearSelection() {
+  clearSelection(): void {
     this.selection.clear();
   }
 

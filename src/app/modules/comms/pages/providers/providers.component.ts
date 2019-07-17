@@ -41,7 +41,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     this.showModal = false;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'comms', 'providers-table');
     this.providerTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = this.displayPropertiesService.getTableShownColumns(this.providerTableDisplayProperties);
@@ -52,11 +52,11 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     // this.providersSubsription.unsubscribe();
   }
 
-  addProvider() {
+  addProvider(): void {
     this.router.navigate(['new-provider'], { relativeTo: this.activatedRoute });
   }
 
-  removeProviders() {
+  removeProviders(): void {
     if (!this.selection || this.selection.selected.length <= 0) {
       return;
     }
@@ -68,7 +68,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDeleteConfirmationPopup() {
+  showDeleteConfirmationPopup(): void {
     const confirmPopup = this.dialog.open(ConfirmationModal, {
       minWidth: '300px',
       data: {
@@ -86,19 +86,19 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     });
   }
 
-  reloadTable() {
+  reloadTable(): void {
     if (this.selection) {
       this.selection.clear();
     }
     this.fetchProviders(true);
   }
 
-  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []) {
+  changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
 
-  private fetchProviders(force?: boolean) {
+  private fetchProviders(force?: boolean): void {
     this.providers$ = this.commsService.fetchProviders(null, force).pipe(
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
@@ -117,11 +117,11 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     );
   }
 
-  get columnProperties() {
+  get columnProperties(): TableHeaderProperties[] {
     return this.providerTableDisplayProperties;
   }
 
-  onProvidersSelectionChange(selection: SelectionModel<CommsProvider>) {
+  onProvidersSelectionChange(selection: SelectionModel<CommsProvider>): void {
     this.selection = selection;
   }
 }

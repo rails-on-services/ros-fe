@@ -25,18 +25,18 @@ export class CognitoPoolComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.poolId = params[`id`];
     });
     this.fetchPool();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
-  detachUsersFromPool(selection: SelectionModel<CognitoPool>) {
+  detachUsersFromPool(selection: SelectionModel<CognitoPool>): void {
     const selectedUsers = selection.selected.map(item => item.id);
     this.iamService.fetchPool(this.poolId).pipe(
       map(pool => {
@@ -52,11 +52,11 @@ export class CognitoPoolComponent implements OnInit, OnDestroy {
     );
   }
 
-  attachUsersToPool() {
+  attachUsersToPool(): void {
     this.router.navigate(['attach-pools'], { relativeTo: this.route });
   }
 
-  private fetchPool() {
+  private fetchPool(): void {
     this.pool$ = this.iamService.fetchPool(this.poolId, true);
   }
 
