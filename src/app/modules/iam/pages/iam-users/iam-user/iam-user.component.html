@@ -18,9 +18,9 @@
     </div>
     <mat-tab-group>
       <mat-tab label="Groups">
-        <app-iam-groups [tabMode]="true" [userId]="id"
-          (detachTemplatesFromCampaign)="detachGroupsFromUser($event)"
-          (attachTemplatesToCampaign)="attachGroupsToUser($event)">
+        <app-iam-groups [tabMode]="true" [userId]="userId"
+          (detachGroupsFromUser)="detachGroupsFromUser($event)"
+          (attachGroupsToUser)="attachGroupsToUser($event)">
         </app-iam-groups>
       </mat-tab>
       <mat-tab label="Credentials"></mat-tab>

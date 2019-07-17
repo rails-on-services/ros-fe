@@ -20,7 +20,7 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
 import { TableContentService } from 'src/shared/services/table-content/table-content.service';
 
 @Component({
-  selector: 'app-users',
+  selector: 'app-cognito-users',
   templateUrl: './cognito-users.component.html',
   styleUrls: ['./cognito-users.component.scss']
 })

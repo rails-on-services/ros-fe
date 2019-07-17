@@ -22,19 +22,25 @@ export class IamService {
     });
   }
 
-  fetchUsers(force?: boolean): Observable<IamUser[]> {
+  fetchUsers(groupId?: number | string, force?: boolean): Observable<IamUser[]> {
+
     if (!force) {
       const users = this.datastore.peekAll(IamUser);
       if (users && users.length > 0) {
         return of(users);
       }
     }
-
+    const params = {
+      page: { size: 10, number: 1 },
+      include: 'groups,credentials'
+    };
+    if (groupId) {
+      params[`filter`] = { group_id: groupId };
+    }
     return this.datastore.findAll(
       IamUser,
       {
-        page: { size: 10, number: 1 },
-        include: 'groups,credentials'
+        ...params
       }
     ).pipe(
       map(document => document.getModels())

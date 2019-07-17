@@ -62,7 +62,7 @@ export class IamGroupsComponent implements OnInit {
     }
     this.selection.selected.forEach(group => {
       this.iamService.removeGroup(group.id).subscribe(() => {
-        this.fetchGroups();
+        this.fetchGroups(true);
       });
     });
   }
@@ -146,7 +146,7 @@ export class IamGroupsComponent implements OnInit {
     if (this.userId) {
       force = true;
     }
-    this.groups$ = this.iamService.fetchGroups(undefined, force).pipe(
+    this.groups$ = this.iamService.fetchGroups(this.userId, force).pipe(
       map(iamGroups => {
         const groups = iamGroups.map(iamGroup => {
           const groupLink = this.tabMode ? `../../groups/${iamGroup.id}` : `${iamGroup.id}`;
