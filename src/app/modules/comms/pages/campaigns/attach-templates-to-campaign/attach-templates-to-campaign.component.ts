@@ -112,27 +112,19 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
   }
 
   attachTemplatesToCampaign(): void {
-    const selectedTemplates = [];
     const selectedTemplateIds = this.selection.selected.map(item => item.id);
-    this.commsService.fetchTemplates()
-      .subscribe(templates => {
-        templates.forEach(template => {
-          if (selectedTemplateIds.includes(template.id)) {
-            selectedTemplates.push(template);
-          }
-        });
-      });
-    if (selectedTemplates.length > 0) {
-      this.commsService.fetchCampaign(this.campaignId)
-        .pipe(
-          map(campaign => {
-            campaign.templates = [...campaign.templates || [], ...selectedTemplates];
-            return campaign;
-          }),
-          switchMap(campaign => campaign.save())
-        ).subscribe(
-          () => this.router.navigate(['../'], { relativeTo: this.route })
-        );
-    }
+    const allTemplates$ = this.commsService.fetchTemplates(undefined, true);
+    const currentCampaign$ = this.commsService.fetchCampaign(this.campaignId, true);
+
+    forkJoin(allTemplates$, currentCampaign$).pipe(
+      map(([templatesData, campaignData]) => {
+        const selectedTemplates = templatesData.filter(template => selectedTemplateIds.includes(template.id));
+        campaignData.groups = [...campaignData.templates || [], ...selectedTemplates];
+        return campaignData;
+      }),
+      switchMap(user => user.save())
+    ).subscribe(
+      () => this.router.navigate(['../'], { relativeTo: this.route })
+    );
   }
 }

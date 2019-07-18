@@ -18,6 +18,7 @@ import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.compon
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
+import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 
 const COMPONENTS = [
   IamUsersComponent,
@@ -36,7 +37,8 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [
-    ...COMPONENTS
+    ...COMPONENTS,
+    AttachGroupsToUserComponent
   ],
   imports: [
     CommonModule,
