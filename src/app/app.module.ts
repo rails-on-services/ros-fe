@@ -18,6 +18,7 @@ import { CORE_SERVICES_MENU, coreServicesMenuValue } from './core/core-services-
 import { HttpRequestInterceptor } from '../helpers/http-request.interceptor';
 import { MockRequestInterceptor } from '../helpers/mock-request.interceptor';
 import { HeaderModule } from './core/components/header/header.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 const isMock = environment.mock;
 
@@ -48,7 +49,8 @@ const isMock = environment.mock;
     {
       provide: CORE_SERVICES_MENU,
       useValue: coreServicesMenuValue
-    }
+    },
+    {provide: APP_BASE_HREF, useValue: environment.baseHref }
   ],
   bootstrap: [AppComponent]
 })

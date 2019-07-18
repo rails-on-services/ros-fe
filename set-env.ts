@@ -24,6 +24,7 @@ export const environment = {
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   preAuthPath: '${process.env.PREAUTHPATH ? process.env.PREAUTHPATH : '/preauth'}',
   mock: ${process.env.MOCK ? process.env.MOCK : false},
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
 };
 `;
 

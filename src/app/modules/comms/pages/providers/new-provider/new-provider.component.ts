@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommsService } from '@perx/open-services';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './new-provider.component.html',
   styleUrls: ['./new-provider.component.scss']
 })
-export class NewProviderComponent implements OnInit, AfterViewInit {
+export class NewProviderComponent implements OnInit {
   providerDetailsGroup: FormGroup;
   isEditable: boolean = true;
 
@@ -28,11 +28,6 @@ export class NewProviderComponent implements OnInit, AfterViewInit {
       encryptedSecretIv: new FormControl(''),
       key: new FormControl(''),
     });
-  }
-
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
   hasError(controlName: string, errorName: string): boolean {

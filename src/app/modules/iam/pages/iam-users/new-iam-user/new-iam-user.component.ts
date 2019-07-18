@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamCredential, IamService, IamUser } from '@perx/open-services';
@@ -11,7 +11,7 @@ import { MatStepper } from '@angular/material';
   templateUrl: './new-iam-user.component.html',
   styleUrls: ['./new-iam-user.component.scss']
 })
-export class NewIamUserComponent implements OnInit, AfterViewInit {
+export class NewIamUserComponent implements OnInit {
   userDetailsGroup: FormGroup;
   isEditable: boolean = true;
 
@@ -39,11 +39,6 @@ export class NewIamUserComponent implements OnInit, AfterViewInit {
       hasProgrammaticAccess: new FormControl(false),
       hasConsoleAccess: new FormControl(false),
     });
-  }
-
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
   hasError(controlName: string, errorName: string): boolean {

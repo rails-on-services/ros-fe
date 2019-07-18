@@ -124,7 +124,7 @@ export class CognitoService {
     );
   }
 
-  createPool(pool: { name: string, attachedPolicies: any[], users: CognitoPool[]; }): Observable<CognitoPool> {
+  createPool(pool: { name: string, attachedPolicies: any[], users: CognitoUser[]; }): Observable<CognitoPool> {
     const newPool = this.datastore.createRecord(
       CognitoPool,
       {
