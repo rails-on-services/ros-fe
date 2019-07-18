@@ -87,11 +87,9 @@ export class NewIamGroupComponent implements OnInit {
       attachedPolicies: policies,
       users: this.groupDetailsGroup.get('users').value
     };
-    this.group$ = this.iamService.createGroup(group);
-  }
-
-  goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.iamService.createGroup(group).subscribe( () => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 
   get columnProperties(): TableHeaderProperties[] {

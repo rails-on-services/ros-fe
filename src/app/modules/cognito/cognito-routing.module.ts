@@ -31,36 +31,36 @@ const router: Routes = [
         component: CognitoUsersComponent,
       },
       {
-        path: 'users/:id',
-        component: CognitoUserComponent
-      },
-      {
         path: 'users/new-user',
         component: NewCognitoUserComponent
+      },
+      {
+        path: 'users/:id',
+        component: CognitoUserComponent
       },
       {
         path: 'pools',
         component: CognitoPoolsComponent,
       },
       {
-        path: 'pools/:id',
-        component: CognitoPoolComponent
-      },
-      {
         path: 'pools/new-pool',
         component: NewCognitoPoolComponent
+      },
+      {
+        path: 'pools/:id',
+        component: CognitoPoolComponent
       },
       {
         path: 'apps',
         component: CognitoAppsComponent,
       },
       {
-        path: 'apps/:id',
-        component: CognitoAppComponent
-      },
-      {
         path: 'apps/new-app',
         component: NewCognitoAppComponent
+      },
+      {
+        path: 'apps/:id',
+        component: CognitoAppComponent
       }
     ]
   },

@@ -1,3 +1,57 @@
-<p>
-  new-cognito-app works!
-</p>
+<mat-card>
+  <mat-card-title>Create New App</mat-card-title>
+  <form [formGroup]="appDetails" (ngSubmit)="submitForm()">
+
+    <mat-horizontal-stepper linear>
+      <mat-step label="App Details" [stepControl]="appDetails" [editable]="isEditable">
+        <mat-card-content>
+          <ng-template matStepLabel>Set app details</ng-template>
+          <!--<mat-card-subtitle> You can add multiple apps at once with the same access type and permissions. Learn more </mat-card-subtitle>-->
+          <mat-form-field>
+            <mat-label>App Name</mat-label>
+            <input matInput placeholder="App Name" formControlName="name" required>
+            <mat-hint>Not more than 60 characters long.</mat-hint>
+            <mat-error *ngIf="hasError('name', 'required')">App Name is required</mat-error>
+            <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
+          </mat-form-field>
+
+
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+            <span class="align-left">
+            </span>
+            <span class="align-right">
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-stroked-button matStepperNext type="button">Next</button>
+
+            </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+      <mat-step label="Review" [editable]="false">
+        <mat-card-content>
+          <h2 class="mat-h2">Review details</h2>
+          <h4 class="mat-h4">App details</h4>
+
+          <mat-label>App Name:</mat-label>
+          <div>{{appDetails.get('name').value}}</div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="button-container">
+            <span class="align-left">
+              <button mat-stroked-button matStepperPrevious>
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                <span>Back</span>
+              </button>
+            </span>
+            <span class="align-right">
+              <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+              <button mat-raised-button color="primary" type="submit">Finish</button>
+            </span>
+          </div>
+        </mat-card-actions>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </form>
+</mat-card>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { CognitoPool, CognitoService, IamService, IamPolicy } from '@perx/open-services';
+import { CognitoService, IamService, IamPolicy } from '@perx/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
@@ -24,8 +24,6 @@ export class NewCognitoPoolComponent implements OnInit {
   createPoolnamePage: boolean;
   reviewPage: boolean;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
-
-  pool$: Observable<CognitoPool>;
 
   constructor(
     private router: Router,
@@ -88,11 +86,9 @@ export class NewCognitoPoolComponent implements OnInit {
       attachedPolicies: policies,
       users: this.poolDetails.get('users').value
     };
-    this.pool$ = this.cognitoService.createPool(pool);
-  }
-
-  goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.cognitoService.createPool(pool).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 
   get columnProperties(): TableHeaderProperties[] {
