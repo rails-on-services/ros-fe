@@ -176,7 +176,7 @@ export class CognitoService {
     );
   }
 
-  createApplications(application: { name: string }): Observable<CognitoApplication> {
+  createApplication(application: { name: string }): Observable<CognitoApplication> {
     const newApplication = this.datastore.createRecord(
       CognitoApplication,
       {
