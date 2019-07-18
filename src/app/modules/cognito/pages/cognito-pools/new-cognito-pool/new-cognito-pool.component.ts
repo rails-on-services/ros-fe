@@ -49,12 +49,6 @@ export class NewCognitoPoolComponent implements OnInit {
     this.fetchPolicies();
   }
 
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
-  }
-
-
   onPolicySelectionChange(selection: SelectionModel<IamPolicy>): void {
     this.selection = selection;
     this.poolDetails.controls.attachedPolicies.setValue(selection.selected);

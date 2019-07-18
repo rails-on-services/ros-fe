@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsService } from '@perx/open-services';
@@ -12,7 +12,7 @@ import { TableActionsManagementComponent } from '@perx/open-ui-components';
   templateUrl: './new-campaign.component.html',
   styleUrls: ['./new-campaign.component.scss']
 })
-export class NewCampaignComponent implements OnInit, AfterViewInit {
+export class NewCampaignComponent implements OnInit {
   cognitoPools$: Observable<any[]>;
   shownColumns: (string | number | symbol)[];
   campaignTableDisplayProperties: TableHeaderProperties[] = [];
@@ -59,11 +59,6 @@ export class NewCampaignComponent implements OnInit, AfterViewInit {
 
   get formArray(): AbstractControl | null {
     return this.campaignDetailsGroup.get('formArray');
-  }
-
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
   hasError(section: number, controlName: string, errorName: string): boolean {

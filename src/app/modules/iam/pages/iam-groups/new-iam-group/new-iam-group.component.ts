@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
@@ -13,7 +13,7 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   templateUrl: './new-iam-group.component.html',
   styleUrls: ['./new-iam-group.component.scss']
 })
-export class NewIamGroupComponent implements OnInit, AfterViewInit {
+export class NewIamGroupComponent implements OnInit {
   policies$: Observable<any[]>;
   selection: SelectionModel<IamPolicy>;
   shownColumns: (string | number | symbol)[];
@@ -47,12 +47,6 @@ export class NewIamGroupComponent implements OnInit, AfterViewInit {
     });
     this.fetchPolicies();
   }
-
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
-  }
-
 
   onPolicySelectionChange(selection: SelectionModel<IamPolicy>): void {
     this.selection = selection;

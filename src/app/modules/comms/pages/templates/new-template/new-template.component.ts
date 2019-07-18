@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommsCampaign, CommsService } from '@perx/open-services';
@@ -13,7 +13,7 @@ import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
   templateUrl: './new-template.component.html',
   styleUrls: ['./new-template.component.scss']
 })
-export class NewTemplateComponent implements OnInit, AfterViewInit {
+export class NewTemplateComponent implements OnInit {
   campaigns$: Observable<any[]>;
   campaignSelection: SelectionModel<CommsCampaign>;
   shownColumns: (string | number | symbol)[];
@@ -53,11 +53,6 @@ export class NewTemplateComponent implements OnInit, AfterViewInit {
 
   get formArray(): AbstractControl | null {
     return this.templateDetailsGroup.get('formArray');
-  }
-
-  ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
   }
 
   hasError(section: number, controlName: string, errorName: string): boolean {

@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {ModalService} from '../../services/modal.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ModalService } from '../../services/modal.service';
 
 export interface DialogData {
   animal: string;
@@ -20,10 +20,7 @@ export class ModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // fix ExpressionChangedAfterItHasBeenCheckedError
-    // https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
     setTimeout(() => this.modalService.openDialog());
-
   }
 
 }
