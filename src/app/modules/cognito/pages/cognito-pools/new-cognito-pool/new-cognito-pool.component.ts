@@ -25,8 +25,6 @@ export class NewCognitoPoolComponent implements OnInit {
   reviewPage: boolean;
   policyTableDisplayProperties: TableHeaderProperties[] = [];
 
-  pool$: Observable<CognitoPool>;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -88,11 +86,9 @@ export class NewCognitoPoolComponent implements OnInit {
       attachedPolicies: policies,
       users: this.poolDetails.get('users').value
     };
-    this.pool$ = this.cognitoService.createPool(pool);
-  }
-
-  goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.cognitoService.createPool(pool).subscribe(() => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 
   get columnProperties(): TableHeaderProperties[] {
