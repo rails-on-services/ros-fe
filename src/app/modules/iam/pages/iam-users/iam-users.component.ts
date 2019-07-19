@@ -77,7 +77,7 @@ export class IamUsersComponent implements OnInit {
     this.selection.selected.forEach(user => {
       this.iamService.removeUser(user.id).subscribe(() => {
         this.selection.deselect(user);
-        this.fetchUsers(true);
+        this.fetchUsers();
       });
     });
   }
@@ -134,7 +134,7 @@ export class IamUsersComponent implements OnInit {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchUsers(true);
+    this.fetchUsers();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -149,11 +149,8 @@ export class IamUsersComponent implements OnInit {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force: boolean = false): void {
-    if (this.groupId) {
-      force = true;
-    }
-    this.users$ = this.iamService.fetchUsers(this.groupId, force).pipe(
+  fetchUsers(): void {
+    this.users$ = this.iamService.fetchUsers(this.groupId).pipe(
       map((users: IamUser[]) => {
         return users.map(user => {
           return {

@@ -98,7 +98,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchEvents(true);
+    this.fetchEvents();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -114,11 +114,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.removeDialogComponentFromBody();
   }
 
-  fetchEvents(force?: boolean): void {
-    if (this.campaignId) {
-      force = true;
-    }
-    this.events$ = this.commsService.fetchEvents(this.campaignId, force).pipe(
+  fetchEvents(): void {
+    this.events$ = this.commsService.fetchEvents(this.campaignId).pipe(
       map(commEvents => {
         const events = commEvents.map(commsEvent => {
           const eventLink = this.tabMode ? `../../events/${commsEvent.id}` : `${commsEvent.id}`;

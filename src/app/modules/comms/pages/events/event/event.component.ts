@@ -52,8 +52,8 @@ export class EventComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  private fetchEvent(force?: boolean): void {
-    this.event$ = this.commsService.fetchEvent(this.id, force).pipe(
+  private fetchEvent(): void {
+    this.event$ = this.commsService.fetchEvent(this.id).pipe(
       map(eventDetails => {
         const campaign = eventDetails.lastSyncModels.filter(item => item.type === 'campaigns')[0];
         // const provider = eventDetailsData.lastSyncModels.filter(item => item.type === 'providers')[0];
@@ -149,7 +149,7 @@ export class EventComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.isTemplateEditable = false;
-        this.fetchEvent(true);
+        this.fetchEvent();
       }
     );
   }

@@ -37,8 +37,8 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
     });
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
     this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
-    this.allGroups$ = this.iamService.fetchGroups(undefined, true);
-    this.currentUser$ = this.iamService.fetchUser(this.userId, true);
+    this.allGroups$ = this.iamService.fetchGroups(undefined);
+    this.currentUser$ = this.iamService.fetchUser(this.userId);
     this.fetchGroupsNotInUser();
   }
 

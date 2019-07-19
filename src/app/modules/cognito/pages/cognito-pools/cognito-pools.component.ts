@@ -136,11 +136,8 @@ export class CognitoPoolsComponent implements OnInit {
   }
 
 
-  fetchPools(force?: boolean): void {
-    if (this.userId) {
-      force = true;
-    }
-    this.pools$ = this.cognitoService.fetchPools(this.userId, force).pipe(
+  fetchPools(): void {
+    this.pools$ = this.cognitoService.fetchPools(this.userId).pipe(
       map(cognitoPools => {
         const pools = cognitoPools.map(cognitoPool => {
           const pool = {

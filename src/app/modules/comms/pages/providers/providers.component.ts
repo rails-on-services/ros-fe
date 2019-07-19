@@ -63,7 +63,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     this.selection.selected.forEach(provider => {
       this.commsService.removeProvider(provider.id).subscribe(() => {
         this.selection.deselect(provider);
-        this.fetchProviders(true);
+        this.fetchProviders();
       });
     });
   }
@@ -90,7 +90,7 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchProviders(true);
+    this.fetchProviders();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -98,8 +98,8 @@ export class CommsProvidersComponent implements OnInit, OnDestroy {
   }
 
 
-  private fetchProviders(force?: boolean): void {
-    this.providers$ = this.commsService.fetchProviders(null, force).pipe(
+  private fetchProviders(): void {
+    this.providers$ = this.commsService.fetchProviders(null).pipe(
       map(commsProviders => {
         const providers = commsProviders.map(commsProvider => {
           const provider = { id: commsProvider.id };
