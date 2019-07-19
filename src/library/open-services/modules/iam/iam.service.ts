@@ -55,7 +55,7 @@ export class IamService {
       }
     }
 
-    return this.datastore.findRecord(IamUser, `${id}`);
+    return this.datastore.findRecord(IamUser, `${id}`, { include: 'groups' });
   }
 
   createUser(user: { username: string; api: boolean; console: boolean; }): Observable<IamUser> {

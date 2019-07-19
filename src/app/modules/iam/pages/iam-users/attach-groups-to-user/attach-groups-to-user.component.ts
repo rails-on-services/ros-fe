@@ -18,6 +18,8 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   selection: SelectionModel<IamGroup>;
   shownColumns: (string | number | symbol)[];
   user$: Observable<any>;
+  allGroups$: Observable<any>;
+  currentUser$: Observable<any>;
   templateTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
@@ -35,6 +37,8 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
     });
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
     this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
+    this.allGroups$ = this.iamService.fetchGroups(undefined, true);
+    this.currentUser$ = this.iamService.fetchUser(this.userId, true);
     this.fetchGroupsNotInUser();
   }
 
@@ -77,10 +81,8 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   }
 
   fetchGroupsNotInUser(): void {
-    this.user$ = forkJoin(this.iamService.fetchGroups(undefined, true), this.iamService.fetchUser(this.userId, true)).pipe(
+    this.user$ = forkJoin(this.allGroups$, this.currentUser$).pipe(
       map(([groupsData, userData]) => {
-        console.log('groupsData', groupsData);
-        console.log('userData', userData);
         const groupsInUser = userData.groups || [];
         const groups = groupsData.filter(singleGroup => {
           if (groupsInUser.length <= 0) { return true; }
@@ -116,14 +118,17 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   attachGroupsToUser(): void {
     const selectedGroupIds = this.selection.selected.map(item => item.id);
 
-    const allGroups$ = this.iamService.fetchGroups(undefined, true);
-    const currentUser$ = this.iamService.fetchUser(this.userId, true);
 
-    forkJoin(allGroups$, currentUser$).pipe(
+    forkJoin(this.allGroups$, this.currentUser$).pipe(
       map(([groupsData, userData]) => {
         console.log('groupsData', groupsData);
         const selectedGroups = groupsData.filter(group => selectedGroupIds.includes(group.id));
-        userData.groups = [...userData.groups || [], ...selectedGroups];
+        userData.groups = [...userData.groups || [], ...selectedGroups].map(group => {
+          delete group.internalDatastore;
+          delete group.users;
+          return group;
+        // return {type: 'groups', id: group.id};
+        });
         console.log('selectedGroups', selectedGroups);
         console.log('userData.groups', userData.groups);
         console.log('userData', userData);
