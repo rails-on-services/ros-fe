@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PolicyAttachComponent } from './policy-attach.component';
+import { AttachPoliciesToUserComponent } from './attach-policies-to-user.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
-describe('PolicyAttachComponent', () => {
-  let component: PolicyAttachComponent;
-  let fixture: ComponentFixture<PolicyAttachComponent>;
+describe('AttachPoliciesToUserComponent', () => {
+  let component: AttachPoliciesToUserComponent;
+  let fixture: ComponentFixture<AttachPoliciesToUserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('PolicyAttachComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        PolicyAttachComponent,
+        AttachPoliciesToUserComponent,
         FilterableTableComponent,
         TableActionsManagementComponent]
     })
@@ -26,7 +26,7 @@ describe('PolicyAttachComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PolicyAttachComponent);
+    fixture = TestBed.createComponent(AttachPoliciesToUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

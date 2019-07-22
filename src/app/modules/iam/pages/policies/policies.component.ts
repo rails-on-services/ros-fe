@@ -107,6 +107,6 @@ export class PoliciesComponent implements OnInit {
   }
 
   attachPolicy(): void {
-    this.router.navigate(['policy-attach', this.selection.selected[0].id], { relativeTo: this.route });
+    this.router.navigate(['attach-policies-to-user', this.selection.selected[0].id], { relativeTo: this.route });
   }
 }

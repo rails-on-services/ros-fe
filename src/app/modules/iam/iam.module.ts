@@ -11,7 +11,7 @@ import { IamComponent } from './iam.component';
 import { NewIamUserComponent } from './pages/iam-users/new-iam-user/new-iam-user.component';
 import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-group.component';
 import { PoliciesComponent } from './pages/policies/policies.component';
-import { PolicyAttachComponent } from './pages/policies/policy-attach/policy-attach.component';
+import { PolicyAttachComponent } from './pages/policies/attach-policies-to-user/attach-policies-to-user.component';
 import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
 import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-group/attach-users-to-group.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
@@ -19,6 +19,7 @@ import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component'
 import { SharedModule } from '../../../shared/shared.module';
 import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
+import { AttachPoliciesToUserComponent } from './pages/iam-users/attach-policies-to-user/attach-policies-to-user.component';
 
 const COMPONENTS = [
   IamUsersComponent,
@@ -38,7 +39,8 @@ const COMPONENTS = [
 @NgModule({
   declarations: [
     ...COMPONENTS,
-    AttachGroupsToUserComponent
+    AttachGroupsToUserComponent,
+    AttachPoliciesToUserComponent
   ],
   imports: [
     CommonModule,
