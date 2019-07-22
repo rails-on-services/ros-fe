@@ -9,7 +9,7 @@ import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.compo
 import { IamComponent } from './iam.component';
 import { NewIamUserComponent } from './pages/iam-users/new-iam-user/new-iam-user.component';
 import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-group.component';
-import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-group-users.component';
+import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-group/attach-users-to-group.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
@@ -70,7 +70,7 @@ const router: Routes = [
       },
       {
         path: 'groups/user-management',
-        component: AddGroupUsersComponent
+        component: AttachUsersToGroupComponent
       }
     ]
   },

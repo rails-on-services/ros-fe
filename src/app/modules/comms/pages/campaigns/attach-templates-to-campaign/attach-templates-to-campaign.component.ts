@@ -113,7 +113,7 @@ export class AttachTemplatesToCampaignComponent implements OnInit, OnDestroy {
 
   attachTemplatesToCampaign(): void {
     const selectedTemplateIds = this.selection.selected.map(item => item.id);
-    const allTemplates$ = this.commsService.fetchTemplates(undefined);
+    const allTemplates$ = this.commsService.fetchTemplates();
     const currentCampaign$ = this.commsService.fetchCampaign(this.campaignId);
 
     forkJoin(allTemplates$, currentCampaign$).pipe(

@@ -44,7 +44,7 @@ export * from './src/app/modules/dashboard/pages/summary/summary.component';
 export * from './src/app/modules/iam/iam-routing.module';
 export * from './src/app/modules/iam/iam.component';
 export * from './src/app/modules/iam/iam.module';
-export * from './src/app/modules/iam/pages/iam-groups/add-group-users/add-group-users.component';
+export * from './src/app/modules/iam/pages/iam-groups/attach-users-to-group/attach-users-to-group.component';
 export * from './src/app/modules/iam/pages/iam-groups/iam-group/iam-group.component';
 export * from './src/app/modules/iam/pages/iam-groups/iam-groups.component';
 export * from './src/app/modules/iam/pages/iam-groups/new-iam-group/new-iam-group.component';

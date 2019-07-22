@@ -2,23 +2,24 @@ import { DisplayPropertiesService } from 'src/shared/services/table-header-displ
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { IamService, IamUser, IamGroup } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 
 @Component({
-  selector: 'app-add-group-users',
-  templateUrl: './add-group-users.component.html',
-  styleUrls: ['./add-group-users.component.scss']
+  selector: 'app-attach-users-to-group',
+  templateUrl: './attach-users-to-group.component.html',
+  styleUrls: ['./attach-users-to-group.component.scss']
 })
-export class AddGroupUsersComponent implements OnInit, OnDestroy {
-  id: number;
+export class AttachUsersToGroupComponent implements OnInit, OnDestroy {
   private sub: any;
-  group$: Observable<any>;
-  tableHeaders: { key: string, value: string }[];
+  groupId: number;
   selection: SelectionModel<IamUser>;
   shownColumns: (string | number | symbol)[];
+  group$: Observable<any>;
+  allUsers$: Observable<any>;
+  currentGroup$: Observable<any>;
   userTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
@@ -28,12 +29,14 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     private displayPropertiesService: DisplayPropertiesService) { }
 
   ngOnInit(): void {
-    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
-    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
     this.shownColumns = ['username', 'urn', 'created_at'];
     this.sub = this.route.params.subscribe(params => {
-      this.id = params[`id`];
+      this.groupId = params[`id`];
     });
+    this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'users-table');
+    this.userTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
+    this.allUsers$ = this.iamService.fetchUsers();
+    this.currentGroup$ = this.iamService.fetchGroup(this.groupId);
     this.fetchUsersNotInGroup();
 
   }
@@ -44,7 +47,16 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: typedef
   private getUserInfo(user: IamUser) {
-    return { id: user.id, ...user };
+    {
+      const userDetails = { id: user.id };
+      const keys = this.userTableDisplayProperties.map(item => item.key);
+
+      keys.forEach(key => {
+        userDetails[key] = user[key];
+      });
+
+      return userDetails;
+    }
   }
 
   // tslint:disable-next-line: typedef
@@ -60,17 +72,16 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
   }
 
   private fetchUsersNotInGroup(): void {
-    this.group$ = forkJoin(this.iamService.fetchUsers(), this.iamService.fetchGroup(this.id)).pipe(
+    this.group$ = forkJoin(this.allUsers$, this.currentGroup$).pipe(
       map(([usersData, groupData]) => {
         const usersInGroup = groupData.users || [];
 
         const users = usersData.filter(singleUser => {
-          const notInGroup = usersInGroup.some(userInGroup => {
-            return userInGroup.id !== singleUser.id;
+          if (usersInGroup.length <= 0) { return true; }
+          const isInGroup = usersInGroup.some(userInGroup => {
+            return userInGroup.id === singleUser.id;
           });
-          if (notInGroup) {
-            return singleUser;
-          }
+          return !isInGroup;
         });
         const groupDetails = this.getGroupInfo(groupData, users);
 
@@ -101,7 +112,23 @@ export class AddGroupUsersComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  addUsersToGroup(): void {
-    console.log(this.selection);
+  attachUsersToGroup(): void {
+    const selectedUserIds = this.selection.selected.map(item => item.id);
+
+
+    forkJoin(this.allUsers$, this.currentGroup$).pipe(
+      map(([usersData, groupData]) => {
+        const selectedUsers = usersData.filter(user => selectedUserIds.includes(user.id));
+        groupData.users = [...groupData.users || [], ...selectedUsers].map(user => {
+          delete user.internalDatastore;
+          delete user.groups;
+          return user;
+        });
+        return groupData;
+      }),
+      switchMap(group => group.save())
+    ).subscribe(
+      () => this.router.navigate(['../'], { relativeTo: this.route })
+    );
   }
 }
