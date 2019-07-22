@@ -2,7 +2,7 @@
   <mat-card-content>
     <ng-container class="groups-table" *ngIf="user$ | async as user">
       <app-filterable-table [columnProperties]="columnProperties" [contents]="user.groups" [selectable]=true
-        (selectionChange)="onEventsSelectionChange($event)" [shownColumns]="shownColumns">
+        (selectionChange)="onGroupsSelectionChange($event)" [shownColumns]="shownColumns">
       </app-filterable-table>
     </ng-container>
     <router-outlet></router-outlet>

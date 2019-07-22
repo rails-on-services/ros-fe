@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddGroupUsersComponent } from './add-group-users.component';
+import { AttachUsersToGroupComponent } from './attach-users-to-group.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
-describe('AddGroupUsersComponent', () => {
-  let component: AddGroupUsersComponent;
-  let fixture: ComponentFixture<AddGroupUsersComponent>;
+describe('AttachUsersToGroupComponent', () => {
+  let component: AttachUsersToGroupComponent;
+  let fixture: ComponentFixture<AttachUsersToGroupComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('AddGroupUsersComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AddGroupUsersComponent,
+        AttachUsersToGroupComponent,
         FilterableTableComponent,
         TableActionsManagementComponent]
     })
@@ -26,7 +26,7 @@ describe('AddGroupUsersComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddGroupUsersComponent);
+    fixture = TestBed.createComponent(AttachUsersToGroupComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

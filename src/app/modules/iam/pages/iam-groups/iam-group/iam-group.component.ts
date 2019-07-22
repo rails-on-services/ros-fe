@@ -53,7 +53,7 @@ export class IamGroupComponent implements OnInit, OnDestroy {
   }
 
   attachUsersToGroup(): void {
-    this.router.navigate(['attach-groups'], { relativeTo: this.route });
+    this.router.navigate(['attach-users'], { relativeTo: this.route });
   }
 
   private fetchGroup(): void {

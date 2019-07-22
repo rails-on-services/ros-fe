@@ -20,7 +20,7 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   user$: Observable<any>;
   allGroups$: Observable<any>;
   currentUser$: Observable<any>;
-  templateTableDisplayProperties: TableHeaderProperties[] = [];
+  groupTableDisplayProperties: TableHeaderProperties[] = [];
 
   constructor(
     private router: Router,
@@ -36,8 +36,8 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
       this.userId = params[`id`];
     });
     this.displayPropertiesService.setTableDisplayProperties('essentials', 'IAM', 'groups-table');
-    this.templateTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
-    this.allGroups$ = this.iamService.fetchGroups(undefined);
+    this.groupTableDisplayProperties = this.displayPropertiesService.getTableDisplayProperties();
+    this.allGroups$ = this.iamService.fetchGroups();
     this.currentUser$ = this.iamService.fetchUser(this.userId);
     this.fetchGroupsNotInUser();
   }
@@ -47,23 +47,23 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   }
 
   // tslint:disable-next-line: typedef
-  getGroupInfo(template: IamGroup) {
-    const templateDetails = { id: template.id };
-    const keys = this.templateTableDisplayProperties.map(item => item.key);
+  getGroupInfo(group: IamGroup) {
+    const groupDetails = { id: group.id };
+    const keys = this.groupTableDisplayProperties.map(item => item.key);
 
     keys.forEach(key => {
-      templateDetails[key] = template[key];
+      groupDetails[key] = group[key];
     });
 
-    return templateDetails;
+    return groupDetails;
   }
 
   // tslint:disable-next-line: typedef
   getUserInfo(user: IamUser, groups: IamGroup[]) {
     const userInfo = {
       id: user.id,
-      groups: groups.map(template => {
-        return this.getGroupInfo(template);
+      groups: groups.map(group => {
+        return this.getGroupInfo(group);
       }),
       link: `users/${user.id}`
     };
@@ -80,14 +80,14 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
     this.shownColumns = shownColumns;
   }
 
-  fetchGroupsNotInUser(): void {
+  private fetchGroupsNotInUser(): void {
     this.user$ = forkJoin(this.allGroups$, this.currentUser$).pipe(
       map(([groupsData, userData]) => {
         const groupsInUser = userData.groups || [];
         const groups = groupsData.filter(singleGroup => {
           if (groupsInUser.length <= 0) { return true; }
-          const isInUser = groupsInUser.some(templateInUser => {
-            return templateInUser.id === singleGroup.id;
+          const isInUser = groupsInUser.some(groupInUser => {
+            return groupInUser.id === singleGroup.id;
           });
 
           return !isInUser;
@@ -100,7 +100,7 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
   }
 
   get columnProperties(): TableHeaderProperties[] {
-    return this.templateTableDisplayProperties;
+    return this.groupTableDisplayProperties;
   }
 
   onGroupsSelectionChange(selection: SelectionModel<IamGroup>): void {
@@ -111,27 +111,18 @@ export class AttachGroupsToUserComponent implements OnInit, OnDestroy {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  onEventsSelectionChange(selection: SelectionModel<IamGroup>): void {
-    this.selection = selection;
-  }
-
   attachGroupsToUser(): void {
     const selectedGroupIds = this.selection.selected.map(item => item.id);
 
 
     forkJoin(this.allGroups$, this.currentUser$).pipe(
       map(([groupsData, userData]) => {
-        console.log('groupsData', groupsData);
         const selectedGroups = groupsData.filter(group => selectedGroupIds.includes(group.id));
         userData.groups = [...userData.groups || [], ...selectedGroups].map(group => {
           delete group.internalDatastore;
           delete group.users;
           return group;
-        // return {type: 'groups', id: group.id};
         });
-        console.log('selectedGroups', selectedGroups);
-        console.log('userData.groups', userData.groups);
-        console.log('userData', userData);
         return userData;
       }),
       switchMap(user => user.save())

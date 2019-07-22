@@ -13,7 +13,7 @@ import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-g
 import { PoliciesComponent } from './pages/policies/policies.component';
 import { PolicyAttachComponent } from './pages/policies/policy-attach/policy-attach.component';
 import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
-import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-group-users.component';
+import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-group/attach-users-to-group.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { SharedModule } from '../../../shared/shared.module';
@@ -30,7 +30,7 @@ const COMPONENTS = [
   PoliciesComponent,
   PolicyAttachComponent,
   NewPolicyComponent,
-  AddGroupUsersComponent,
+  AttachUsersToGroupComponent,
   IamGroupComponent,
   IamUserComponent
 ];
