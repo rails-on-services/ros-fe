@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card-content>
-    <ng-container class="users-table" *ngIf="group$ | async as group">
-      <app-filterable-table [columnProperties]="columnProperties" [contents]="group.users" [selectable]=true
+    <ng-container class="users-table" *ngIf="pool$ | async as pool">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="pool.users" [selectable]=true
         (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
       </app-filterable-table>
     </ng-container>
