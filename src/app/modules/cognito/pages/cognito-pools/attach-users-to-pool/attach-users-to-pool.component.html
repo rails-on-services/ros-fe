@@ -1,0 +1,21 @@
+<div class="container">
+  <mat-card-content>
+    <ng-container class="users-table" *ngIf="group$ | async as group">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="group.users" [selectable]=true
+        (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
+      </app-filterable-table>
+    </ng-container>
+    <router-outlet></router-outlet>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    <div class="button-container text-right">
+      <span>
+        <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+        <button mat-raised-button color="primary" (click)="attachUsersToPool()">
+          Attach Users to Pool
+        </button>
+      </span>
+    </div>
+  </mat-card-actions>
+</div>
