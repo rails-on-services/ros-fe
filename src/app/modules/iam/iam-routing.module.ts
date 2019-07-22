@@ -77,7 +77,8 @@ const router: Routes = [
       {
         path: 'policies/:id/attach-users',
         component: AttachUsersToPolicyComponent,
-      },{
+      },
+      {
         path: 'policies/:id',
         component: IamPolicyComponent,
       }
