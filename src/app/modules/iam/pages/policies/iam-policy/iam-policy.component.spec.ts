@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { IamUsersComponent } from '../../iam-users/iam-users.component';
 import { TableActionsManagementComponent, FilterableTableComponent, DismissibleContentComponent } from '@perx/open-ui-components';
 
-describe('PolicyComponent', () => {
+describe('IamPolicyComponent', () => {
   let component: IamPolicyComponent;
   let fixture: ComponentFixture<IamPolicyComponent>;
 

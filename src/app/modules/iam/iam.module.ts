@@ -20,6 +20,7 @@ import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 import { AttachPoliciesToUserComponent } from './pages/iam-users/attach-policies-to-user/attach-policies-to-user.component';
 import { IamPolicyComponent } from './pages/policies/iam-policy/iam-policy.component';
+import { AttachUsersToPolicyComponent } from './pages/policies/attach-users-to-policy/attach-users-to-policy.component';
 
 const COMPONENTS = [
   IamUsersComponent,
@@ -35,7 +36,8 @@ const COMPONENTS = [
   NewIamPolicyComponent,
   AttachUsersToGroupComponent,
   IamGroupComponent,
-  IamUserComponent
+  IamUserComponent,
+  AttachUsersToPolicyComponent
 ];
 
 @NgModule({

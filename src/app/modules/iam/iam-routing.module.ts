@@ -14,6 +14,7 @@ import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
+import { IamPolicyComponent } from './pages/policies/iam-policy/iam-policy.component';
 
 const router: Routes = [
   {
@@ -76,7 +77,10 @@ const router: Routes = [
       {
         path: 'policies/:id/attach-users',
         component: AttachUsersToPolicyComponent,
-      },
+      },{
+        path: 'policies/:id',
+        component: IamPolicyComponent,
+      }
     ]
   },
 
