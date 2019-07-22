@@ -28,21 +28,21 @@ const COMPONENTS = [
   CognitoUsersComponent,
   CognitoPoolsComponent,
   NewCognitoUserComponent,
-  CognitoAppsComponent
+  CognitoAppsComponent,
+  NewCognitoPoolComponent,
+  NewCognitoAppComponent,
+  CognitoUserComponent,
+  CognitoAppComponent,
+  CognitoPoolComponent,
+  AttachUsersToPoolComponent,
+  AttachAppsToUserComponent,
+  AttachPoolToUserComponent,
+  AttachUsersToAppComponent
 ];
 
 @NgModule({
   declarations: [
-    ...COMPONENTS,
-    NewCognitoPoolComponent,
-    NewCognitoAppComponent,
-    CognitoUserComponent,
-    CognitoAppComponent,
-    CognitoPoolComponent,
-    AttachUsersToPoolComponent,
-    AttachAppsToUserComponent,
-    AttachPoolToUserComponent,
-    AttachUsersToAppComponent
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,
