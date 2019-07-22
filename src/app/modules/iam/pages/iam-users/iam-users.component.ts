@@ -33,6 +33,7 @@ export class IamUsersComponent implements OnInit {
   @Output() attachUsersToGroup: EventEmitter<any> = new EventEmitter();
   @Output() detachUsersFromGroup: EventEmitter<any> = new EventEmitter();
   @Input() groupId: number;
+  @Input() policyId: number;
   @Input() tabMode: string;
 
   document$: Observable<JsonApiQueryData<IamUser>>;
@@ -150,7 +151,9 @@ export class IamUsersComponent implements OnInit {
   }
 
   fetchUsers(): void {
-    this.users$ = this.iamService.fetchUsers(this.groupId).pipe(
+    const filterId = this.groupId || this.policyId;
+
+    this.users$ = this.iamService.fetchUsers(filterId).pipe(
       map((users: IamUser[]) => {
         return users.map(user => {
           return {

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   templateUrl: './new-policy.component.html',
   styleUrls: ['./new-policy.component.scss']
 })
-export class NewPolicyComponent {
+export class NewIamPolicyComponent {
   isEditable: boolean = true;
   goNextStepTriggered: boolean = false;
   createPolicynamePage: boolean;

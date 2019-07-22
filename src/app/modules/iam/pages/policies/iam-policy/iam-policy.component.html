@@ -1,0 +1,20 @@
+<div class="container">
+  <ng-container *ngIf="policy$ | async as policy">
+    <div fxLayout="row"><a [routerLink]="'..'" routerLinkActive="active-service">policies</a>&nbsp;>&nbsp;{{policy.name}}
+    </div>
+    <h2>Details</h2>
+    <div fxLayout="column" fxLayoutGap="1rem">
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">policy URN:</div>
+        <div class="detail-list">{{policy.urn}}</div>
+      </div>
+      <div fxFlex fxLayout="row" fxLayoutGap="1rem">
+        <div class="detail-list-title">Create At:</div>
+        <div class="detail-list">{{policy.created_at}}</div>
+      </div>
+    </div>
+    <app-iam-users [tabMode]="true" [policyId]="policyId" (detachUsersFromPolicy)="detachUsersFromPolicy($event)"
+      (attachUsersToPolicy)="attachUsersToPolicy($event)">>
+    </app-iam-users>
+  </ng-container>
+</div>

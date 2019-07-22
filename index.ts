@@ -59,7 +59,8 @@ export * from './src/app/modules/iam/pages/iam-users/iam-user/iam-user.component
 export * from './src/app/modules/iam/pages/iam-users/iam-users.component';
 export * from './src/app/modules/iam/pages/iam-users/new-iam-user/new-iam-user.component';
 export * from './src/app/modules/iam/pages/policies/attach-users-to-policy/attach-users-to-policy.component';
-export * from './src/app/modules/iam/pages/policies/new-policy/new-policy.component';
+export * from './src/app/modules/iam/pages/policies/iam-policy/iam-policy.component';
+export * from './src/app/modules/iam/pages/policies/new-iam-policy/new-iam-policy.component';
 export * from './src/app/modules/iam/pages/policies/policies.component';
 export * from './src/app/modules/storage/pages/files/files.component';
 export * from './src/app/modules/storage/pages/new-file/new-file.component';

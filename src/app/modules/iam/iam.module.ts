@@ -12,7 +12,7 @@ import { NewIamUserComponent } from './pages/iam-users/new-iam-user/new-iam-user
 import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-group.component';
 import { PoliciesComponent } from './pages/policies/policies.component';
 import { PolicyAttachComponent } from './pages/policies/attach-policies-to-user/attach-policies-to-user.component';
-import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
+import { NewIamPolicyComponent } from './pages/policies/new-iam-policy/new-iam-policy.component';
 import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-group/attach-users-to-group.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
@@ -20,6 +20,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ServiceMenuModule } from 'src/app/core/components/service-menu/service-menu.module';
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 import { AttachPoliciesToUserComponent } from './pages/iam-users/attach-policies-to-user/attach-policies-to-user.component';
+import { IamPolicyComponent } from './pages/policies/iam-policy/iam-policy.component';
 
 const COMPONENTS = [
   IamUsersComponent,
@@ -30,7 +31,7 @@ const COMPONENTS = [
   NewIamGroupComponent,
   PoliciesComponent,
   PolicyAttachComponent,
-  NewPolicyComponent,
+  NewIamPolicyComponent,
   AttachUsersToGroupComponent,
   IamGroupComponent,
   IamUserComponent
@@ -40,7 +41,8 @@ const COMPONENTS = [
   declarations: [
     ...COMPONENTS,
     AttachGroupsToUserComponent,
-    AttachPoliciesToUserComponent
+    AttachPoliciesToUserComponent,
+    IamPolicyComponent
   ],
   imports: [
     CommonModule,
