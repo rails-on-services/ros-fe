@@ -53,6 +53,10 @@ const router: Routes = [
         component: NewIamGroupComponent
       },
       {
+        path: 'groups/:id/attach-users',
+        component: AttachUsersToGroupComponent
+      },
+      {
         path: 'groups/:id',
         component: IamGroupComponent
       },
@@ -67,10 +71,6 @@ const router: Routes = [
       {
         path: 'policies/new-policy',
         component: NewPolicyComponent,
-      },
-      {
-        path: 'groups/user-management',
-        component: AttachUsersToGroupComponent
       }
     ]
   },

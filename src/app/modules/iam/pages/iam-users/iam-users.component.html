@@ -11,7 +11,7 @@
       [disabled]="!(selection && selection.selected.length)">
       Remove User<span style="vertical-align: unset" *ngIf="selection && selection.selected.length>1">s</span>
     </button>
-    <button *ngIf="tabMode" mat-raised-button color="primary" (click)="attachGroups()">
+    <button *ngIf="tabMode" mat-raised-button color="primary" (click)="attachUsers()">
       Attach Users to Group
     </button>
     <button *ngIf="tabMode" mat-raised-button color="warn" (click)="showDetachConfirmationPopup()"
