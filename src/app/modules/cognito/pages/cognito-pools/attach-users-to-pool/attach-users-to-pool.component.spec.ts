@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PolicyAttachComponent } from './policy-attach.component';
+import { AttachUsersToPoolComponent } from './attach-users-to-pool.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FilterableTableComponent, TableActionsManagementComponent } from '@perx/open-ui-components';
 
-describe('PolicyAttachComponent', () => {
-  let component: PolicyAttachComponent;
-  let fixture: ComponentFixture<PolicyAttachComponent>;
+describe('AttachUsersToPoolComponent', () => {
+  let component: AttachUsersToPoolComponent;
+  let fixture: ComponentFixture<AttachUsersToPoolComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -18,15 +18,15 @@ describe('PolicyAttachComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        PolicyAttachComponent,
+        AttachUsersToPoolComponent,
         FilterableTableComponent,
         TableActionsManagementComponent]
-    })
-    .compileComponents();
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PolicyAttachComponent);
+    fixture = TestBed.createComponent(AttachUsersToPoolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

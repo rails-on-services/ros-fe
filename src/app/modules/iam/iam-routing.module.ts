@@ -1,11 +1,12 @@
+import { AttachUsersToPolicyComponent } from './pages/policies/attach-users-to-policy/attach-users-to-policy.component';
+import { AttachPoliciesToUserComponent } from './pages/iam-users/attach-policies-to-user/attach-policies-to-user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IamHomeComponent } from './pages/iam-home/iam-home.component';
 import { IamUsersComponent } from './pages/iam-users/iam-users.component';
 import { IamGroupsComponent } from './pages/iam-groups/iam-groups.component';
 import { PoliciesComponent } from './pages/policies/policies.component';
-import { PolicyAttachComponent } from './pages/policies/policy-attach/policy-attach.component';
-import { NewPolicyComponent } from './pages/policies/new-policy/new-policy.component';
+import { NewIamPolicyComponent } from './pages/policies/new-iam-policy/new-iam-policy.component';
 import { IamComponent } from './iam.component';
 import { NewIamUserComponent } from './pages/iam-users/new-iam-user/new-iam-user.component';
 import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-group.component';
@@ -13,6 +14,7 @@ import { AttachUsersToGroupComponent } from './pages/iam-groups/attach-users-to-
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
 import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
+import { IamPolicyComponent } from './pages/policies/iam-policy/iam-policy.component';
 
 const router: Routes = [
   {
@@ -41,6 +43,10 @@ const router: Routes = [
         component: AttachGroupsToUserComponent
       },
       {
+        path: 'users/:id/attach-policies',
+        component: AttachPoliciesToUserComponent
+      },
+      {
         path: 'users/:id',
         component: IamUserComponent
       },
@@ -65,12 +71,16 @@ const router: Routes = [
         component: PoliciesComponent,
       },
       {
-        path: 'policies/policy-attach/:id',
-        component: PolicyAttachComponent,
+        path: 'policies/new-policy',
+        component: NewIamPolicyComponent,
       },
       {
-        path: 'policies/new-policy',
-        component: NewPolicyComponent,
+        path: 'policies/:id/attach-users',
+        component: AttachUsersToPolicyComponent,
+      },
+      {
+        path: 'policies/:id',
+        component: IamPolicyComponent,
       }
     ]
   },

@@ -5,11 +5,11 @@ import { IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-new-policy',
-  templateUrl: './new-policy.component.html',
-  styleUrls: ['./new-policy.component.scss']
+  selector: 'app-new-iam-policy',
+  templateUrl: './new-iam-policy.component.html',
+  styleUrls: ['./new-iam-policy.component.scss']
 })
-export class NewPolicyComponent {
+export class NewIamPolicyComponent {
   isEditable: boolean = true;
   goNextStepTriggered: boolean = false;
   createPolicynamePage: boolean;

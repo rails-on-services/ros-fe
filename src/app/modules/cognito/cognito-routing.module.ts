@@ -1,3 +1,7 @@
+import { AttachUsersToAppComponent } from './pages/cognito-apps/attach-users-to-app/attach-users-to-app.component';
+import { AttachUsersToPoolComponent } from './pages/cognito-pools/attach-users-to-pool/attach-users-to-pool.component';
+import { AttachAppsToUserComponent } from './pages/cognito-users/attach-apps-to-user/attach-apps-to-user.component';
+import { AttachGroupsToUserComponent } from './../iam/pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CognitoHomeComponent } from './pages/cognito-home/cognito-home.component';
@@ -35,6 +39,14 @@ const router: Routes = [
         component: NewCognitoUserComponent
       },
       {
+        path: 'users/:id/attach-pools',
+        component: AttachGroupsToUserComponent
+      },
+      {
+        path: 'users/:id/attach-apps',
+        component: AttachAppsToUserComponent
+      },
+      {
         path: 'users/:id',
         component: CognitoUserComponent
       },
@@ -47,6 +59,10 @@ const router: Routes = [
         component: NewCognitoPoolComponent
       },
       {
+        path: 'pools/:id/attach-users',
+        component: AttachUsersToPoolComponent
+      },
+      {
         path: 'pools/:id',
         component: CognitoPoolComponent
       },
@@ -57,6 +73,10 @@ const router: Routes = [
       {
         path: 'apps/new-app',
         component: NewCognitoAppComponent
+      },
+      {
+        path: 'apps/:id/attach-users',
+        component: AttachUsersToAppComponent
       },
       {
         path: 'apps/:id',

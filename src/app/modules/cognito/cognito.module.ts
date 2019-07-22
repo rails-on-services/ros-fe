@@ -17,6 +17,10 @@ import { NewCognitoAppComponent } from './pages/cognito-apps/new-cognito-app/new
 import { CognitoUserComponent } from './pages/cognito-users/cognito-user/cognito-user.component';
 import { CognitoAppComponent } from './pages/cognito-apps/cognito-app/cognito-app.component';
 import { CognitoPoolComponent } from './pages/cognito-pools/cognito-pool/cognito-pool.component';
+import { AttachUsersToPoolComponent } from './pages/cognito-pools/attach-users-to-pool/attach-users-to-pool.component';
+import { AttachAppsToUserComponent } from './pages/cognito-users/attach-apps-to-user/attach-apps-to-user.component';
+import { AttachPoolToUserComponent } from './pages/cognito-users/attach-pools-to-user/attach-pools-to-user.component';
+import { AttachUsersToAppComponent } from './pages/cognito-apps/attach-users-to-app/attach-users-to-app.component';
 
 const COMPONENTS = [
   CognitoComponent,
@@ -24,17 +28,21 @@ const COMPONENTS = [
   CognitoUsersComponent,
   CognitoPoolsComponent,
   NewCognitoUserComponent,
-  CognitoAppsComponent
+  CognitoAppsComponent,
+  NewCognitoPoolComponent,
+  NewCognitoAppComponent,
+  CognitoUserComponent,
+  CognitoAppComponent,
+  CognitoPoolComponent,
+  AttachUsersToPoolComponent,
+  AttachAppsToUserComponent,
+  AttachPoolToUserComponent,
+  AttachUsersToAppComponent
 ];
 
 @NgModule({
   declarations: [
-    ...COMPONENTS,
-    NewCognitoPoolComponent,
-    NewCognitoAppComponent,
-    CognitoUserComponent,
-    CognitoAppComponent,
-    CognitoPoolComponent
+    ...COMPONENTS
   ],
   imports: [
     CommonModule,

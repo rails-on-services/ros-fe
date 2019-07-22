@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewPolicyComponent } from './new-policy.component';
+import { NewIamPolicyComponent } from './new-iam-policy.component';
 import { SharedModule } from 'src/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-describe('NewPolicyComponent', () => {
-  let component: NewPolicyComponent;
-  let fixture: ComponentFixture<NewPolicyComponent>;
+describe('NewIamPolicyComponent', () => {
+  let component: NewIamPolicyComponent;
+  let fixture: ComponentFixture<NewIamPolicyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,13 +21,13 @@ describe('NewPolicyComponent', () => {
         ReactiveFormsModule,
         FormsModule
       ],
-      declarations: [ NewPolicyComponent ]
+      declarations: [ NewIamPolicyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewPolicyComponent);
+    fixture = TestBed.createComponent(NewIamPolicyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
