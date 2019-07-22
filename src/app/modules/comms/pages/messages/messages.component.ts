@@ -41,7 +41,7 @@ export class MessagesComponent implements OnInit {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchMessages(true);
+    this.fetchMessages();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -49,8 +49,8 @@ export class MessagesComponent implements OnInit {
   }
 
 
-  private fetchMessages(force?: boolean): void {
-    this.messages$ = this.commsService.fetchMessages(force).pipe(
+  private fetchMessages(): void {
+    this.messages$ = this.commsService.fetchMessages().pipe(
       map(commsUsers => {
         const users = commsUsers.map(commsUser => {
           const user = { id: commsUser.id };

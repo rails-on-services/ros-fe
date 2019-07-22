@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IamUser } from './models/user.model';
@@ -22,14 +22,14 @@ export class IamService {
     });
   }
 
-  fetchUsers(groupId?: number | string, force?: boolean): Observable<IamUser[]> {
+  fetchUsers(groupId?: number | string): Observable<IamUser[]> {
 
-    if (!force) {
-      const users = this.datastore.peekAll(IamUser);
-      if (users && users.length > 0) {
-        return of(users);
-      }
-    }
+    // if (!force) {
+    //   const users = this.datastore.peekAll(IamUser);
+    //   if (users && users.length > 0) {
+    //     return of(users);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 },
       include: 'groups,credentials'
@@ -47,15 +47,15 @@ export class IamService {
     );
   }
 
-  fetchUser(id: number | string, force?: boolean): Observable<IamUser> {
-    if (!force) {
-      const user = this.datastore.peekRecord(IamUser, `${id}`);
-      if (user) {
-        return of(user);
-      }
-    }
+  fetchUser(id: number | string): Observable<IamUser> {
+    // if (!force) {
+    //   const user = this.datastore.peekRecord(IamUser, `${id}`);
+    //   if (user) {
+    //     return of(user);
+    //   }
+    // }
 
-    return this.datastore.findRecord(IamUser, `${id}`);
+    return this.datastore.findRecord(IamUser, `${id}`, { include: 'groups' });
   }
 
   createUser(user: { username: string; api: boolean; console: boolean; }): Observable<IamUser> {
@@ -76,13 +76,13 @@ export class IamService {
     );
   }
 
-  fetchCredentials(force?: boolean): Observable<IamCredential[]> {
-    if (!force) {
-      const credentials = this.datastore.peekAll(IamCredential);
-      if (credentials && credentials.length > 0) {
-        return of(credentials);
-      }
-    }
+  fetchCredentials(): Observable<IamCredential[]> {
+    // if (!force) {
+    //   const credentials = this.datastore.peekAll(IamCredential);
+    //   if (credentials && credentials.length > 0) {
+    //     return of(credentials);
+    //   }
+    // }
 
     return this.datastore.findAll(
       IamCredential,
@@ -107,13 +107,13 @@ export class IamService {
     return credential.save();
   }
 
-  fetchGroups(userId?: number | string, force?: boolean): Observable<IamGroup[]> {
-    if (!force) {
-      const groups = this.datastore.peekAll(IamGroup);
-      if (groups && groups.length > 0) {
-        return of(groups);
-      }
-    }
+  fetchGroups(userId?: number | string): Observable<IamGroup[]> {
+    // if (!force) {
+    //   const groups = this.datastore.peekAll(IamGroup);
+    //   if (groups && groups.length > 0) {
+    //     return of(groups);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 },
       include: 'users'
@@ -131,13 +131,13 @@ export class IamService {
     );
   }
 
-  fetchGroup(id: number | string, force?: boolean): Observable<IamGroup> {
-    if (!force) {
-      const group = this.datastore.peekRecord(IamGroup, `${id}`);
-      if (group) {
-        return of(group);
-      }
-    }
+  fetchGroup(id: number | string): Observable<IamGroup> {
+    // if (!force) {
+    //   const group = this.datastore.peekRecord(IamGroup, `${id}`);
+    //   if (group) {
+    //     return of(group);
+    //   }
+    // }
 
     return this.datastore.findRecord(IamGroup, `${id}`, { include: 'users' });
   }
@@ -162,13 +162,13 @@ export class IamService {
 
   // TODO: this need to check with Rob with relationship
 
-  fetchPolicies(userId?: number | string, force?: boolean): Observable<IamPolicy[]> {
-    if (!force) {
-      const policies = this.datastore.peekAll(IamPolicy);
-      if (policies && policies.length > 0) {
-        return of(policies);
-      }
-    }
+  fetchPolicies(userId?: number | string): Observable<IamPolicy[]> {
+    // if (!force) {
+    //   const policies = this.datastore.peekAll(IamPolicy);
+    //   if (policies && policies.length > 0) {
+    //     return of(policies);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 }
     };
@@ -185,13 +185,13 @@ export class IamService {
     );
   }
 
-  fetchPolicy(id: number | string, force?: boolean): Observable<IamPolicy> {
-    if (!force) {
-      const policy = this.datastore.peekRecord(IamPolicy, `${id}`);
-      if (policy) {
-        return of(policy);
-      }
-    }
+  fetchPolicy(id: number | string): Observable<IamPolicy> {
+    // if (!force) {
+    //   const policy = this.datastore.peekRecord(IamPolicy, `${id}`);
+    //   if (policy) {
+    //     return of(policy);
+    //   }
+    // }
 
     return this.datastore.findRecord(IamPolicy, `${id}`);
   }

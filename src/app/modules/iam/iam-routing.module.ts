@@ -12,6 +12,7 @@ import { NewIamGroupComponent } from './pages/iam-groups/new-iam-group/new-iam-g
 import { AddGroupUsersComponent } from './pages/iam-groups/add-group-users/add-group-users.component';
 import { IamUserComponent } from './pages/iam-users/iam-user/iam-user.component';
 import { IamGroupComponent } from './pages/iam-groups/iam-group/iam-group.component';
+import { AttachGroupsToUserComponent } from './pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 
 const router: Routes = [
   {
@@ -29,20 +30,15 @@ const router: Routes = [
       },
       {
         path: 'users',
-        component: IamUsersComponent,
-        children: [
-          // {
-          //   path: 'new-user',
-          //   component: ModalComponent,
-          //   resolve: {
-          //     modal: NewCognitoUserResolverService
-          //   }
-          // },
-        ],
+        component: IamUsersComponent
       },
       {
         path: 'users/new-user',
         component: NewIamUserComponent
+      },
+      {
+        path: 'users/:id/attach-groups',
+        component: AttachGroupsToUserComponent
       },
       {
         path: 'users/:id',

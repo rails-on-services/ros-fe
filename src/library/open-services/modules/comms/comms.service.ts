@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { CommsMessage } from './models/message.model';
 import { CommsDatastore } from './comms-datastore.service';
@@ -23,13 +23,13 @@ export class CommsService {
     });
   }
 
-  fetchMessages(force?: boolean): Observable<CommsMessage[]> {
-    if (!force) {
-      const messages = this.datastore.peekAll(CommsMessage);
-      if (messages && messages.length > 0) {
-        return of(messages);
-      }
-    }
+  fetchMessages(): Observable<CommsMessage[]> {
+    // if (!force) {
+    //   const messages = this.datastore.peekAll(CommsMessage);
+    //   if (messages && messages.length > 0) {
+    //     return of(messages);
+    //   }
+    // }
 
     return this.datastore.findAll(
       CommsMessage,
@@ -42,13 +42,13 @@ export class CommsService {
     );
   }
 
-  fetchMessage(id: number | string, force?: boolean): Observable<CommsMessage> {
-    if (!force) {
-      const message = this.datastore.peekRecord(CommsMessage, `${id}`);
-      if (message) {
-        return of(message);
-      }
-    }
+  fetchMessage(id: number | string): Observable<CommsMessage> {
+    // if (!force) {
+    //   const message = this.datastore.peekRecord(CommsMessage, `${id}`);
+    //   if (message) {
+    //     return of(message);
+    //   }
+    // }
 
     return this.datastore.findRecord(CommsMessage, `${id}`);
   }
@@ -74,13 +74,13 @@ export class CommsService {
     );
   }
 
-  fetchTemplates(campaignId?: number | string, force?: boolean): Observable<CommsTemplate[]> {
-    if (!force) {
-      const templates = this.datastore.peekAll(CommsTemplate);
-      if (templates && templates.length > 0) {
-        return of(templates);
-      }
-    }
+  fetchTemplates(campaignId?: number | string): Observable<CommsTemplate[]> {
+    // if (!force) {
+    //   const templates = this.datastore.peekAll(CommsTemplate);
+    //   if (templates && templates.length > 0) {
+    //     return of(templates);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 },
       include: 'campaign',
@@ -98,13 +98,13 @@ export class CommsService {
     );
   }
 
-  fetchTemplate(id: number | string, force?: boolean): Observable<CommsTemplate> {
-    if (!force) {
-      const template = this.datastore.peekRecord(CommsTemplate, `${id}`);
-      if (template) {
-        return of(template);
-      }
-    }
+  fetchTemplate(id: number | string): Observable<CommsTemplate> {
+    // if (!force) {
+    //   const template = this.datastore.peekRecord(CommsTemplate, `${id}`);
+    //   if (template) {
+    //     return of(template);
+    //   }
+    // }
 
     return this.datastore.findRecord(CommsTemplate, `${id}`, { include: 'campaign' });
   }
@@ -144,13 +144,13 @@ export class CommsService {
     );
   }
 
-  fetchEvents(campaignId?: number | string, force?: boolean): Observable<CommsEvent[]> {
-    if (!force) {
-      const events = this.datastore.peekAll(CommsEvent);
-      if (events && events.length > 0) {
-        return of(events);
-      }
-    }
+  fetchEvents(campaignId?: number | string): Observable<CommsEvent[]> {
+    // if (!force) {
+    //   const events = this.datastore.peekAll(CommsEvent);
+    //   if (events && events.length > 0) {
+    //     return of(events);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 },
       include: 'campaign,template'
@@ -169,13 +169,13 @@ export class CommsService {
     );
   }
 
-  fetchEvent(id: number | string, force?: boolean): Observable<CommsEvent> {
-    if (!force) {
-      const event = this.datastore.peekRecord(CommsEvent, `${id}`);
-      if (event) {
-        return of(event);
-      }
-    }
+  fetchEvent(id: number | string): Observable<CommsEvent> {
+    // if (!force) {
+    //   const event = this.datastore.peekRecord(CommsEvent, `${id}`);
+    //   if (event) {
+    //     return of(event);
+    //   }
+    // }
     // Provider and message are not ready
     return this.datastore.findRecord(CommsEvent, `${id}`, { include: 'campaign,template' });
   }
@@ -228,13 +228,13 @@ export class CommsService {
     );
   }
 
-  fetchCampaigns(force?: boolean): Observable<CommsCampaign[]> {
-    if (!force) {
-      const campaigns = this.datastore.peekAll(CommsCampaign);
-      if (campaigns && campaigns.length > 0) {
-        return of(campaigns);
-      }
-    }
+  fetchCampaigns(): Observable<CommsCampaign[]> {
+    // if (!force) {
+    //   const campaigns = this.datastore.peekAll(CommsCampaign);
+    //   if (campaigns && campaigns.length > 0) {
+    //     return of(campaigns);
+    //   }
+    // }
 
     return this.datastore.findAll(
       CommsCampaign,
@@ -246,13 +246,13 @@ export class CommsService {
     );
   }
 
-  fetchCampaign(id: number | string, force?: boolean): Observable<CommsCampaign> {
-    if (!force) {
-      const campaign = this.datastore.peekRecord(CommsCampaign, `${id}`);
-      if (campaign) {
-        return of(campaign);
-      }
-    }
+  fetchCampaign(id: number | string): Observable<CommsCampaign> {
+    // if (!force) {
+    //   const campaign = this.datastore.peekRecord(CommsCampaign, `${id}`);
+    //   if (campaign) {
+    //     return of(campaign);
+    //   }
+    // }
 
     return this.datastore.findRecord(CommsCampaign, `${id}`, { include: 'events,templates' });
   }
@@ -277,13 +277,13 @@ export class CommsService {
     );
   }
 
-  fetchProviders(eventId?: number | string, force?: boolean): Observable<CommsProvider[]> {
-    if (!force) {
-      const providers = this.datastore.peekAll(CommsProvider);
-      if (providers && providers.length > 0) {
-        return of(providers);
-      }
-    }
+  fetchProviders(eventId?: number | string): Observable<CommsProvider[]> {
+    // if (!force) {
+    //   const providers = this.datastore.peekAll(CommsProvider);
+    //   if (providers && providers.length > 0) {
+    //     return of(providers);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 }
     };
@@ -301,13 +301,13 @@ export class CommsService {
     );
   }
 
-  fetchProvider(id: number | string, force?: boolean): Observable<CommsProvider> {
-    if (!force) {
-      const provider = this.datastore.peekRecord(CommsProvider, `${id}`);
-      if (provider) {
-        return of(provider);
-      }
-    }
+  fetchProvider(id: number | string): Observable<CommsProvider> {
+    // if (!force) {
+    //   const provider = this.datastore.peekRecord(CommsProvider, `${id}`);
+    //   if (provider) {
+    //     return of(provider);
+    //   }
+    // }
 
     return this.datastore.findRecord(CommsProvider, `${id}`);
   }

@@ -35,11 +35,10 @@ export class DisplayPropertiesService {
 
   public updateCurrentUserDisplayProperties(): void {
     const currentUser = JSON.parse(this.getCurrentUser());
-    const force = true;
     currentUser.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName] = this.currentTableDisplayProperties;
     this.setCurrentUser(JSON.stringify(currentUser));
 
-    this.iamService.fetchUser(currentUser.id, force).subscribe(
+    this.iamService.fetchUser(currentUser.id).subscribe(
       userDetails => {
         userDetails.displayProperties[this.tablePlatform][this.tableModule][`tables`][this.tableName] = this.currentTableDisplayProperties;
         userDetails.save();

@@ -33,16 +33,7 @@ export const router: Routes = [
       },
       {
         path: 'events',
-        component: EventsComponent,
-        children: [
-          // {
-          //   path: 'new-user',
-          //   component: ModalComponent,
-          //   resolve: {
-          //     modal: NewUserResolverService
-          //   }
-          // },
-        ],
+        component: EventsComponent
       },
       {
         path: 'events/new-event',
@@ -77,12 +68,12 @@ export const router: Routes = [
         component: NewCampaignComponent
       },
       {
-        path: 'campaigns/:id',
-        component: CommsCampaignComponent,
-      },
-      {
         path: 'campaigns/:id/attach-templates',
         component: AttachTemplatesToCampaignComponent
+      },
+      {
+        path: 'campaigns/:id',
+        component: CommsCampaignComponent,
       },
       {
         path: 'providers',

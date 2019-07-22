@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CognitoUser } from './models/user.model';
 import { CognitoDatastore } from './cognito-datastore.service';
 import { CognitoPool } from './models/pool.model';
@@ -19,13 +19,13 @@ export class CognitoService {
     });
   }
 
-  fetchUsers(force?: boolean): Observable<CognitoUser[]> {
-    if (!force) {
-      const users = this.datastore.peekAll(CognitoUser);
-      if (users && users.length > 0) {
-        return of(users);
-      }
-    }
+  fetchUsers(): Observable<CognitoUser[]> {
+    // if (!force) {
+    //   const users = this.datastore.peekAll(CognitoUser);
+    //   if (users && users.length > 0) {
+    //     return of(users);
+    //   }
+    // }
 
     return this.datastore.findAll(
       CognitoUser,
@@ -39,13 +39,13 @@ export class CognitoService {
   }
 
 
-  fetchUser(id: number | string, force?: boolean): Observable<CognitoUser> {
-    if (!force) {
-      const user = this.datastore.peekRecord(CognitoUser, `${id}`);
-      if (user) {
-        return of(user);
-      }
-    }
+  fetchUser(id: number | string): Observable<CognitoUser> {
+    // if (!force) {
+    //   const user = this.datastore.peekRecord(CognitoUser, `${id}`);
+    //   if (user) {
+    //     return of(user);
+    //   }
+    // }
 
     return this.datastore.findRecord(CognitoUser, `${id}`);
   }
@@ -68,13 +68,13 @@ export class CognitoService {
     );
   }
 
-  fetchCredentials(force?: boolean): Observable<CognitoCredential[]> {
-    if (!force) {
-      const credentials = this.datastore.peekAll(CognitoCredential);
-      if (credentials && credentials.length > 0) {
-        return of(credentials);
-      }
-    }
+  fetchCredentials(): Observable<CognitoCredential[]> {
+    // if (!force) {
+    //   const credentials = this.datastore.peekAll(CognitoCredential);
+    //   if (credentials && credentials.length > 0) {
+    //     return of(credentials);
+    //   }
+    // }
 
     return this.datastore.findAll(
       CognitoCredential,
@@ -100,13 +100,13 @@ export class CognitoService {
     return credential.save();
   }
 
-  fetchPools(userId?: number | string, force?: boolean): Observable<CognitoPool[]> {
-    if (!force) {
-      const pools = this.datastore.peekAll(CognitoPool);
-      if (pools && pools.length > 0) {
-        return of(pools);
-      }
-    }
+  fetchPools(userId?: number | string): Observable<CognitoPool[]> {
+    // if (!force) {
+    //   const pools = this.datastore.peekAll(CognitoPool);
+    //   if (pools && pools.length > 0) {
+    //     return of(pools);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 },
       include: 'users'
@@ -142,24 +142,24 @@ export class CognitoService {
     );
   }
 
-  fetchPool(id: number | string, force?: boolean): Observable<CognitoPool> {
-    if (!force) {
-      const pool = this.datastore.peekRecord(CognitoPool, `${id}`);
-      if (pool) {
-        return of(pool);
-      }
-    }
+  fetchPool(id: number | string): Observable<CognitoPool> {
+    // if (!force) {
+    //   const pool = this.datastore.peekRecord(CognitoPool, `${id}`);
+    //   if (pool) {
+    //     return of(pool);
+    //   }
+    // }
 
     return this.datastore.findRecord(CognitoPool, `${id}`, { include: 'users' });
   }
 
-  fetchApplications(userId?: number | string, force?: boolean): Observable<CognitoApplication[]> {
-    if (!force) {
-      const apps = this.datastore.peekAll(CognitoApplication);
-      if (apps && apps.length > 0) {
-        return of(apps);
-      }
-    }
+  fetchApplications(userId?: number | string): Observable<CognitoApplication[]> {
+    // if (!force) {
+    //   const apps = this.datastore.peekAll(CognitoApplication);
+    //   if (apps && apps.length > 0) {
+    //     return of(apps);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 }
     };
@@ -194,13 +194,13 @@ export class CognitoService {
     );
   }
 
-  fetchApplication(id: number | string, force?: boolean): Observable<CognitoApplication> {
-    if (!force) {
-      const app = this.datastore.peekRecord(CognitoApplication, `${id}`);
-      if (app) {
-        return of(app);
-      }
-    }
+  fetchApplication(id: number | string): Observable<CognitoApplication> {
+    // if (!force) {
+    //   const app = this.datastore.peekRecord(CognitoApplication, `${id}`);
+    //   if (app) {
+    //     return of(app);
+    //   }
+    // }
 
     return this.datastore.findRecord(CognitoApplication, `${id}`, { include: 'users' });
   }

@@ -49,6 +49,7 @@ export * from './src/app/modules/iam/pages/iam-groups/iam-group/iam-group.compon
 export * from './src/app/modules/iam/pages/iam-groups/iam-groups.component';
 export * from './src/app/modules/iam/pages/iam-groups/new-iam-group/new-iam-group.component';
 export * from './src/app/modules/iam/pages/iam-home/iam-home.component';
+export * from './src/app/modules/iam/pages/iam-users/attach-groups-to-user/attach-groups-to-user.component';
 export * from './src/app/modules/iam/pages/iam-users/iam-user/iam-user.component';
 export * from './src/app/modules/iam/pages/iam-users/iam-users.component';
 export * from './src/app/modules/iam/pages/iam-users/new-iam-user/new-iam-user.component';

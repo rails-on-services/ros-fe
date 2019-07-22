@@ -88,8 +88,8 @@ export class NewTemplateComponent implements OnInit {
     this.shownColumns = shownColumns;
   }
 
-  private fetchCampaigns(force?: boolean): void {
-    this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
+  private fetchCampaigns(): void {
+    this.campaigns$ = this.commsService.fetchCampaigns().pipe(
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };

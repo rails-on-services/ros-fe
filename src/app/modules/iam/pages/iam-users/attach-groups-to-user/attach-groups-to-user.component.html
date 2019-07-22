@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card-content>
-    <ng-container class="templates-table" *ngIf="campaign$ | async as campaign">
-      <app-filterable-table [columnProperties]="columnProperties" [contents]="campaign.templates" [selectable]=true
+    <ng-container class="groups-table" *ngIf="user$ | async as user">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="user.groups" [selectable]=true
         (selectionChange)="onEventsSelectionChange($event)" [shownColumns]="shownColumns">
       </app-filterable-table>
     </ng-container>
@@ -12,8 +12,8 @@
     <div class="button-container text-right">
       <span>
         <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
-        <button mat-raised-button color="primary" (click)="attachTemplatesToCampaign()">
-          Attach Templates to Campaign
+        <button mat-raised-button color="primary" (click)="attachGroupsToUser()">
+          Attach Groups to User
         </button>
       </span>
     </div>

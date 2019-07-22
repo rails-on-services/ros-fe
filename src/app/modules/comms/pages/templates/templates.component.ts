@@ -101,7 +101,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     this.selection.selected.forEach(template => {
       this.commsService.removeTemplate(template.id).subscribe(() => {
         this.selection.deselect(template);
-        this.fetchTemplates(true);
+        this.fetchTemplates();
       });
     });
   }
@@ -128,7 +128,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchTemplates(true);
+    this.fetchTemplates();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -136,11 +136,8 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   }
 
 
-  fetchTemplates(force?: boolean): void {
-    if (this.campaignId) {
-      force = true;
-    }
-    this.templates$ = this.commsService.fetchTemplates(this.campaignId, force).pipe(
+  fetchTemplates(): void {
+    this.templates$ = this.commsService.fetchTemplates(this.campaignId).pipe(
       map(commsTemplates => {
         const templates = commsTemplates.map(commsTemplate => {
           const templateLink = this.tabMode ? `../../templates/${commsTemplate.id}` : `${commsTemplate.id}`;

@@ -73,15 +73,15 @@ export class PoliciesComponent implements OnInit {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchPolicies(true);
+    this.fetchPolicies();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private fetchPolicies(force?: boolean): void {
-    this.policies$ = this.iamService.fetchPolicies(null, force).pipe(
+  private fetchPolicies(): void {
+    this.policies$ = this.iamService.fetchPolicies(null).pipe(
       map(iamPolicies => {
         const policies = iamPolicies.map(iamPolicy => {
           const policyDetails = { id: iamPolicy.id };

@@ -120,7 +120,7 @@ export class CognitoUsersComponent implements OnInit {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchUsers(true);
+    this.fetchUsers();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
@@ -135,9 +135,9 @@ export class CognitoUsersComponent implements OnInit {
     this.removeDialogComponentFromBody();
   }
 
-  fetchUsers(force: boolean = false): void {
+  fetchUsers(): void {
 
-    this.users$ = this.cognitoService.fetchUsers(force).pipe(
+    this.users$ = this.cognitoService.fetchUsers().pipe(
       map((users: CUser[]) => {
         return users.map(user => {
           return {

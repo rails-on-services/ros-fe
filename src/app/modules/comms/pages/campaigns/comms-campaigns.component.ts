@@ -50,7 +50,7 @@ export class CommsCampaignsComponent implements OnInit {
     }
     this.selection.selected.forEach(campaign => {
       this.commsService.removeCampaign(campaign.id).subscribe(() => {
-        this.fetchCampaigns(true);
+        this.fetchCampaigns();
       });
     });
   }
@@ -77,15 +77,15 @@ export class CommsCampaignsComponent implements OnInit {
     if (this.selection) {
       this.selection.clear();
     }
-    this.fetchCampaigns(true);
+    this.fetchCampaigns();
   }
 
   changeTableHeaderSetting(shownColumns: (string | number | symbol)[] = []): void {
     this.shownColumns = shownColumns;
   }
 
-  private fetchCampaigns(force?: boolean): void {
-    this.campaigns$ = this.commsService.fetchCampaigns(force).pipe(
+  private fetchCampaigns(): void {
+    this.campaigns$ = this.commsService.fetchCampaigns().pipe(
       map(commsCampaigns => {
         const campaigns = commsCampaigns.map(commsCampaign => {
           const campaign = { id: commsCampaign.id };

@@ -47,7 +47,7 @@ export class IamUserComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.iamGroupsComponent.clearSelection();
-        this.iamGroupsComponent.fetchGroups(true);
+        this.iamGroupsComponent.fetchGroups();
       }
     );
   }

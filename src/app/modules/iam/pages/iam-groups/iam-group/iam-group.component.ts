@@ -47,7 +47,7 @@ export class IamGroupComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.iamUsersComponent.clearSelection();
-        this.iamUsersComponent.fetchUsers(true);
+        this.iamUsersComponent.fetchUsers();
       }
     );
   }
@@ -57,7 +57,7 @@ export class IamGroupComponent implements OnInit, OnDestroy {
   }
 
   private fetchGroup(): void {
-    this.group$ = this.iamService.fetchGroup(this.groupId, true);
+    this.group$ = this.iamService.fetchGroup(this.groupId);
   }
 
 }

@@ -47,7 +47,7 @@ export class CognitoPoolComponent implements OnInit, OnDestroy {
     ).subscribe(
       () => {
         this.cognitoUsersComponent.clearSelection();
-        this.cognitoUsersComponent.fetchUsers(true);
+        this.cognitoUsersComponent.fetchUsers();
       }
     );
   }
@@ -57,7 +57,7 @@ export class CognitoPoolComponent implements OnInit, OnDestroy {
   }
 
   private fetchPool(): void {
-    this.pool$ = this.iamService.fetchPool(this.poolId, true);
+    this.pool$ = this.iamService.fetchPool(this.poolId);
   }
 
 }

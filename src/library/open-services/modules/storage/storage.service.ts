@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageDatastore } from './storage-datastore.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { StorageFile } from './models/storage.model';
 import { map } from 'rxjs/operators';
 
@@ -36,13 +36,13 @@ export class StorageService {
     return this.http.post(this.storageEndpoint, formData, options);
   }
 
-  fetchFiles(force?: boolean): Observable<StorageFile[]> {
-    if (!force) {
-      const files = this.datastore.peekAll(StorageFile);
-      if (files && files.length > 0) {
-        return of(files);
-      }
-    }
+  fetchFiles(): Observable<StorageFile[]> {
+    // if (!force) {
+    //   const files = this.datastore.peekAll(StorageFile);
+    //   if (files && files.length > 0) {
+    //     return of(files);
+    //   }
+    // }
     const params = {
       page: { size: 10, number: 1 }
     };
@@ -56,13 +56,13 @@ export class StorageService {
     );
   }
 
-  fetchFile(id: number|string, force?: boolean): Observable<StorageFile> {
-    if (!force) {
-      const file = this.datastore.peekRecord(StorageFile, `${ id }`);
-      if (file) {
-        return of(file);
-      }
-    }
+  fetchFile(id: number|string): Observable<StorageFile> {
+    // if (!force) {
+    //   const file = this.datastore.peekRecord(StorageFile, `${ id }`);
+    //   if (file) {
+    //     return of(file);
+    //   }
+    // }
     return this.datastore.findRecord(StorageFile, `${ id }`);
   }
 
