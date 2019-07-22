@@ -1,3 +1,21 @@
-<p>
-  attach-users-to-app works!
-</p>
+<mat-card-content>
+  <div class="container">
+    <ng-container class="users-table" *ngIf="app$ | async as app">
+      <app-filterable-table [columnProperties]="columnProperties" [contents]="app.users" [selectable]=true
+        (selectionChange)="onUsersSelectionChange($event)" [shownColumns]="shownColumns">
+      </app-filterable-table>
+    </ng-container>
+  </div>
+  <router-outlet></router-outlet>
+</mat-card-content>
+<mat-divider></mat-divider>
+<mat-card-actions>
+  <div class="button-container text-right">
+    <span>
+      <button mat-button color="warn" (click)="cancelClicked()" type="button">Cancel</button>
+      <button mat-raised-button color="primary" (click)="attachUsersToApp()">
+        Attach Users to App
+      </button>
+    </span>
+  </div>
+</mat-card-actions>
