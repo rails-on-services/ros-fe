@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IamService } from '../../../library/open-services/modules/iam/iam.service';
+import { IamService } from '@perx/open-services';
 import { TableHeaderProperties } from '../../models/tableHeaderProperties';
 
 @Injectable({
