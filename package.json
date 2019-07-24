@@ -12,10 +12,13 @@
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "precommit": "node ./scripts/precommit.js && git add index.ts src/library/open-ui-components/index.ts src/library/open-services/index.ts ",
+    "precommit": "node ./scripts/precommit.js && git add index.ts src/library/open-ui-components/index.ts ",
     "postinstall": "ts-node set-env.ts"
   },
   "private": true,
+  "peerDependencies": {
+    "@perx/open-services": "x.x"
+  },
   "dependencies": {
     "@angular/animations": "^7.2.11",
     "@angular/cdk": "^7.3.6",
@@ -39,6 +42,7 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
+    "@perx/open-services": "rails-on-services/open-services#master",
     "@angular-devkit/build-angular": "~0.13.0",
     "@angular-devkit/build-ng-packagr": "~0.13.0",
     "@angular/cli": "~7.3.7",
