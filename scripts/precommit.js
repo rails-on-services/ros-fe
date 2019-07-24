@@ -14,7 +14,7 @@ exportToIndex({
   srcDir: './src/library/open-ui-components'
 });
 
-// exportToIndex({
-//   indexDir: './src/library/open-services',
-//   srcDir: './src/library/open-services'
-// });
+exportToIndex({
+  indexDir: './src/library/open-services',
+  srcDir: './src/library/open-services'
+});
