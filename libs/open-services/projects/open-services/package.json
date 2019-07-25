@@ -1,12 +1,11 @@
 {
-  "name": "@perx/core",
+  "name": "@perx/open-services",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/animations": "^8.0.0",
+    "@angular/animations": "~7.2.0",
     "@angular/cdk": "^8.0.1",
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
-    "@angular/material": "^8.0.1",
+    "@angular/common": "~7.2.0",
+    "@angular/core": "~7.2.0",
     "ngx-auth": "^5.0.0"
   }
 }
