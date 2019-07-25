@@ -1,74 +1,109 @@
-[![CircleCI](https://circleci.com/gh/rails-on-services/ros-fe.svg?style=svg)](https://circleci.com/gh/rails-on-services/ros-fe)
-# Ros-fe
+# Essential reading
+Please read the [Coding Guidelines](coding-guidelines.md) before starting
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.7.
-
-Demo: http://console.ros.rails-on-services.org/
-
-## Tooling Requirements
-* [angular CLI](https://angular.io/guide/quickstart)
-* [node 10+](https://nodejs.org/en/)
-* [yarn](https://yarnpkg.com/en/)
-
-## Getting started
-
-Run `yarn install` to install dependencies
-
-Run `yarn start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `yarn build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `yarn build:prod` flag for a production build.
-
-## Development
-### Environment Variables
-
-the environment variables are set on `yarn start|build`.
-
-you can set new variables in `/set-env.ts` and set defaults unless overridden in run scripts in `/package.json`
-
-### Feature Flags
-
-Add/modify new flags in `/path/to/services/feature-flags.service.ts`. Flags should be set based on environment.
-
-To use feature flags in your component:
-``` 
-### component.ts
-import { FeatureFlagsService } from '/path/to/services/feature-flags.service';
-
-  featureSet: {
-    foo: [true|false],
-  };
-  
-  constructor(private featureFlags: FeatureFlagsService) {
-      this.featureSet = featureFlags;
-  }
-```
-```
-### component.html
-<div *ngIf="featureSet.foo; then thenBlock else elseBlock"></div>
-<ng-template #thenBlock>
-  <p>content to render if true</p>
-</ng-template>
-
-<ng-template #elseBlock>
-  <p>content to render if false</p>
-</ng-template>
-
+# Instructions
+Download dependencies
+```bash
+yarn
 ```
 
-## Running unit tests
+Global build
+```bash
+yarn build
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Global test
+```
+yarn test-ci
+```
 
-## Running end-to-end tests
+# Philosophy
+* Reusable components seat under libs.
+* Deployable apps seat under apps.
+* Currently it is on the base one app per microsite.
+* Apps should mostly be basic wrappers which style and aggregate the components in a coherent routable app.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+# Rules
+* Components in libs should not use any router feature.
+* Components in libs should instead trigger events, that should be caught by the parent app to update the routing if necessary.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Enabling login functionality
+
+ * Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
+     ```json
+     {
+      "endpoints": {
+        "microsite.perxtech.org": {
+          "target_url": "https://whistler-api-dev.perxtech.org/cognito/users",
+          "account_id": "2"
+        },
+        "localhost:4200": {
+          "target_url": "https://api.perxtech.io",
+          "account_id": "3"
+        }
+      },
+      "credentials": {
+        "2": {
+          "perx_access_key_id": "",
+          "perx_secret_access_key": ""
+        },
+        "3": {
+          "perx_access_key_id": "",
+          "perx_secret_access_key": ""
+        }
+      }
+    }
+     ```
+ * Run the node server for login api capability
+ * `apps/{app}/src/environments` should have at minimum
+   ```js
+   export const environment = {
+      apiHost: 'https://api.perxtech.io',
+      production: false,
+      preAuthPath: '/preauth',
+      preAuth: false,
+    };
+   ```
+ * In `apps/{app}/src/app/app.module.ts` add these 3 modules
+   ```js
+    @NgModule({
+    imports: [
+        ...
+        CognitoModule.forRoot({ env: environment }),
+        OauthModule.forRoot({ env: environment }),
+        AuthenticationModule,
+        ],
+    ...
+    })
+
+   ```
+
+## Local Deployment
+
+Doing this allows you to emulate your build on the server. It does not live reload because it is set up for server side rendering.
+
+to build the prudential shake the tree app:
+```
+docker build -t microsite-apps-ng . --build-arg app=prudential
+```
+
+
+we expose port 8000 in the dockerfile 
+```
+docker run -p 8000:8000 --name microsite-apps-ng microsite-apps-ng 
+```
+
+you should have the server now listening on `http://localhost:8000
+
+to find the process list
+```
+docker ps -a
+```
+
+to kill the process
+
+```
+docker rm processname
+
+```
