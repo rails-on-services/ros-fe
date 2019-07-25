@@ -4,8 +4,8 @@
     "lerna": "^3.16.4"
   },
   "scripts": {
-    "build": "lerna run build:rs-fe --",
-    "build:prod": "lerna run build:rs-fe:prod --",
+    "build": "lerna run build:lib && lerna run build:rs-fe --",
+    "build:prod": "lerna run build:lib && lerna run build:rs-fe:prod --",
     "clean": "lerna run clean && rm -rf ./dist ./node_modules",
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
