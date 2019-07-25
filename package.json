@@ -4,6 +4,7 @@
     "lerna": "^3.16.4"
   },
   "scripts": {
+    "start": "lerna run start:ros-fe --",
     "build": "lerna run build:lib && lerna run build:ros-fe --",
     "build:prod": "lerna run build:lib && lerna run build:ros-fe:prod --",
     "clean": "lerna run clean && rm -rf ./dist ./node_modules",
