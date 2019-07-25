@@ -1,7 +1,4 @@
 import { NgModule } from '@angular/core';
-
-import { OpenUiComponentsModule } from '@perx/open-ui-components';
-
 import { JsonApiModule } from 'angular2-jsonapi';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +11,6 @@ const COMPONENTS = [
   ],
   imports: [
     CommonModule,
-    OpenUiComponentsModule,
     JsonApiModule
   ],
   exports: [

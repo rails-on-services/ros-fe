@@ -7,8 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "precommit": "node node_modules/@perx/open-ui-components/scripts/precommit.js && git add index.ts"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
