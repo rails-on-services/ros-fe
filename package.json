@@ -4,14 +4,8 @@
     "lerna": "^3.16.4"
   },
   "scripts": {
-    "build": "lerna run build",
-    "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",
-    "build:bpi:prod": "lerna run build:lib && lerna run build:bpi:prod --",
-    "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
-    "build:digi:prod": "lerna run build:lib && lerna run build:digi:prod --",
-    "build:hsbc:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
-    "build:prudential:prod": "lerna run build:lib && lerna run build:prudential:prod --",
-    "build:backend": "lerna run build:backend",
+    "build": "lerna run build:rs-fe --",
+    "build:prod": "lerna run build:rs-fe:prod --",
     "clean": "lerna run clean && rm -rf ./dist ./node_modules",
     "lint-ci": "lerna run lint",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
