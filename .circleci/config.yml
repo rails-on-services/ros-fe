@@ -10,12 +10,12 @@ jobs:
       - checkout
       - run: yarn install
       - run: yarn build:prod
-      - run: yarn lint
-      - run: yarn test
+      - run: yarn lint-ci
+      - run: yarn test-ci
       - persist_to_workspace:
           root: ~/project
           paths:
-            - dist/ros-fe
+            - apps/ros-fe/dist
   deploy:
     working_directory: ~/project
     executor: aws-cli/default
@@ -26,7 +26,7 @@ jobs:
       - aws-cli/configure
       - run:
           name: Sync to S3
-          command: aws s3 sync --delete ~/project/dist/ros-fe s3://${S3_BUCKET}
+          command: aws s3 sync --delete ~/project/apps/ros-fe/dist s3://${S3_BUCKET}
 workflows:
   build_and_deploy:
     jobs:
@@ -37,6 +37,4 @@ workflows:
           filters:
             branches:
               only:
-                - master
-                - staging
                 - develop
