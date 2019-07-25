@@ -17,6 +17,4 @@ export class IamComponent {
       { route: 'policies', display: 'Policies' }
     ];
 
-  constructor() { }
-
 }

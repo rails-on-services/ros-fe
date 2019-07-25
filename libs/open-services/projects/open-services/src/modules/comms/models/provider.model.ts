@@ -6,20 +6,20 @@ import { CommsEvent } from './event.model';
 })
 export class CommsProvider extends JsonApiModel {
   @Attribute()
-  providername: string;
+  public providername: string;
 
   @Attribute({ serializedName: 'encrypted_secret' })
-  encryptedSecret: string;
+  public encryptedSecret: string;
 
   @Attribute({ serializedName: 'encrypted_secret_iv' })
-  encryptedSecretIv: string;
+  public encryptedSecretIv: string;
 
   @Attribute()
-  key: string;
+  public key: string;
 
   @Attribute({ serializedName: 'created_at' })
-  createdAt: string;
+  public createdAt: string;
 
   @HasMany()
-  events: CommsEvent[];
+  public events: CommsEvent[];
 }

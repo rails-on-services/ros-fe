@@ -7,7 +7,6 @@ import { CognitoUser } from './models/user.model';
 import { CognitoPool } from './models/pool.model';
 import { CognitoApplication } from './models/applications.model';
 
-
 const config: DatastoreConfig = {
   baseUrl: 'https://api.ros.rails-on-services.org/cognito',
   models: {

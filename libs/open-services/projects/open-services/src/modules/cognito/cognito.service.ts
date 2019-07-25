@@ -19,7 +19,7 @@ export class CognitoService {
     });
   }
 
-  fetchUsers(): Observable<CognitoUser[]> {
+  public fetchUsers(): Observable<CognitoUser[]> {
     // if (!force) {
     //   const users = this.datastore.peekAll(CognitoUser);
     //   if (users && users.length > 0) {
@@ -38,8 +38,7 @@ export class CognitoService {
     );
   }
 
-
-  fetchUser(id: number | string): Observable<CognitoUser> {
+  public fetchUser(id: number | string): Observable<CognitoUser> {
     // if (!force) {
     //   const user = this.datastore.peekRecord(CognitoUser, `${id}`);
     //   if (user) {
@@ -50,7 +49,7 @@ export class CognitoService {
     return this.datastore.findRecord(CognitoUser, `${id}`);
   }
 
-  createUser(user: { username: string; api: boolean; console: boolean; }): Observable<CognitoUser> {
+  public createUser(user: { username: string; api: boolean; console: boolean; }): Observable<CognitoUser> {
     const newUser = this.datastore.createRecord(
       CognitoUser,
       {
@@ -61,14 +60,14 @@ export class CognitoService {
     return newUser.save();
   }
 
-  removeUser(id: number | string): Observable<Response> {
+  public removeUser(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CognitoUser,
       `${id}`
     );
   }
 
-  fetchCredentials(): Observable<CognitoCredential[]> {
+  public fetchCredentials(): Observable<CognitoCredential[]> {
     // if (!force) {
     //   const credentials = this.datastore.peekAll(CognitoCredential);
     //   if (credentials && credentials.length > 0) {
@@ -87,8 +86,7 @@ export class CognitoService {
     );
   }
 
-
-  createCredentialFor(user: CognitoPool): Observable<CognitoCredential> {
+  public createCredentialFor(user: CognitoPool): Observable<CognitoCredential> {
     const credential = this.datastore.createRecord(
       CognitoCredential,
       {
@@ -100,7 +98,7 @@ export class CognitoService {
     return credential.save();
   }
 
-  fetchPools(userId?: number | string): Observable<CognitoPool[]> {
+  public fetchPools(userId?: number | string): Observable<CognitoPool[]> {
     // if (!force) {
     //   const pools = this.datastore.peekAll(CognitoPool);
     //   if (pools && pools.length > 0) {
@@ -124,7 +122,7 @@ export class CognitoService {
     );
   }
 
-  createPool(pool: { name: string, attachedPolicies: any[], users: CognitoUser[]; }): Observable<CognitoPool> {
+  public createPool(pool: { name: string, attachedPolicies: any[], users: CognitoUser[]; }): Observable<CognitoPool> {
     const newPool = this.datastore.createRecord(
       CognitoPool,
       {
@@ -135,14 +133,14 @@ export class CognitoService {
     return newPool.save();
   }
 
-  removePool(id: number | string): Observable<Response> {
+  public removePool(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CognitoPool,
       `${id}`
     );
   }
 
-  fetchPool(id: number | string): Observable<CognitoPool> {
+  public fetchPool(id: number | string): Observable<CognitoPool> {
     // if (!force) {
     //   const pool = this.datastore.peekRecord(CognitoPool, `${id}`);
     //   if (pool) {
@@ -153,7 +151,7 @@ export class CognitoService {
     return this.datastore.findRecord(CognitoPool, `${id}`, { include: 'users' });
   }
 
-  fetchApplications(userId?: number | string): Observable<CognitoApplication[]> {
+  public fetchApplications(userId?: number | string): Observable<CognitoApplication[]> {
     // if (!force) {
     //   const apps = this.datastore.peekAll(CognitoApplication);
     //   if (apps && apps.length > 0) {
@@ -176,7 +174,7 @@ export class CognitoService {
     );
   }
 
-  createApplication(application: { name: string }): Observable<CognitoApplication> {
+  public createApplication(application: { name: string }): Observable<CognitoApplication> {
     const newApplication = this.datastore.createRecord(
       CognitoApplication,
       {
@@ -187,14 +185,14 @@ export class CognitoService {
     return newApplication.save();
   }
 
-  removeApplication(id: number | string): Observable<Response> {
+  public removeApplication(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CognitoApplication,
       `${id}`
     );
   }
 
-  fetchApplication(id: number | string): Observable<CognitoApplication> {
+  public fetchApplication(id: number | string): Observable<CognitoApplication> {
     // if (!force) {
     //   const app = this.datastore.peekRecord(CognitoApplication, `${id}`);
     //   if (app) {

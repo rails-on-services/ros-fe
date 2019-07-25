@@ -6,27 +6,27 @@ import { CognitoPool as Pool } from './pool.model';
 })
 export class CognitoUser extends JsonApiModel {
   @Attribute()
-  username: string;
+  public username: string;
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
   @Attribute({ serializedName: 'console' })
-  consoleAccess: boolean;
+  public consoleAccess: boolean;
 
   @Attribute({ serializedName: 'dashboard' })
-  dashboardAccess: boolean;
+  public dashboardAccess: boolean;
 
   // @Column({ name: 'API Access' })
   // @Attribute({ serializedName: 'api' })
   // apiAccess: boolean;
 
   @Attribute({ serializedName: 'attached_policies' })
-  attachedPolicies: {};
+  public attachedPolicies: {};
 
   @Attribute({ serializedName: 'attached_actions' })
-  attachedActions: {};
+  public attachedActions: {};
 
   @HasMany()
-  pools: Pool[];
+  public pools: Pool[];
 }

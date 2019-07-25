@@ -11,8 +11,6 @@ export class StorageComponent implements OnInit {
     {route: 'files', display: 'Files'}
   ];
 
-  constructor() { }
-
   ngOnInit(): void {
   }
 

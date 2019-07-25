@@ -6,29 +6,29 @@ import { IamGroup as Group } from './group.model';
 })
 export class IamUser extends JsonApiModel {
   @Attribute()
-  username: string;
+  public username: string;
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
-  type: string = 'user';
+  public type: string = 'user';
 
   @Attribute({ serializedName: 'console' })
-  consoleAccess: boolean;
+  public consoleAccess: boolean;
 
   @Attribute({ serializedName: 'api' })
-  apiAccess: boolean;
+  public apiAccess: boolean;
 
   @Attribute({ serializedName: 'attached_policies' })
-  attachedPolicies: {};
+  public attachedPolicies: {};
 
   @Attribute({ serializedName: 'attached_actions' })
-  attachedActions: {};
+  public attachedActions: {};
 
   @Attribute({ serializedName: 'display_properties' })
-  displayProperties: {};
+  public displayProperties: {};
 
   @Attribute({ serializedName: 'groups' })
   @HasMany()
-  groups: Group[];
+  public groups: Group[];
 }

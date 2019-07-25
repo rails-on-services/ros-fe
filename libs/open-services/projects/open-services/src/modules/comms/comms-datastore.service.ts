@@ -9,7 +9,6 @@ import { CommsTemplate } from './models/template.model';
 import { CommsCampaign } from './models/campaign.model';
 import { CommsProvider } from './models/provider.model';
 
-
 const config: DatastoreConfig = {
   baseUrl: 'https://api.ros.rails-on-services.org/comm',
   models: {

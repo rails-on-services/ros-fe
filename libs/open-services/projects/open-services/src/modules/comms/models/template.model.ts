@@ -7,24 +7,23 @@ import { CommsCampaign } from './campaign.model';
 export class CommsTemplate extends JsonApiModel {
 
   @Attribute()
-  content: string;
+  public content: string;
 
   @Attribute()
-  templatesname: string;
+  public templatesname: string;
 
   @Attribute()
-  description: string;
+  public description: string;
 
   @Attribute({ serializedName: 'status' })
-  status: string;
+  public status: string;
 
   @Attribute({ serializedName: 'created_at' })
-  createdAt: string;
+  public createdAt: string;
 
   @Attribute({ serializedName: 'updated_at' })
-  updatedAt: string;
+  public updatedAt: string;
 
   @HasMany()
-  campaigns: CommsCampaign[];
-
+  public campaigns: CommsCampaign[];
 }

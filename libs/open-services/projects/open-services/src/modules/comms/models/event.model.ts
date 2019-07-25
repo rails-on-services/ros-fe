@@ -9,42 +9,41 @@ import { CommsMessage } from './message.model';
 })
 export class CommsEvent extends JsonApiModel {
   @Attribute()
-  name: string;
+  public name: string;
 
   @Attribute()
-  channel: string;
+  public channel: string;
 
   @Attribute({ serializedName: 'urn' })
-  urn: string;
+  public urn: string;
 
   @Attribute({ serializedName: 'send_at' })
-  sendAt: string;
+  public sendAt: string;
 
-    // @Attribute()
-  status: string;
+  // @Attribute()
+  public status: string;
 
   @Attribute({ serializedName: 'created_at' })
-  createdAt: string;
+  public createdAt: string;
 
   @Attribute({ serializedName: 'updated_at' })
-  updatedAt: string;
+  public updatedAt: string;
 
   @Attribute({ serializedName: 'target_id' })
-  targetId: number;
+  public targetId: number;
 
   @Attribute({ serializedName: 'target_type'})
-  targetType: string;
+  public targetType: string;
 
   @BelongsTo()
-  provider: CommsProvider;
+  public provider: CommsProvider;
 
   @BelongsTo()
-  campaigns: CommsCampaign;
+  public campaigns: CommsCampaign;
 
   @BelongsTo()
-  templates: CommsTemplate;
+  public templates: CommsTemplate;
 
   @BelongsTo()
-  message: CommsMessage;
-
+  public message: CommsMessage;
 }

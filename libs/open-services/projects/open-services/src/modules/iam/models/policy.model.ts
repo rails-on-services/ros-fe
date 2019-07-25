@@ -5,10 +5,10 @@ import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 })
 export class IamPolicy extends JsonApiModel {
   @Attribute({ serializedName: 'policyname'})
-  policyname: string;
+  public policyname: string;
 
   @Attribute({ serializedName: 'urn'})
-  urn: string;
+  public urn: string;
 
   // @Column({ name: 'Console Access' })
   // @Attribute({ serializedName: 'console' })
@@ -19,23 +19,23 @@ export class IamPolicy extends JsonApiModel {
   // apiAccess: boolean;
 
   @Attribute({ serializedName: 'type' })
-  type: string;
+  public type: string;
 
   @Attribute({ serializedName: 'attachments' })
-  attachments: number;
+  public attachments: number;
 
   @Attribute({ serializedName: 'used_as' })
-  usedAs: string;
+  public usedAs: string;
 
   @Attribute({ serializedName: 'creation_time' })
-  creationTime: string;
+  public creationTime: string;
 
   @Attribute({ serializedName: 'edited_time' })
-  editedTime: string;
+  public editedTime: string;
 
   @Attribute({ serializedName: 'description' })
-  description: string;
+  public description: string;
 
   @Attribute({ serializedName: 'json_summary' })
-  policy: {};
+  public policy: {};
 }

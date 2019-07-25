@@ -9,8 +9,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class StorageService {
-  storageEndpoint: string;
-  httpHeaders: HttpHeaders;
+  private storageEndpoint: string;
+  private httpHeaders: HttpHeaders;
 
   constructor(
     private http: HttpClient,
@@ -26,7 +26,7 @@ export class StorageService {
     this.storageEndpoint = 'http://d853ad1a.ngrok.io/storage/files';
   }
 
-  uploadFile(file: File): Observable<any> {
+  public uploadFile(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);
 
@@ -36,7 +36,7 @@ export class StorageService {
     return this.http.post(this.storageEndpoint, formData, options);
   }
 
-  fetchFiles(): Observable<StorageFile[]> {
+  public fetchFiles(): Observable<StorageFile[]> {
     // if (!force) {
     //   const files = this.datastore.peekAll(StorageFile);
     //   if (files && files.length > 0) {
@@ -56,7 +56,7 @@ export class StorageService {
     );
   }
 
-  fetchFile(id: number|string): Observable<StorageFile> {
+  public fetchFile(id: number|string): Observable<StorageFile> {
     // if (!force) {
     //   const file = this.datastore.peekRecord(StorageFile, `${ id }`);
     //   if (file) {

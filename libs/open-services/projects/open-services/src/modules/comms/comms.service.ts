@@ -23,7 +23,7 @@ export class CommsService {
     });
   }
 
-  fetchMessages(): Observable<CommsMessage[]> {
+  public fetchMessages(): Observable<CommsMessage[]> {
     // if (!force) {
     //   const messages = this.datastore.peekAll(CommsMessage);
     //   if (messages && messages.length > 0) {
@@ -42,7 +42,7 @@ export class CommsService {
     );
   }
 
-  fetchMessage(id: number | string): Observable<CommsMessage> {
+  public fetchMessage(id: number | string): Observable<CommsMessage> {
     // if (!force) {
     //   const message = this.datastore.peekRecord(CommsMessage, `${id}`);
     //   if (message) {
@@ -53,7 +53,7 @@ export class CommsService {
     return this.datastore.findRecord(CommsMessage, `${id}`);
   }
 
-  createMessage(message: {
+  public createMessage(message: {
     name: string; channel: string; from: string; to: string,
     ownerType: string
   }): Observable<CommsMessage> {
@@ -67,14 +67,14 @@ export class CommsService {
     return newMessage.save();
   }
 
-  removeMessage(id: number | string): Observable<Response> {
+  public removeMessage(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsMessage,
       `${id}`
     );
   }
 
-  fetchTemplates(campaignId?: number | string): Observable<CommsTemplate[]> {
+  public fetchTemplates(campaignId?: number | string): Observable<CommsTemplate[]> {
     // if (!force) {
     //   const templates = this.datastore.peekAll(CommsTemplate);
     //   if (templates && templates.length > 0) {
@@ -98,7 +98,7 @@ export class CommsService {
     );
   }
 
-  fetchTemplate(id: number | string): Observable<CommsTemplate> {
+  public fetchTemplate(id: number | string): Observable<CommsTemplate> {
     // if (!force) {
     //   const template = this.datastore.peekRecord(CommsTemplate, `${id}`);
     //   if (template) {
@@ -109,7 +109,7 @@ export class CommsService {
     return this.datastore.findRecord(CommsTemplate, `${id}`, { include: 'campaign' });
   }
 
-  createTemplate(template: {
+  public createTemplate(template: {
     name: string,
     description: string,
     content: string,
@@ -137,14 +137,14 @@ export class CommsService {
     return newTemplate.save();
   }
 
-  removeTemplate(id: number | string): Observable<Response> {
+  public removeTemplate(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsTemplate,
       `${id}`
     );
   }
 
-  fetchEvents(campaignId?: number | string): Observable<CommsEvent[]> {
+  public fetchEvents(campaignId?: number | string): Observable<CommsEvent[]> {
     // if (!force) {
     //   const events = this.datastore.peekAll(CommsEvent);
     //   if (events && events.length > 0) {
@@ -169,7 +169,7 @@ export class CommsService {
     );
   }
 
-  fetchEvent(id: number | string): Observable<CommsEvent> {
+  public fetchEvent(id: number | string): Observable<CommsEvent> {
     // if (!force) {
     //   const event = this.datastore.peekRecord(CommsEvent, `${id}`);
     //   if (event) {
@@ -180,7 +180,7 @@ export class CommsService {
     return this.datastore.findRecord(CommsEvent, `${id}`, { include: 'campaign,template' });
   }
 
-  createEvent(event: {
+  public createEvent(event: {
     name: string,
     channel: string,
     sendAt: string,
@@ -221,14 +221,14 @@ export class CommsService {
     return newEvent.save();
   }
 
-  removeEvent(id: number | string): Observable<Response> {
+  public removeEvent(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsEvent,
       `${id}`
     );
   }
 
-  fetchCampaigns(): Observable<CommsCampaign[]> {
+  public fetchCampaigns(): Observable<CommsCampaign[]> {
     // if (!force) {
     //   const campaigns = this.datastore.peekAll(CommsCampaign);
     //   if (campaigns && campaigns.length > 0) {
@@ -246,7 +246,7 @@ export class CommsService {
     );
   }
 
-  fetchCampaign(id: number | string): Observable<CommsCampaign> {
+  public fetchCampaign(id: number | string): Observable<CommsCampaign> {
     // if (!force) {
     //   const campaign = this.datastore.peekRecord(CommsCampaign, `${id}`);
     //   if (campaign) {
@@ -257,7 +257,7 @@ export class CommsService {
     return this.datastore.findRecord(CommsCampaign, `${id}`, { include: 'events,templates' });
   }
 
-  createCampaign(campaign: {
+  public createCampaign(campaign: {
     name: string, description: string, ownerId: number, ownerType: string, cognitoEndpointId: number
   }): Observable<CommsCampaign> {
     const newCampaign = this.datastore.createRecord(
@@ -270,14 +270,14 @@ export class CommsService {
     return newCampaign.save();
   }
 
-  removeCampaign(id: number | string): Observable<Response> {
+  public removeCampaign(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsCampaign,
       `${id}`
     );
   }
 
-  fetchProviders(eventId?: number | string): Observable<CommsProvider[]> {
+  public fetchProviders(eventId?: number | string): Observable<CommsProvider[]> {
     // if (!force) {
     //   const providers = this.datastore.peekAll(CommsProvider);
     //   if (providers && providers.length > 0) {
@@ -301,7 +301,7 @@ export class CommsService {
     );
   }
 
-  fetchProvider(id: number | string): Observable<CommsProvider> {
+  public fetchProvider(id: number | string): Observable<CommsProvider> {
     // if (!force) {
     //   const provider = this.datastore.peekRecord(CommsProvider, `${id}`);
     //   if (provider) {
@@ -312,8 +312,7 @@ export class CommsService {
     return this.datastore.findRecord(CommsProvider, `${id}`);
   }
 
-
-  createProvider(provider: {
+  public createProvider(provider: {
     name: string, encryptedSecret: string, encryptedSecretIv: string, key: string
   }): Observable<CommsProvider> {
     const newProvider = this.datastore.createRecord(
@@ -326,7 +325,7 @@ export class CommsService {
     return newProvider.save();
   }
 
-  removeProvider(id: number | string): Observable<Response> {
+  public removeProvider(id: number | string): Observable<Response> {
     return this.datastore.deleteRecord(
       CommsProvider,
       `${id}`

@@ -5,15 +5,14 @@ import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 })
 export class StorageFile extends JsonApiModel {
   @Attribute({ serializedName: 'filename' })
-  name: string;
+  public name: string;
 
   @Attribute({ serializedName: 'urn' })
-  urn: string;
+  public urn: string;
 
   @Attribute({ serializedName: 'extension' })
-  extension: string;
+  public extension: string;
 
   @Attribute({ serializedName: 'created_at' })
-  createdAt: Date;
-
+  public createdAt: Date;
 }

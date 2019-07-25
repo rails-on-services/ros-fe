@@ -6,22 +6,22 @@ import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 })
 export class CommsMessage extends JsonApiModel {
     // @Attribute()
-  name: string;
+  public name: string;
 
   @Attribute()
-  channel: string;
+  public channel: string;
 
   @Attribute()
-  from: string;
+  public from: string;
 
   @Attribute({ serializedName: 'owner' })
-  ownerType: string;
+  public ownerType: string;
 
   @Attribute()
-  to: string;
+  public to: string;
 
   @Attribute()
-  body: string;
+  public body: string;
 
   // @Attribute({ serializedName: 'provider_id' })
   // providerId: string;

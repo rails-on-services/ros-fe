@@ -14,8 +14,6 @@ export class CognitoComponent implements OnInit {
     {route: 'apps', display: 'Apps'}
   ];
 
-  constructor() { }
-
   ngOnInit(): void {
   }
 

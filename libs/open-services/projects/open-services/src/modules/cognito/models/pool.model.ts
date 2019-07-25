@@ -6,22 +6,22 @@ import { CognitoUser } from './user.model';
 })
 export class CognitoPool extends JsonApiModel {
   @Attribute()
-  poolname: string;
+  public poolname: string;
 
   @HasMany()
-  users: CognitoUser[];
+  public users: CognitoUser[];
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
-  type: string = 'pool';
+  public type: string = 'pool';
 
   // @Attribute({ serializedName: 'attached_policies' })
-  attachedPolicies: {};
+  public attachedPolicies: {};
 
   // @Attribute({ serializedName: 'attached_actions' })
-  attachedActions: {};
+  public attachedActions: {};
 
   @Attribute({ serializedName: 'created_at'})
-  creationTime: Date;
+  public creationTime: Date;
 }

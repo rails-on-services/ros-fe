@@ -6,20 +6,20 @@ import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 export class CognitoCredential extends JsonApiModel {
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
   @Attribute({ serializedName: 'access_key_id' })
-  accessKeyId: string;
+  public accessKeyId: string;
 
   @Attribute({ serializedName: 'secret_access_key' })
-  secretAccessKey: string;
+  public secretAccessKey: string;
 
   @Attribute({ serializedName: 'schema_name' })
-  schemaName: string;
+  public schemaName: string;
 
   @Attribute({ serializedName: 'owner_type' })
-  ownerType: string;
+  public ownerType: string;
 
   @Attribute({ serializedName: 'owner_id' })
-  ownerId: string;
+  public ownerId: string;
 }

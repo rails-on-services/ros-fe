@@ -7,7 +7,6 @@ import { IamUser } from './models/user.model';
 import { IamGroup } from './models/group.model';
 import { IamPolicy } from './models/policy.model';
 
-
 const config: DatastoreConfig = {
   baseUrl: 'https://api.ros.rails-on-services.org/iam',
   models: {

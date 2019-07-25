@@ -7,29 +7,29 @@ import { CommsTemplate } from './template.model';
 })
 export class CommsCampaign extends JsonApiModel {
   @Attribute({ serializedName: 'owner_id' })
-  ownerId: number;
+  public ownerId: number;
 
   @Attribute({ serializedName: 'owner_type' })
-  ownerType: string;
+  public ownerType: string;
 
   @Attribute()
-  name: string;
+  public name: string;
 
   @Attribute()
-  description: string;
+  public description: string;
 
   @Attribute({ serializedName: 'created_at' })
-  createdAt: string;
+  public createdAt: string;
 
   @Attribute({ serializedName: 'created_at' })
-  updatedAt: string;
+  public updatedAt: string;
 
-    // @Attribute({ serializedName: 'cognito_endpoint_id' })
-  cognitoEndpointId: number;
-
-  @HasMany()
-  events: CommsEvent[];
+  // @Attribute({ serializedName: 'cognito_endpoint_id' })
+  public cognitoEndpointId: number;
 
   @HasMany()
-  templates: CommsTemplate[];
+  public events: CommsEvent[];
+
+  @HasMany()
+  public templates: CommsTemplate[];
 }

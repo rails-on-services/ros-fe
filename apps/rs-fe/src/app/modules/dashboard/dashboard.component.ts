@@ -11,8 +11,6 @@ export class DashboardComponent implements OnInit {
     {route: 'summary', display: 'Summary'}
   ];
 
-  constructor() { }
-
   ngOnInit(): void {
   }
 

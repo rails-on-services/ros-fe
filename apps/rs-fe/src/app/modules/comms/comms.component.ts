@@ -16,8 +16,6 @@ export class CommsComponent implements OnInit {
     {route: 'providers', display: 'Providers'}
   ];
 
-  constructor() { }
-
   ngOnInit(): void {
   }
 

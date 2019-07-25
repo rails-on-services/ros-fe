@@ -6,22 +6,22 @@ import { IamUser } from './user.model';
 })
 export class IamGroup extends JsonApiModel {
   @Attribute()
-  name: string;
+  public name: string;
 
   @HasMany()
-  users: IamUser[];
+  public users: IamUser[];
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
-  type: string = 'group';
+  public type: string = 'group';
 
   // @Attribute({ serializedName: 'attached_policies' })
-  attachedPolicies: {};
+  public attachedPolicies: {};
 
   // @Attribute({ serializedName: 'attached_actions' })
-  attachedActions: {};
+  public attachedActions: {};
 
   @Attribute({ serializedName: 'created_at'})
-  creationTime: Date;
+  public creationTime: Date;
 }

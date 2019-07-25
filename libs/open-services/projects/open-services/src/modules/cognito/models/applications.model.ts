@@ -5,11 +5,11 @@ import { JsonApiModel, JsonApiModelConfig, Attribute } from 'angular2-jsonapi';
 })
 export class CognitoApplication extends JsonApiModel {
   @Attribute()
-  applicationname: string;
+  public applicationname: string;
 
   @Attribute()
-  urn: string;
+  public urn: string;
 
   @Attribute({ serializedName: 'created_at'})
-  creationTime: Date;
+  public creationTime: Date;
 }

@@ -5,7 +5,6 @@ import { DatastoreConfig, JsonApiDatastore, JsonApiDatastoreConfig } from 'angul
 
 import { StorageFile } from './models/storage.model';
 
-
 const config: DatastoreConfig = {
   // baseUrl: 'https://api.ros.rails-on-services.org/storage',
   baseUrl: 'https://d853ad1a.ngrok.io/storage',
