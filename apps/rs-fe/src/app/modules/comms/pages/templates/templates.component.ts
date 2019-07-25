@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { CommsService, CommsTemplate } from '@perx/open-services';
+import { CommsService, CommsTemplate } from '@perx/open-services/dist/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {

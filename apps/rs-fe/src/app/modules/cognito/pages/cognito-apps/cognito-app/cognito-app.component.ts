@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { CognitoService } from '@perx/open-services';
+import { CognitoService } from '@perx/open-services/dist/open-services';
 
 @Component({
   selector: 'app-cognito-app',

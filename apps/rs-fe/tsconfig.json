@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@perx/open-services": ["./src/library/open-services"],
       "@perx/open-ui-components": ["./src/library/open-ui-components"]
     },
     "outDir": "./dist/out-tsc",

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
-import { CognitoService, IamService, IamPolicy } from '@perx/open-services';
+import { CognitoService, IamService, IamPolicy } from '@perx/open-services/dist/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';

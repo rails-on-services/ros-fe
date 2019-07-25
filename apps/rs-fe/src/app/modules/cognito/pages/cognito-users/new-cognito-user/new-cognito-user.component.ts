@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {IamService, IamUser} from '@perx/open-services';
+import {IamService, IamUser} from '@perx/open-services/dist/open-services';
 import { Observable } from 'rxjs';
 
 @Component({

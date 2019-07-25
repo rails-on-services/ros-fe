@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CommsService } from '@perx/open-services';
+import { CommsService } from '@perx/open-services/dist/open-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

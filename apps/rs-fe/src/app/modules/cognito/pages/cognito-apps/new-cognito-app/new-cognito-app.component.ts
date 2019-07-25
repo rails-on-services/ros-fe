@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { IamPolicy, CognitoService } from '@perx/open-services';
+import { IamPolicy, CognitoService } from '@perx/open-services/dist/open-services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { Router, ActivatedRoute } from '@angular/router';

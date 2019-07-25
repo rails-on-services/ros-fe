@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { IamUsersComponent } from '../../iam-users/iam-users.component';
 import { Observable } from 'rxjs';
-import { IamService, IamPolicy } from '@perx/open-services';
+import { IamService, IamPolicy } from '@perx/open-services/dist/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map, switchMap } from 'rxjs/operators';

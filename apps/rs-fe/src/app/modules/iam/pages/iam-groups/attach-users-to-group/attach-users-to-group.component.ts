@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { IamService, IamUser, IamGroup } from '@perx/open-services';
+import { IamService, IamUser, IamGroup } from '@perx/open-services/dist/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 

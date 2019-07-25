@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IamService } from '@perx/open-services';
+import { IamService } from '@perx/open-services/dist/open-services';
 
 @Component({
   selector: 'app-iam-home',

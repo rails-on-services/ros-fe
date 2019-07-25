@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { IamService, IamGroup } from '@perx/open-services';
+import { IamService, IamGroup } from '@perx/open-services/dist/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, from } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';

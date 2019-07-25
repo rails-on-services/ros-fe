@@ -1,4 +1,4 @@
-import { CommsService, CommsTemplate, CommsCampaign } from '@perx/open-services';
+import { CommsService, CommsTemplate, CommsCampaign } from '@perx/open-services/dist/open-services';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';

@@ -8,7 +8,7 @@ import {
   CommsProvider,
   CommsCampaign,
   CommsTemplate
-} from '@perx/open-services';
+} from '@perx/open-services/dist/open-services';
 import { Observable, Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map, takeUntil } from 'rxjs/operators';

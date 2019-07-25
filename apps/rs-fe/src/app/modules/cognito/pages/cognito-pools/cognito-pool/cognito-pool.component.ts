@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CognitoService, CognitoPool } from '@perx/open-services';
+import { CognitoService, CognitoPool } from '@perx/open-services/dist/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map, switchMap } from 'rxjs/operators';

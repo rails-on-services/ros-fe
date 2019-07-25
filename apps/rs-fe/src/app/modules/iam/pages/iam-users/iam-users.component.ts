@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { IamService, IamUser } from '@perx/open-services';
+import { IamService, IamUser } from '@perx/open-services/dist/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {

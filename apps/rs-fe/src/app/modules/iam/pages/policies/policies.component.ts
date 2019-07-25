@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { IamService, IamPolicy } from '@perx/open-services';
+import { IamService, IamPolicy } from '@perx/open-services/dist/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

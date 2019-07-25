@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsService } from '@perx/open-services';
+import { CommsService } from '@perx/open-services/dist/open-services';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';

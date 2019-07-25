@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommsService } from '@perx/open-services';
+import { CommsService } from '@perx/open-services/dist/open-services';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 

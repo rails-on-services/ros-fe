@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CognitoService, CognitoUser, CognitoApplication } from '@perx/open-services';
+import { CognitoService, CognitoUser, CognitoApplication } from '@perx/open-services/dist/open-services';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 import { map, switchMap } from 'rxjs/operators';
 
