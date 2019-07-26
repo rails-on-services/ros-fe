@@ -47,5 +47,14 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.2.2"
-  }
+  },
+  "main": "./dist/open-services/bundles/perx-open-services.umd.js",
+  "module": "./dist/open-services/fesm5/perx-open-services.js",
+  "es2015": "./dist/open-services/fesm2015/perx-open-services.js",
+  "esm5": "./dist/open-services/esm5/perx-open-services.js",
+  "esm2015": "./dist/open-services/esm2015/perx-open-services.js",
+  "fesm5": "./dist/open-services/fesm5/perx-open-services.js",
+  "fesm2015": "./dist/open-services/fesm2015/perx-open-services.js",
+  "typings": "./dist/open-services/perx-open-services.d.ts",
+  "metadata": "./dist/open-services/perx-open-services.metadata.json"
 }
