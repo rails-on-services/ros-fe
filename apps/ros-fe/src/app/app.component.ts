@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IamService } from '@perx/open-services/dist/open-services';
+import { IamService } from '@perx/open-services';
 import { DEFAULT_SETTING } from '../shared/constant/displayPropertiesContant';
 import { DisplayPropertiesService } from 'src/shared/services/table-header-display-properties/display-properties.service';
 

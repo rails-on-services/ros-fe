@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IamService, IamGroup, IamPolicy } from '@perx/open-services/dist/open-services';
+import { IamService, IamGroup, IamPolicy } from '@perx/open-services';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { map } from 'rxjs/operators';

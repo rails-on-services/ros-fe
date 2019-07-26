@@ -5,9 +5,9 @@ import { ChildrenOutletContexts } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { IamModule as IamServiceModule } from '@perx/open-services/dist/open-services';
-import { CognitoModule as CognitoServiceModule } from '@perx/open-services/dist/open-services';
-import { CommsModule as CommsServiceModule } from '@perx/open-services/dist/open-services';
+import { IamModule as IamServiceModule } from '@perx/open-services';
+import { CognitoModule as CognitoServiceModule } from '@perx/open-services';
+import { CommsModule as CommsServiceModule } from '@perx/open-services';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

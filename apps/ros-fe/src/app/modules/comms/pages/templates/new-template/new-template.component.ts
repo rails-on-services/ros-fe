@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CommsCampaign, CommsService } from '@perx/open-services/dist/open-services';
+import { CommsCampaign, CommsService } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';

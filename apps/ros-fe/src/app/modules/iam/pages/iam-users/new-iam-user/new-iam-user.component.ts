@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IamCredential, IamService, IamUser } from '@perx/open-services/dist/open-services';
+import { IamCredential, IamService, IamUser } from '@perx/open-services';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { MatStepper } from '@angular/material';

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { CognitoService, CognitoPool } from '@perx/open-services/dist/open-services';
+import { CognitoService, CognitoPool } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, from } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
