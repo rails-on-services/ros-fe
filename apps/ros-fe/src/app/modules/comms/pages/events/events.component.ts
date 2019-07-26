@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CommsService, CommsEvent } from '@perx/open-services/dist/open-services';
+import { CommsService, CommsEvent } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommsService } from '@perx/open-services/dist/open-services';
+import { CommsService } from '@perx/open-services';
 
 @Component({
   selector: 'app-home',

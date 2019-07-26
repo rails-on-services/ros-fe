@@ -12,8 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 
-import { CognitoService } from '@perx/open-services/dist/open-services';
-import { CognitoUser as CUser } from '@perx/open-services/dist/open-services';
+import { CognitoService } from '@perx/open-services';
+import { CognitoUser as CUser } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { SelectionModel } from '@angular/cdk/collections';

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CognitoService, CognitoApplication } from '@perx/open-services/dist/open-services';
+import { CognitoService, CognitoApplication } from '@perx/open-services';
 import { MatDialog } from '@angular/material';
 import { ConfirmationModal } from '@perx/open-ui-components';
 import { map } from 'rxjs/operators';

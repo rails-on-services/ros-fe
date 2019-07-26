@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
-import { CommsService } from '@perx/open-services/dist/open-services';
+import { CommsService } from '@perx/open-services';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';

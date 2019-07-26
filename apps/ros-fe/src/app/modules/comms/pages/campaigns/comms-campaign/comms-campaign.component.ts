@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { CommsService, CommsTemplate } from '@perx/open-services/dist/open-services';
+import { CommsService, CommsTemplate } from '@perx/open-services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';

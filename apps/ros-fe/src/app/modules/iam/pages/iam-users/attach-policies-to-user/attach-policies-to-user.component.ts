@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { IamPolicy, IamService, IamUser } from '@perx/open-services/dist/open-services';
+import { IamPolicy, IamService, IamUser } from '@perx/open-services';
 import { Observable, forkJoin } from 'rxjs';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { Router, ActivatedRoute } from '@angular/router';

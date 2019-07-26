@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { StorageService } from '@perx/open-services/dist/open-services';
+import { StorageService } from '@perx/open-services';
 import { MatHorizontalStepper } from '@angular/material';
 @Component({
   selector: 'app-new-file',

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IamService, IamUser, IamPolicy } from '@perx/open-services/dist/open-services';
+import { IamService, IamUser, IamPolicy } from '@perx/open-services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';

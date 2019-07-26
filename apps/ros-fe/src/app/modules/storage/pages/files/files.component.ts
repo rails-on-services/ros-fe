@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { CommsCampaign, StorageService, StorageFile } from '@perx/open-services/dist/open-services';
+import { CommsCampaign, StorageService, StorageFile } from '@perx/open-services';
 import { TableHeaderProperties } from 'src/shared/models/tableHeaderProperties';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';

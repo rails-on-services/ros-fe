@@ -1,4 +1,4 @@
-import { CognitoService } from '@perx/open-services/dist/open-services';
+import { CognitoService } from '@perx/open-services';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
